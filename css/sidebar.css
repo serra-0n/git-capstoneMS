@@ -1,9 +1,10 @@
 .sidebar {
     width: 250px;
-    background: #1d0c74;
-    color: white;
-    min-height: 100vh;
-    padding: 30px 20px;
+    min-height:100vh;
+    background:#1D0C74;
+    display:flex;
+    flex-direction:column;
+    padding:30px 18px;
 }
 
 .logo {
@@ -13,30 +14,78 @@
 
 .logo img {
     width: 70px;
-    margin-bottom: 50px;
+    margin-bottom: 12px;
 }
 
 .logo h2 {
     color:white;
-    font-size: 28px;
+    font-size: 32px;
+    font-weight: 700;
 }
 
 .logo p{
-    color: #d6d6d6;
+    color: #d7d7d7;
     font-size: 14px;
 }
 
 .menu {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 8px;
 }
 
 .menu a{
-    text-decoration: none;
+    display:flex;
+    align-items:center;
+    gap: 15px;
+    padding: 15px 18px;
     color: white;
-    padding: 15px 20px;
-    border-radius: 12px;
-    transition: 0.3s;
-    font-size: 17px;
+    text-decoration: none;
+    border-radius: 14px;
+    transition: .25s;
+}
+
+.menu a:hover {
+    background-color: #6A4DFF;
+    transform: translateX(4px);
+}
+
+.menu a:active {
+    background-color: #6A4DFF;
+    font-weight: 600;
+}
+
+.menu svg {
+    width: 22px;
+    height: 22px;
+}
+
+.settings {
+    margin-top: auto;
+    width: 100%;
+}
+
+.settings a{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    padding: 15px 18px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 14px;
+    transition: .25s ease;
+    box-sizing: border-box;
+}
+
+.settings a:hover {
+    background-color: #6A4DFF;
+    transform: translateX(4px);
+}
+
+.settings svg {
+    width: 22px;
+    height: 22px;
+    stroke: #fff;
+    stroke-width: 2.2px;
 }
