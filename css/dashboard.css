@@ -1,0 +1,58 @@
+/*header*/
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.header-left{
+    font-size: 20px;
+    font-weight: 700;
+    color: #1b1b1b;
+}
+
+.header-left p {
+    margin-top:6px;
+    color:#666;
+    font-size: 16px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.icon-btn{
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: .3s;
+}
+
+.icon-btn:hover {
+    background-color: #ececec;
+}
+
+.icon-btn svg {
+    width: 24px;
+    height: 24px;
+    color: #222;
+}
+
+.profile-img{
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+    object-fit:cover;
+
+    cursor:pointer;
+}
