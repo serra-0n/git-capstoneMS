@@ -3,7 +3,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
 .header-left h1{
@@ -78,4 +78,47 @@
     width: 24px;
     height: 24px;
     color: #222;
+}
+
+.dashboard-content {
+    margin-top: 30px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.stat-card {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 18px;
+    min-height: 170px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card h3 {
+    font-size: 15px;
+    color: #666;
+    font-weight: 600;
+}
+
+.stat-card h2 {
+    font-size: 3cap;
+    font-weight: 700;
+    color: #0E8A2D;
+}
+
+.stat-card svg {
+    width: 28px;
+    height: 28px;
+    color: #555;
 }

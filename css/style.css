@@ -18,5 +18,5 @@ body {
 /*sa mainContent*/
 .main-content {
     flex: 1;
-    padding:30px;
+    padding:40px 48px;
 }
