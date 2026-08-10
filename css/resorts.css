@@ -1,3 +1,65 @@
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+.header-left {
+    flex: 1;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-left: auto;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 228px;
+    height: 100vh;
+
+    z-index: 1000;
+}
+
+.main-content {
+    margin-left: 228px;
+    min-height: 100vh;
+
+    box-sizing: border-box;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+.header-left {
+    flex: 1;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-left: auto;
+}
+
+
 .resorts-content {
     width: 100%;
 }
@@ -27,21 +89,21 @@
     letter-spacing: 1px;
 }
 
-.table-header,
-.table-row {
+.resorts-top .table-header,
+.resorts-top .table-row {
     display: grid;
     grid-template-columns: 1.4fr 1.2fr 1fr 0.8fr;
     align-items: center;
 }
 
-.table-header {
+.resorts-top .table-header {
     padding: 14px 6px;
     color: #999;
     font-size: 13px;
     font-weight: 700;
 }
 
-.table-row {
+.resorts-top .table-row {
     padding: 20px 6px;
     border-top: 1px solid #ddd;
     color: #777;
@@ -84,11 +146,6 @@
     padding: 18px;
 }
 
-.subscription-overview {
-    min-height: 245px;
-    padding: 18px;
-}
-
 .subscription-monitoring h3,
 .subscription-overview h3 {
     margin: 0;
@@ -108,21 +165,27 @@
     width: 82px;
     height: 82px;
     border-radius: 50%;
+
     background: conic-gradient(
         #00bd00 0% 75%,
         #ffbf00 75% 90%,
         #b36b00 90% 100%
     );
+
     position: relative;
 }
 
 .donut-chart::after {
     content: "";
+
     position: absolute;
+
     width: 50px;
     height: 50px;
+
     background: white;
     border-radius: 50%;
+
     top: 16px;
     left: 16px;
 }
@@ -156,23 +219,148 @@
     background: #b36b00;
 }
 
+.subscription-overview {
+    min-height: 245px;
+    padding: 18px;
+}
+
 .no-data {
     height: 190px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     color: #aaa;
     font-size: 14px;
     font-weight: 700;
+}
+
+.all-resorts {
+    width: 100%;
+    margin-top: 32px;
+    padding: 28px 30px 0;
+    overflow: hidden;
 }
 
 .all-resorts-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+
+    margin-bottom: 20px;
 }
 
 .all-resorts-header h2 {
-    margin: 25px;
+    margin: 0;
+}
+
+.search-box {
+    width: 235px;
+    height: 40px;
+
+    border: 1px solid #d6d6d6;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+.search-box svg {
+    width: 18px;
+    height: 18px;
+
+    color: #777;
+
+    flex-shrink: 0;
+}
+
+.search-box input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    padding: 0 8px;
+
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.all-resorts-table {
+    width: 100%;
+}
+
+.all-resorts-table .table-header {
+    display: grid;
+
+    grid-template-columns:
+        1.5fr
+        1.2fr
+        1fr
+        0.8fr
+        1fr;
+
+    align-items: center;
+
+    width: 100%;
+
+    padding: 14px 6px;
+
+    box-sizing: border-box;
+
+    color: #999;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.all-resorts-table .table-row {
+    display: grid;
+
+    grid-template-columns:
+        1.5fr
+        1.2fr
+        1fr
+        0.8fr
+        1fr;
+
+    align-items: center;
+
+    width: 100%;
+
+    padding: 20px 6px;
+
+    box-sizing: border-box;
+
+    border-top: 1px solid #ddd;
+
+    color: #777;
+    font-size: 14px;
+}
+
+.all-resorts-table .table-header span,
+.all-resorts-table .table-row span {
+    min-width: 0;
+}
+
+.all-resorts-table .table-row:hover {
+    background: #f8f8ff;
+}
+
+@media (max-width: 1000px) {
+
+    .resorts-top {
+        grid-template-columns: 1fr;
+    }
+
+    .all-resorts {
+        overflow-x: auto;
+    }
+
+    .all-resorts-table {
+        min-width: 750px;
+    }
 }

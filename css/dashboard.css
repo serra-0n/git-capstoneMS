@@ -80,6 +80,24 @@
     color: #222;
 }
 
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 228px;
+    height: 100vh;
+
+    z-index: 1000;
+}
+
+.main-content {
+    margin-left: 228px;
+    min-height: 100vh;
+
+    box-sizing: border-box;
+}
+
 .dashboard-content {
     margin-top: 30px;
 }
@@ -122,3 +140,4 @@
     height: 28px;
     color: #555;
 }
+
