@@ -1,0 +1,178 @@
+.resorts-content {
+    width: 100%;
+}
+
+.resorts-top {
+    display: grid;
+    grid-template-columns: 2.2fr 0.8fr;
+    gap: 32px;
+    margin-top: 25px;
+}
+
+.resort-card {
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+}
+
+.resorts-top > .resort-card:first-child {
+    padding: 28px 30px 0;
+}
+
+.resorts-top h2,
+.all-resorts h2 {
+    margin: 0 0 28px;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.table-header,
+.table-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1.2fr 1fr 0.8fr;
+    align-items: center;
+}
+
+.table-header {
+    padding: 14px 6px;
+    color: #999;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.table-row {
+    padding: 20px 6px;
+    border-top: 1px solid #ddd;
+    color: #777;
+    font-size: 14px;
+}
+
+.status {
+    font-weight: 600;
+}
+
+.approved {
+    color: #168000;
+}
+
+.pending {
+    color: #f07800;
+}
+
+.view-all {
+    border-top: 1px solid #ddd;
+    text-align: center;
+    padding: 18px;
+    margin-top: 0;
+}
+
+.view-all a {
+    color: #168000;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.resorts-side {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.subscription-monitoring {
+    min-height: 150px;
+    padding: 18px;
+}
+
+.subscription-overview {
+    min-height: 245px;
+    padding: 18px;
+}
+
+.subscription-monitoring h3,
+.subscription-overview h3 {
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.subscription-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    gap: 20px;
+}
+
+.donut-chart {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    background: conic-gradient(
+        #00bd00 0% 75%,
+        #ffbf00 75% 90%,
+        #b36b00 90% 100%
+    );
+    position: relative;
+}
+
+.donut-chart::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    top: 16px;
+    left: 16px;
+}
+
+.subscription-legend {
+    font-size: 10px;
+}
+
+.subscription-legend div {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 7px 0;
+}
+
+.legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+}
+
+.legend-dot.active {
+    background: #00bd00;
+}
+
+.legend-dot.expiring {
+    background: #ffbf00;
+}
+
+.legend-dot.expired {
+    background: #b36b00;
+}
+
+.no-data {
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.all-resorts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.all-resorts-header h2 {
+    margin: 25px;
+}
