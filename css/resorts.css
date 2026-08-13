@@ -346,6 +346,14 @@
     min-width: 0;
 }
 
+.onboarding-row {
+    cursor: pointer;
+}
+
+.onboarding-row:hover {
+    background: #f8f8ff;
+}
+
 .all-resorts-table .table-row:hover {
     background: #f8f8ff;
 }
