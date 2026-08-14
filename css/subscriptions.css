@@ -1,0 +1,333 @@
+.subscription-content {
+    width: 100;
+}
+
+.subscription-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 2.2fr) minmax(260px, 0.8fr);
+    gap: 30px;
+    align-items: start;
+}
+
+/*subs table*/
+.subscription-card {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+}
+
+.subscription-table-card {
+    overflow: hidden;
+}
+
+.subscription-table-card h2 {
+    margin: 0;
+    padding: 24px 26px 18px;
+    font-size: 18px;
+}
+
+.resort-count {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 4px 8px;
+    background: #f3eaff;
+    color: #6c4cff;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.subscription-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.subscription-table {
+    min-width: 850px;
+}
+
+.subscription-row {
+    display: grid;
+    grid-template-columns:
+    2fr
+    0.8fr
+    0.9fr
+    1.2fr
+    1.1fr
+    0.8fr
+    0.7fr;
+    align-items: center;
+    min-height: 70px;
+    padding: 0 24px;
+    box-sizing: border-box;
+    border-top: 1px solid #eeeeee;
+    font-size: 13px;
+    color: #68738a;
+}
+
+.subscription-header {
+    min-height: 44px;
+    background: #fafafa;
+    color: #68738a;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.resort-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.resort-info strong {
+    color: #1f2937;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.resort-info small {
+    color: #8b95a7;
+    font-size: 11px;
+}
+
+.plan {
+    display: inline-flex;
+    width: fit-content;
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.plan.basic {
+    background: #e5f1ff;
+    color: #1683e8;
+}
+
+.status,
+.payment {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.status.active,
+.payment.paid{
+    background: #e8f9ef;
+    color: #009b50;
+}
+
+.status.active::before,
+.payment.paid::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    margin-right: 5px;
+    background: #00b85a;
+    border-radius: 50%;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #68738a;
+    cursor: pointer;
+}
+
+.actions button:hover {
+    color: #168000;
+}
+
+.actions svg {
+    width: 17px;
+    height: 17px;
+}
+
+.subscription-pagination {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px 16px;
+    min-height: 50px;
+    box-sizing: border-box;
+}
+
+.subscription-pagination button {
+    border: 1px solid #dfe3ea;
+    background: white;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.page-number {
+    width: 32px;
+    height: 32px;
+    color: #6c4cff;
+    border: none;
+    background: #f3eaff !important;
+    border-radius: 8px;
+}
+
+.next-page {
+    height: 34px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid #dfe3ea !important;
+    background: #ffffff;
+    color: #1f2937;
+    border-radius: 8px;
+}
+
+.next-page:hover {
+    background: #f7f7f7;
+}
+
+.next-page svg {
+    width: 15px;
+    height: 15px;
+}
+
+/*subs side*/
+.subscription-side {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/*subs monitoring*/
+.monitoring-card {
+    padding: 20px;
+}
+
+.monitoring-card h3,
+.overview-card h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.monitoring-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.donut-chart {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background: conic-gradient(
+        #00bd00 0% 75%,
+        #ffbf00 75% 90%,
+        #b36b00 90% 100%
+    );
+    position: relative;
+    flex-shrink: 0;
+}
+
+.donut-chart::after {
+    content: "";
+    position: absolute;
+    width: 53px;
+    height: 53px;
+    background: white;
+    border-radius: 50%;
+    top: 16px;
+    left: 16px;
+}
+
+.monitoring-legend {
+    font-size: 10px;
+}
+
+.monitoring-legend div {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 8px 0;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.legend-dot.active {
+    background: #00bd00;
+}
+
+.legend-dot.expiring {
+    background: #ffbf00;
+}
+
+.legend-dot.expired {
+    background: #b36b00;
+}
+
+/*subs overview*/
+.overview-card {
+    padding: 20px;
+}
+
+.overview-item {
+    margin-top: 20px;
+}
+
+.overview-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.overview-bar {
+    width: 100%;
+    height: 6px;
+    background: #eeeeee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.overview-progress {
+    height: 100%;
+    border-radius: 10px;
+}
+
+.overview-progress.free {
+    width: 0%;
+}
+
+.overview-progress.basic {
+    width: 100%;
+    background: #6c4cff;
+}
+
+.overview-progress.standard {
+    width: 0%;
+}

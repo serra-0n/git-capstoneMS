@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscriptions - ResortMS</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/subscriptions.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+     <div class="container">
+
+        <aside class="sidebar">
+
+            <div class="logo">
+                <h2>ResortMS</h2>
+                <p>Super Admin</p>
+            </div>
+
+            <nav class="menu">
+
+                <a href="Dashboard.html">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="Resorts.html">
+                    <i data-lucide="building-2"></i>
+                    <span>Resorts</span>
+                </a>
+
+                <a href="Subscriptions.html" class="active">
+                    <i data-lucide="badge-dollar-sign"></i>
+                    <span>Subscription</span>
+                </a>
+
+                <a href="Reports.html">
+                    <i data-lucide="bar-chart-3"></i>
+                    <span>Reports</span>
+                </a>
+
+                <a href="Users.html">
+                    <i data-lucide="users"></i>
+                    <span>Resort Users</span>
+                </a>
+
+                <a href="Audit.html">
+                    <i data-lucide="clipboard-list"></i>
+                    <span>Audit Logs</span>
+                </a>
+
+            </nav>
+
+            <div class="settings">
+
+                <a href="#">
+                    <i data-lucide="settings"></i>
+                    <span>Settings</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+        <main class="main-content">
+
+             <header class="header">
+                <div class="header-left">
+                    <h1>SUBSCRIPTIONS</h1>
+                </div>
+
+                <div class="header-right">
+                    <button class="notification-btn">
+                        <i data-lucide="bell"></i>
+                    </button>
+                    <img src="../image/profile.png" 
+                            alt="Profile" 
+                            class="profile-img">
+                </div>
+             </header>
+
+             <!--subs content-->
+             <section class="subscription-content">
+                <div class="subscription-layout">
+                    <div class="subscription-card subscription-table-card">
+                        <h2>
+                            Resorts
+                            <span class="resort-count">3 resorts</span>
+                        </h2>
+                    
+
+                        <div class="subscription-table-wrapper">
+                            <div class="subscription-table">
+                                <div class="subscription-row subscription-header">
+                                    <span>Name</span>
+                                    <span>Plan</span>
+                                    <span>Status</span>
+                                    <span>Renewal Date</span>
+                                    <span>Payment Status</span>
+                                    <span>Amount</span>
+                                    <span>Action</span>
+                                </div>
+                                <!--1st-->
+                                <div class="subscription-row">
+                                    <span class="resort-info">
+                                        <strong>Blue Lagoon Resort</strong>
+                                        <small>Batangas, Philippines</small>
+                                    </span>
+
+                                    <span class="plan basic">Basic</span>
+                                    <span class="status active">Active</span>
+                                    <span>June 10, 2026</span>
+                                    <span class="payment paid">Paid</span>
+                                    <span>₱450</span>
+                                    <span class="actions">
+                                       <button title="Delete">
+                                            <i data-lucide="trash-2"></i>
+                                        </button>
+
+                                        <button title="Edit">
+                                            <i data-lucide="pencil"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <!--2nd-->
+                                <div class="subscription-row">
+
+                                    <span class="resort-info">
+                                        <strong>Bikini Bottom Resort</strong>
+                                        <small>La Union, Philippines</small>
+                                    </span>
+
+                                    <span class="plan basic">Basic</span>
+                                    <span class="status active">Active</span>
+                                    <span>June 8, 2026</span>
+                                    <span class="payment paid">Paid</span>
+                                    <span>₱450</span>
+                                    <span class="actions">
+                                        <button title="Delete">
+                                            <i data-lucide="trash-2"></i>
+                                     </button>
+
+                                        <button title="Edit">
+                                            <i data-lucide="pencil"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <!--3rd-->
+                                <div class="subscription-row">
+
+                                    <span class="resort-info">
+                                        <strong>Golden Pyramid</strong>
+                                        <small>Quezon City, Philippines</small>
+                                    </span>
+
+                                    <span class="plan basic">Basic</span>
+                                    <span class="status active">Active</span>
+                                    <span>June 8, 2026</span>
+                                    <span class="payment paid">Paid</span>
+                                    <span>₱450</span>
+                                    <span class="actions">
+                                        <button title="Delete">
+                                            <i data-lucide="trash-2"></i>
+                                        </button>
+
+                                        <button title="Edit">
+                                            <i data-lucide="pencil"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div class="subscription-pagination">
+                                    <button class="page-number active">
+                                        1
+                                    </button>
+
+                                    <button class="next-page">
+                                        Next
+                                        <i data-lucide="arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--right side circle-->
+
+                    <div class="subscription-side">
+                        <div class="subscription-card monitoring-card">
+                            <h3>
+                                Subscription Monitoring
+                            </h3>
+
+                            <div class="monitoring-content">
+                                <div class="donut-chart"></div>
+
+                                <div class="monitoring-legend">
+                                    <div>
+                                        <span class="legend-dot active"></span>
+                                        <span>Active</span>
+                                    </div>
+
+                                    <div>
+                                        <span class="legend-dot expiring"></span>
+                                        <span>Expiring soon</span>
+                                    </div>
+
+                                    <div>
+                                        <span class="legend-dot expired"></span>
+                                        <span>Expired</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subscription-card overview-card">
+                        <h3>Subscription Overview</h3>
+
+                        <div class="overview-item">
+                            <div class="overview-label">
+                                <span>Free</span>
+                                <span>0</span>
+                            </div>
+
+                            <div class="overview-bar">
+                                <div class="overview-progress free"></div>
+                            </div>
+                        </div>
+
+                        <div class="overview-item">
+                            <div class="overview-label">
+                                <span>Basic</span>
+                                <span>3</span>
+                            </div>
+
+                            <div class="overview-bar">
+                                <div class="overview-progress basic"></div>
+                            </div>
+                        </div>
+
+                        <div class="overview-item">
+                            <div class="overview-label">
+                                <span>Standard</span>
+                                <span>0</span>
+                            </div>
+
+                            <div class="overview-bar">
+                                <div class="overview-progress standard"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </section>
+        </main>
+    <script src="../js/script.js"></script>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
