@@ -129,11 +129,11 @@
                                 <span class="approved">Approved</span>
                             </div>
 
-                            <div class="table-row onboarding-row" onclick="openOnboardingModal()">
+                            <div class="table-row onboarding-row" onclick="openOnboardingModal('Billiard Resort', 'Andrei Cruz', 'May 11, 2026', 'Pending')">
                                 <span>Billiard Resort</span>
                                 <span>Andrei Cruz</span>
                                 <span>May 11, 2026</span>
-                                <span class="pending">Pending</span>
+                                <span class="pending" id="billiardStatus">Pending</span>
                             </div>
 
                         </div>
@@ -201,6 +201,7 @@
                             <i data-lucide="search"></i>
                             <input
                                 type="text"
+                                id="resortSearch"
                                 placeholder="Search">
                         </div>
 
@@ -218,7 +219,14 @@
                         </div>
 
 
-                        <div class="table-row">
+                        <div class="table-row resort-view-row"
+                            onclick="openResortDetails(
+                            'Blue Lagoon',
+                            'Juan Dela Cruz',
+                            'May 10, 2026',
+                            'Approved'
+                            )">
+
                             <span>Blue Lagoon Resort</span>
                             <span>Juan Dela Cruz</span>
                             <span>May 10, 2026</span>
@@ -227,7 +235,14 @@
                         </div>
 
 
-                        <div class="table-row">
+                        <div class="table-row resort-view-row"
+                            onclick="openResortDetails(
+                                'Bikini Bottom',
+                                'Maria Santos',
+                                'May 8, 2026',
+                                'Approved'
+                            )">
+
                             <span>Bikini Bottom Resort</span>
                             <span>Maria Santos</span>
                             <span>May 8, 2026</span>
@@ -236,7 +251,14 @@
                         </div>
 
 
-                        <div class="table-row">
+                        <div class="table-row resort-view-row"
+                            onclick="openResortDetails(
+                            'Golden Pyramid',
+                            'Nate Joshua',
+                            'May 8, 2026',
+                            'Approved'
+                            )">
+
                             <span>Golden Pyramid Resort</span>
                             <span>Nate Joshua</span>
                             <span>May 8, 2026</span>
@@ -252,8 +274,99 @@
 
         </main>
 
+        <div class="modal-overlay" id="onboardingModal">
+            <div class="onboarding-modal">
+
+                <div class="modal-header">
+                    <div>
+                        <h2>Resort Onboarding Request</h2>
+                        <p>Review the resort registration details</p>
+                    </div>
+
+                    <button class="close-modal" onclick="closeOnboardingModal()">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+
+                <div class="request-datails">
+                    <div class="detail-item">
+                        <span>Resort Name</span>
+                        <strong>Billiard Resort</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Resort Admin</span>
+                        <strong>Andrei Cruz</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Request Date</span>
+                        <strong>May 11, 2026</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Request Status</span>
+                        <strong class="pending">Pending</strong>
+                    </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="reject-btn"
+                    onclick="rejectRequest()">
+                    Reject
+                </button>
+                <button class="approve-btn"
+                    onclick="approveRequest()">
+                    Approve
+                </button>
+            </div>
+        </div>
     </div>
 
+    <!--resort details modal--->
+
+    <div class="modal-overlay" id="resortDetailsModal">
+        <div class="onboarding-modal">
+            <div class="modal-header">
+
+                <div>
+                    <h2>Resort Details</h2>
+                    <p>View registered resort information</p>
+                </div>
+
+                <button class="close-modal" onclick="closeResortDetails()">
+                    <i data-lucide="x"></i>
+                </button>
+
+            </div>
+
+            <div class="request-details">
+
+                <div class="detail-item">
+                    <span>Resort Name</span>
+                    <strong id="detailsResortName"></strong>
+                </div>
+
+                <div class="detail-item">
+                    <span>Resort Admin</span>
+                    <strong id="detailsAdminName"></strong>
+                </div>
+
+                <div class="detail-item">
+                    <span>Registered Date</span>
+                    <strong id="detailsDate"></strong>
+                </div>
+
+                <div class="detail-item">
+                    <span>Status</span>
+                    <strong id="detailsStatus"></strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
     <script src="../js/script.js"></script>
 
     <script src="https://unpkg.com/lucide@latest"></script>

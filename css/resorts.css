@@ -358,6 +358,138 @@
     background: #f8f8ff;
 }
 
+/* hover effects*/
+.resort-view-row {
+    cursor: pointer;
+}
+
+.resort-view-row:hover {
+    background: #f8f8ff;
+}
+
+/*onboarding request modal*/
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.onboarding-modal {
+    width: 500px;
+    max-width:90%;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 28px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+}
+
+.modal-header h2 {
+    margin: 0 0 6px;
+    font-size: 22px;
+}
+
+.modal-header p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+}
+
+.close-modal {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.close-modal svg {
+    width: 22px;
+    height:22px;
+}
+
+.request-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.detail-item span {
+    color: #999;
+    font-size: 13px;
+}
+
+.detail-item strong {
+    font-size: 15px;
+    color: #333;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.modal-actions button {
+    padding: 11px 22px;
+    border-radius: 8px;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.reject-btn {
+    background: #f1f1f1;
+    color: #d00000;
+}
+
+.approve-btn {
+    background: #168000;
+    color: white;
+}
+
+.reject-btn:hover {
+    background: #ffe5e5;
+}
+
+.approve-btn:hover {
+    background: #106600;
+}
+
+/*para maging clickable yung pending request */
+
+.onboarding-row {
+    cursor: pointer;
+}
+
+.onboarding-row:hover {
+    background: #f8f8ff;
+}
+
 @media (max-width: 1000px) {
 
     .resorts-top {
