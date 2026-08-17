@@ -1,17 +1,21 @@
 .platform-user-panel {
+    width: calc(100% - 48);
+    max-width: 1500px;
+    margin: 22px auto 0;
     background: #ffffff;
     border: 1px solid #e5e7eb;
     border-radius: 14px;
-    padding: 24px;
-    margin-top: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    padding: 22px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .user-overview {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
-    margin-top: 24px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    width: calc(100% - 48);
+    max-width: 1500px;
+    margin: 24px auto 0;
 }
 
 .user-overview-card {
@@ -21,8 +25,8 @@
     background: #ffffff;
     border: 1px solid #e5e7eb;
     border-radius: 14px;
-    padding: 20px;
-    min-height: 92px;
+    padding: 28px;
+    min-height: 82px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
@@ -55,6 +59,18 @@
     color: #111827;
     font-size: 25px;
     font-weight: 700;
+}
+
+.user-overview,
+.platform-user-panel {
+    width: calc(100% - 48px);
+    max-width: 1950px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-overview {
+    margin-top: 24px;
 }
 
 .platform-user-header {
@@ -198,7 +214,7 @@
     padding: 13px 14px;
     text-align: left;
     color: #64748b;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -224,3 +240,170 @@
 /* =========================================================
    USER INFORMATION
    ========================================================= */
+.platform-user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 190px;
+}
+
+.platform-user-avatar {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.platform-user-avatar svg {
+    width: 20px;
+    height: 20px;
+}
+
+.platform-user-info strong {
+    display: block;
+    color: #1f2937;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.platform-user-info span {
+    display: block;
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+.user-role {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.user-role.resort-admin {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+.user-role.client {
+    background: #ecfeff;
+    color: #0f766e;
+}
+
+.user-role.system-admin {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.user-account-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.user-account-status::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+.user-account-status.active {
+    color: #15803d;
+}
+
+.user-account-status::before {
+    background: #22c55e;
+}
+
+.user-account-status.inactive {
+    color: #b45309;
+}
+
+.user-account-status.inactive::before {
+    background: #f59e0b;
+}
+
+.user-action-button {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.user-action-button:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #1f2937;
+}
+
+.user-action-button svg {
+    width: 17px;
+    height: 17px;
+}
+
+@media (max-width: 1100px) {
+    .user-overview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .platform-user-toolbar {
+        flex-wrap: wrap;
+    }
+
+    .platform-user-search {
+        flex-basis: 100%;
+    }
+}
+
+@media (max-width: 700px) {
+    .user-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .platform-user-panel {
+        padding: 18px;
+    }
+
+    .platform-user-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .add-user-button {
+        width: 100%
+    }
+
+    .platform-user-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .platform-user-search,
+    .user-role-filter,
+    .user-status-filter {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .platform-user-table {
+        min-width: 850px;
+    }
+}
