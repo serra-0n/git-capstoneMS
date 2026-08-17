@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Users | Resort Management System</title>
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/sidebar.css">
+    <link rel="stylesheet" href="../../css/nav.css">
+    <link rel="stylesheet" href="../../css/system-admin/platform-users.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <img src="../../image/logo.png" alt="ResortHub Logo">
+
+            <div class="sidebar-brand-text">
+                <h2>ResortHub</h2>
+                <span>System Administrator</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <span class="nav-section-title">MAIN</span>
+                <a href="Dashboard.html" class="nav-item">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">TENANT MANAGEMENT</span>
+
+                <a href="ResortApproval.html" class="nav-item">
+                    <i data-lucide="building-2"></i>
+                    <span>Resort Approvals</span>
+                </a>
+
+                <a href="TenantMonitoring.html" class="nav-item">
+                    <i data-lucide="monitor"></i>
+                    <span>Tenant Monitoring</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">USER MANAGEMENT</span>
+
+                <a href="PlatformUsers.html" class="nav-item active">
+                    <i data-lucide="users"></i>
+                    <span>Platform Users</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">DOCUMENT MANAGEMENT</span>
+
+                <a href="OCRVerification.html" class="nav-item">
+                    <i data-lucide="scan-text"></i>
+                    <span>OCR Verification</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">MONITORING</span>
+
+                <a href="ActivityLogs.html" class="nav-item">
+                    <i data-lucide="activity"></i>
+                    <span>Activity Logs</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">REPORTS</span>
+
+                <a href="SystemReports.html" class="nav-item">
+                    <i data-lucide="file-bar-chart"></i>
+                    <span>System Reports</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-user">
+            <img src="../../image/profile.png" alt="System Administrator">
+            <div class="sidebar-user-info">
+                <strong>System Admin</strong>
+                <span>Administrator</span>
+            </div>
+        </div>
+
+        <a href="../../index.html" class="sidebar-logout">
+            <i data-lucide="log-out"></i>
+            <span>Logout</span>
+        </a>
+    </aside>
+<!-- MAIN CONTENT -->
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button
+                    type="button"
+                    class="menu-button"
+                    aria-label="Open menu">
+                    <i data-lucide="menu"></i>
+                </button>
+
+                <div class="topbar-search">
+                    <i data-lucide="search"></i>
+                    <input 
+                        type="search"
+                        placeholder="Search..."
+                        aria-label="Search">
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <button 
+                    type="button"
+                    class="notification-button"
+                    aria-label="Notifications">
+
+                    <i data-lucide="bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+
+                <div class="topbar-profile">
+                    <img src="../../image/profile.png" alt="System Administrator">
+
+                    <div>
+                        <strong>System Admin</strong>
+                        <span>Administrator</span>
+                    </div>
+                    <i data-lucide="chevron-down"></i>
+                </div>
+            </div>
+        </header>
+
+        <section class="page-header">
+            <div>
+                <span class="breadcrumb">
+                    User Management / Platform Users
+                </span>
+
+                <h1>Platform Users</h1>
+
+                <p>
+                    Manage user accounts and monitor access
+                    across the ResortHub platform.
+                </p>
+            </div>
+        </section>
+
+        <section class="user-overview">
+            <article class="user-overview-card">
+                <div class="user-overview-icon">
+                    <i data-lucide="users"></i>
+                </div>
+                
+                <div>
+                    <span>Total Users</span>
+                    <strong>248</strong>
+                </div>
+            </article>
+
+            <article class="user-overview-card">
+                <div class="user-overview-icon">
+                    <i data-lucide="user-check"></i>
+                </div>
+
+                <div>
+                    <span>Active Users</span>
+                    <strong>221</strong>
+                </div>
+            </article>
+
+            <article class="user-overview-card">
+                <div class="user-overview-icon">
+                    <i data-lucide="user-x"></i>
+                </div>
+                
+                <div>
+                    <span>Inactive Users</span>
+                    <strong>19</strong>
+                </div>
+            </article>
+
+            <article class="user-overview-card">
+                <div class="user-overview-icon">
+                    <i data-lucide="shield-check"></i>
+                </div>
+                <div>
+                    <span>Administrators</span>
+                    <strong>8</strong>
+                </div>
+        </section>
+
+        <section class="platform-user-panel">
+            <div class="platform-user-header">
+                <div>
+                    <h2>Platform Accounts</h2>
+                    <p>View and manage registered platform users.</p>
+                </div>
+
+                <button
+                    type="button"
+                    class="add-user-button">
+
+                    <i data-lucide="user-plus"></i>
+                    Add User
+                </button>
+            </div>
+
+            <div class="platform-user-toolbar">
+                <div class="platform-user-search">
+                    <i data-lucide="search"></i>
+
+                    <input  
+                        type="search"
+                        placeholder="Search user name or email..."
+                        aria-label="Search users">
+                </div>
+
+                <select
+                    class="user-role-filter"
+                    aria-label="Filter by role">
+
+                    <option value="">All Roles</option>
+                    <option value="system-admin">System Administrator</option>
+                    <option value="resort-admin">Resort Administrator</option>
+                    <option value="client">Client</option>
+                </select>
+
+                <select
+                    class="user-status-filter"
+                    aria-label="Filter by status">
+
+                    <option value="">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+
+            <div class="platform-user-table-wrapper">
+                <table class="platform-user-table">
+                    <thread>
+                        <tr>
+                            <th>User</th>
+                            <th>Role</th>
+                            <th>Tenant</th>
+                            <th>Last Login</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thread>
+
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="platform-user-info">
+                                    <div class="platform-user-avatar">
+                                        <i data-lucide="user"></i>
+                                    </div>
+
+                                    <div>
+                                        <strong>Juan Dela Cruz</strong>
+                                        <span>juan@example.com</span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <span class="user-role resort-admin">
+                                    Resort Administrator
+                                </span>
+                            </td>
+
+                            <td>
+                                Blue Lagoon Resort
+                            </td>
+
+                            <td>
+                                June 1, 2025
+                            </td>
+
+                            <td>
+                                <span class="user-account-status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+                                <button 
+                                    type="button"
+                                    class="user-action-button"
+                                    aria-label="View user">
+
+                                    <i data-lucide="ellipsis"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="platform-user-info">
+                                    <div class="platform-user-avatar">
+                                        <i data-lucide="user"></i>
+                                    </div>
+
+                                    <div>
+                                        <strong>Maria Santos</strong>
+                                        <span>maria@example.com</span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <span class="user-role resort-admin">
+                                    Resort Administrator
+                                </span>
+                            </td>
+
+                            <td>Seaside View Resort</td>
+
+                            <td>May 30, 2025</td>
+
+                            <td>
+                                <span class="user-account-status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+                                <button
+                                    type="button"
+                                    class="user-action-button"
+                                    aria-label="View user">
+
+                                    <i data-lucide="ellipsis"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="platform-user-info">
+                                    <div class="platform-user-avatar">
+                                        <i data-lucide="user"></i>
+                                    </div>
+                                    <div>
+                                        <strong>Pedro Reyes</strong>
+                                        <span>pedro@example.com</span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <span class="user-role client">
+                                    Client
+                                </span>
+                            </td>
+
+                            <td>Mountain Breeze Resort</td>
+
+                            <td> May 28, 2025</td>
+
+                            <td>
+                                <span class="user-account-status inactive">
+                                    Inactive
+                                </span>
+                            </td>
+
+                            <td>
+                                <button
+                                    type="button"
+                                    class="user-action-button"
+                                    aria-label="View user">
+
+                                    <i data-lucide="ellipsis"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="platform-user-info">
+                                    <div class="platform-user-avatar">
+                                        <i data-lucide="shield"></i>
+                                    </div>
+
+                                    <div>
+                                        <strong>System Admin</strong>
+                                        <span>admin@resorthub.com</span>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <span class="user-role system-admin">
+                                    System Administrator
+                                </span>
+                            </td>
+
+                            <td>
+                                June 1, 2025
+                            </td>
+
+                            <td>
+                                <span class="user-account-status active">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+                                <button
+                                    type="button"
+                                    class="user-action-button"
+                                    aria-label="View user">
+
+                                    <i data-lucide="ellipsis"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <script src="../../js/system-admin/PlatformUsers.js"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

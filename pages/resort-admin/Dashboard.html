@@ -1,113 +1,813 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Admin Dashboard</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Resort Owner - Dashboard</title>
 
-    <link rel = "stylesheet" href = "../css/style.css">
-    <link rel = "stylesheet" href = "../css/sidebar.css">
-    <link rel = "stylesheet" href = "../css/dashboard.css">
+    <link rel="stylesheet" href="../../css/resortAdStyle.css">
+    <link rel="stylesheet" href="../../css/resortAdSidebar.css">
+    <link rel="stylesheet" href="../../css/resortAdNav.css">
+    <link rel="stylesheet" href="../../css/resort-admin/dashboard.css">
 
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
 </head>
+
 <body>
-    <div class = "container">
 
-        <aside class="sidebar">
-            <div class="logo">
-                <h2>ResortMS</h2>
-                <p>Super Admin</p>
-            </div>
+    <div class="resort-admin-layout">
 
-            <nav class="menu">
-                <a href="Dashboard.html" class="active">
-                    <i data-lucide="layout-dashboard"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="Resorts.html">
-                    <i data-lucide="building-2"></i>
-                    <span>Resorts</span>
-                </a>
-                <a href="Subscriptions.html">
-                    <i data-lucide="badge-dollar-sign"></i>
-                    <span>Subscription</span>
-                </a>
-                <a href="Reports.html">
-                    <i data-lucide="bar-chart-3"></i>
-                    <span>Reports</span>
-                </a>
-                <a href="Users.html">
-                    <i data-lucide="users"></i>
-                    <span>Resort Users</span>
-                </a>
-                <a href="Audit.html">
-                    <i data-lucide="clipboard-list"></i>
-                    <span>Audit Logs</span>
-                </a>
-            </nav>
+        <div id="sidebar-container"></div>
 
-            <div class="settings">
-                <a href="#">
-                    <i data-lucide="settings"></i>
-                    <span>Settings</span>
-                </a>
-            </div>
-        </aside>
+        <main class="resort-main">
 
-        <main class="main-content">
-            <header class="header">
-
-                <div class="header-left">
-                    <h1>PLATFORM DASHBOARD</h1>
-                    <p>Overview of all resorts in the system</p>
-                </div>
-
-                <div class="header-right">
-                    
-                    <button class="notification-btn">
-                        <i data-lucide="bell"></i>
-                    </button>
-
-                    <img src="../image/profile.png"
-                        alt="Profile"
-                        class="profile-img">
-                </div>
-            </header>
+            <div id="nav-container"></div>
 
             <section class="dashboard-content">
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3>Total Users</h3>
-                        <h2>0</h2>
-                        <i data-lucide="users"></i>
+
+                <div class="dashboard-header">
+
+                    <div class="dashboard-title">
+
+                        <h1>
+                            Operational Dashboard
+                        </h1>
+
+                        <p>
+                            Welcome back, Juan! Here's what's
+                            happening with your resort today.
+                        </p>
+
                     </div>
 
-                    <div class="stat-card">
-                        <h3>Total Revenue</h3>
-                        <h2>₱0</h2>
-                        <i data-lucide="wallet"></i>
+                    <div class="date-card">
+
+                        <div class="date-icon">
+                            <i class="fa-regular fa-calendar"></i>
+                        </div>
+
+                        <div class="date-information">
+
+                            <strong>
+                                May 24, 2025
+                            </strong>
+
+                            <span>
+                                Saturday
+                            </span>
+
+                        </div>
+
                     </div>
 
-                    <div class="stat-card">
-                        <h3>Active Subscriptions</h3>
-                        <h2>0</h2>
-                        <i data-lucide="badge-check"></i>
-                    </div>
                 </div>
+
+                <div class="summary-cards">
+
+                    <div class="summary-card">
+
+                        <div class="summary-icon blue">
+                            <i class="fa-regular fa-calendar-check"></i>
+                        </div>
+
+                        <div class="summary-content">
+
+                            <span>
+                                Total Reservations
+                            </span>
+
+                            <strong>
+                                128
+                            </strong>
+
+                            <small class="positive">
+                                +12% vs last 30 days
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="summary-card">
+
+                        <div class="summary-icon green">
+                            <i class="fa-solid fa-bed"></i>
+                        </div>
+
+                        <div class="summary-content">
+
+                            <span>
+                                Available Rooms/Cottages
+                            </span>
+
+                            <strong>
+                                24 / 60
+                            </strong>
+
+                            <small class="positive">
+                                40% available
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="summary-card">
+
+                        <div class="summary-icon orange">
+                            <i class="fa-regular fa-credit-card"></i>
+                        </div>
+
+                        <div class="summary-content">
+
+                            <span>
+                                Pending Payments
+                            </span>
+
+                            <strong>
+                                15
+                            </strong>
+
+                            <small class="warning">
+                                ₱58,750.00
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="summary-card">
+
+                        <div class="summary-icon purple">
+                            <i class="fa-solid fa-qrcode"></i>
+                        </div>
+
+                        <div class="summary-content">
+
+                            <span>
+                                Pending OCR Verifications
+                            </span>
+
+                            <strong>
+                                9
+                            </strong>
+
+                            <small class="purple-text">
+                                Requires attention
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="middle-grid">
+
+                    <div class="dashboard-card activities-card">
+
+                        <div class="card-header">
+
+                            <h2>
+                                Today's Activities
+                            </h2>
+
+                            <a href="#">
+                                View Calendar
+                            </a>
+
+                        </div>
+
+                        <div class="activity-list">
+
+                            <div class="activity-row">
+
+                                <div class="activity-label">
+
+                                    <div class="activity-icon green">
+                                        <i class="fa-solid fa-right-to-bracket"></i>
+                                    </div>
+
+                                    <span>
+                                        Check-ins Today
+                                    </span>
+
+                                </div>
+
+                                <strong>
+                                    18
+                                </strong>
+
+                            </div>
+
+                            <div class="activity-row">
+
+                                <div class="activity-label">
+
+                                    <div class="activity-icon red">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                    </div>
+
+                                    <span>
+                                        Check-outs Today
+                                    </span>
+
+                                </div>
+
+                                <strong>
+                                    12
+                                </strong>
+
+                            </div>
+
+                            <div class="activity-row">
+
+                                <div class="activity-label">
+
+                                    <div class="activity-icon orange">
+                                        <i class="fa-solid fa-users"></i>
+                                    </div>
+
+                                    <span>
+                                        In-house Guests
+                                    </span>
+
+                                </div>
+
+                                <strong>
+                                    46
+                                </strong>
+
+                            </div>
+
+                            <div class="activity-row">
+
+                                <div class="activity-label">
+
+                                    <div class="activity-icon blue">
+                                        <i class="fa-regular fa-calendar"></i>
+                                    </div>
+
+                                    <span>
+                                        New Reservations Today
+                                    </span>
+
+                                </div>
+
+                                <strong>
+                                    7
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="dashboard-card revenue-card">
+
+                        <div class="card-header">
+
+                            <h2>
+                                Revenue Summary
+                            </h2>
+
+                            <select>
+
+                                <option>
+                                    This Month
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="revenue-information">
+
+                            <span>
+                                Total Revenue
+                            </span>
+
+                            <div class="revenue-amount">
+
+                                <strong>
+                                    ₱285,450.00
+                                </strong>
+
+                                <span class="revenue-growth">
+                                    ↗ 18.6%
+                                </span>
+
+                            </div>
+
+                            <small>
+                                vs April 24 – May 23, 2025
+                                (₱240,650.00)
+                            </small>
+
+                        </div>
+
+                        <div class="revenue-chart"></div>
+
+                    </div>
+
+                    <div class="dashboard-card notifications-card">
+
+                        <div class="card-header">
+
+                            <h2>
+                                Notifications
+                            </h2>
+
+                            <a href="#">
+                                View All
+                            </a>
+
+                        </div>
+
+                        <div class="notification-list">
+
+                            <div class="notification-item">
+
+                                <div class="notification-icon orange">
+                                    <i class="fa-regular fa-clock"></i>
+                                </div>
+
+                                <div class="notification-content">
+
+                                    <strong>
+                                        15 payments are still pending.
+                                    </strong>
+
+                                    <p>
+                                        Please verify and confirm payments.
+                                    </p>
+
+                                </div>
+
+                                <span class="notification-time">
+                                    10 min ago
+                                </span>
+
+                            </div>
+
+                            <div class="notification-item">
+
+                                <div class="notification-icon purple">
+                                    <i class="fa-solid fa-file-circle-check"></i>
+                                </div>
+
+                                <div class="notification-content">
+
+                                    <strong>
+                                        9 OCR documents pending verification.
+                                    </strong>
+
+                                    <p>
+                                        Review and validate documents.
+                                    </p>
+
+                                </div>
+
+                                <span class="notification-time">
+                                    25 min ago
+                                </span>
+
+                            </div>
+
+                            <div class="notification-item">
+
+                                <div class="notification-icon blue">
+                                    <i class="fa-regular fa-calendar"></i>
+                                </div>
+
+                                <div class="notification-content">
+
+                                    <strong>
+                                        3 new reservations received today.
+                                    </strong>
+
+                                    <p>
+                                        Please review new bookings.
+                                    </p>
+
+                                </div>
+
+                                <span class="notification-time">
+                                    1 hour ago
+                                </span>
+
+                            </div>
+
+                            <div class="notification-item">
+
+                                <div class="notification-icon green">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+
+                                <div class="notification-content">
+
+                                    <strong>
+                                        Payment verified: ₱6,500.00
+                                    </strong>
+
+                                    <p>
+                                        Reference: PSN-1234-5678-9012
+                                    </p>
+
+                                </div>
+
+                                <span class="notification-time">
+                                    2 hours ago
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="bottom-grid">
+
+                    <div class="dashboard-card reservations-card">
+
+                        <div class="card-header">
+
+                            <h2>
+                                Recent Reservations
+                            </h2>
+
+                            <a href="#">
+                                View All Reservations
+                            </a>
+
+                        </div>
+
+                        <div class="table-container">
+
+                            <table class="reservation-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            Reservation<br>Code
+                                        </th>
+
+                                        <th>
+                                            Guest<br>Name
+                                        </th>
+
+                                        <th>
+                                            Check-in
+                                        </th>
+
+                                        <th>
+                                            Check-out
+                                        </th>
+
+                                        <th>
+                                            Room /<br>Cottage
+                                        </th>
+
+                                        <th>
+                                            Amount
+                                        </th>
+
+                                        <th>
+                                            Status
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>
+                                            RH-250524<br>-00123
+                                        </td>
+
+                                        <td>
+                                            Juan Miguel<br>Dela Cruz
+                                        </td>
+
+                                        <td>
+                                            May 24,<br>2025
+                                        </td>
+
+                                        <td>
+                                            May 25,<br>2025
+                                        </td>
+
+                                        <td>
+                                            Family<br>Cottage
+                                        </td>
+
+                                        <td>
+                                            ₱4,950.00
+                                        </td>
+
+                                        <td>
+                                            <span class="status confirmed">
+                                                Confirmed
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <td>
+                                            RH-250524<br>-00124
+                                        </td>
+
+                                        <td>
+                                            Maria<br>Santos
+                                        </td>
+
+                                        <td>
+                                            May 25,<br>2025
+                                        </td>
+
+                                        <td>
+                                            May 27,<br>2025
+                                        </td>
+
+                                        <td>
+                                            Deluxe<br>Room
+                                        </td>
+
+                                        <td>
+                                            ₱6,800.00
+                                        </td>
+
+                                        <td>
+                                            <span class="status pending">
+                                                Pending<br>Payment
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <td>
+                                            RH-250523<br>-00122
+                                        </td>
+
+                                        <td>
+                                            Mark<br>Reyes
+                                        </td>
+
+                                        <td>
+                                            May 26,<br>2025
+                                        </td>
+
+                                        <td>
+                                            May 28,<br>2025
+                                        </td>
+
+                                        <td>
+                                            Beachfront<br>Villa
+                                        </td>
+
+                                        <td>
+                                            ₱12,500.00
+                                        </td>
+
+                                        <td>
+                                            <span class="status confirmed">
+                                                Confirmed
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <td>
+                                            RH-250523<br>-00121
+                                        </td>
+
+                                        <td>
+                                            Angela<br>Guzman
+                                        </td>
+
+                                        <td>
+                                            May 27,<br>2025
+                                        </td>
+
+                                        <td>
+                                            May 29,<br>2025
+                                        </td>
+
+                                        <td>
+                                            Standard<br>Cottage
+                                        </td>
+
+                                        <td>
+                                            ₱3,200.00
+                                        </td>
+
+                                        <td>
+                                            <span class="status ocr">
+                                                Pending<br>OCR
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <td>
+                                            RH-250523<br>-00120
+                                        </td>
+
+                                        <td>
+                                            Carlos<br>Dela Cruz
+                                        </td>
+
+                                        <td>
+                                            May 28,<br>2025
+                                        </td>
+
+                                        <td>
+                                            May 30,<br>2025
+                                        </td>
+
+                                        <td>
+                                            Deluxe<br>Room
+                                        </td>
+
+                                        <td>
+                                            ₱6,800.00
+                                        </td>
+
+                                        <td>
+                                            <span class="status cancelled">
+                                                Cancelled
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <div class="table-footer">
+
+                            <span>
+                                Showing 1 to 5 of 128 reservations
+                            </span>
+
+                            <div class="pagination">
+
+                                <button>
+                                    ‹
+                                </button>
+
+                                <button class="active">
+                                    1
+                                </button>
+
+                                <button>
+                                    2
+                                </button>
+
+                                <button>
+                                    3
+                                </button>
+
+                                <button>
+                                    ...
+                                </button>
+
+                                <button>
+                                    26
+                                </button>
+
+                                <button>
+                                    ›
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="dashboard-card quick-actions-card">
+
+                        <div class="card-header">
+
+                            <h2>
+                                Quick Actions
+                            </h2>
+
+                        </div>
+
+                        <div class="quick-actions">
+
+                            <a href="#" class="quick-action">
+
+                                <i class="fa-regular fa-calendar-plus"></i>
+
+                                <span>
+                                    New<br>Reservation
+                                </span>
+
+                            </a>
+
+                            <a href="#" class="quick-action">
+
+                                <i class="fa-solid fa-person-walking"></i>
+
+                                <span>
+                                    Walk-in<br>Reservation
+                                </span>
+
+                            </a>
+
+                            <a href="#" class="quick-action">
+
+                                <i class="fa-solid fa-house"></i>
+
+                                <span>
+                                    Add Room /<br>Cottage
+                                </span>
+
+                            </a>
+
+                            <a href="#" class="quick-action">
+
+                                <i class="fa-regular fa-calendar"></i>
+
+                                <span>
+                                    View<br>Calendar
+                                </span>
+
+                            </a>
+
+                            <a href="#" class="quick-action">
+
+                                <i class="fa-regular fa-credit-card"></i>
+
+                                <span>
+                                    Payment<br>Transactions
+                                </span>
+
+                            </a>
+
+                            <a href="#" class="quick-action">
+
+                                <i class="fa-regular fa-file-lines"></i>
+
+                                <span>
+                                    Generate<br>Report
+                                </span>
+
+                            </a>
+
+                            <a href="#" class="quick-action-wide">
+
+                                <i class="fa-solid fa-qrcode"></i>
+
+                                <span>
+                                    OCR Document Verification
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </section>
+
         </main>
+
     </div>
 
-    <script src="../js/script.js"></script>
+    <script src="../../js/resort-admin/dashboard.js"></script>
 
-    <script>
-        lucide.createIcons();
-    </script>
 </body>
+
 </html>

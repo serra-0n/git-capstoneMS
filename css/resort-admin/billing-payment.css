@@ -1,0 +1,1163 @@
+/* =========================================================
+   RESORTHUB - RESORT ADMIN
+   BILLING & PAYMENT MANAGEMENT
+   File: billing-payment.css
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.billing-page {
+    width: 100%;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.billing-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 16px;
+}
+
+.billing-title {
+    margin: 0;
+
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+
+    color: #111827;
+}
+
+.billing-breadcrumb {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 5px;
+
+    font-size: 8px;
+
+    color: #64748b;
+}
+
+.billing-breadcrumb .separator {
+    color: #94a3b8;
+}
+
+
+/* =========================================================
+   HEADER ACTION
+   ========================================================= */
+
+.billing-export-btn {
+    height: 29px;
+
+    padding: 0 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    background: #ffffff;
+
+    border: 1px solid #dbe2ea;
+
+    border-radius: 5px;
+
+    color: #111827;
+
+    font-size: 8px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.billing-export-btn:hover {
+    border-color: #2563eb;
+
+    color: #2563eb;
+
+    background: #f8fbff;
+}
+
+
+/* =========================================================
+   PAYMENT STATISTICS
+   ========================================================= */
+
+.billing-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 8px;
+
+    margin-bottom: 12px;
+}
+
+.billing-stat-card {
+    min-height: 84px;
+
+    padding: 10px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 8px;
+}
+
+.billing-stat-icon {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    font-size: 11px;
+}
+
+.billing-stat-icon.blue {
+    background: #eaf2ff;
+    color: #2563eb;
+}
+
+.billing-stat-icon.orange {
+    background: #fff2df;
+    color: #f59e0b;
+}
+
+.billing-stat-icon.green {
+    background: #e8f8ee;
+    color: #22c55e;
+}
+
+.billing-stat-icon.red {
+    background: #feeceb;
+    color: #ef4444;
+}
+
+.billing-stat-icon.purple {
+    background: #f2eaff;
+    color: #8b5cf6;
+}
+
+.billing-stat-content {
+    min-width: 0;
+}
+
+.billing-stat-label {
+    font-size: 7px;
+
+    font-weight: 600;
+
+    color: #111827;
+
+    line-height: 1.2;
+}
+
+.billing-stat-value {
+    margin-top: 4px;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    color: #111827;
+}
+
+.billing-stat-meta {
+    margin-top: 5px;
+
+    font-size: 6px;
+
+    font-weight: 500;
+}
+
+.billing-stat-meta.green {
+    color: #16a34a;
+}
+
+.billing-stat-meta.orange {
+    color: #f97316;
+}
+
+.billing-stat-meta.red {
+    color: #ef4444;
+}
+
+.billing-stat-meta.purple {
+    color: #8b5cf6;
+}
+
+
+/* =========================================================
+   MAIN BILLING LAYOUT
+   ========================================================= */
+
+.billing-main-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        188px;
+
+    gap: 10px;
+
+    align-items: start;
+}
+
+.billing-main {
+    min-width: 0;
+}
+
+.billing-sidebar {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   BILLING TRANSACTION CARD
+   ========================================================= */
+
+.billing-transactions-card {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   TRANSACTION TABS
+   ========================================================= */
+
+.billing-tabs {
+    height: 39px;
+
+    padding: 0 11px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 17px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.billing-tab {
+    position: relative;
+
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 4px;
+
+    color: #475569;
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+}
+
+.billing-tab.active {
+    color: #2563eb;
+}
+
+.billing-tab.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: -1px;
+
+    height: 2px;
+
+    background: #2563eb;
+}
+
+.billing-tab-count {
+    min-width: 16px;
+
+    padding: 2px 4px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #fff0dc;
+
+    color: #f97316;
+
+    font-size: 6px;
+
+    font-weight: 700;
+}
+
+.billing-tab-count.green {
+    background: #dcfce7;
+
+    color: #16a34a;
+}
+
+.billing-tab-count.red {
+    background: #fee2e2;
+
+    color: #ef4444;
+}
+
+
+/* =========================================================
+   FILTER AREA
+   ========================================================= */
+
+.billing-filter-area {
+    padding: 9px 10px;
+
+    border-bottom: 1px solid #eef0f3;
+}
+
+.billing-filter-row {
+    display: grid;
+
+    grid-template-columns:
+        1.4fr
+        1fr
+        1fr
+        1fr
+        auto;
+
+    gap: 7px;
+}
+
+.billing-search {
+    width: 100%;
+
+    height: 29px;
+
+    padding: 0 8px;
+
+    border: 1px solid #dbe2ea;
+
+    border-radius: 5px;
+
+    background: #ffffff;
+
+    outline: none;
+
+    color: #374151;
+
+    font-size: 7px;
+}
+
+.billing-search::placeholder {
+    color: #9ca3af;
+}
+
+.billing-search:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 2px rgba(37, 99, 235, 0.05);
+}
+
+.billing-filter-select {
+    width: 100%;
+
+    height: 29px;
+
+    padding: 0 8px;
+
+    border: 1px solid #dbe2ea;
+
+    border-radius: 5px;
+
+    background: #ffffff;
+
+    color: #64748b;
+
+    outline: none;
+
+    font-size: 7px;
+}
+
+.billing-filter-select:focus {
+    border-color: #2563eb;
+}
+
+.billing-filter-btn {
+    height: 29px;
+
+    padding: 0 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    background: #ffffff;
+
+    border: 1px solid #dbe2ea;
+
+    border-radius: 5px;
+
+    color: #374151;
+
+    font-size: 7px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+}
+
+.billing-filter-btn:hover {
+    border-color: #2563eb;
+
+    color: #2563eb;
+}
+
+
+/* =========================================================
+   TRANSACTION TOOLBAR
+   ========================================================= */
+
+.billing-toolbar {
+    min-height: 37px;
+
+    padding: 6px 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.billing-showing {
+    font-size: 7px;
+
+    color: #94a3b8;
+}
+
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+
+.billing-pagination {
+    display: flex;
+
+    align-items: center;
+
+    gap: 3px;
+}
+
+.billing-pagination button {
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 4px;
+
+    background: #ffffff;
+
+    color: #475569;
+
+    font-size: 7px;
+
+    cursor: pointer;
+}
+
+.billing-pagination button:hover {
+    border-color: #2563eb;
+
+    color: #2563eb;
+}
+
+.billing-pagination button.active {
+    background: #2563eb;
+
+    border-color: #2563eb;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   PAYMENT TABLE
+   ========================================================= */
+
+.billing-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.billing-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+
+    font-size: 7px;
+}
+
+.billing-table th {
+    padding: 8px 7px;
+
+    background: #f8fafc;
+
+    border-top: 1px solid #eef0f3;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    color: #475569;
+
+    font-size: 6px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    text-align: left;
+}
+
+.billing-table td {
+    padding: 8px 7px;
+
+    border-bottom: 1px solid #eef0f3;
+
+    color: #374151;
+
+    line-height: 1.25;
+
+    vertical-align: middle;
+}
+
+.billing-table tbody tr:hover {
+    background: #fafcff;
+}
+
+.billing-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   TABLE CONTENT
+   ========================================================= */
+
+.transaction-code {
+    color: #374151;
+
+    font-size: 6.5px;
+
+    line-height: 1.2;
+
+    word-break: break-word;
+}
+
+.reservation-code {
+    color: #374151;
+
+    font-size: 6.5px;
+
+    line-height: 1.2;
+
+    word-break: break-word;
+}
+
+.billing-guest-name {
+    font-size: 6.5px;
+
+    font-weight: 500;
+
+    color: #111827;
+}
+
+.billing-email {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 5px;
+
+    color: #94a3b8;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.billing-amount {
+    color: #111827;
+
+    font-size: 7px;
+
+    font-weight: 600;
+}
+
+.billing-method {
+    color: #374151;
+
+    font-size: 6.5px;
+}
+
+.billing-date {
+    color: #475569;
+
+    font-size: 6.5px;
+
+    line-height: 1.2;
+}
+
+.billing-time {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 5px;
+
+    color: #94a3b8;
+}
+
+
+/* =========================================================
+   PAYMENT STATUS
+   ========================================================= */
+
+.billing-status {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    max-width: 58px;
+
+    padding: 5px 6px;
+
+    border-radius: 5px;
+
+    font-size: 5.5px;
+
+    font-weight: 600;
+
+    line-height: 1.15;
+
+    text-align: center;
+}
+
+.billing-status.pending {
+    background: #fff0dc;
+
+    color: #f97316;
+}
+
+.billing-status.verified {
+    background: #dcfce7;
+
+    color: #16a34a;
+}
+
+.billing-status.overdue {
+    background: #fee2e2;
+
+    color: #ef4444;
+}
+
+
+/* =========================================================
+   FINANCIAL SUMMARY
+   ========================================================= */
+
+.financial-summary-card {
+    padding: 11px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 8px;
+}
+
+.financial-summary-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 13px;
+}
+
+.financial-summary-title {
+    font-size: 9px;
+
+    font-weight: 700;
+
+    color: #111827;
+}
+
+.financial-period {
+    height: 25px;
+
+    padding: 0 7px;
+
+    border: 1px solid #dbe2ea;
+
+    border-radius: 5px;
+
+    background: #ffffff;
+
+    color: #374151;
+
+    font-size: 6.5px;
+
+    outline: none;
+}
+
+.financial-summary-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 11px;
+}
+
+.financial-summary-item {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 8px;
+}
+
+.financial-summary-label {
+    font-size: 6.5px;
+
+    color: #64748b;
+}
+
+.financial-summary-value {
+    font-size: 7px;
+
+    font-weight: 700;
+
+    color: #111827;
+}
+
+.financial-summary-value.orange {
+    color: #f97316;
+}
+
+.financial-summary-value.red {
+    color: #ef4444;
+}
+
+.financial-report-link {
+    margin-top: 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    color: #2563eb;
+
+    font-size: 7px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.financial-report-link:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   PAYMENT REVIEW
+   ========================================================= */
+
+.payment-review-card {
+    padding: 11px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 8px;
+}
+
+.payment-review-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.payment-review-title {
+    font-size: 9px;
+
+    font-weight: 700;
+
+    color: #111827;
+}
+
+.payment-review-all {
+    color: #2563eb;
+
+    font-size: 7px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.payment-review-all:hover {
+    text-decoration: underline;
+}
+
+.payment-review-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 11px;
+}
+
+.payment-review-item {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        auto;
+
+    gap: 6px;
+
+    align-items: center;
+}
+
+.payment-review-info {
+    min-width: 0;
+}
+
+.payment-review-name {
+    font-size: 6.5px;
+
+    font-weight: 600;
+
+    color: #111827;
+}
+
+.payment-review-code {
+    margin-top: 2px;
+
+    font-size: 5px;
+
+    color: #64748b;
+}
+
+.payment-review-amount {
+    margin-top: 2px;
+
+    font-size: 6.5px;
+
+    font-weight: 700;
+
+    color: #111827;
+}
+
+.payment-review-btn {
+    height: 25px;
+
+    padding: 0 8px;
+
+    background: #fff0dc;
+
+    border: 1px solid #fed7aa;
+
+    border-radius: 5px;
+
+    color: #f97316;
+
+    font-size: 6.5px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.payment-review-btn:hover {
+    background: #ffedd5;
+
+    border-color: #fb923c;
+}
+
+
+/* =========================================================
+   QUICK ACTIONS
+   ========================================================= */
+
+.billing-quick-actions {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+}
+
+.billing-quick-title {
+    padding: 11px;
+
+    border-bottom: 1px solid #eef0f3;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    color: #111827;
+}
+
+.billing-quick-list {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.billing-quick-action {
+    min-height: 39px;
+
+    padding: 8px 11px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom: 1px solid #eef0f3;
+
+    color: #374151;
+
+    font-size: 6.5px;
+
+    cursor: pointer;
+}
+
+.billing-quick-action:last-child {
+    border-bottom: none;
+}
+
+.billing-quick-action:hover {
+    background: #f8fbff;
+
+    color: #2563eb;
+}
+
+.billing-quick-action-left {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.billing-quick-action-left i {
+    width: 10px;
+
+    text-align: center;
+
+    font-size: 7px;
+}
+
+.billing-quick-arrow {
+    color: #64748b;
+
+    font-size: 7px;
+}
+
+.billing-quick-action:hover .billing-quick-arrow {
+    color: #2563eb;
+}
+
+
+/* =========================================================
+   TABLE FOOTER
+   ========================================================= */
+
+.billing-table-footer {
+    min-height: 36px;
+
+    padding: 6px 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-top: 1px solid #eef0f3;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1250px) {
+
+    .billing-stats {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+    .billing-main-grid {
+        grid-template-columns:
+            minmax(0, 1fr)
+            180px;
+    }
+
+    .billing-filter-row {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 1000px) {
+
+    .billing-main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .billing-sidebar {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        align-items: start;
+    }
+}
+
+
+@media (max-width: 800px) {
+
+    .billing-stats {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .billing-filter-row {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .billing-header {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .billing-sidebar {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .billing-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .billing-filter-row {
+        grid-template-columns: 1fr;
+    }
+
+    .billing-tabs {
+        gap: 12px;
+
+        overflow-x: auto;
+    }
+
+    .billing-tab {
+        flex-shrink: 0;
+    }
+
+    .billing-table {
+        min-width: 720px;
+    }
+
+    .billing-table-footer {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 7px;
+    }
+
+    .billing-export-btn {
+        width: 100%;
+    }
+}
