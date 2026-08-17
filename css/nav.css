@@ -1,0 +1,154 @@
+/* =========================================
+   GLOBAL NAVIGATION
+========================================= */
+
+
+/* =========================================
+   NAVIGATION CONTAINER
+========================================= */
+
+.sidebar-nav {
+
+    flex: 1;
+
+    padding: 18px 12px;
+
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+
+/* =========================================
+   NAVIGATION SECTION
+========================================= */
+
+.nav-section {
+
+    margin-bottom: 22px;
+}
+
+
+.nav-section-title {
+
+    display: block;
+
+    padding: 0 12px;
+
+    margin-bottom: 7px;
+
+    color: #6b7280;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 0.8px;
+}
+
+
+/* =========================================
+   NAVIGATION ITEM
+========================================= */
+
+.nav-item {
+
+    min-height: 40px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 0 12px;
+
+    margin-bottom: 3px;
+
+    border-radius: 7px;
+
+    color: #9ca3af;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+/* =========================================
+   NAVIGATION ICON
+========================================= */
+
+.nav-item svg {
+
+    width: 17px;
+    height: 17px;
+
+    flex-shrink: 0;
+
+    stroke-width: 1.8;
+}
+
+
+/* =========================================
+   HOVER
+========================================= */
+
+.nav-item:hover {
+
+    background: rgba(255, 255, 255, 0.06);
+
+    color: var(--white);
+}
+
+
+/* =========================================
+   ACTIVE
+========================================= */
+
+.nav-item.active {
+
+    background: var(--primary);
+
+    color: var(--white);
+
+    font-weight: 600;
+}
+
+
+.nav-item.active svg {
+
+    stroke-width: 2;
+}
+
+
+/* =========================================
+   NAVIGATION SCROLLBAR
+========================================= */
+
+.sidebar-nav::-webkit-scrollbar {
+
+    width: 5px;
+}
+
+
+.sidebar-nav::-webkit-scrollbar-track {
+
+    background: transparent;
+}
+
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+
+    background: rgba(255, 255, 255, 0.15);
+
+    border-radius: 10px;
+}
+
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+
+    background: rgba(255, 255, 255, 0.25);
+}

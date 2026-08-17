@@ -1,91 +1,230 @@
+/* =========================================
+   SIDEBAR
+========================================= */
+
 .sidebar {
-    width: 250px;
-    min-height:100vh;
-    background:#1D0C74;
-    display:flex;
-    flex-direction:column;
-    padding:30px 18px;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 220px;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #111827;
+    color: #ffffff;
+
+    border-right: 1px solid #1f2937;
+
+    z-index: 1000;
 }
 
-.logo {
-    text-align: center;
-    margin-bottom: 50px;
+
+/* =========================================
+   BRAND
+========================================= */
+
+.sidebar-brand {
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 14px;
+
+    border-bottom: 1px solid #1f2937;
 }
 
-.logo img {
-    width: 70px;
-    margin-bottom: 12px;
+.sidebar-brand img {
+    width: 34px;
+    height: 34px;
+
+    object-fit: contain;
+
+    margin-right: 8px;
 }
 
-.logo h2 {
-    color:white;
-    font-size: 32px;
+.sidebar-brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-brand-text h2 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 17px;
     font-weight: 700;
 }
 
-.logo p{
-    color: #d7d7d7;
-    font-size: 14px;
+.sidebar-brand-text span {
+    margin-top: 2px;
+
+    color: #94a3b8;
+
+    font-size: 8px;
 }
 
-.menu {
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.sidebar-nav {
+    flex: 1;
+
+    padding: 14px 7px;
+
+    overflow-y: auto;
+}
+
+.nav-section {
+    margin-bottom: 17px;
+}
+
+.nav-section-title {
+    display: block;
+
+    padding: 0 11px 7px;
+
+    color: #64748b;
+
+    font-size: 8px;
+    font-weight: 600;
+
+    letter-spacing: 0.8px;
+}
+
+
+/* =========================================
+   NAV ITEM
+========================================= */
+
+.nav-item {
+    height: 37px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 0 12px;
+
+    margin-bottom: 3px;
+
+    border-radius: 6px;
+
+    color: #94a3b8;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 500;
+
+    transition: 0.2s ease;
+}
+
+.nav-item svg {
+    width: 16px;
+    height: 16px;
+
+    flex-shrink: 0;
+}
+
+.nav-item:hover {
+    background: #1e293b;
+    color: #ffffff;
+}
+
+.nav-item.active {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.nav-item.active svg {
+    color: #ffffff;
+}
+
+
+/* =========================================
+   SIDEBAR USER
+========================================= */
+
+.sidebar-user {
+    min-height: 58px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 10px 11px;
+
+    border-top: 1px solid #1f2937;
+}
+
+.sidebar-user img {
+    width: 32px;
+    height: 32px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+}
+
+.sidebar-user-info {
     display: flex;
     flex-direction: column;
-    gap: 8px;
 }
 
-.menu a{
-    display:flex;
-    align-items:center;
-    gap: 15px;
-    padding: 15px 18px;
-    color: white;
-    text-decoration: none;
-    border-radius: 14px;
-    transition: .25s;
-}
+.sidebar-user-info strong {
+    color: #ffffff;
 
-.menu a:hover {
-    background-color: #6A4DFF;
-    transform: translateX(4px);
-}
-
-.menu a:active {
-    background-color: #6A4DFF;
+    font-size: 10px;
     font-weight: 600;
 }
 
-.menu svg {
-    width: 22px;
-    height: 22px;
+.sidebar-user-info span {
+    margin-top: 2px;
+
+    color: #94a3b8;
+
+    font-size: 8px;
 }
 
-.settings {
-    margin-top: auto;
-    width: 100%;
-}
 
-.settings a{
+/* =========================================
+   LOGOUT
+========================================= */
+
+.sidebar-logout {
+    height: 48px;
+
     display: flex;
     align-items: center;
-    gap: 15px;
-    width: 100%;
-    padding: 15px 18px;
-    color: #fff;
+
+    gap: 9px;
+
+    padding: 0 12px;
+
+    border-top: 1px solid #1f2937;
+
+    color: #94a3b8;
+
     text-decoration: none;
-    border-radius: 14px;
-    transition: .25s ease;
-    box-sizing: border-box;
+
+    font-size: 10px;
 }
 
-.settings a:hover {
-    background-color: #6A4DFF;
-    transform: translateX(4px);
+.sidebar-logout svg {
+    width: 15px;
+    height: 15px;
 }
 
-.settings svg {
-    width: 22px;
-    height: 22px;
-    stroke: #fff;
-    stroke-width: 2.2px;
+.sidebar-logout:hover {
+    color: #ffffff;
+    background: #1e293b;
 }
