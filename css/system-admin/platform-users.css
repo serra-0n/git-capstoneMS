@@ -27,7 +27,7 @@
     border-radius: 14px;
     padding: 28px;
     min-height: 82px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
 }
 
 .user-overview-icon {
