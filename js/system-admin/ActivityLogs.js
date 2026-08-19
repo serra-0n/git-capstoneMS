@@ -186,6 +186,10 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        
+        const activity = getActivityInformation(row);
+
+        if (modalActivityTitle) {
+            modalActivityTitle.textContent = activity.activity;
+        }
     }
 });
