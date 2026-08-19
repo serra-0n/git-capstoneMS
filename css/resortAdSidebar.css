@@ -24,6 +24,7 @@
     z-index: 900;
 
     display: flex;
+
     flex-direction: column;
 
     overflow-y: auto;
@@ -36,31 +37,61 @@
    ========================================================= */
 
 .sidebar-brand {
-    height: 64px;
+    min-height: 64px;
 
     display: flex;
-    flex-direction: column;
-    justify-content: center;
 
-    padding: 0 12px;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 10px;
 
     border-bottom: 1px solid #eef0f3;
 }
 
-.sidebar-brand .brand-name {
-    font-size: 14px;
+.brand-logo {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 7px;
+
+    background: #eaf2ff;
+
+    color: #2563eb;
+
+    font-size: 13px;
+}
+
+.brand-text {
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+.brand-text h2 {
+    font-size: 11px;
 
     font-weight: 700;
 
-    color: #111827;
-
     line-height: 1.2;
+
+    color: #111827;
 }
 
-.sidebar-brand .brand-subtitle {
+.brand-text span {
     margin-top: 2px;
 
-    font-size: 8px;
+    font-size: 6px;
 
     color: #6b7280;
 }
@@ -70,37 +101,54 @@
    RESORT PROFILE
    ========================================================= */
 
-.sidebar-resort {
-    padding: 13px 9px;
-
-    border-bottom: 1px solid #eef0f3;
-}
-
 .resort-profile {
+    position: relative;
+
+    min-height: 55px;
+
     display: flex;
 
     align-items: center;
 
     gap: 7px;
+
+    padding: 10px 8px;
+
+    border-bottom: 1px solid #eef0f3;
 }
 
-.resort-image {
-    width: 28px;
-    height: 28px;
+.resort-avatar {
+    width: 27px;
+    height: 27px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
 
     border-radius: 50%;
 
-    object-fit: cover;
+    background: #f1f5f9;
 
-    flex-shrink: 0;
+    color: #64748b;
+
+    font-size: 10px;
 }
 
-.resort-info {
+.resort-profile-info {
     min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    flex: 1;
 }
 
-.resort-name {
-    font-size: 9px;
+.resort-profile-info strong {
+    font-size: 7px;
 
     font-weight: 600;
 
@@ -115,12 +163,36 @@
     text-overflow: ellipsis;
 }
 
-.resort-role {
+.resort-profile-info span {
     margin-top: 2px;
 
-    font-size: 7px;
+    font-size: 6px;
 
     color: #6b7280;
+}
+
+.resort-profile-arrow {
+    width: 16px;
+    height: 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: none;
+
+    background: transparent;
+
+    color: #9ca3af;
+
+    font-size: 7px;
+}
+
+.resort-profile-arrow:hover {
+    color: #2563eb;
 }
 
 
@@ -128,22 +200,26 @@
    NAVIGATION
    ========================================================= */
 
-.sidebar-nav {
-    padding: 8px 6px 16px;
+.sidebar-navigation {
+    flex: 1;
+
+    padding: 8px 6px 12px;
 }
 
-.nav-section {
-    margin-bottom: 12px;
+.sidebar-section {
+    margin-bottom: 10px;
 }
 
-.nav-section-title {
+.sidebar-section-title {
+    display: block;
+
     padding: 5px 6px;
 
-    font-size: 7px;
+    font-size: 6px;
 
     font-weight: 700;
 
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
 
     color: #9ca3af;
 
@@ -152,10 +228,10 @@
 
 
 /* =========================================================
-   NAVIGATION ITEM
+   NAVIGATION LINK
    ========================================================= */
 
-.nav-item {
+.sidebar-link {
     position: relative;
 
     display: flex;
@@ -166,7 +242,7 @@
 
     min-height: 31px;
 
-    padding: 7px;
+    padding: 7px 6px;
 
     margin-bottom: 2px;
 
@@ -174,7 +250,7 @@
 
     color: #4b5563;
 
-    font-size: 8px;
+    font-size: 7px;
 
     font-weight: 500;
 
@@ -183,13 +259,34 @@
         color 0.2s ease;
 }
 
-.nav-item:hover {
+.sidebar-link i {
+    width: 14px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    font-size: 9px;
+}
+
+.sidebar-link span {
+    min-width: 0;
+
+    flex: 1;
+
+    line-height: 1.2;
+}
+
+.sidebar-link:hover {
     background: #f3f6fb;
 
     color: #2563eb;
 }
 
-.nav-item.active {
+.sidebar-link.active {
     background: #eaf2ff;
 
     color: #2563eb;
@@ -197,7 +294,7 @@
     font-weight: 600;
 }
 
-.nav-item.active::before {
+.sidebar-link.active::before {
     content: "";
 
     position: absolute;
@@ -205,7 +302,6 @@
     left: -6px;
 
     top: 5px;
-
     bottom: 5px;
 
     width: 3px;
@@ -215,44 +311,49 @@
     background: #2563eb;
 }
 
-.nav-icon {
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.sidebar-footer {
+    padding: 8px 6px 10px;
+
+    border-top: 1px solid #eef0f3;
+}
+
+.sidebar-logout {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    min-height: 31px;
+
+    padding: 7px 6px;
+
+    border-radius: 6px;
+
+    color: #ef4444;
+
+    font-size: 7px;
+
+    font-weight: 500;
+}
+
+.sidebar-logout i {
     width: 14px;
-    height: 14px;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    flex-shrink: 0;
-
-    font-size: 10px;
+    font-size: 9px;
 }
 
-.nav-label {
-    flex: 1;
-
-    white-space: nowrap;
-}
-
-
-/* =========================================================
-   SIDEBAR FOOTER
-   ========================================================= */
-
-.sidebar-footer {
-    margin-top: auto;
-
-    padding: 10px 6px;
-
-    border-top: 1px solid #eef0f3;
-}
-
-.logout-link {
-    color: #ef4444;
-}
-
-.logout-link:hover {
+.sidebar-logout:hover {
     background: #fef2f2;
 
     color: #dc2626;
@@ -260,18 +361,18 @@
 
 
 /* =========================================================
-   SIDEBAR SCROLLBAR
+   SCROLLBAR
    ========================================================= */
 
-.sidebar::-webkit-scrollbar {
+.resort-sidebar::-webkit-scrollbar {
     width: 3px;
 }
 
-.sidebar::-webkit-scrollbar-track {
+.resort-sidebar::-webkit-scrollbar-track {
     background: transparent;
 }
 
-.sidebar::-webkit-scrollbar-thumb {
+.resort-sidebar::-webkit-scrollbar-thumb {
     background: #d1d5db;
 
     border-radius: 10px;
@@ -284,13 +385,13 @@
 
 @media (max-width: 768px) {
 
-    .sidebar {
+    .resort-sidebar {
         transform: translateX(-100%);
 
         transition: transform 0.25s ease;
     }
 
-    .sidebar.open {
+    .resort-sidebar.open {
         transform: translateX(0);
     }
 }
