@@ -180,4 +180,12 @@ document.addEventListener("DOMContentLoaded", function() {
     /* ==========================================
        OPEN ACTIVITY MODAL
     ========================================== */
+
+    function openActivityModal(row) {
+        if (!activityModal || !row) {
+            return;
+        }
+
+        
+    }
 });
