@@ -504,3 +504,183 @@
 /* =========================================================
    ACTIVITY MODAL
    ========================================================= */
+
+.activity-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1000;
+    transition: 
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+}
+
+.activity-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.45);
+    backdrop-filter: blur(2px);
+}
+
+.activity-modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    max-height: 88vh;
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.16);
+    padding: 26px;
+    z-index: 2;
+}
+
+.activity-modal-heading {
+    padding-right: 45px;
+    margin-bottom: 24px;
+}
+
+.activity-modal-heading .modal-label {
+    display: inline-block;
+    margin-bottom: 6px;
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.activity-modal-heading h2 {
+    margin: 0 0 6px;
+    color: #111827;
+    font-size: 20px;
+}
+
+.activity-modal-heading p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.activity-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #e5e7eb;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.activity-modal-close:hover {
+    background: #f9fafb;
+    color: #111827;
+}
+
+.activity-modal-close svg {
+    width: 17px;
+    height: 17px;
+}
+
+.activity-detail-section {
+    padding: 18px 0;
+    border-top: 1px solid #eef0f2;
+}
+
+.activity-detail-section:first-of-type {
+    border-top: none;
+    padding-top: 0;
+}
+
+.activity-detail-header {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 16px;
+}
+
+.activity-detail-header > svg {
+    width: 19px;
+    height: 19px;
+    color: #4f46e5;
+}
+
+.activity-detail-header h3 {
+    margin: 0 0 3px;
+    color: #111827;
+    font-size: 14px;
+}
+
+.activity-detail-header p {
+    margin: 0;
+    color: #9ca3af;
+    font-size: 11px;
+}
+
+.activity-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax*(0, 1fr));
+    gap: 14px;
+}
+
+.activity-detail-field {
+    padding: 12px 14px;
+    border: 1px solid #eef0f2;
+    border-radius: 10px;
+    background: #fafafa;
+}
+
+.activity-detail-field span {
+    display: block;
+    margin-bottom: 5px;
+    color: #9ca3af;
+    font-size: 10px;
+}
+
+.activity-detail-field strong {
+    display: block;
+    color: #374151;
+    font-size: 13px;
+    word-break: break-word;
+}
+
+.activity-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid #eef0f2;
+}
+
+.close-activity-button {
+    min-width: 85px;
+    height: 38px;
+    padding: 0 16px;
+    border: 1px solid #dfe3e8;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.close-activity-button:hover {
+    background: #f9fafb;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
