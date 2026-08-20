@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f7fa;
+    color: #111827;
+}
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+
+    --background: #f5f7fa;
+    --white: #ffffff;
+
+    --text-dark: #111827;
+    --text: #374151;
+    --text-light: #6b7280;
+
+    --border: #e5e7eb;
+
+    --success: #16a34a;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+}
+
+.main-content {
+    margin-left: 220px;
+    min-height: 100vh;
+    background: var(--background);
+}
+
+.topbar {
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 24px;
+
+    background: var(--white);
+
+    border-bottom: 1px solid var(--border);
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.menu-button {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+}
+
+.menu-button svg {
+    width: 18px;
+    height: 18px;
+}
+
+.topbar-search {
+    width: 340px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 0 12px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: #fafafa;
+}
+
+.topbar-search svg {
+    width: 16px;
+    height: 16px;
+
+    color: var(--text-light);
+}
+
+.topbar-search input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    font-size: 13px;
+}
+
+.topbar-search input::placeholder {
+    color: var(--text-light);
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.notification-button {
+    position: relative;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+}
+
+.notification-button svg {
+    width: 18px;
+    height: 18px;
+}
+
+.notification-dot {
+    position: absolute;
+
+    top: 8px;
+    right: 8px;
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: var(--danger);
+}
+
+.topbar-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.topbar-profile img {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.topbar-profile div {
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar-profile strong {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.topbar-profile span {
+    font-size: 10px;
+    color: var(--text-light);
+}
+
+.topbar-profile > svg {
+    width: 16px;
+    height: 16px;
+
+    color: var(--text-light);
+}
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.page-header {
+    padding: 24px 28px 16px;
+}
+
+.breadcrumb {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 11px;
+    color: var(--text-light);
+}
+
+.page-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+
+    color: var(--text-dark);
+}
+
+.page-header p {
+    margin-top: 6px;
+
+    font-size: 13px;
+    color: var(--text-light);
+}
+
+/* =========================================
+   GLOBAL BUTTONS
+========================================= */
+
+.btn-primary {
+    height: 38px;
+
+    padding: 0 16px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--primary);
+    color: white;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
