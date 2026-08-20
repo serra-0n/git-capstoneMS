@@ -650,13 +650,12 @@
 .activity-modal {
     position: fixed;
     inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
     padding: 24px;
     visibility: hidden;
     opacity: 0;
     z-index: 1000;
+    overflow-y: auto;
     transition:
         opacity 0.2s ease,
         visibility 0.2s ease;
@@ -668,10 +667,11 @@
 }
 
 .activity-modal-overlay {
-    position: absolute;
+    position: fixed;
     inset: 0;
     background: rgba(17, 24, 39, 0.45);
-    backdrop-filter: blur(2px);
+    backdrop-filter: none;
+    z-index: 1;
 }
 
 .activity-modal-content {
@@ -679,18 +679,18 @@
 
     width: 100%;
     max-width: 680px;
-    max-height: 88vh;
-    overflow-y: auto;
-    background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.16);
+    margin: 40px auto 0;
     padding: 26px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.16);
     z-index: 2;
 }
 
 .activity-modal-heading {
     padding-right: 45px;
-    margin-bottom: 24px;
+    margin-bottom: 0;
 }
 
 .activity-modal-heading .modal-label {
@@ -707,6 +707,7 @@
     margin: 0 0 6px;
     color: #111827;
     font-size: 20px;
+    font-weight: 700;
 }
 
 .activity-modal-heading p {
@@ -730,10 +731,15 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: 
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .activity-modal-close:hover {
     background: #f9fafb;
+    border-color: #d1d5db;
     color: #111827;
 }
 
@@ -743,13 +749,19 @@
 }
 
 .activity-detail-section {
-    padding: 18px 0;
+    position : relative;
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px 26px;
+    box-sizing: border-box;
+    background: #ffffff;
     border-top: 1px solid #eef0f2;
+    z-index: 2;
 }
 
 .activity-detail-section:first-of-type {
-    border-top: none;
-    padding-top: 0;
+    padding-top: 20px;
 }
 
 .activity-detail-header {
@@ -762,6 +774,7 @@
 .activity-detail-header > svg {
     width: 19px;
     height: 19px;
+    flex-shrink: 0;
     color: #4f46e5;
 }
 
@@ -769,6 +782,7 @@
     margin: 0 0 3px;
     color: #111827;
     font-size: 14px;
+    font-weight: 700;
 }
 
 .activity-detail-header p {
@@ -788,6 +802,7 @@
     border: 1px solid #eef0f2;
     border-radius: 10px;
     background: #fafafa;
+    box-sizing: border-box;
 }
 
 .activity-detail-field span {
@@ -801,15 +816,32 @@
     display: block;
     color: #374151;
     font-size: 13px;
+    line-height: 1.4; 
     word-break: break-word;
 }
 
+.activity-detail-status {
+    display: inline-block;
+}
+
+.activity-detail-status.success {
+    color: #059669;
+}
+
 .activity-modal-actions {
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px 26px 26px;
+    box-sizing: border-box;
     display: flex;
     justify-content: flex-end;
     gap: 10px;
-    padding-top: 20px;
+    background: #ffffff;
     border-top: 1px solid #eef0f2;
+    border-radius: 0 0 16px 16px;
+    z-index: 2;
 }
 
 .close-activity-button {
@@ -823,10 +855,14 @@
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .close-activity-button:hover {
     background: #f9fafb;
+    border-color: #d1d5db;
 }
 
 @media (max-width: 1100px) {
@@ -913,14 +949,33 @@
 
     .activity-modal {
         padding: 12px;
+        overflow-y: auto;
     }
 
     .activity-modal-content {
-        max-height: 92vh;
+        margin-top: 12px;
+        max-width: 100%;
         padding: 20px;
+        border-radius: 14px 14px 0 0;
+    }
+
+    .activity-modal > .activity-detail-section {
+        max-width: 100%;
+        padding: 18px 20px;
+    }
+
+    .activity-modal-actions {
+        max-width: 100%;
+        padding: 18px 20px 20px;
+        border-radius: 0 0 14px 14px;
     }
 
     .activity-detail-grid {
         grid-template-columns: 1fr;
+    }
+
+    .activity-modal-close {
+        top: 16px;
+        right: 16px;
     }
 }
