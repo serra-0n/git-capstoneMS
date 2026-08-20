@@ -38,12 +38,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
         activityRows.forEach(function (row) {
             const rowText = row.textContent.toLocaleLowerCase().trim();
-            const rowType = (row.dataset.action || "").toLowerCase().trim();
+            const rowType = (row.dataset.type || "").toLowerCase().trim();
             const rowAction = (row.dataset.action || "").toLowerCase().trim();
 
 
             const matchesSearch = searchValue === "" || rowText.includes(searchValue);
-            const matchesType = selectedType === "" || rowtype === selectedType;
+            const matchesType = selectedType === "" || rowType === selectedType;
             const matchesAction = selectedAction === "" || rowAction === selectedAction;
 
             if (
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function getActivityInformation(row) {
         const dateElement = row.querySelector(".activity-date");
         const userElement = row.querySelector(".activity-user");
-        const descriptionElement = row.querySelector("activity-description");
+        const descriptionElement = row.querySelector(".activity-description");
         const tenantElement = row.querySelector("td:nth-child(4)");
         const typeElement = row.querySelector(".activity-type");
 
@@ -191,5 +191,106 @@ document.addEventListener("DOMContentLoaded", function() {
         if (modalActivityTitle) {
             modalActivityTitle.textContent = activity.activity;
         }
+
+        if (modalActivityDescription) {
+            modalActivityDescription.textContent = activity.description;
+        }
+
+        if (modalActivityDate) {
+            modalActivityDate.textContent = activity.date + " - " + activity.time;
+        }
+
+        if (modalActivityType) {
+            modalActivityType.textContent = activity.type;
+        }
+
+        if (modalActivityUser) {
+            modalActivityUser.textContent = activity.user;
+        }
+
+        if (modalActivityRole) {
+            modalActivityRole.textContent = activity.role;
+        }
+
+        if (modalActivityTenant) {
+            modalActivityTenant.textContent = activity.tenant;
+        }
+
+        if (modalActivityAction) {
+            modalActivityAction.textContent = activity.action;
+        }
+
+
+        const rowIndex = Array.from(activityRows).indexOf(row) + 1;
+
+        if (modalActivityId) {
+            modalActivityId.textContent = "ACT-" + String(rowIndex).padStart(6, "0");
+        }
+
+        if (modalActivityIp) {
+            const ipAddress = [
+                "192.168.1.100",
+                "192.168.1.101",
+                "192.168.1.102",
+                "192.168.1.103",
+                "192.168.1.104"
+            ]
+
+            modalActivityIp.textContent = ipAddress[rowIndex - 1] || "192.168.1.100"
+        }
+
+        if (modalActivityDevice) {
+            modalActivityDevice.textContent = "Windows Desktop";
+        }
+
+        activityModal.classList.add("show");
+        document.body.style.overflow = "hidden";
     }
+
+    function closeActivityModalWindow() {
+        if (!activityModal) {
+            return;
+        }
+        activityModal.classList.remove("show");
+        document.body.style.overflow = "";
+    }
+
+    const activityViewButtons = document.querySelectorAll(".activity-view-button");
+
+    activityViewButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            const row = button.closest("tr");
+
+            if (!row) {
+                return;
+            }
+
+            openActivityModal(row);
+        });
+    });
+
+    if (closeActivityModal) {
+        closeActivityModal.addEventListener("click", closeActivityModalWindow);
+    }
+
+    if (closeActivityDetails) {
+        closeActivityDetails.addEventListener("click", closeActivityModalWindow);
+    }
+
+    if (activityModalOverlay) {
+        activityModalOverlay.addEventListener("click", closeActivityModalWindow);
+    }
+
+    document.addEventListener("keydown", function (event) {
+        if (
+            event.key === "Escape" &&
+            activityModal &&
+            activityModal.classList.contains("show") 
+        ) {
+            closeActivityModalWindow();
+        }
+    });
+
+    updateActivityCounts();
+    filterActivities();
 });
