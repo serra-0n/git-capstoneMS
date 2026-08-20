@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resort Approvals | Resort Management Syatem</title>
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/sidebar.css">
+    <link rel="stylesheet" href="../../css/nav.css">
+    <link rel="stylesheet" href="../../css/system-admin/resort-approvals.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <img src="../../image/logo.png">
+            <div class="sidebar-brand-text">
+                <h2>ResortHub</h2>
+                <span>System Administrator</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <span class="nav-section-title">MAIN</span>
+                <a href="Dashboard.html" class="nav-item">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">TENANT MANAGEMENT</span>
+                <a href="ResortApproval.html" class="nav-item active">
+                    <i data-lucide="building-2"></i>
+                    <span>Resort Approvals</span>
+                </a>
+                
+                <a href="TenantMonitoring.html" class="nav-item">
+                    <i data-lucide="monitor"></i>
+                    <span>Tenant Monitoring</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">USER MANAGEMENT</span>
+                <a href="PlatformUsers.html" class="nav-item">
+                    <i data-lucide="users"></i>
+                    <span>Platform Users</span>
+                </a>
+            </div>
+
+            <div class="nav-selection">
+                <span class="nav-section-title">MONITORING</span>
+                <a href="ActivityLogs.html" class="nav-item">
+                    <i data-lucide="activity"></i>
+                    <span>Activity Logs</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">REPORTS</span>
+                <a href="SystemReports.html" class="nav-item">
+                    <i data-lucide="file-bar-chart"></i>
+                    <span>System Reports</span>
+                </a>
+            </div>
+        </nav>
+        <div class="sidebar-user">
+            <img src="../../image/profile.png" alt="System Administrator">
+
+            <div class="sidebar-user-info">
+                <strong>System Admin</strong>
+                <span>Administrator</span>
+            </div>
+        </div>
+
+        <a href="../../index.html" class="sidebar-logout">
+            <i data-lucide="log-out"></i>
+            <span>Logout</span>
+        </a>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button
+                    type="button"
+                    class="menu-button"
+                    aria-label="Open menu">
+                <i data-lucide="menu"></i>
+                </button>
+
+                <div class="topbar-search">
+                    <i data-lucide="search"></i>
+                    <input
+                        type="search"
+                        placeholder="Search..."
+                        aria-label="Search">
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <button
+                    type="button"
+                    class="notification-button"
+                    aria-label="Notifications">
+                <i data-lucide="bell"></i>
+                <span class="notification-dot"></span>
+                </button>
+
+                <div class="topbar-profile">
+                    <img src="../../image/profile.png" alt="System Administrator">
+
+                    <div>
+                        <strong>System Admin</strong>
+                        <span>Administrator</span>
+                    </div>
+
+                    <i data-lucide="chevron-down"></i>
+                </div>
+            </div>
+        </header>
+
+        <section class="page-header">
+            <div>
+                <span class="breadcrumb">Tenant Management / Resort Approvals</span>
+
+                <h1>Resort Approvals</h1>
+                <p>
+                    Review and manage resort registration
+                    applications submitted to the platform.
+                </p>
+            </div>
+        </section>
+
+        <section class="approval-summary">
+            <article class="summary-card">
+                <div class="summary-icon pending">
+                    <i data-lucide="clock-3"></i>
+                </div>
+
+                <div>
+                    <span>Pending Review</span>
+                    <strong id="pendingCount">0</strong>
+                </div>
+            </article>
+
+            <article class="summary-card">
+                <div class="summary-icon approved">
+                    <i data-lucide="circle-check"></i>
+                </div>
+
+                <div>
+                    <span>Approved</span>
+                    <strong id="approvedCount">0</strong>
+                </div>
+            </article>
+
+            <article class="summary-card">
+                <div class="summary-icon rejected">
+                    <i data-lucide="circle-x"></i>
+                </div>
+
+                <div>
+                    <span>Rejected</span>
+                    <strong id="rejectedCount">0</strong>
+                </div>
+            </article>
+
+            <article class="summary-card">
+                <div class="summary-icon total">
+                    <i data-lucide="building-2"></i>
+                </div>
+
+                <div>
+                    <span>Total Applications</span>
+                    <strong id="totalCount">0</strong>
+                </div>
+            </article>
+        </section>
+
+        <section class="approval-card">
+            <div class="approval-card-header">
+                <div>
+                    <h2>Resort Registration Applications</h2>
+
+                    <p>
+                        Review submitted resort applications
+                        before approval.
+                    </p>
+                </div>
+            </div>
+
+            <div class="filter-area">
+                <div class="approval-search">
+                    <i data-lucide="search"></i>
+
+                    <input
+                        type="search"
+                        placeholder="Search resort name..."
+                        aria-label="Search resort name">
+                </div>
+
+                <button type="button" class="filter-button">
+                    <i data-lucide="sliders-horizontal"></i>
+                    Filter
+                </button>
+            </div>
+
+            <div class="approval-tabs">
+                <button type="button" class="approval-tab active" data-status="pending">
+                    Pending (<span class="tab-count">0</span>)
+                </button>
+
+                <button type="button" class="approval-tab" data-status="approved">
+                    Approved (<span class="tab-count">0</span>)
+                </button>
+
+                <button type="button" class="approval-tab" data-status="rejected">
+                    Rejected (<span class="tab-count">0</span>)
+                </button>
+            </div>
+
+            <div class="application-list">
+                <article class="application-item">
+                    <div class="application-resort">
+                        <div class="resort-avatar">
+                            <i data-lucide="building-2"></i>
+                        </div>
+
+                        <div>
+                            <strong>Blue Lagoon Resort</strong>
+                            <span>Panglao, Bohol</span>
+                        </div>
+                    </div>
+
+                    <div class="application-owner">
+                        <span class="application-label">Owner</span>
+                        <strong>Juan Dela Cruz</strong>
+                    </div>
+
+                    <div class="application-date">
+                        <span class="application-label">Submitted</span>
+                        <strong>May 31, 2025</strong>
+                    </div>
+
+                    <div>
+                        <span class="approval-status pending">Pending</span>
+                    </div>
+
+                    <div>
+                        <button type="button" class="view-button">
+                            <i data-lucide="eye"></i>
+                            Review
+                        </button>
+                    </div>
+                </article>
+
+                <!-- APPLICATION 2 -->
+                 <article class="application-item">
+                    <div class="application-resort">
+                        <div class="resort-avatar">
+                            <i data-lucide="building-2"></i>
+                        </div>
+                        
+                        <div>
+                            <strong>Seaside View Resort</strong>
+                            <span>San Juan, La Union</span>
+                        </div>
+                    </div>
+
+                    <div class="application-owner">
+                        <span class="application-label">Owner</span>
+                        <strong>Maria Santos</strong>
+                    </div>
+
+                    <div class="application-date">
+                        <span class="application-label">Submitted</span>
+                        <strong>May 30, 2025</strong>
+                    </div>
+
+                    <div>
+                        <span class="approval-status pending">Pending</span>
+                    </div>
+
+                    <div>
+                        <button type="button" class="view-button">
+                            <i data-lucide="eye"></i>
+                            Review
+                        </button>
+                    </div>
+                 </article>
+
+                 <article class="application-item">
+                    <div class="application-resort">
+                        <div class="resort-avatar">
+                            <i data-lucide="building-2"></i>
+                        </div>
+
+                        <div>
+                            <strong>Mountain Breeze Resort</strong>
+                            <span>Baguio City, Benguet</span>
+                        </div>
+                    </div>
+
+                    <div class="application-owner">
+                        <span class="application-label">Owner</span>
+                        <strong>Pedro Reyes</strong>
+                    </div>
+
+                    <div class="application-date">
+                        <span class="application-label">Submitted</span>
+                        <strong>May 30, 2025</strong>
+                    </div>
+
+                    <div>
+                        <span class="approval-status pending">Pending</span>
+                    </div>
+
+                    <div>
+                        <button type="button" class="view-button">
+                            <i data-lucide="eye"></i>
+                            Review
+                        </button>
+                    </div>
+                 </article>
+            </div>
+        </section>
+
+        <div class="review-modal" id="reviewModal">
+            <div class="review-modal-overlay"></div>
+             <div class="review-modal-content">
+                <div>
+                    <span class="modal-label">Resort Registration</span>
+                    <h2>Review Application</h2>
+                    <p>
+                        Review the submitted resort information
+                        before making a decision
+                    </p>
+                </div>
+
+                <button 
+                    type="button"
+                    class="modal-close"
+                    id="closeReviewModal"
+                    aria-label="Close review modal">
+                    <i data-lucide="x"></i>
+                </button>
+
+            <section class="review-section">
+                <div class="review-section-header">
+                    <i data-lucide="building-2"></i>
+
+                    <div>
+                        <h3>Resort Information</h3>
+                        <p>Basic resort registration details.</p>
+                    </div>
+                </div>
+
+                <div class="review-grid">
+                    <div class="review-field">
+                        <span>Resort Name</span>
+                        <strong id="reviewResortName">
+                            Blue Lagoon Resort
+                        </strong>
+                    </div>
+
+                    <div class="review-field">
+                        <span>Location</span>
+                        <strong id="reviewLocation">
+                            Panglao, Bohol
+                        </strong>
+                    </div>
+
+                    <div class="review-field">
+                        <span>Resort Type</span>
+                        <strong>
+                            Beach Resort
+                        </strong>
+                    </div>
+
+                    <div class="review-field">
+                        <span>Number of Rooms</span>
+                        <strong>24 Rooms</strong>
+                    </div>
+                </div>
+            </section>
+<!-- Owner Information -->
+            <section class="review-section">
+                <div class="review-section-header">
+                    <i data-lucide="user"></i>
+                    <div>
+                        <h3>Owner / Contact Details</h3>
+                        <p>Registered resort owner information.</p>
+                    </div>
+                </div>
+
+                <div class="review-grid">
+                    <div class="review-field">
+                        <span>Owner Name</span>
+                        <strong>
+                            Juan Dela Cruz
+                        </strong>
+                    </div>
+
+                    <div class="review-field">
+                        <span>Email</span>
+                        <strong>
+                            juandelacruz@example.com
+                        </strong>
+                    </div>
+
+                    <div class="review-field">
+                        <span>Contact Number</span>
+                        <strong>
+                            +63 912 345 6789
+                        </strong>
+                    </div>
+
+                    <div class="review-field">
+                        <span>Valid ID</span>
+                        <strong>
+                            Driver's License
+                        </strong>
+                    </div>
+                </div>
+            </section>
+            <!-- Business Information -->
+
+            <section class="review-section">
+                <div class="review-section-header">
+                    <i data-lucide="briefcase-business"></i>
+
+                    <div>
+                        <h3>Business Information</h3>
+                        <p>Submitted business registration details.</p>
+                    </div>
+                </div>
+
+                <div class="review-grid">
+                    <div class="review-field">
+                        <span>Business Name</span>
+                        <strong>Blue Lagoon Resort and Services</strong>
+                    </div>
+
+                    <div class="review-field">
+                        <span>DTI / Business No.</span>
+                        <strong>DTI-BOH-2025-00123</strong>
+                    </div>
+
+                    <div class="review-field">
+                        <span>Business Address</span>
+                        <strong>Purok 5, Dauis, Bohol</strong>
+                    </div>
+
+                    <div class="review-field">
+                        <span>Date Established</span>
+                        <strong>March 15, 2023</strong>
+                    </div>
+                </div>
+            </section>
+<!-- Submitted Documents -->
+            <section class="review-section">
+                <div class="review-section-header">
+                    <i data-lucide="file-check-2"></i>
+
+                    <div>
+                        <h3>Submitted Documents</h3>
+                        <p>Documents uploaded by the resort applicant.</p>
+                    </div>
+                </div>
+
+                <div class="document-list">
+                    <div class="document-item">
+                        <i data-lucide="file-text"></i>
+
+                        <div>
+                            <strong>DTI Registration</strong>
+                            <span>PDF Document</span>
+                        </div>
+
+                        <button type="button">View</button>
+                    </div>
+
+                    <div class="document-item">
+                        <i data-lucide="file-text"></i>
+
+                        <div>
+                            <strong>Business Permit</strong>
+                            <span>PDF Document</span>
+                        </div>
+
+                        <button type="button">View</button>
+                    </div>
+
+                    <div class="document-item">
+                        <i data-lucide="file-text"></i>
+
+                        <div>
+                            <strong>Barangay Clearance</strong>
+                            <span>PDF Document</span>
+                        </div>
+
+                        <button type="button">View</button>
+                    </div>
+
+                    <div class="document-item">
+                        <i data-lucide="file-text"></i>
+
+                        <div>
+                            <strong>Mayor's Permit</strong>
+                            <span>PDF Document</span>
+                        </div>
+
+                        <button type="button">View</button>
+                    </div>
+                </div>
+            </section>
+ <!-- Validation Checklist -->
+            <section class="review-section">
+                <div class="review-section-header">
+                    <i data-lucide="clipboard-check"></i>
+                    
+                    <div>
+                        <h3>Validation Checklist</h3>
+                        <p>Application verification results.</p>
+                    </div>
+                </div>
+
+                <div class="validation-list">
+                    <div class="validation-item valid">
+                        <i data-lucide="circle-check"></i>
+
+                        <span>Business Documents</span>
+                        <strong>Valid</strong>
+                    </div>
+
+                    <div class="validation-item valid">
+                        <i data-lucide="circle-check"></i>
+
+                        <span>Owner Identification</span>
+                        <strong>Valid</strong>
+                    </div>
+
+                    <div class="validation-item valid">
+                        <i data-lucide="circle-check"></i>
+
+                        <span>Business Information</span>
+                        <strong>Valid</strong>
+                    </div>
+
+                    <div class="validation-item valid">
+                        <i data-lucide="circle-check"></i>
+
+                        <span>Resort Information</span>
+                        <strong>Valid</strong>
+                    </div>
+                </div>
+            </section>
+
+            <section class="review-section">
+                <div class="review-section-header">
+                    <i data-lucide="message-square-text"></i>
+
+                    <div>
+                        <h3>Review Notes</h3>
+                        <p>Add notes before approving or rejecting.</p>
+                    </div>
+                </div>
+
+                <textarea 
+                    id="reviewNotes" 
+                    class="review-notes" 
+                    placeholder="Add remarks or notes about this application...">
+                </textarea>
+            </section>
+
+            <div class="review-modal-actions">
+                <button
+                    type="button"
+                    class="reject-button"
+                    id="rejectApplication">
+
+                    <i data-lucide="x"></i>
+
+                    Reject Application
+                </button>
+
+                <button 
+                    type="button"
+                    class="approve-button"
+                    id="approveApplication">
+
+                    <i data-lucide="check"></i>
+
+                    Approve Application
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script src="../../js/system-admin/ResortApproval.js"></script>
+</body>
+</html>
