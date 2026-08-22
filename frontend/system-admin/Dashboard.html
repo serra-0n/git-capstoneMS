@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Admin Dashboard | ResortHub</title>
+
+    <link rel="stylesheet" href="../../frontend/css/systemadminGlobal/style.css">
+    <link rel="stylesheet" href="../../frontend/css/systemadminGlobal/sidebar.css">
+    <link rel="stylesheet" href="../../frontend/css/systemadminGlobal/nav.css">
+    <link rel="stylesheet" href="../../frontend/css/system-admin/dashboard.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <img src="../../frontend/image/logo.png" alt="ResortHub Logo">
+
+            <div class="sidebar-brand-text">
+                <h2>ResortHub</h2>
+                <span>System Administrator</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <span class="nav-section-title">
+                    MAIN
+                </span>
+
+                <a href="Dashboard.html" class="nav-item active">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">
+                    TENANT MANAGEMENT
+                </span>
+
+                <a href="ResortApproval.html" class="nav-item">
+                    <i data-lucide="building-2"></i>
+                    <span>Resort Approvals</span>
+                </a>
+
+                <a href="TenantMonitoring.html" class="nav-item">
+                    <i data-lucide="monitor"></i>
+                    <span>Tenant Monitoring</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">
+                    USER MANAGEMENT
+                </span>
+
+                <a href="PlatformUsers.html" class="nav-item">
+                    <i data-lucide="users"></i>
+                    <span>Platform Users</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">
+                    MONITORING
+                </span>
+
+                <a href="ActivityLogs.html" class="nav-item">
+                    <i data-lucide="activity"></i>
+                    <span>Activity Logs</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-section-title">
+                    REPORTS
+                </span>
+
+                <a href="SystemReports.html" class="nav-item">
+                    <i data-lucide="file-bar-chart"></i>
+                    <span>System Reports</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-user">
+            <img src="../../frontend/image/profile.png" alt="System Administrator">
+
+            <div class="sidebar-user-info">
+                <strong>System Admin</strong>
+                <span>Administrator</span>
+            </div>
+        </div>
+
+        <a href="../../frontend/index.html" class="sidebar-logout">
+            <i data-lucide="log-out"></i>
+            <span>Logout</span>
+        </a>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button
+                    type="button"
+                    class="menu-button"
+                    aria-label="Open menu">
+                <i data-lucide="menu"></i>
+                </button>
+
+                <div class="topbar-search">
+                    <i data-lucide="search"></i>
+
+                    <input
+                        type="search"
+                        placeholder="Search..."
+                        aria-label="Search">
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <button
+                    type="button"
+                    class="notification-button"
+                    aria-label="Notifications">
+                
+                    <i data-lucide="bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+
+                <div class="topbar-profile">
+                    <img src="../../frontend/image/profile.png" alt="System Administrator">
+
+                    <div>
+                        <strong>System Admin</strong>
+                        <span>Administrator</span>
+                    </div>
+                    
+                    <i data-lucide="chevron-down"></i>
+                </div>
+            </div>
+        </header>
+        <!-- PAGE HEADER -->
+
+        <section class="page-header">
+            <div>
+                <span class="breadcrumb">Main / Dashboard</span>
+                <h1>System Admin Dashboard</h1>
+                <p>
+                    Overview of the ResortHub platform
+                    and its current activity.
+                </p>
+            </div>
+        </section>
+
+        <section class="dashboard-overview">
+            <article class="dashboard-card">
+                <div class="dashboard-card-icon tenants">
+                    <i data-lucide="building-2"></i>
+                </div>
+
+                <div>
+                    <span>Total Tenants</span>
+                    <strong id="dashboardTotalTenants">12</strong>
+                </div>
+            </article>
+
+            <article class="dashboard-card">
+                <div class="dashboard-card-icon users">
+                    <i data-lucide="users"></i>
+                </div>
+
+                <div>
+                    <span>Total Users</span>
+                    <strong id="dashboardTotalUsers">248</strong>
+                </div>
+            </article>
+
+            <article class="dashboard-card">
+                <div class="dashboard-card-icon active">
+                    <i data-lucide="circle-check"></i>
+                </div>
+
+                <div>
+                    <span>Active Tenants</span>
+                    <strong id="dashboardActiveTenants">9</strong>
+                </div>
+            </article>
+
+            <article class="dashboard-card">
+                <div class="dashboard-card-icon pending">
+                    <i data-lucide="clock-3"></i>
+                </div>
+
+                <div>
+                    <span>Pending Approvals</span>
+                    <strong id="dashboardPendingApprovals">8</strong>
+                </div>
+            </article>
+        </section>
+
+        <section class="dashboard-secondary">
+            <article class="dashboard-panel">
+                <div class="dashboard-panel-header">
+                    <div>
+                        <span class="section-label">TENANT MANAGEMENT</span>
+                        <h2>Tenant Status</h2>
+                        <p>
+                            Current status of registered
+                            resort tenants.
+                        </p>
+                    </div>
+
+                    <a href="TenantMonitoring.html" class="dashboard-panel-link">
+                        View Tenants
+                        <i data-lucide="arrow-light"></i>
+                    </a>
+                </div>
+
+                <div class="tenant-status-list">
+                    <div class="tenant-status-item">
+                        <div>
+                            <span class="tenant-status-label">Active</span>
+                            <strong>9 Tenants</strong>
+                        </div>
+
+                        <span class="status-badge active">Active</span>
+                    </div>
+
+                    <div class="tenant-status-item">
+                        <div>
+                            <span class="tenant-status-label">Suspended</span>
+                            <strong>2 Tenants</strong>
+                        </div>
+
+                        <span class="status-badge suspended">Suspended</span>
+                    </div>
+
+                    <div class="tenant-status-item">
+                        <div>
+                            <span class="tenant-status-label">Pending</span>
+                            <strong>1 Tenant</strong>
+                        </div>
+
+                        <span class="status-badge pending">Pending</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- APPROVAL PANEL -->
+             <article class="dashboard-panel">
+                <div class="dashboard-panel-header">
+                    <div>
+                        <span class="section-label">RESORT APPROVALS</span>
+                        <h2>Pending Applications</h2>
+                        <p>
+                            Applications waiting for
+                            system administrator review.
+                        </p>
+                    </div>
+
+                    <a href="ResortApproval.html" class="dashboard-panel-link">
+                        View Applications
+
+                        <i data-lucide="arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="approval-summary">
+                    <div class="approval-number">
+                        <strong>8</strong>
+                        <span>
+                            Applications
+                            Pending Review
+                        </span>
+                    </div>
+
+                    <div class="approval-icon">
+                        <i data-lucide="clipboard-check"></i>
+                    </div>
+                </div>
+             </article>
+        </section>
+
+        <section class="dashboard-panel recent-dashboard-panel">
+            <div class="dashboard-panel-header">
+                <div>
+                    <span class="section-label">MONITORING</span>
+                    <h2>Recent Activity</h2>
+                    <p>
+                        Latest activity across the
+                        ResortHub platform.
+                    </p>
+                </div>
+
+                <a href="ActivityLogs.html" class="dashboard-panel-link">
+                    View Activity Logs
+
+                    <i data-lucide="arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="dashboard-activity-list">
+                <div class="dashboard-activity-item">
+                    <div class="dashboard-activity-icon login">
+                        <i data-lucide="log-in"></i>
+                    </div>
+
+                    <div class="dashboard-activity-content">
+                        <strong>Resort Admin Login</strong>
+                        <p>
+                            Blue Lagoon Resort
+                            administrator logged in.
+                        </p>
+                        <span>Today, 10:32 AM</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-activity-item">
+                    <div class="dashboard-activity-icon approval">
+                        <i data-lucide="check-circle"></i>
+                    </div>
+
+                    <div class="dashboard-activity-content">
+                        <strong>Resort Application Approved</strong>
+                        <p>
+                            Seaside View Resort was
+                            approved by System Admin.
+                        </p>
+                        <span>Today, 9:45 AM</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-activity-item">
+                    <div class="dashboard-activity-icon user">
+                        <i data-lucide="user-plus"></i>
+                    </div>
+
+                    <div class="dashboard-activity-content">
+                        <strong>New Platform User</strong>
+                        <p>
+                            A new user account was
+                            registered on the platform.
+                        </p>
+                        <span>Yesterday, 4:18 PM</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-activity-item">
+                    <div class="dashboard-activity-icon warning">
+                        <i data-lucide="alert-circle"></i>
+                    </div>
+
+                    <div class="dashboard-activity-content">
+                        <strong>Tenant Suspended</strong>
+                        <p>
+                            Mountain Breeze Resort
+                            account was suspended.
+                        </p>
+                        <span>Yesterday, 2:06 PM</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- REPORTS -->
+        <section class="dashboard-panel dashboard-reports-panel">
+            <div class="dashboard-panel-header">
+                <div>
+                    <span class="section-label">REPORTS</span>
+                    <h2>System Reports</h2>
+                    <p>
+                        Access platform reports and
+                        system information.
+                    </p>
+                </div>
+
+                <a href="SystemReports.html" class="dashboard-panel-link">
+                    View Reports
+                    <i data-lucide="arrow-light"></i>
+                </a>
+            </div>
+
+            <div class="dashboard-report-grid">
+                <div class="dashboard-report-item">
+                    <div class="dashboard-report-icon tenant">
+                        <i data-lucide="building-2"></i>
+                    </div>
+
+                    <div>
+                        <strong>Tenant Report</strong>
+                        <span>Registered resort tenants</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-report-item">
+                    <div class="dashboard-report-icon user">
+                        <i data-lucide="users"></i>
+                    </div>
+
+                    <div>
+                        <strong>User Report</strong>
+                        <span>Platform user overview</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-report-item">
+                    <div class="dashboard-report-icon activity">
+                        <i data-lucide="activity"></i>
+                    </div>
+
+                    <div>
+                        <strong>Activity Report</strong>
+                        <span>Platform activity summary</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-report-item">
+                    <div class="dashboard-report-icon system">
+                        <i data-lucide="file-bar-chart"></i>
+                    </div>
+
+                    <div>
+                        <strong>System Summary</strong>
+                        <span>Overall platform summary</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../../frontend/js/system-admin/Dashboard.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
