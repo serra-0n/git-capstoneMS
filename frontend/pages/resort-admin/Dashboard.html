@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Operational Dashboard | ResortHub</title>
+
+  <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css">
+  <link rel="stylesheet" href="../../css/resort-adminGlobal/sidebar.css">
+  <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css">
+  <link rel="stylesheet" href="../../css/resort-admin/dashboard.css">
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <aside class="sidebar">
+  <a class="brand" href="Dashboard.html">
+    <i class="brand-mark" data-lucide="building-2"></i>
+
+    <span>
+      <strong>ResortHub</strong>
+      <small>Resort Owner</small>
+    </span>
+  </a>
+
+  <div class="resort-switcher">
+    <span class="resort-avatar">BW</span>
+
+    <span>
+      <strong>Blue Waves Resort</strong>
+      <small>Resort Owner</small>
+    </span>
+  </div>
+
+  <div class="nav-section">MAIN</div>
+
+  <a class="nav-link active" href="Dashboard.html">
+    <i data-lucide="layout-dashboard"></i>
+    Dashboard
+  </a>
+
+  <div class="nav-section">RESERVATIONS</div>
+
+  <a class="nav-link" href="Reservations.html">
+    <i data-lucide="calendar-days"></i>
+    Reservations
+  </a>
+
+  <a class="nav-link" href="Guests.html">
+    <i data-lucide="contact-round"></i>
+    Guests
+  </a>
+
+  <div class="nav-section">ACCOMMODATION</div>
+
+  <a class="nav-link" href="Rooms.html">
+    <i data-lucide="bed-double"></i>
+    Rooms & Cottages
+  </a>
+
+  <div class="nav-section">FINANCE</div>
+
+  <a class="nav-link" href="BillingPayments.html">
+    <i data-lucide="credit-card"></i>
+    Billing & Payments
+  </a>
+
+  <div class="nav-section">OPERATIONS</div>
+
+  <a class="nav-link" href="OCRVerification.html">
+    <i data-lucide="scan-search"></i>
+    OCR Verification
+  </a>
+
+  <a class="nav-link" href="StaffManagement.html">
+    <i data-lucide="users"></i>
+    Staff Management
+  </a>
+
+  <a class="nav-link" href="Reports.html">
+    <i data-lucide="chart-no-axes-combined"></i>
+    Reports
+  </a>
+
+  <div class="nav-section">SETTINGS</div>
+
+  <a class="nav-link" href="Settings.html">
+    <i data-lucide="settings"></i>
+    Settings
+  </a>
+
+  <a class="nav-link logout" href="#">
+    <i data-lucide="log-out"></i>
+    Logout
+  </a>
+</aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="sidebar-toggle">
+          <i data-lucide="menu"></i>
+        </button>
+
+        <input
+          class="search"
+          type="search"
+          placeholder="Search anything..."
+        >
+
+        <span class="topbar-spacer"></span>
+
+        <button class="notification">
+          <i data-lucide="bell"></i>
+        </button>
+
+        <button class="top-select">
+          <span class="avatar">BW</span>
+          Blue Waves Resort
+        </button>
+
+        <button class="profile">
+          <span>
+            <b>Juan Dela Cruz</b>
+            <small>Resort Owner</small>
+          </span>
+        </button>
+      </header>
+
+      <section class="content">
+        <div class="page-title-row">
+          <div>
+            <h1>Operational Dashboard</h1>
+            <p class="subtitle">Welcome back, Juan!</p>
+          </div>
+
+          <div class="date-card">
+            <b>May 24, 2025</b>
+            <span>Saturday</span>
+          </div>
+        </div>
+
+        <section class="metric-grid">
+          <article class="metric-card blue">
+            <div class="metric-content">
+              <span class="metric-icon">
+                <i data-lucide="calendar-days"></i>
+              </span>
+
+              <div>
+                <div class="label">Total Reservations</div>
+                <div class="number">128</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="metric-card green">
+            <div class="metric-content">
+              <span class="metric-icon">
+                <i data-lucide="bed-double"></i>
+              </span>
+
+              <div>
+                <div class="label">Available Rooms/Cottages</div>
+                <div class="number">24 / 60</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="metric-card orange">
+            <div class="metric-content">
+              <span class="metric-icon">
+                <i data-lucide="clock-3"></i>
+              </span>
+
+              <div>
+                <div class="label">Pending Payments</div>
+                <div class="number">15</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="metric-card purple">
+            <div class="metric-content">
+              <span class="metric-icon">
+                <i data-lucide="scan-search"></i>
+              </span>
+
+              <div>
+                <div class="label">Pending OCR Verifications</div>
+                <div class="number">9</div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="dashboard-grid">
+          <article class="panel">
+            <div class="panel-header">
+              <b class="panel-title">Today's Activities</b>
+            </div>
+
+            <div class="activity-row">
+              <span>Check-ins Today</span>
+              <b>18</b>
+            </div>
+
+            <div class="activity-row">
+              <span>Check-outs Today</span>
+              <b>12</b>
+            </div>
+
+            <div class="activity-row">
+              <span>In-house Guests</span>
+              <b>46</b>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <b class="panel-title">Revenue Summary</b>
+            </div>
+
+            <div class="revenue">
+              <span class="revenue-label">Total Revenue</span>
+              <div class="revenue-amount">₱285,450.00</div>
+              <div class="revenue-period">This month</div>
+            </div>
+          </article>
+
+          <article class="panel notifications">
+            <div class="panel-header">
+              <b class="panel-title">Notifications</b>
+            </div>
+
+            <div class="notice">
+              <i data-lucide="credit-card"></i>
+
+              <div>
+                <div class="notice-title">15 payments are pending.</div>
+                <div class="notice-copy">Please verify payments.</div>
+              </div>
+            </div>
+
+            <div class="notice">
+              <i data-lucide="scan-search"></i>
+
+              <div>
+                <div class="notice-title">9 OCR documents need review.</div>
+                <div class="notice-copy">Validate submitted documents.</div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="lower-grid">
+          <article class="panel">
+            <div class="panel-header">
+              <b class="panel-title">Recent Reservations</b>
+              <a class="panel-link" href="Reservations.html">View All</a>
+            </div>
+
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Reservation Code</th>
+                    <th>Guest Name</th>
+                    <th>Room / Cottage</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>RH-250524-00123</td>
+                    <td>Juan Miguel Dela Cruz</td>
+                    <td>Family Cottage</td>
+                    <td>₱4,950.00</td>
+                    <td><span class="status green">Confirmed</span></td>
+                  </tr>
+
+                  <tr>
+                    <td>RH-250524-00124</td>
+                    <td>Maria Santos</td>
+                    <td>Deluxe Room</td>
+                    <td>₱6,800.00</td>
+                    <td><span class="status orange">Pending Payment</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <b class="panel-title">Quick Actions</b>
+            </div>
+
+            <div class="quick-actions">
+              <button class="quick-action">
+                <i data-lucide="calendar-plus"></i>
+                New Reservation
+              </button>
+
+              <button class="quick-action">
+                <i data-lucide="user-plus"></i>
+                Walk-in Reservation
+              </button>
+
+              <button class="quick-action">
+                <i data-lucide="plus"></i>
+                Add Room / Cottage
+              </button>
+
+              <button class="quick-action wide">
+                <i data-lucide="scan-search"></i>
+                OCR Verification
+              </button>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons({
+      attrs: {
+        "stroke-width": 1.8
+      }
+    });
+  </script>
+</body>
+</html>
