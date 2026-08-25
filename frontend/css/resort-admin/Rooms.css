@@ -689,7 +689,7 @@
 
 .donut-center span {
   color: #76849a;
-  font-size: 6px;
+  font-size: 14px;
 }
 
 
@@ -709,18 +709,18 @@
   justify-content: space-between;
   gap: 6px;
   color: #4a586b;
-  font-size: 7px;
+  font-size: 10px;
 }
 
 .occupancy-list > div > span {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 12px;
 }
 
 .occupancy-list strong {
   color: #27364a;
-  font-size: 7px;
+  font-size: 10px;
 }
 
 
@@ -777,7 +777,7 @@
   gap: 8px;
   min-height: 30px;
   color: #4b596d;
-  font-size: 7px;
+  font-size: 10px;
 }
 
 .status-row span {
@@ -788,7 +788,7 @@
 
 .status-row strong {
   color: #27364a;
-  font-size: 6.5px;
+  font-size: 8.5px;
   text-align: right;
 }
 
