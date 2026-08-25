@@ -1,0 +1,82 @@
+.main {
+  min-width: 0;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  height: 42px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 24px;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+}
+
+.sidebar-toggle {
+  border: 0;
+  color: #21324a;
+  background: transparent;
+  font-size: 17px;
+}
+
+.search {
+  width: 224px;
+  height: 31px;
+  padding: 0 11px;
+  border: 1px solid #dce5f2;
+  border-radius: 5px;
+  outline: none;
+  font-size: 9px;
+}
+
+.search:focus {
+  border-color: #92b6ff;
+  box-shadow: 0 0 0 3px #eaf1ff;
+}
+
+.topbar-spacer {
+  flex: 1;
+}
+
+.notification {
+  position: relative;
+  border: 0;
+  background: transparent;
+  font-size: 16px;
+}
+
+.top-select,
+.profile {
+  display: flex;
+  min-height: 30px;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 7px;
+  border: 1px solid #e2e8f2;
+  border-radius: 5px;
+  background: #fff;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.avatar {
+  display: grid;
+  width: 29px;
+  height: 29px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(135deg, #9bc4d0, #c88e64);
+  font-size: 9px;
+}
+
+.profile small {
+  display: block;
+  margin-top: 1px;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 400;
+}
