@@ -1,0 +1,70 @@
+:root {
+  --blue: #2865df;
+  --blue-50: #eaf1ff;
+  --ink: #162033;
+  --muted: #6d7890;
+  --line: #e2e9f4;
+  --canvas: #f5f8fc;
+  --green: #08a75a;
+  --red: #ef4444;
+  --shadow: 0 1px 2px rgba(23, 45, 76, 0.03);
+  font-family: Inter, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--canvas);
+  font-size: 12px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.content {
+  max-width: 1420px;
+  margin: 0 auto;
+  padding: 16px 24px 30px;
+}
+
+.panel {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.button {
+  height: 31px;
+  padding: 0 11px;
+  border: 1px solid #e0e7f1;
+  border-radius: 5px;
+  color: var(--ink);
+  background: #fff;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.button.primary {
+  border-color: var(--blue);
+  color: #fff;
+  background: var(--blue);
+}
