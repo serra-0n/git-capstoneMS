@@ -8,21 +8,132 @@
 <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css">
 <link rel="stylesheet" href="../../css/resort-adminGlobal/sidebar.css">
 <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css">
-<link rel="stylesheet" href="../../css/resort-admin/reservations.css">
+<link rel="stylesheet" href="../../css/resort-admin/Reservations.css">
+
+
 </head>
 <body>
+    
 <div class="app-shell">
 
 <!-- Use the SAME sidebar from Dashboard.html -->
 <aside class="sidebar">
-<!-- Paste your existing sidebar here -->
+
+    <a class="brand" href="Dashboard.html">
+    <i class="brand-mark" data-lucide="building-2"></i>
+
+    <span>
+      <strong>ResortHub</strong>
+      <small>Resort Owner</small>
+    </span>
+  </a>
+
+  <div class="resort-switcher">
+    <span class="resort-avatar">BW</span>
+
+    <span>
+      <strong>Blue Waves Resort</strong>
+      <small>Resort Owner</small>
+    </span>
+  </div>
+
+  <div class="nav-section">MAIN</div>
+
+  <a class="nav-link active" href="Dashboard.html">
+    <i data-lucide="layout-dashboard"></i>
+    Dashboard
+  </a>
+
+  <div class="nav-section">RESERVATIONS</div>
+
+  <a class="nav-link" href="Reservations.html">
+    <i data-lucide="calendar-days"></i>
+    Reservations
+  </a>
+
+  <a class="nav-link" href="Guests.html">
+    <i data-lucide="contact-round"></i>
+    Guests
+  </a>
+
+  <div class="nav-section">ACCOMMODATION</div>
+
+  <a class="nav-link" href="Rooms.html">
+    <i data-lucide="bed-double"></i>
+    Rooms & Cottages
+  </a>
+
+  <div class="nav-section">FINANCE</div>
+
+  <a class="nav-link" href="BillingPayments.html">
+    <i data-lucide="credit-card"></i>
+    Billing & Payments
+  </a>
+
+  <div class="nav-section">OPERATIONS</div>
+
+  <a class="nav-link" href="OCRVerification.html">
+    <i data-lucide="scan-search"></i>
+    OCR Verification
+  </a>
+
+  <a class="nav-link" href="StaffManagement.html">
+    <i data-lucide="users"></i>
+    Staff Management
+  </a>
+
+  <a class="nav-link" href="Reports.html">
+    <i data-lucide="chart-no-axes-combined"></i>
+    Reports
+  </a>
+
+  <div class="nav-section">SETTINGS</div>
+
+  <a class="nav-link" href="Settings.html">
+    <i data-lucide="settings"></i>
+    Settings
+  </a>
+
+  <a class="nav-link logout" href="#">
+    <i data-lucide="log-out"></i>
+    Logout
+  </a>
+
 </aside>
 
 <main class="main">
 
 <!-- Use the SAME top navigation from Dashboard.html -->
 <header class="topbar">
-<!-- Paste your existing navbar here -->
+
+    <button class="sidebar-toggle">
+          <i data-lucide="menu"></i>
+        </button>
+
+        <input
+          class="search"
+          type="search"
+          placeholder="Search anything..."
+        >
+
+        <span class="topbar-spacer"></span>
+
+        <button class="notification">
+          <i data-lucide="bell"></i>
+        </button>
+
+        <button class="top-select">
+          <span class="avatar">BW</span>
+          Blue Waves Resort
+        </button>
+
+        <button class="profile">
+          <span>
+            <b>Juan Dela Cruz</b>
+            <small>Resort Owner</small>
+          </span>
+        </button>
+
 </header>
 
 <section class="content">
