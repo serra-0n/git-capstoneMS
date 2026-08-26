@@ -104,14 +104,16 @@
 }
 
 .stat-card {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
 
-  padding: 17px;
-  border: 1px solid #dce5f2;
-  border-radius: 10px;
-  background: #ffffff;
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(33, 50, 74, 0.10);
+  border-color: #c8d6ea;
 }
 
 
@@ -416,10 +418,16 @@
 }
 
 .room-card {
-  overflow: hidden;
-  border: 1px solid #dfe6f0;
-  border-radius: 7px;
-  background: #fff;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.room-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(33, 50, 74, 0.12);
+  border-color: #c8d6ea;
 }
 
 .room-image {
