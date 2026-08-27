@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Reports | ResortHub</title>
+
+  <!-- =====================================================
+       GLOBAL STYLES
+       ===================================================== -->
+
+  <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css">
+  <link rel="stylesheet" href="../../css/resort-adminGlobal/sidebar.css">
+  <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css">
+
+  <!-- =====================================================
+       PAGE STYLE
+       ===================================================== -->
+
+  <link rel="stylesheet" href="../../css/resort-admin/reports.css">
+
+  <!-- =====================================================
+       LUCIDE ICONS
+       ===================================================== -->
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+
+
+<body>
+
+  <!-- =====================================================
+       APPLICATION SHELL
+       ===================================================== -->
+
+  <div class="app-shell">
+
+
+    <!-- ===================================================
+         GLOBAL SHARED SIDEBAR
+         =================================================== -->
+
+    <aside class="sidebar">
+
+      <!-- ResortHub Brand -->
+
+      <a class="brand" href="Dashboard.html">
+
+        <i
+          class="brand-mark"
+          data-lucide="building-2">
+        </i>
+
+        <span>
+          <strong>ResortHub</strong>
+          <small>Resort Owner</small>
+        </span>
+
+      </a>
+
+
+      <!-- Resort Switcher -->
+
+      <div class="resort-switcher">
+
+        <span class="resort-avatar">
+          BW
+        </span>
+
+        <span>
+          <strong>Blue Waves Resort</strong>
+          <small>Resort Owner</small>
+        </span>
+
+      </div>
+
+
+      <!-- =================================================
+           MAIN
+           ================================================= -->
+
+      <div class="nav-section">
+        MAIN
+      </div>
+
+
+      <a
+        class="nav-link"
+        href="Dashboard.html">
+
+        <i data-lucide="layout-dashboard"></i>
+
+        Dashboard
+
+      </a>
+
+
+      <!-- =================================================
+           RESERVATIONS
+           ================================================= -->
+
+      <div class="nav-section">
+        RESERVATIONS
+      </div>
+
+
+      <a
+        class="nav-link"
+        href="Reservations.html">
+
+        <i data-lucide="calendar-days"></i>
+
+        Reservations
+
+      </a>
+
+
+      <a
+        class="nav-link"
+        href="Guests.html">
+
+        <i data-lucide="contact-round"></i>
+
+        Guests
+
+      </a>
+
+
+      <!-- =================================================
+           ACCOMMODATION
+           ================================================= -->
+
+      <div class="nav-section">
+        ACCOMMODATION
+      </div>
+
+
+      <a
+        class="nav-link"
+        href="Rooms.html">
+
+        <i data-lucide="bed-double"></i>
+
+        Rooms & Cottages
+
+      </a>
+
+
+      <!-- =================================================
+           FINANCE
+           ================================================= -->
+
+      <div class="nav-section">
+        FINANCE
+      </div>
+
+
+      <a
+        class="nav-link"
+        href="BillingPayments.html">
+
+        <i data-lucide="credit-card"></i>
+
+        Billing & Payments
+
+      </a>
+
+
+      <!-- =================================================
+           OPERATIONS
+           ================================================= -->
+
+      <div class="nav-section">
+        OPERATIONS
+      </div>
+
+
+      <a
+        class="nav-link"
+        href="OCRVerification.html">
+
+        <i data-lucide="scan-search"></i>
+
+        OCR Verification
+
+      </a>
+
+
+      <a
+        class="nav-link"
+        href="StaffManagement.html">
+
+        <i data-lucide="users"></i>
+
+        Staff Management
+
+      </a>
+
+
+      <a
+        class="nav-link active"
+        href="Reports.html">
+
+        <i data-lucide="chart-no-axes-combined"></i>
+
+        Reports
+
+      </a>
+
+
+      <!-- =================================================
+           SETTINGS
+           ================================================= -->
+
+      <div class="nav-section">
+        SETTINGS
+      </div>
+
+
+      <a
+        class="nav-link"
+        href="Settings.html">
+
+        <i data-lucide="settings"></i>
+
+        Settings
+
+      </a>
+
+
+      <!-- Logout -->
+
+      <a
+        class="nav-link logout"
+        href="#">
+
+        <i data-lucide="log-out"></i>
+
+        Logout
+
+      </a>
+
+    </aside>
+
+
+    <!-- ===================================================
+         MAIN CONTENT
+         =================================================== -->
+
+    <main class="main">
+
+
+      <!-- =================================================
+           GLOBAL TOPBAR
+           ================================================= -->
+
+      <header class="topbar">
+
+
+        <!-- Sidebar Toggle -->
+
+        <button
+          class="sidebar-toggle"
+          type="button"
+          aria-label="Toggle sidebar">
+
+          <i data-lucide="menu"></i>
+
+        </button>
+
+
+        <!-- Search -->
+
+        <input
+          class="search"
+          type="search"
+          placeholder="Search reports...">
+
+
+        <div class="topbar-spacer"></div>
+
+
+        <!-- Notification -->
+
+        <button
+          class="notification"
+          type="button"
+          aria-label="Notifications">
+
+          <i data-lucide="bell"></i>
+
+        </button>
+
+
+        <!-- Resort Selector -->
+
+        <button
+          class="top-select"
+          type="button">
+
+          <span>
+            Blue Waves Resort
+          </span>
+
+          <i data-lucide="chevron-down"></i>
+
+        </button>
+
+
+        <!-- Profile -->
+
+        <button
+          class="profile"
+          type="button">
+
+          <span class="avatar">
+            BW
+          </span>
+
+          <span>
+            Resort Owner
+            <small>Administrator</small>
+          </span>
+
+          <i data-lucide="chevron-down"></i>
+
+        </button>
+
+      </header>
+
+
+      <!-- =================================================
+           PAGE CONTENT
+           ================================================= -->
+
+      <div class="page-content">
+
+
+        <!-- =================================================
+             PAGE HEADER
+             ================================================= -->
+
+        <section class="page-header">
+
+
+          <div>
+
+            <div class="breadcrumb">
+
+              <span>
+                Operations
+              </span>
+
+              <i data-lucide="chevron-right"></i>
+
+              <strong>
+                Reports
+              </strong>
+
+            </div>
+
+
+            <h1>
+              Reports
+            </h1>
+
+
+            <p>
+              Generate operational and financial reports
+              from resort records.
+            </p>
+
+          </div>
+
+
+          <!-- Page Action -->
+
+          <div class="page-actions">
+
+            <button
+              class="btn-secondary"
+              type="button"
+              id="printReportButton">
+
+              <i data-lucide="printer"></i>
+
+              Print Report
+
+            </button>
+
+
+            <button
+              class="btn-primary"
+              type="button"
+              id="generateReportButton">
+
+              <i data-lucide="file-chart-column"></i>
+
+              Generate Report
+
+            </button>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             REPORT FILTERS
+             ================================================= -->
+
+        <section class="content-card report-filter-card">
+
+
+          <div class="section-header">
+
+            <div>
+
+              <h2>
+                Report Filters
+              </h2>
+
+              <p>
+                Select the report information and period
+                to display.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="filter-grid">
+
+
+            <!-- Report Type -->
+
+            <div class="filter-group">
+
+              <label for="reportType">
+                Report Type
+              </label>
+
+              <select id="reportType">
+
+                <option value="all">
+                  All Reports
+                </option>
+
+                <option value="reservation">
+                  Reservation Summary
+                </option>
+
+                <option value="occupancy">
+                  Occupancy Monitoring
+                </option>
+
+                <option value="payment">
+                  Payment Records
+                </option>
+
+                <option value="transaction">
+                  Transaction Summary
+                </option>
+
+                <option value="verification">
+                  Document Verification
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- Start Date -->
+
+            <div class="filter-group">
+
+              <label for="startDate">
+                Start Date
+              </label>
+
+              <input
+                type="date"
+                id="startDate">
+
+            </div>
+
+
+            <!-- End Date -->
+
+            <div class="filter-group">
+
+              <label for="endDate">
+                End Date
+              </label>
+
+              <input
+                type="date"
+                id="endDate">
+
+            </div>
+
+
+            <!-- Apply Filter -->
+
+            <div class="filter-group filter-button-group">
+
+              <button
+                class="btn-primary apply-filter"
+                type="button"
+                id="applyFilterButton">
+
+                <i data-lucide="filter"></i>
+
+                Apply Filter
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             REPORT SUMMARY
+             ================================================= -->
+
+        <section class="stats-grid">
+
+
+          <!-- Reservations -->
+
+          <article
+            class="stat-card"
+            data-report-section="reservation">
+
+            <div class="stat-icon">
+
+              <i data-lucide="calendar-check"></i>
+
+            </div>
+
+            <span>
+              Reservations
+            </span>
+
+            <strong id="reservationTotal">
+              48
+            </strong>
+
+            <small>
+              Recorded reservations
+            </small>
+
+          </article>
+
+
+          <!-- Occupancy -->
+
+          <article
+            class="stat-card"
+            data-report-section="occupancy">
+
+            <div class="stat-icon occupancy-icon">
+
+              <i data-lucide="bed-double"></i>
+
+            </div>
+
+            <span>
+              Occupancy
+            </span>
+
+            <strong id="occupancyTotal">
+              72%
+            </strong>
+
+            <small>
+              Current occupancy
+            </small>
+
+          </article>
+
+
+          <!-- Payments -->
+
+          <article
+            class="stat-card"
+            data-report-section="payment">
+
+            <div class="stat-icon payment-icon">
+
+              <i data-lucide="credit-card"></i>
+
+            </div>
+
+            <span>
+              Payments
+            </span>
+
+            <strong id="paymentTotal">
+              ₱285,500
+            </strong>
+
+            <small>
+              Recorded payments
+            </small>
+
+          </article>
+
+
+          <!-- Transactions -->
+
+          <article
+            class="stat-card"
+            data-report-section="transaction">
+
+            <div class="stat-icon transaction-icon">
+
+              <i data-lucide="receipt-text"></i>
+
+            </div>
+
+            <span>
+              Transactions
+            </span>
+
+            <strong id="transactionTotal">
+              48
+            </strong>
+
+            <small>
+              Billing transactions
+            </small>
+
+          </article>
+
+        </section>
+
+
+        <!-- =================================================
+             RESERVATION SUMMARY
+             ================================================= -->
+
+        <section
+          class="content-card report-section"
+          data-report-section="reservation">
+
+
+          <div class="section-header">
+
+            <div>
+
+              <div class="section-title-with-icon">
+
+                <div class="section-icon">
+
+                  <i data-lucide="calendar-check"></i>
+
+                </div>
+
+                <div>
+
+                  <h2>
+                    Reservation Summary
+                  </h2>
+
+                  <p>
+                    Summary of recorded resort reservations.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="report-action"
+              type="button">
+
+              <i data-lucide="download"></i>
+
+              Export
+
+            </button>
+
+          </div>
+
+
+          <div class="report-grid">
+
+
+            <div class="report-item">
+
+              <span>
+                Total Reservations
+              </span>
+
+              <strong>
+                48
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Confirmed
+              </span>
+
+              <strong>
+                32
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Pending
+              </span>
+
+              <strong>
+                8
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Cancelled
+              </span>
+
+              <strong>
+                8
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             OCCUPANCY MONITORING
+             ================================================= -->
+
+        <section
+          class="content-card report-section"
+          data-report-section="occupancy">
+
+
+          <div class="section-header">
+
+            <div>
+
+              <div class="section-title-with-icon">
+
+                <div class="section-icon">
+
+                  <i data-lucide="bed-double"></i>
+
+                </div>
+
+                <div>
+
+                  <h2>
+                    Occupancy Monitoring
+                  </h2>
+
+                  <p>
+                    Current accommodation occupancy status.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="report-action"
+              type="button">
+
+              <i data-lucide="download"></i>
+
+              Export
+
+            </button>
+
+          </div>
+
+
+          <div class="report-grid">
+
+
+            <div class="report-item">
+
+              <span>
+                Total Rooms & Cottages
+              </span>
+
+              <strong>
+                25
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Available
+              </span>
+
+              <strong>
+                7
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Reserved
+              </span>
+
+              <strong>
+                12
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Occupied
+              </span>
+
+              <strong>
+                6
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PAYMENT RECORDS
+             ================================================= -->
+
+        <section
+          class="content-card report-section"
+          data-report-section="payment">
+
+
+          <div class="section-header">
+
+            <div>
+
+              <div class="section-title-with-icon">
+
+                <div class="section-icon payment-section-icon">
+
+                  <i data-lucide="credit-card"></i>
+
+                </div>
+
+                <div>
+
+                  <h2>
+                    Payment Records
+                  </h2>
+
+                  <p>
+                    Summary of recorded payment transactions.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="report-action"
+              type="button">
+
+              <i data-lucide="download"></i>
+
+              Export
+
+            </button>
+
+          </div>
+
+
+          <div class="report-grid">
+
+
+            <div class="report-item">
+
+              <span>
+                Total Payments
+              </span>
+
+              <strong>
+                ₱285,500
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Paid
+              </span>
+
+              <strong>
+                ₱238,000
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Pending Verification
+              </span>
+
+              <strong>
+                ₱12,500
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Outstanding
+              </span>
+
+              <strong>
+                ₱35,000
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             TRANSACTION SUMMARY
+             ================================================= -->
+
+        <section
+          class="content-card report-section"
+          data-report-section="transaction">
+
+
+          <div class="section-header">
+
+            <div>
+
+              <div class="section-title-with-icon">
+
+                <div class="section-icon transaction-section-icon">
+
+                  <i data-lucide="receipt-text"></i>
+
+                </div>
+
+                <div>
+
+                  <h2>
+                    Transaction Summary
+                  </h2>
+
+                  <p>
+                    Summary of billing and payment transactions.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="report-action"
+              type="button">
+
+              <i data-lucide="download"></i>
+
+              Export
+
+            </button>
+
+          </div>
+
+
+          <div class="report-grid">
+
+
+            <div class="report-item">
+
+              <span>
+                Total Transactions
+              </span>
+
+              <strong>
+                48
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Completed
+              </span>
+
+              <strong>
+                32
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Pending Verification
+              </span>
+
+              <strong>
+                8
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Unpaid
+              </span>
+
+              <strong>
+                8
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             DOCUMENT VERIFICATION REPORT
+             ================================================= -->
+
+        <section
+          class="content-card report-section"
+          data-report-section="verification">
+
+
+          <div class="section-header">
+
+            <div>
+
+              <div class="section-title-with-icon">
+
+                <div class="section-icon verification-section-icon">
+
+                  <i data-lucide="scan-search"></i>
+
+                </div>
+
+                <div>
+
+                  <h2>
+                    Document Verification Report
+                  </h2>
+
+                  <p>
+                    Summary of submitted payment documents
+                    and verification records.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <button
+              class="report-action"
+              type="button">
+
+              <i data-lucide="download"></i>
+
+              Export
+
+            </button>
+
+          </div>
+
+
+          <div class="report-grid">
+
+
+            <div class="report-item">
+
+              <span>
+                Documents Submitted
+              </span>
+
+              <strong>
+                15
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Verified
+              </span>
+
+              <strong>
+                11
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Pending Verification
+              </span>
+
+              <strong>
+                3
+              </strong>
+
+            </div>
+
+
+            <div class="report-item">
+
+              <span>
+                Rejected
+              </span>
+
+              <strong>
+                1
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             REPORT FOOTER INFORMATION
+             ================================================= -->
+
+        <div class="report-note">
+
+          <i data-lucide="info"></i>
+
+          <span>
+            Reports are generated from recorded resort
+            transactions, reservations, accommodation
+            records, payments, and document verification
+            data.
+          </span>
+
+        </div>
+
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
+
+  <script src="../../js/resort-admin/reports.js"></script>
+
+
+  <!-- =====================================================
+       INITIALIZE LUCIDE
+       ===================================================== -->
+
+  <script>
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+        if (
+          typeof lucide !== "undefined" &&
+          typeof lucide.createIcons === "function"
+        ) {
+
+          lucide.createIcons();
+
+        }
+
+      }
+    );
+
+  </script>
+
+
+</body>
+
+</html>
