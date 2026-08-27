@@ -1,37 +1,61 @@
+/* =========================================
+   RESORTHUB LOGIN
+========================================= */
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
 html {
-    min-height: 100%;
+    scroll-behavior: smooth;
 }
 
 body {
+    margin: 0;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: #ffffff;
+
+    background: #f8fafc;
     color: #111827;
-    font-family: Arial, Helvetica, sans-serif;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
 }
+
+
+/* =========================================
+   HEADER
+========================================= */
 
 .auth-header {
     width: 100%;
     height: 72px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     padding: 0 48px;
+
     background: #ffffff;
     border-bottom: 1px solid #e5e7eb;
 }
+
+
+/* =========================================
+   LOGO
+========================================= */
 
 .auth-logo {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+
     color: #111827;
     text-decoration: none;
 }
@@ -46,13 +70,16 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 2px;
+
     margin-top: 2px;
 }
 
 .logo-dots span {
     width: 4px;
     height: 4px;
+
     display: block;
+
     border-radius: 50%;
     background: #2563eb;
 }
@@ -65,23 +92,33 @@ body {
     background: #93c5fd;
 }
 
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
 .auth-navigation {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 18px;
 }
 
 .header-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     min-height: 40px;
     padding: 0 14px;
+
     color: #374151;
+
     font-size: 13px;
     font-weight: 500;
+
     text-decoration: none;
     border-radius: 8px;
+
     transition:
         background 0.2s ease,
         color 0.2s ease;
@@ -93,97 +130,156 @@ body {
 }
 
 .header-link.active {
-    color: #111827;
+    color: #2563eb;
     font-weight: 600;
 }
 
 .resort-link {
-    margin-right: 4px;
+    color: #2563eb;
 }
 
+
+/* =========================================
+   HEADER BUTTON
+========================================= */
+
 .header-button {
-    min-height: 40px;
+    min-height: 38px;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 17px;
-    background: #2563eb;
-    color: #ffffff;
+
+    padding: 0 15px;
+
+    border: 1px solid #2563eb;
     border-radius: 8px;
+
+    background: #ffffff;
+    color: #2563eb;
+
     font-size: 13px;
     font-weight: 600;
+
     text-decoration: none;
+
     transition:
         background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
         transform 0.2s ease;
 }
 
 .header-button:hover {
-    background: #1d4ed8;
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+
     transform: translateY(-1px);
 }
 
+
+/* =========================================
+   HEADER MENU
+========================================= */
+
 .header-menu {
-    width: 40px;
-    height: 40px;
     display: none;
+
     align-items: center;
     justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    padding: 0;
+
     border: 1px solid #e5e7eb;
     border-radius: 8px;
+
     background: #ffffff;
     color: #374151;
+
     cursor: pointer;
 }
 
 .header-menu svg {
-    width: 19px;
-    height: 19px;
+    width: 18px;
+    height: 18px;
 }
+
+
+/* =========================================
+   MAIN
+========================================= */
 
 .auth-main {
     flex: 1;
+
     display: flex;
-    align-items: flex-start;
     justify-content: center;
-    padding: 58px 24px 70px;
-    background: #ffffff;
+
+    padding: 48px 20px 55px;
 }
+
+
+/* =========================================
+   AUTH CARD
+========================================= */
 
 .auth-card {
     width: 100%;
-    max-width: 430px;
-    padding: 34px 36px 30px;
+    max-width: 450px;
+
+    padding: 32px 34px 28px;
+
     background: #ffffff;
+
     border: 1px solid #e5e7eb;
-    border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    border-radius: 14px;
+
+    box-shadow:
+        0 8px 25px rgba(15, 23, 42, 0.06);
 }
 
+
+/* =========================================
+   CARD HEADER
+========================================= */
+
 .auth-card-header {
+    margin-bottom: 24px;
+
     text-align: center;
-    margin-bottom: 28px;
 }
 
 .auth-card-header h1 {
-    margin-bottom: 9px;
+    margin: 0 0 8px;
+
     color: #111827;
-    font-size: 24px;
+
+    font-size: 23px;
     font-weight: 700;
-    line-height: 1.25;
+
+    line-height: 1.3;
+    letter-spacing: -0.4px;
 }
 
 .auth-card-header p {
-    color: #6b7280;
-    font-size: 13px;
+    max-width: 350px;
+
+    margin: 0 auto;
+
+    color: #64748b;
+
+    font-size: 12px;
     line-height: 1.5;
 }
 
-.login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
+
+/* =========================================
+   GOOGLE LOGIN
+========================================= */
 
 .social-login {
     width: 100%;
@@ -192,19 +288,34 @@ body {
 .social-button {
     width: 100%;
     height: 42px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 9px;
+
+    gap: 10px;
+
+    padding: 0 14px;
+
     border: 1px solid #d1d5db;
     border-radius: 8px;
-    background-color: #ffffff;
+
+    background: #ffffff;
     color: #374151;
-    font-size: 13px;
-    font-weight: 700;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 12px;
+    font-weight: 600;
+
     cursor: pointer;
-    box-sizing: border-box;
-    transition: 
+
+    transition:
         background 0.2s ease,
         border-color 0.2s ease,
         box-shadow 0.2s ease;
@@ -212,64 +323,163 @@ body {
 
 .social-button:hover {
     background: #f9fafb;
-    border-color: #bfc4cc;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+
+    border-color: #9ca3af;
+
+    box-shadow:
+        0 2px 6px rgba(15, 23, 42, 0.05);
 }
 
-.social-button:active {
-    background: #f3f4f6;
-}
+.social-icon {
+    width: 20px;
+    height: 20px;
 
-.google-button .social-icon {
-    width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    color: #4285f4;
-    font-size: 15px;
-    font-weight: 700;
-    flex-shrink: 0;
-}
-
-.auth-divider p {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 20px;
+
+    color: #4285f4;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+
+/* =========================================
+   DIVIDER
+========================================= */
+
+.auth-divider {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 22px 0;
+}
+
+.auth-divider span {
+    flex: 1;
+
+    height: 1px;
+
+    background: #e5e7eb;
+}
+
+.auth-divider p {
     margin: 0;
-    font-size: 13px;
+
+    color: #94a3b8;
+
+    font-size: 11px;
     font-weight: 500;
 }
 
-.form-group {
+
+/* =========================================
+   FORM
+========================================= */
+
+.login-form {
     width: 100%;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 7px;
+
+/* =========================================
+   FORM GROUP
+========================================= */
+
+.form-group {
+    width: 100%;
+
+    margin-bottom: 17px;
+}
+
+.form-group > label,
+.password-label-row label {
     color: #374151;
+
     font-size: 13px;
     font-weight: 600;
 }
+
+
+/* =========================================
+   EMAIL INPUT
+========================================= */
+
+.form-group input[type="email"] {
+    width: 100%;
+    height: 42px;
+
+    display: block;
+
+    margin-top: 7px;
+
+    padding: 0 12px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #ffffff;
+    color: #111827;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-group input::placeholder {
+    color: #9ca3af;
+}
+
+.form-group input:hover {
+    border-color: #9ca3af;
+}
+
+.form-group input:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+/* =========================================
+   PASSWORD LABEL
+========================================= */
 
 .password-label-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 7px;
-}
-
-.password-label-row label {
-    margin-bottom: 0;
 }
 
 .forgot-password {
     color: #2563eb;
+
     font-size: 11px;
     font-weight: 500;
+
     text-decoration: none;
 }
 
@@ -277,65 +487,103 @@ body {
     text-decoration: underline;
 }
 
-.form-group > input,
+
+/* =========================================
+   PASSWORD INPUT
+========================================= */
+
+.password-input-wrapper {
+    position: relative;
+
+    width: 100%;
+
+    margin-top: 7px;
+}
+
 .password-input-wrapper input {
     width: 100%;
-    height: 46px;
-    padding: 0 13px;
+    height: 42px;
+
+    display: block;
+
+    padding: 0 44px 0 12px;
+
     border: 1px solid #d1d5db;
-    border-radius: 9px;
+    border-radius: 8px;
+
+    outline: none;
+
     background: #ffffff;
     color: #111827;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
     font-size: 13px;
-    outline: none;
+
     transition:
         border-color 0.2s ease,
         box-shadow 0.2s ease;
 }
 
-.form-group > input::placeholder,
 .password-input-wrapper input::placeholder {
     color: #9ca3af;
 }
 
-.form-group > input:focus,
+.password-input-wrapper input:hover {
+    border-color: #9ca3af;
+}
+
 .password-input-wrapper input:focus {
     border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
 }
 
-.password-input-wrapper {
-    position: relative;
-    width: 100%;
-}
 
-.password-input-wrapper input {
-    padding-right: 46px;
-}
+/* =========================================
+   PASSWORD TOGGLE
+========================================= */
 
 .password-toggle {
     position: absolute;
+
     top: 50%;
-    right: 7px;
-    width: 34px;
-    height: 34px;
+    right: 8px;
+
+    width: 32px;
+    height: 32px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translateY(-50%);
+
+    padding: 0;
+
     border: none;
-    border-radius: 7px;
+
     background: transparent;
-    color: #6b7280;
+    color: #64748b;
+
+    transform: translateY(-50%);
+
     cursor: pointer;
+
+    border-radius: 6px;
+
     transition:
         background 0.2s ease,
         color 0.2s ease;
 }
 
 .password-toggle:hover {
-    background: #f3f4f6;
-    color: #111827;
+    background: #f1f5f9;
+    color: #2563eb;
 }
 
 .password-toggle svg {
@@ -343,68 +591,126 @@ body {
     height: 17px;
 }
 
+
+/* =========================================
+   REMEMBER ME
+========================================= */
+
 .remember-row {
-    margin-top: -3px;
+    margin-top: -2px;
+    margin-bottom: 20px;
 }
 
 .remember-label {
     display: inline-flex;
     align-items: center;
+
     gap: 8px;
-    color: #6b7280;
+
+    color: #64748b;
+
     font-size: 12px;
+
     cursor: pointer;
 }
 
 .remember-label input {
-    width: 15px;
-    height: 15px;
+    width: 14px;
+    height: 14px;
+
     margin: 0;
+
     accent-color: #2563eb;
+
     cursor: pointer;
 }
 
+
+/* =========================================
+   SIGN IN BUTTON
+========================================= */
+
 .continue-button {
     width: 100%;
-    height: 46px;
-    margin-top: 2px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
     border: none;
-    border-radius: 9px;
+    border-radius: 8px;
+
     background: #2563eb;
     color: #ffffff;
-    font-size: 13px;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 12px;
     font-weight: 600;
+
     cursor: pointer;
+
     transition:
         background 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
 }
 
 .continue-button:hover {
     background: #1d4ed8;
+
+    box-shadow:
+        0 4px 10px rgba(37, 99, 235, 0.18);
+
     transform: translateY(-1px);
-    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.18);
 }
 
 .continue-button:active {
     transform: translateY(0);
 }
 
+.continue-button:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================
+   SIGNUP PROMPT
+========================================= */
+
 .signup-prompt {
     display: flex;
     align-items: center;
     justify-content: center;
+
     gap: 5px;
-    margin-top: 22px;
-    color: #6b7280;
+
+    margin-top: 20px;
+
+    color: #64748b;
+
     font-size: 12px;
-    text-align: center;
 }
 
 .signup-prompt a {
     color: #2563eb;
+
     font-weight: 600;
+
     text-decoration: none;
 }
 
@@ -412,50 +718,88 @@ body {
     text-decoration: underline;
 }
 
+
+/* =========================================
+   TERMS
+========================================= */
+
 .terms-text {
-    margin-top: 20px;
-    color: #9ca3af;
-    font-size: 11px;
-    line-height: 1.6;
-    text-align: center
+    margin: 18px auto 0;
+
+    max-width: 350px;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+
+    text-align: center;
 }
 
 .terms-text a {
+    color: #64748b;
+
+    text-decoration: underline;
+}
+
+.terms-text a:hover {
     color: #2563eb;
 }
 
+
+/* =========================================
+   FOOTER
+========================================= */
+
 .auth-footer {
     width: 100%;
-    background: #f9fafb;
+
+    padding: 30px 38px;
+
+    background: #ffffff;
+
     border-top: 1px solid #e5e7eb;
 }
 
 .footer-content {
-    max-width: 1000px;
+    max-width: 1050px;
+
     margin: 0 auto;
-    padding: 34px 48px;
+
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 40px;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 35px;
 }
 
 .footer-column {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+
+    gap: 6px;
 }
 
 .footer-column h3 {
-    margin-bottom: 5px;
-    color: #111827;
-    font-size: 14px;
+    margin: 0 0 4px;
+
+    color: #374151;
+
+    font-size: 18px;
     font-weight: 700;
 }
 
 .footer-column a {
-    color: #6b7280;
-    font-size: 12px;
+    width: fit-content;
+
+    color: #64748b;
+
+    font-size: 15px;
+
     text-decoration: none;
+
     transition: color 0.2s ease;
 }
 
@@ -463,65 +807,73 @@ body {
     color: #2563eb;
 }
 
-@media (max-width: 800px) {
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 850px) {
+
     .auth-header {
-        padding: 0 28px;
+        padding: 0 24px;
     }
 
     .auth-navigation {
-        gap: 4px;
+        gap: 14px;
+    }
+
+    .auth-footer {
+        padding: 28px 24px;
+    }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+    .auth-header {
+        height: 60px;
+
+        padding: 0 16px;
+    }
+
+    .auth-navigation {
+        gap: 8px;
     }
 
     .resort-link {
         display: none;
     }
 
-    .footer-content {
-        padding-left: 28px;
-        padding-right: 28px;
-    }
-}
-
-@media (max-width: 600px) {
-    .auth-header {
-        height: 64px;
-        padding: 0 16px;
-    }
-
-    .logo-text {
-        font-size: 20px;
-    }
-
-    .header-link {
+    .header-link:not(.resort-link) {
         display: none;
     }
 
     .header-button {
-        min-height: 36px;
-        padding: 0 13px;
-        font-size: 11px;
+        min-height: 34px;
+
+        padding: 0 12px;
+
+        font-size: 10px;
     }
 
     .header-menu {
         display: flex;
     }
 
-    .auth-navigation {
-        gap: 7px;
-    }
-
     .auth-main {
-        padding: 35px 16px 45px;
+        padding: 30px 15px 40px;
     }
 
     .auth-card {
         max-width: 100%;
-        padding: 28px 22px 25px;
-        border-radius: 14px;
-    }
 
-    .auth-card-header {
-        margin-bottom: 24px;
+        padding: 26px 20px 24px;
+
+        border-radius: 12px;
     }
 
     .auth-card-header h1 {
@@ -529,51 +881,44 @@ body {
     }
 
     .auth-card-header p {
-        font-size: 12px;
+        font-size: 11px;
+    }
+
+    .auth-footer {
+        padding: 26px 20px;
     }
 
     .footer-content {
         grid-template-columns: 1fr;
-        gap: 24px;
-        padding: 28px 22px;
+
+        gap: 22px;
     }
 }
 
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
 @media (max-width: 400px) {
-    .auth-header {
-        padding: 0 12px;
-    }
 
     .logo-text {
-        font-size: 18px;
-    }
-
-    .header-button {
-        padding: 0 10px;
-        font-size: 10px;
-    }
-
-    .header-menu {
-        width: 36px;
-        height: 36px;
-    }
-
-    .auth-main {
-        padding-left: 12px;
-        padding-right: 12px;
+        font-size: 17px;
     }
 
     .auth-card {
-        padding-left: 18px;
-        padding-right: 18px;
+        padding: 23px 17px 22px;
     }
 
-    .auth-header h1 {
-        font-size: 19px;
+    .auth-card-header h1 {
+        font-size: 20px;
     }
 
     .signup-prompt {
-        flex-direction: column;
-        gap: 3px;
+        font-size: 11px;
+    }
+
+    .terms-text {
+        font-size: 9px;
     }
 }
