@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const passwordIcon = document.getElementById("passwordIcon");
     const confirmPasswordIcon = document.getElementById("confirmPasswordIcon");
     const agreeTerms = document.getElementById("agreeTerms");
-    const createAccountButton = document.getElementById("createAccountButton");
 
 
     function togglePassword(input, icon, button) {
