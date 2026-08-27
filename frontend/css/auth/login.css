@@ -201,7 +201,7 @@ body {
     background-color: #ffffff;
     color: #374151;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
     box-sizing: border-box;
     transition: 
@@ -225,6 +225,7 @@ body {
     height: 18px;
     display: flex;
     align-items: center;
+    font-family: Arial, sans-serif;
     color: #4285f4;
     font-size: 15px;
     font-weight: 700;
@@ -236,8 +237,9 @@ body {
     align-items: center;
     justify-content: center;
     height: 20px;
+    margin: 0;
     font-size: 13px;
-    font-weight: 300;
+    font-weight: 500;
 }
 
 .form-group {
