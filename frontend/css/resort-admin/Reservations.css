@@ -1,358 +1,377 @@
-/* ===========================
-   PAGE HEADER
-=========================== */
+/* ==========================================
+   RESERVATION PAGE
+========================================== */
+
+/* PAGE HEADER */
 
 .page-title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .page-title-row h1 {
-  margin: 0;
-  font-size: 22px;
+    margin: 0;
+    font-size: 22px;
 }
 
 .subtitle {
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: 11px;
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 11px;
 }
 
-
-/* ===========================
+/* ==========================================
    SUMMARY CARDS
-=========================== */
+========================================== */
 
 .metric-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 18px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
 }
 
 .metric-card {
-  padding: 18px;
-  border-radius: 8px;
-  background: #fff;
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow);
+    padding: 18px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    transition: .25s ease;
+    cursor: pointer;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,.08);
 }
 
 .metric-content {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .metric-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    color: white;
 }
 
 .metric-card.blue .metric-icon {
-  background: #2865df;
+    background: #2865df;
 }
 
 .metric-card.green .metric-icon {
-  background: #08a75a;
+    background: #08a75a;
 }
 
 .metric-card.orange .metric-icon {
-  background: #f59e0b;
+    background: #f59e0b;
 }
 
 .metric-card.red .metric-icon {
-  background: #ef4444;
+    background: #ef4444;
 }
 
 .label {
-  color: var(--muted);
-  font-size: 11px;
+    color: var(--muted);
+    font-size: 11px;
 }
 
 .number {
-  margin-top: 4px;
-  font-size: 23px;
-  font-weight: 700;
+    margin-top: 4px;
+    font-size: 23px;
+    font-weight: 700;
 }
 
-
-/* ===========================
-   FILTER BAR
-=========================== */
+/* ==========================================
+   FILTER PANEL
+========================================== */
 
 .filter-panel {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 16px;
-  margin-bottom: 18px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 16px;
+    margin-bottom: 20px;
+    transition: .25s ease;
+}
+
+.filter-panel:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,.05);
 }
 
 .filter-panel input,
 .filter-panel select {
-  height: 34px;
-  padding: 0 12px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: #fff;
+    height: 34px;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    outline: none;
+    background: #fff;
 }
 
 .filter-panel input {
-  width: 220px;
+    width: 220px;
 }
 
-.filter-panel select {
-  min-width: 150px;
+.filter-panel input:focus,
+.filter-panel select:focus {
+    border-color: var(--blue);
 }
 
-
-/* ===========================
-   MAIN LAYOUT
-=========================== */
+/* ==========================================
+   MAIN CONTENT
+========================================== */
 
 .reservation-layout {
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 18px;
-  align-items: start;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 20px;
+    align-items: start;
 }
 
+/* ==========================================
+   PANELS
+========================================== */
 
-/* ===========================
-   TABLE
-=========================== */
-
-.table-wrap {
-  overflow-x: auto;
+.panel {
+    transition: .25s ease;
 }
 
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.data-table thead {
-  background: #f7f9fc;
-}
-
-.data-table th {
-  padding: 14px;
-  text-align: left;
-  border-bottom: 1px solid var(--line);
-  font-size: 10px;
-  color: var(--muted);
-}
-
-.data-table td {
-  padding: 15px 14px;
-  border-bottom: 1px solid #edf2f8;
-  font-size: 11px;
-}
-
-.data-table tbody tr {
-  transition: .25s;
-}
-
-.data-table tbody tr:hover {
-  background: #f8fbff;
-}
-
-
-/* ===========================
-   STATUS BADGES
-=========================== */
-
-.status {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 50px;
-  font-size: 10px;
-  font-weight: 700;
-}
-
-.status.green {
-  background: #e9f8ef;
-  color: #08a75a;
-}
-
-.status.blue {
-  background: #e8f1ff;
-  color: #2865df;
-}
-
-.status.orange {
-  background: #fff6e6;
-  color: #d97706;
-}
-
-.status.red {
-  background: #fdecec;
-  color: #ef4444;
-}
-
-
-/* ===========================
-   ACTION BUTTONS
-=========================== */
-
-.data-table button {
-  margin-right: 5px;
-  height: 28px;
-  padding: 0 12px;
-  border: none;
-  border-radius: 5px;
-  background: var(--blue);
-  color: white;
-  font-size: 10px;
-  cursor: pointer;
-  transition: .2s;
-}
-
-.data-table button:hover {
-  opacity: .9;
-}
-
-
-/* ===========================
-   SIDE CARDS
-=========================== */
-
-.side-column {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+.panel:hover {
+    box-shadow: 0 12px 25px rgba(0,0,0,.08);
 }
 
 .panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 18px;
+    border-bottom: 1px solid var(--line);
+}
+
+.panel-title {
+    font-size: 13px;
+}
+
+/* ==========================================
+   TABLE
+========================================== */
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table thead {
+    background: #f7f9fc;
+}
+
+.data-table th {
+    padding: 14px;
+    text-align: left;
+    color: var(--muted);
+    font-size: 10px;
+    border-bottom: 1px solid var(--line);
+}
+
+.data-table td {
+    padding: 15px 14px;
+    border-bottom: 1px solid #edf2f8;
+    font-size: 11px;
+}
+
+.data-table tbody tr {
+    transition: .2s;
+}
+
+.data-table tbody tr:hover {
+    background: #f5f9ff;
+}
+
+/* ==========================================
+   STATUS BADGES
+========================================== */
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.status.green {
+    color: #08a75a;
+    background: #e9f8ef;
+}
+
+.status.blue {
+    color: #2865df;
+    background: #e8f1ff;
+}
+
+.status.orange {
+    color: #d97706;
+    background: #fff6e6;
+}
+
+.status.red {
+    color: #ef4444;
+    background: #fdecec;
+}
+
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
+
+.data-table button {
+    height: 30px;
+    padding: 0 12px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 6px;
+    background: var(--blue);
+    color: white;
+    font-size: 10px;
+    transition: .2s;
+}
+
+.data-table button:hover {
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   SIDE COLUMN
+========================================== */
+
+.side-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .activity-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 14px 16px;
-  border-bottom: 1px solid #eef2f7;
-  font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 18px;
+    border-bottom: 1px solid #edf2f8;
 }
 
 .activity-row:last-child {
-  border-bottom: none;
+    border-bottom: none;
 }
 
-
-/* ===========================
+/* ==========================================
    QUICK ACTIONS
-=========================== */
+========================================== */
 
 .quick-actions {
-  display: grid;
-  gap: 10px;
-  padding: 16px;
+    display: grid;
+    gap: 12px;
+    padding: 16px;
 }
 
 .quick-action {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 38px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: white;
-  font-size: 11px;
-  font-weight: 600;
-  transition: .2s;
+    height: 40px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: white;
+    font-weight: 600;
+    transition: .25s ease;
 }
 
 .quick-action:hover {
-  background: var(--blue);
-  color: white;
+    background: var(--blue);
+    color: white;
+    border-color: var(--blue);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(40,101,223,.25);
 }
 
-
-/* ===========================
+/* ==========================================
    PAGINATION
-=========================== */
+========================================== */
 
 .pagination {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  padding: 18px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 20px;
 }
 
 .pagination button {
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: white;
-  cursor: pointer;
-  transition: .2s;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: white;
+    transition: .2s;
 }
 
 .pagination button:hover {
-  background: var(--blue-50);
+    background: var(--blue-50);
+    transform: translateY(-2px);
 }
 
 .pagination button.active {
-  background: var(--blue);
-  color: white;
-  border-color: var(--blue);
+    background: var(--blue);
+    color: white;
+    border-color: var(--blue);
 }
 
-
-/* ===========================
+/* ==========================================
    RESPONSIVE
-=========================== */
+========================================== */
 
 @media (max-width: 1200px) {
 
-  .reservation-layout {
-    grid-template-columns: 1fr;
-  }
+    .reservation-layout {
+        grid-template-columns: 1fr;
+    }
 
-  .side-column {
-    order: -1;
-  }
+    .side-column {
+        order: -1;
+    }
 
 }
 
 @media (max-width: 900px) {
 
-  .metric-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+    .metric-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
 }
 
 @media (max-width: 600px) {
 
-  .metric-grid {
-    grid-template-columns: 1fr;
-  }
+    .metric-grid {
+        grid-template-columns: 1fr;
+    }
 
-  .filter-panel {
-    flex-direction: column;
-    align-items: stretch;
-  }
+    .filter-panel {
+        flex-direction: column;
+        align-items: stretch;
+    }
 
-  .filter-panel input,
-  .filter-panel select,
-  .filter-panel button {
-    width: 100%;
-  }
+    .filter-panel input,
+    .filter-panel select,
+    .filter-panel button {
+        width: 100%;
+    }
 
 }

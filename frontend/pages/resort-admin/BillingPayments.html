@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Billing & Payments | ResortHub</title>
+
+  <!-- =====================================================
+       GLOBAL STYLES
+       ===================================================== -->
+
+  <link rel="stylesheet" href="../../css/resort-adminGlobal/Style.css">
+  <link rel="stylesheet" href="../../css/resort-adminGlobal/Sidebar.css">
+  <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css">
+  <link rel="stylesheet" href="../../css/resort-admin/BillingPayments.css">
+
+  <!-- =====================================================
+       PAGE STYLES
+       ===================================================== -->
+
+  <link rel="stylesheet" href="../../css/resort-admin/billing-payments.css">
+
+  <!-- =====================================================
+       LUCIDE ICONS
+       ===================================================== -->
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+
+<body>
+
+  <!-- =====================================================
+       APPLICATION SHELL
+       ===================================================== -->
+
+  <div class="app-shell">
+
+
+    <!-- ===================================================
+         GLOBAL SIDEBAR
+         =================================================== -->
+
+    <aside class="sidebar">
+
+      <a class="brand" href="Dashboard.html">
+
+        <i
+          class="brand-mark"
+          data-lucide="building-2">
+        </i>
+
+        <span>
+          <strong>ResortHub</strong>
+          <small>Resort Owner</small>
+        </span>
+
+      </a>
+
+
+      <!-- Resort Switcher -->
+
+      <div class="resort-switcher">
+
+        <span class="resort-avatar">
+          BW
+        </span>
+
+        <span>
+          <strong>Blue Waves Resort</strong>
+          <small>Resort Owner</small>
+        </span>
+
+      </div>
+
+
+      <!-- MAIN -->
+
+      <div class="nav-section">
+        MAIN
+      </div>
+
+      <a
+        class="nav-link"
+        href="Dashboard.html">
+
+        <i data-lucide="layout-dashboard"></i>
+
+        Dashboard
+
+      </a>
+
+
+      <!-- RESERVATIONS -->
+
+      <div class="nav-section">
+        RESERVATIONS
+      </div>
+
+      <a
+        class="nav-link"
+        href="Reservations.html">
+
+        <i data-lucide="calendar-days"></i>
+
+        Reservations
+
+      </a>
+
+      <a
+        class="nav-link"
+        href="Guests.html">
+
+        <i data-lucide="contact-round"></i>
+
+        Guests
+
+      </a>
+
+
+      <!-- ACCOMMODATION -->
+
+      <div class="nav-section">
+        ACCOMMODATION
+      </div>
+
+      <a
+        class="nav-link"
+        href="Rooms.html">
+
+        <i data-lucide="bed-double"></i>
+
+        Rooms & Cottages
+
+      </a>
+
+
+      <!-- FINANCE -->
+
+      <div class="nav-section">
+        FINANCE
+      </div>
+
+      <a
+        class="nav-link active"
+        href="BillingPayments.html">
+
+        <i data-lucide="credit-card"></i>
+
+        Billing & Payments
+
+      </a>
+
+
+      <!-- OPERATIONS -->
+
+      <div class="nav-section">
+        OPERATIONS
+      </div>
+
+      <a
+        class="nav-link"
+        href="OCRVerification.html">
+
+        <i data-lucide="scan-search"></i>
+
+        OCR Verification
+
+      </a>
+
+      <a
+        class="nav-link"
+        href="StaffManagement.html">
+
+        <i data-lucide="users"></i>
+
+        Staff Management
+
+      </a>
+
+      <a
+        class="nav-link"
+        href="Reports.html">
+
+        <i data-lucide="chart-no-axes-combined"></i>
+
+        Reports
+
+      </a>
+
+
+      <!-- SETTINGS -->
+
+      <div class="nav-section">
+        SETTINGS
+      </div>
+
+      <a
+        class="nav-link"
+        href="Settings.html">
+
+        <i data-lucide="settings"></i>
+
+        Settings
+
+      </a>
+
+
+      <!-- LOGOUT -->
+
+      <a
+        class="nav-link logout"
+        href="#">
+
+        <i data-lucide="log-out"></i>
+
+        Logout
+
+      </a>
+
+    </aside>
+
+
+    <!-- ===================================================
+         MAIN CONTENT
+         =================================================== -->
+
+    <main class="main">
+
+
+      <!-- =================================================
+           GLOBAL TOPBAR
+           ================================================= -->
+
+      <header class="topbar">
+
+        <button
+          class="sidebar-toggle"
+          type="button"
+          aria-label="Toggle sidebar">
+
+          <i data-lucide="menu"></i>
+
+        </button>
+
+
+        <input
+          class="search"
+          type="search"
+          placeholder="Search transactions...">
+
+
+        <div class="topbar-spacer"></div>
+
+
+        <!-- Notification -->
+
+        <button
+          class="notification"
+          type="button"
+          aria-label="Notifications">
+
+          <i data-lucide="bell"></i>
+
+        </button>
+
+
+        <!-- Resort Select -->
+
+        <button
+          class="top-select"
+          type="button">
+
+          <span>Blue Waves Resort</span>
+
+          <i data-lucide="chevron-down"></i>
+
+        </button>
+
+
+        <!-- Profile -->
+
+        <button
+          class="profile"
+          type="button">
+
+          <span class="avatar">
+            BW
+          </span>
+
+          <span>
+            Resort Owner
+            <small>Administrator</small>
+          </span>
+
+          <i data-lucide="chevron-down"></i>
+
+        </button>
+
+      </header>
+
+
+      <!-- =================================================
+           PAGE CONTENT
+           ================================================= -->
+
+      <div class="page-content">
+
+
+        <!-- =================================================
+             PAGE HEADER
+             ================================================= -->
+
+        <section class="page-header">
+
+          <div>
+
+            <div class="breadcrumb">
+
+              <span>Finance</span>
+
+              <i data-lucide="chevron-right"></i>
+
+              <strong>Billing & Payments</strong>
+
+            </div>
+
+            <h1>
+              Billing & Payments
+            </h1>
+
+            <p>
+              Manage billing transactions and payment records.
+            </p>
+
+          </div>
+
+
+          <div class="page-actions">
+
+            <button
+              class="btn-secondary"
+              type="button">
+
+              <i data-lucide="download"></i>
+
+              Export Report
+
+            </button>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FINANCIAL SUMMARY
+             ================================================= -->
+
+        <section class="stats-grid">
+
+
+          <!-- Total Transactions -->
+
+          <article class="stat-card">
+
+            <div class="stat-icon">
+
+              <i data-lucide="receipt-text"></i>
+
+            </div>
+
+            <span>
+              Total Transactions
+            </span>
+
+            <strong>
+              48
+            </strong>
+
+            <small>
+              Sample data
+            </small>
+
+          </article>
+
+
+          <!-- Paid -->
+
+          <article class="stat-card paid">
+
+            <div class="stat-icon">
+
+              <i data-lucide="circle-check"></i>
+
+            </div>
+
+            <span>
+              Paid
+            </span>
+
+            <strong>
+              32
+            </strong>
+
+            <small>
+              Sample data
+            </small>
+
+          </article>
+
+
+          <!-- Pending Verification -->
+
+          <article class="stat-card pending">
+
+            <div class="stat-icon">
+
+              <i data-lucide="clock-3"></i>
+
+            </div>
+
+            <span>
+              Pending Verification
+            </span>
+
+            <strong>
+              8
+            </strong>
+
+            <small>
+              Sample data
+            </small>
+
+          </article>
+
+
+          <!-- Outstanding Balance -->
+
+          <article class="stat-card outstanding">
+
+            <div class="stat-icon">
+
+              <i data-lucide="wallet-cards"></i>
+
+            </div>
+
+            <span>
+              Outstanding Balance
+            </span>
+
+            <strong>
+              ₱42,500
+            </strong>
+
+            <small>
+              Sample data
+            </small>
+
+          </article>
+
+
+        </section>
+
+
+        <!-- =================================================
+             TRANSACTION RECORDS
+             ================================================= -->
+
+        <section class="content-card">
+
+
+          <!-- Section Header -->
+
+          <div class="section-header">
+
+            <div>
+
+              <h2>
+                Billing & Payment Records
+              </h2>
+
+              <p>
+                View and monitor reservation-related
+                billing transactions.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               FILTER BAR
+               ================================================= -->
+
+          <div class="filter-bar">
+
+
+            <!-- Search -->
+
+            <div class="filter-search">
+
+              <i data-lucide="search"></i>
+
+              <input
+                type="search"
+                id="transactionSearch"
+                placeholder="Search transaction or guest...">
+
+            </div>
+
+
+            <!-- Payment Status -->
+
+            <select id="paymentStatusFilter">
+
+              <option>
+                All Status
+              </option>
+
+              <option>
+                Paid
+              </option>
+
+              <option>
+                Pending Verification
+              </option>
+
+              <option>
+                Partially Paid
+              </option>
+
+              <option>
+                Unpaid
+              </option>
+
+            </select>
+
+
+            <!-- Payment Method -->
+
+            <select id="paymentMethodFilter">
+
+              <option>
+                All Methods
+              </option>
+
+              <option>
+                GCash
+              </option>
+
+              <option>
+                Maya
+              </option>
+
+              <option>
+                Bank Transfer
+              </option>
+
+            </select>
+
+
+            <!-- Clear -->
+
+            <button
+              class="clear-filter"
+              type="button">
+
+              <i data-lucide="rotate-ccw"></i>
+
+              Clear
+
+            </button>
+
+          </div>
+
+
+          <!-- =================================================
+               TRANSACTION TABLE
+               ================================================= -->
+
+          <div class="table-wrapper">
+
+            <table class="transaction-table">
+
+              <thead>
+
+                <tr>
+
+                  <th>
+                    Reference No.
+                  </th>
+
+                  <th>
+                    Guest
+                  </th>
+
+                  <th>
+                    Reservation
+                  </th>
+
+                  <th>
+                    Total Amount
+                  </th>
+
+                  <th>
+                    Amount Paid
+                  </th>
+
+                  <th>
+                    Balance
+                  </th>
+
+                  <th>
+                    Payment Method
+                  </th>
+
+                  <th>
+                    Status
+                  </th>
+
+                  <th>
+                    Action
+                  </th>
+
+                </tr>
+
+              </thead>
+
+
+              <tbody>
+
+
+                <!-- =================================================
+                     TRANSACTION 001
+                     ================================================= -->
+
+                <tr>
+
+                  <td>
+                    <strong>
+                      TXN-0001
+                    </strong>
+                  </td>
+
+                  <td>
+                    Juan Dela Cruz
+                  </td>
+
+                  <td>
+                    RES-0012
+                  </td>
+
+                  <td>
+                    ₱8,500
+                  </td>
+
+                  <td>
+                    ₱8,500
+                  </td>
+
+                  <td>
+                    ₱0
+                  </td>
+
+                  <td>
+                    GCash
+                  </td>
+
+                  <td>
+
+                    <span class="status-badge paid-badge">
+                      Paid
+                    </span>
+
+                  </td>
+
+                  <td>
+
+                    <button
+                      class="table-action"
+                      type="button"
+                      title="View transaction">
+
+                      <i data-lucide="eye"></i>
+
+                    </button>
+
+                  </td>
+
+                </tr>
+
+
+                <!-- =================================================
+                     TRANSACTION 002
+                     ================================================= -->
+
+                <tr>
+
+                  <td>
+                    <strong>
+                      TXN-0002
+                    </strong>
+                  </td>
+
+                  <td>
+                    Maria Santos
+                  </td>
+
+                  <td>
+                    RES-0015
+                  </td>
+
+                  <td>
+                    ₱12,000
+                  </td>
+
+                  <td>
+                    ₱6,000
+                  </td>
+
+                  <td>
+                    ₱6,000
+                  </td>
+
+                  <td>
+                    Maya
+                  </td>
+
+                  <td>
+
+                    <span class="status-badge partial-badge">
+                      Partially Paid
+                    </span>
+
+                  </td>
+
+                  <td>
+
+                    <button
+                      class="table-action"
+                      type="button"
+                      title="View transaction">
+
+                      <i data-lucide="eye"></i>
+
+                    </button>
+
+                  </td>
+
+                </tr>
+
+
+                <!-- =================================================
+                     TRANSACTION 003
+                     ================================================= -->
+
+                <tr>
+
+                  <td>
+                    <strong>
+                      TXN-0003
+                    </strong>
+                  </td>
+
+                  <td>
+                    Pedro Reyes
+                  </td>
+
+                  <td>
+                    RES-0018
+                  </td>
+
+                  <td>
+                    ₱6,500
+                  </td>
+
+                  <td>
+                    ₱6,500
+                  </td>
+
+                  <td>
+                    ₱0
+                  </td>
+
+                  <td>
+                    Bank Transfer
+                  </td>
+
+                  <td>
+
+                    <span class="status-badge pending-badge">
+                      Pending Verification
+                    </span>
+
+                  </td>
+
+                  <td>
+
+                    <button
+                      class="table-action verify-payment"
+                      type="button"
+                      title="Verify payment">
+
+                      <i data-lucide="scan-search"></i>
+
+                    </button>
+
+                  </td>
+
+                </tr>
+
+
+                <!-- =================================================
+                     TRANSACTION 004
+                     ================================================= -->
+
+                <tr>
+
+                  <td>
+                    <strong>
+                      TXN-0004
+                    </strong>
+                  </td>
+
+                  <td>
+                    Ana Garcia
+                  </td>
+
+                  <td>
+                    RES-0020
+                  </td>
+
+                  <td>
+                    ₱10,000
+                  </td>
+
+                  <td>
+                    ₱0
+                  </td>
+
+                  <td>
+                    ₱10,000
+                  </td>
+
+                  <td>
+                    GCash
+                  </td>
+
+                  <td>
+
+                    <span class="status-badge unpaid-badge">
+                      Unpaid
+                    </span>
+
+                  </td>
+
+                  <td>
+
+                    <button
+                      class="table-action"
+                      type="button"
+                      title="View transaction">
+
+                      <i data-lucide="eye"></i>
+
+                    </button>
+
+                  </td>
+
+                </tr>
+
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             DOCUMENT VERIFICATION WIDGET
+             ================================================= -->
+
+        <section class="verification-card">
+
+
+          <!-- Widget Header -->
+
+          <div class="section-header">
+
+            <div>
+
+              <div class="section-title-with-icon">
+
+                <div class="section-icon">
+
+                  <i data-lucide="scan-search"></i>
+
+                </div>
+
+                <div>
+
+                  <h2>
+                    Document Verification
+                  </h2>
+
+                  <p>
+                    Review submitted proof of payment
+                    and extracted transaction information.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <span class="verification-status pending">
+              Pending Verification
+            </span>
+
+          </div>
+
+
+          <!-- =================================================
+               VERIFICATION CONTENT
+               ================================================= -->
+
+          <div class="verification-grid">
+
+
+            <!-- Document Preview -->
+
+            <div class="document-preview">
+
+              <div class="preview-header">
+
+                <span>
+                  Submitted Document
+                </span>
+
+                <i data-lucide="file-image"></i>
+
+              </div>
+
+
+              <div class="document-placeholder">
+
+                <i data-lucide="image"></i>
+
+                <strong>
+                  Proof of Payment
+                </strong>
+
+                <small>
+                  Payment_Proof_TXN-0003.jpg
+                </small>
+
+                <button
+                  class="preview-button"
+                  type="button">
+
+                  <i data-lucide="maximize-2"></i>
+
+                  View Document
+
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <!-- OCR Extracted Information -->
+
+            <div class="ocr-results">
+
+              <div class="preview-header">
+
+                <span>
+                  OCR Extracted Information
+                </span>
+
+                <i data-lucide="scan-text"></i>
+
+              </div>
+
+
+              <div class="ocr-field">
+
+                <span>
+                  Transaction Reference
+                </span>
+
+                <strong>
+                  GCR-847291
+                </strong>
+
+              </div>
+
+
+              <div class="ocr-field">
+
+                <span>
+                  Payment Amount
+                </span>
+
+                <strong>
+                  ₱6,500
+                </strong>
+
+              </div>
+
+
+              <div class="ocr-field">
+
+                <span>
+                  Payment Method
+                </span>
+
+                <strong>
+                  Bank Transfer
+                </strong>
+
+              </div>
+
+
+              <div class="ocr-field">
+
+                <span>
+                  Submitted Date
+                </span>
+
+                <strong>
+                  August 27, 2026
+                </strong>
+
+              </div>
+
+
+              <div class="ocr-actions">
+
+                <button
+                  class="btn-verify"
+                  type="button">
+
+                  <i data-lucide="circle-check"></i>
+
+                  Verify Payment
+
+                </button>
+
+                <button
+                  class="btn-reject"
+                  type="button">
+
+                  <i data-lucide="circle-x"></i>
+
+                  Reject
+
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
+
+  <script src="../../js/resort-admin/billingPayments.js"></script>
+
+  <script>
+
+    /*
+     * Initialize Lucide icons after
+     * the page has loaded.
+     */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+        if (
+          typeof lucide !== "undefined" &&
+          typeof lucide.createIcons === "function"
+        ) {
+
+          lucide.createIcons();
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>
