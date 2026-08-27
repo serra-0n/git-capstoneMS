@@ -1,0 +1,818 @@
+/* =========================================
+   RESORTHUB RESORT SIGNUP
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    background: #f8fafc;
+    color: #111827;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.auth-header {
+    width: 100%;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 48px;
+
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.auth-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #111827;
+    text-decoration: none;
+}
+
+.logo-text {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.logo-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+
+    margin-top: 2px;
+}
+
+.logo-dots span {
+    width: 4px;
+    height: 4px;
+
+    display: block;
+
+    border-radius: 50%;
+    background: #2563eb;
+}
+
+.logo-dots span:nth-child(2) {
+    background: #60a5fa;
+}
+
+.logo-dots span:nth-child(3) {
+    background: #93c5fd;
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.auth-navigation {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.header-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 40px;
+    padding: 0 14px;
+
+    color: #374151;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    text-decoration: none;
+    border-radius: 8px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.header-link:hover {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.header-link.active {
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.resort-link {
+    color: #2563eb;
+}
+
+
+/* =========================================
+   HEADER BUTTON
+========================================= */
+
+.header-button {
+    min-height: 38px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 15px;
+
+    border: 1px solid #2563eb;
+    border-radius: 8px;
+
+    background: #ffffff;
+    color: #2563eb;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.header-button:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+
+    transform: translateY(-1px);
+}
+
+.header-button.active {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.auth-main {
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+
+    padding: 48px 20px 55px;
+}
+
+.onboarding-shell {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.auth-card {
+    width: 100%;
+    max-width: 450px;
+
+    padding: 32px 34px 28px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    box-shadow:
+        0 8px 25px rgba(15, 23, 42, 0.06);
+}
+
+.onboarding-card {
+    max-width: 450px;
+}
+
+
+/* =========================================
+   CARD HEADER
+========================================= */
+
+.auth-card-header {
+    margin-bottom: 24px;
+
+    text-align: center;
+}
+
+.auth-card-header h1 {
+    margin: 0 0 8px;
+
+    color: #111827;
+
+    font-size: 23px;
+    font-weight: 700;
+
+    line-height: 1.3;
+    letter-spacing: -0.4px;
+}
+
+.auth-card-header p {
+    max-width: 350px;
+
+    margin: 0 auto;
+
+    color: #64748b;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.signup-form {
+    width: 100%;
+}
+
+
+/* =========================================
+   FORM ROW
+========================================= */
+
+.form-row {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+
+/* =========================================
+   FORM GROUP
+========================================= */
+
+.form-group {
+    width: 100%;
+
+    display: block;
+
+    margin-bottom: 16px;
+
+    color: #374151;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   TEXT INPUT
+========================================= */
+
+.form-group input[type="text"],
+.form-group input[type="email"] {
+    width: 100%;
+    height: 42px;
+
+    display: block;
+
+    margin-top: 6px;
+
+    padding: 0 12px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #ffffff;
+    color: #111827;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 13px;
+    font-weight: 400;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-group input::placeholder {
+    color: #9ca3af;
+}
+
+.form-group input:hover {
+    border-color: #9ca3af;
+}
+
+.form-group input:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+/* =========================================
+   SELECT
+========================================= */
+
+.resort-type-select {
+    width: 100%;
+    height: 42px;
+
+    display: block;
+
+    margin-top: 6px;
+
+    padding: 0 12px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #ffffff;
+    color: #111827;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.resort-type-select:hover {
+    border-color: #9ca3af;
+}
+
+.resort-type-select:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+/* =========================================
+   FILE FIELD
+========================================= */
+
+.file-field {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 18px;
+
+    color: #374151;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   FILE INPUT
+========================================= */
+
+.file-field input[type="file"] {
+    width: 100%;
+
+    margin-top: 6px;
+
+    padding: 9px 10px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    background: #ffffff;
+    color: #374151;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.file-field input[type="file"]:hover {
+    border-color: #9ca3af;
+}
+
+.file-field input[type="file"]:focus {
+    outline: none;
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+/* =========================================
+   FILE BUTTON
+========================================= */
+
+.file-field input[type="file"]::file-selector-button {
+    margin-right: 10px;
+
+    padding: 7px 12px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+
+    background: #ffffff;
+    color: #374151;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.file-field input[type="file"]::file-selector-button:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+
+/* =========================================
+   FILE HELP TEXT
+========================================= */
+
+.file-field small {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+    font-weight: 400;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================
+   SUBMIT BUTTON
+========================================= */
+
+.continue-button {
+    width: 100%;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.continue-button:hover {
+    background: #1d4ed8;
+
+    box-shadow:
+        0 4px 10px rgba(37, 99, 235, 0.18);
+
+    transform: translateY(-1px);
+}
+
+.continue-button:active {
+    transform: translateY(0);
+}
+
+.continue-button:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================
+   FORM MESSAGE
+========================================= */
+
+.message {
+    min-height: 18px;
+
+    margin: 10px 0 0;
+
+    color: #64748b;
+
+    font-size: 11px;
+    line-height: 1.5;
+
+    text-align: center;
+}
+
+
+/* =========================================
+   BACK LINK
+========================================= */
+
+.back-link {
+    display: block;
+
+    margin-top: 20px;
+
+    color: #2563eb;
+
+    font-size: 13.5px;
+    font-weight: 600;
+
+    text-align: center;
+
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.auth-footer {
+    width: 100%;
+
+    padding: 30px 38px;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+.footer-content {
+    max-width: 1050px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 35px;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+.footer-column h3 {
+    margin: 0 0 4px;
+
+    color: #374151;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.footer-column a {
+    width: fit-content;
+
+    color: #64748b;
+
+    font-size: 15px;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.footer-column a:hover {
+    color: #2563eb;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 850px) {
+
+    .auth-header {
+        padding: 0 24px;
+    }
+
+    .auth-navigation {
+        gap: 14px;
+    }
+
+    .auth-footer {
+        padding: 28px 24px;
+    }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+    .auth-header {
+        height: 60px;
+
+        padding: 0 16px;
+    }
+
+    .auth-navigation {
+        gap: 8px;
+    }
+
+    .resort-link {
+        display: none;
+    }
+
+    .header-link:not(.resort-link) {
+        display: none;
+    }
+
+    .header-button {
+        min-height: 34px;
+
+        padding: 0 12px;
+
+        font-size: 10px;
+    }
+
+    .auth-main {
+        padding: 30px 15px 40px;
+    }
+
+    .auth-card {
+        max-width: 100%;
+
+        padding: 26px 20px 24px;
+
+        border-radius: 12px;
+    }
+
+    .auth-card-header h1 {
+        font-size: 21px;
+    }
+
+    .auth-card-header p {
+        font-size: 11px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+
+        gap: 0;
+    }
+
+    .auth-footer {
+        padding: 26px 20px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+
+        gap: 22px;
+    }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 400px) {
+
+    .logo-text {
+        font-size: 17px;
+    }
+
+    .auth-card {
+        padding: 23px 17px 22px;
+    }
+
+    .auth-card-header h1 {
+        font-size: 20px;
+    }
+
+    .file-field {
+        font-size: 12px;
+    }
+
+    .file-field small {
+        font-size: 9px;
+    }
+
+    .back-link {
+        font-size: 11px;
+    }
+}
