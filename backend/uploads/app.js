@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const bcrypt = require("bcryptjs");
 const pool = require("../config/database");
 const upload = require("../middleware/uploadMiddleware");
 const { extractText } = require("../services/ocrService");
@@ -19,6 +20,148 @@ app.get("/api/health", async (request, response) => {
 		response.json({ status: "ok", database: "connected" });
 	} catch (error) {
 		response.status(503).json({ status: "error", database: "unavailable" });
+	}
+});
+
+app.get("/api/admin/tenants", async (request, response) => {
+	try {
+		const [tenants] = await pool.execute(
+			`SELECT id, tenant_code, resort_name, resort_type, location,
+					owner_name, owner_email, approval_status, tenant_status, created_at
+			 FROM tenants
+			 ORDER BY created_at DESC`
+		);
+
+		response.json(tenants);
+	} catch (error) {
+		response.status(500).json({ message: "Unable to load resort applications." });
+	}
+});
+
+app.patch("/api/admin/tenants/:id/status", async (request, response) => {
+	const tenantId = Number(request.params.id);
+	const { status, reviewNotes } = request.body;
+
+	if (!Number.isInteger(tenantId) || !["approved", "rejected"].includes(status)) {
+		return response.status(400).json({ message: "A valid tenant and status are required." });
+	}
+
+	if (status === "rejected" && !reviewNotes?.trim()) {
+		return response.status(400).json({ message: "A review note is required when rejecting an application." });
+	}
+
+	const connection = await pool.getConnection();
+
+	try {
+		await connection.beginTransaction();
+		const tenantStatus = status === "approved" ? "active" : "inactive";
+		const actionType = status === "approved" ? "tenant_approved" : "tenant_rejected";
+
+		const [updateResult] = await connection.execute(
+			`UPDATE tenants
+			 SET approval_status = ?, tenant_status = ?, review_notes = ?, reviewed_at = NOW()
+			 WHERE id = ?`,
+			[status, tenantStatus, reviewNotes?.trim() || null, tenantId]
+		);
+
+		if (updateResult.affectedRows !== 1) {
+			await connection.rollback();
+			return response.status(404).json({ message: "Tenant application was not found." });
+		}
+
+		await connection.execute(
+			`INSERT INTO activity_logs (tenant_id, action_type, entity_type, entity_id, action_details)
+			 VALUES (?, ?, 'tenant', ?, ?)`,
+			[tenantId, actionType, tenantId, reviewNotes?.trim() || null]
+		);
+
+		await connection.commit();
+		response.json({ message: `Tenant application ${status}.` });
+	} catch (error) {
+		await connection.rollback();
+		console.error("Tenant status update failed:", error);
+		response.status(500).json({ message: "Unable to update tenant application." });
+	} finally {
+		connection.release();
+	}
+});
+
+app.post("/api/onboarding/resorts/:id/complete", upload.single("resortLogo"), async (request, response) => {
+	const tenantId = Number(request.params.id);
+	const {
+		password,
+		description,
+		contactNumber,
+		contactEmail,
+		resortName,
+		resortType,
+		location
+	} = request.body;
+
+	if (!Number.isInteger(tenantId) || !password || password.length < 6 ||
+		!description?.trim() || !contactNumber?.trim() || !contactEmail?.trim() ||
+		!resortName?.trim() || !resortType || !location?.trim()) {
+		return response.status(400).json({ message: "All required resort information must be completed." });
+	}
+
+	const connection = await pool.getConnection();
+
+	try {
+		await connection.beginTransaction();
+		const [tenants] = await connection.execute(
+			`SELECT owner_name, owner_email
+			 FROM tenants
+			 WHERE id = ? AND approval_status = 'approved' AND tenant_status = 'active'`,
+			[tenantId]
+		);
+
+		if (tenants.length !== 1) {
+			await connection.rollback();
+			return response.status(403).json({ message: "This resort is not approved for account setup." });
+		}
+
+		const nameParts = tenants[0].owner_name.trim().split(/\s+/).reduce(
+			(parts, part, index) => {
+				if (index === 0) parts[0] = part;
+				else parts[1] += `${parts[1] ? " " : ""}${part}`;
+				return parts;
+			},
+			["", ""]
+		);
+		const passwordHash = await bcrypt.hash(password, 12);
+		const logoPath = request.file
+			? path.relative(path.resolve(__dirname, "../.."), request.file.path)
+			: null;
+
+		const [userResult] = await connection.execute(
+			`INSERT INTO users
+				(tenant_id, first_name, last_name, email, password_hash, role, account_status, setup_status)
+			 VALUES (?, ?, ?, ?, ?, 'resort_admin', 'active', 'completed')`,
+			[tenantId, nameParts[0], nameParts[1], tenants[0].owner_email, passwordHash]
+		);
+
+		await connection.execute(
+			`UPDATE tenants
+			 SET resort_name = ?, resort_type = ?, location = ?, description = ?,
+				 contact_number = ?, contact_email = ?, logo_path = COALESCE(?, logo_path)
+			 WHERE id = ?`,
+			[resortName.trim(), resortType, location.trim(), description.trim(), contactNumber.trim(), contactEmail.trim(), logoPath, tenantId]
+		);
+
+		await connection.execute(
+			`INSERT INTO activity_logs (tenant_id, user_id, action_type, entity_type, entity_id, action_details)
+			 VALUES (?, ?, 'user_created', 'user', ?, 'Resort administrator account completed setup')`,
+			[tenantId, userResult.insertId, userResult.insertId]
+		);
+
+		await connection.commit();
+		response.status(201).json({ message: "Resort account setup completed." });
+	} catch (error) {
+		await connection.rollback();
+		console.error("Resort account setup failed:", error);
+		response.status(500).json({ message: "Unable to complete resort account setup." });
+	} finally {
+		connection.release();
 	}
 });
 

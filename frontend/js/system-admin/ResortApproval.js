@@ -1,271 +1,137 @@
 document.addEventListener("DOMContentLoaded", () => {
-    if (typeof lucide !=="undefined"){
-        lucide.createIcons();
-    }
-
+    const applicationList = document.querySelector("#applicationList");
     const searchInput = document.querySelector(".approval-search input");
     const tabs = document.querySelectorAll(".approval-tab");
-    const applications = document.querySelectorAll(".application-item");
     const reviewModal = document.querySelector("#reviewModal");
-    const closeReviewModal = document.querySelector("#closeReviewModal");
     const reviewModalOverlay = document.querySelector(".review-modal-overlay");
+    const closeReviewModal = document.querySelector("#closeReviewModal");
     const approveButton = document.querySelector("#approveApplication");
     const rejectButton = document.querySelector("#rejectApplication");
     const reviewNotes = document.querySelector("#reviewNotes");
-
-    const pendingCount = document.querySelector("#pendingCount");
-    const approvedCount = document.querySelector("#approvedCount");
-    const rejectedCount = document.querySelector("#rejectedCount");
-    const totalCount = document.querySelector("#totalCount");
-
     let currentStatus = "pending";
     let currentApplication = null;
 
-    function filterApplications(){
-        const searchValue = searchInput ? searchInput.value.trim().toLowerCase() : "";
-
-        applications.forEach(application => {
-            const statusElement = application.querySelector(".approval-status");
-
-            if(!statusElement){
-                return;
-            }
-
-            const status = statusElement.textContent.trim().toLowerCase();
-            const applicationText = application.textContent.toLowerCase();
-            const statusMatches = status === currentStatus;
-            const searchMatches = applicationText.includes(searchValue);
-
-            if(statusMatches && searchMatches) {
-                application.style.display = "";
-            } else {
-                application.style.display = "none";
-            }
-        });
-    }
-    
-    function updateCounts () {
-        let pending = 0;
-        let approved = 0;
-        let rejected = 0;
-
-        applications.forEach(application => {
-            const statusElement = application.querySelector(".approval-status");
-
-            if (!statusElement) {
-                return;
-            }
-
-            const status = statusElement.textContent
-                    .trim()
-                    .toLowerCase();
-
-            if (status === "pending") {
-                pending++;
-            } else if (status === "approved") {
-                approved++;
-            } else if (status === "rejected") {
-                rejected++;
-            }
-        });
-
-        const total = pending + approved + rejected;
-
-            if (pendingCount) {
-                pendingCount.textContent = pending;
-            }
-
-            if (approvedCount) {
-                approvedCount.textContent = approved;
-            }
-
-            if (rejectedCount) {
-                rejectedCount.textContent = rejected;
-            }
-
-            if (totalCount) {
-                totalCount.textContent = total;
-            }
-
-            document.querySelectorAll(".approval-tab").forEach(tab => {
-                const status = tab.dataset.status;
-                const count = tab.querySelector(".tab-count");
-
-                if (!count){
-                    return;
-                }
-
-                if (status === "pending") {
-                    count.textContent = pending;
-                }
-
-                if (status === "approved") {
-                    count.textContent = approved;
-                }
-
-                if (status === "rejected") {
-                    count.textContent = rejected;
-                }
-            });
+    function escapeHtml(value) {
+        return String(value ?? "").replace(/[&<>\'"]/g, character => ({
+            "&": "&amp;", "<": "&lt;", ">": "&gt;",
+            "\'": "&#39;", '"': "&quot;"
+        }[character]));
     }
 
-    
-    tabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-            tabs.forEach(item => {
-                item.classList.remove("active");
-            });
-
-            tab.classList.add("active");
-
-            const selectedTab = tab.textContent
-                .trim()
-                .toLowerCase();
-
-
-                if (selectedTab.includes("pending")) {
-                    currentStatus = "pending";
-                } else if(selectedTab.includes("approved")) {
-                    currentStatus = "approved";
-                } else if(selectedTab.includes("rejected")) {
-                    currentStatus = "rejected";
-                }
-
-                filterApplications();
-            });
+    function updateCounts() {
+        const counts = { pending: 0, approved: 0, rejected: 0 };
+        document.querySelectorAll(".application-item").forEach(application => {
+            const status = application.dataset.status;
+            if (counts[status] !== undefined) counts[status]++;
         });
+        ["pending", "approved", "rejected"].forEach(status => {
+            const count = document.querySelector(`#${status}Count`);
+            if (count) count.textContent = counts[status];
+            const tabCount = document.querySelector(`.approval-tab[data-status="${status}"] .tab-count`);
+            if (tabCount) tabCount.textContent = counts[status];
+        });
+        const totalCount = document.querySelector("#totalCount");
+        if (totalCount) totalCount.textContent = counts.pending + counts.approved + counts.rejected;
+    }
 
-    if (searchInput) {
-        searchInput.addEventListener("input", () => {
-            filterApplications();
+    function filterApplications() {
+        const searchValue = searchInput?.value.trim().toLowerCase() || "";
+        document.querySelectorAll(".application-item").forEach(application => {
+            const matchesStatus = application.dataset.status === currentStatus;
+            const matchesSearch = application.textContent.toLowerCase().includes(searchValue);
+            application.style.display = matchesStatus && matchesSearch ? "" : "none";
         });
     }
 
-    const reviewButtons = document.querySelectorAll(".view-button");
+    function closeModal() {
+        reviewModal?.classList.remove("show");
+        document.body.style.overflow = "";
+        currentApplication = null;
+    }
 
-    reviewButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            const application = button.closest(".application-item");
-
-            if (!application){
-                return;
-            }
-
-            currentApplication = application;
-
-            const resort = application.querySelector(".application-resort strong");
-
-            if (!resort) {
-                return;
-            }
-
-            const reviewResortName = document.querySelector("#reviewResortName");
-
-            if (reviewResortName) {
-                reviewResortName.textContent = resort.textContent;
-            }
-
-            if (reviewModal) {
-                reviewModal.classList.add("show");
+    function bindReviewButtons() {
+        document.querySelectorAll(".view-button").forEach(button => {
+            button.addEventListener("click", () => {
+                currentApplication = button.closest(".application-item");
+                document.querySelector("#reviewResortName").textContent = currentApplication?.querySelector(".application-resort strong")?.textContent || "";
+                document.querySelector("#reviewLocation").textContent = currentApplication?.querySelector(".application-resort span")?.textContent || "";
+                reviewModal?.classList.add("show");
                 document.body.style.overflow = "hidden";
-            }
+            });
         });
-    });
+    }
 
-    function closeReviewModalFunction(){
-        if (reviewModal) {
-            reviewModal.classList.remove("show");
-            document.body.style.overflow = "";
+    async function loadApplications() {
+        try {
+            const response = await fetch("/api/admin/tenants");
+            const tenants = await response.json();
+            if (!response.ok) throw new Error(tenants.message || "Unable to load applications.");
+            applicationList.innerHTML = tenants.map(tenant => `
+                <article class="application-item" data-tenant-id="${tenant.id}" data-status="${tenant.approval_status}">
+                    <div class="application-resort">
+                        <div class="resort-avatar"><i data-lucide="building-2"></i></div>
+                        <div><strong>${escapeHtml(tenant.resort_name)}</strong><span>${escapeHtml(tenant.location)}</span></div>
+                    </div>
+                    <div class="application-owner"><span class="application-label">Owner</span><strong>${escapeHtml(tenant.owner_name)}</strong></div>
+                    <div class="application-date"><span class="application-label">Submitted</span><strong>${new Date(tenant.created_at).toLocaleDateString()}</strong></div>
+                    <div><span class="approval-status ${tenant.approval_status}">${escapeHtml(tenant.approval_status)}</span></div>
+                    <div><button type="button" class="view-button"><i data-lucide="eye"></i> Review</button></div>
+                </article>
+            `).join("");
+            if (typeof lucide !== "undefined") lucide.createIcons();
+            bindReviewButtons();
+            updateCounts();
+            filterApplications();
+        } catch (error) {
+            applicationList.innerHTML = `<p class="message error">${escapeHtml(error.message)}</p>`;
         }
     }
 
-    if (closeReviewModal){ 
-        closeReviewModal.addEventListener(
-            "click", 
-            closeReviewModalFunction
-        );
-    }
-
-    if (reviewModalOverlay) {
-        reviewModalOverlay.addEventListener(
-            "click", 
-            closeReviewModalFunction
-        );
-    }
-
-    if (approveButton) {
-        approveButton.addEventListener("click", () => {
-            if (!currentApplication) {
-                return;
-            }
-
-            const resort = currentApplication.querySelector(".application-resort strong");
-            const resortName = resort ? resort.textContent : "this resort";
-            const confirmed = confirm("Are you sure you want to approve " + resortName + "?");
-
-            if (!confirmed) {
-                return;
-            }
-
-            const status = currentApplication.querySelector(".approval-status");
-
-            if(status) {
-                status.textContent = "Approved";
-                status.classList.remove("pending");
-                status.classList.add("approved");
-            }
-
-            closeReviewModalFunction();
-            currentApplication = null;
-            updateCounts();
-            filterApplications();
+    async function changeStatus(status, notes) {
+        const response = await fetch(`/api/admin/tenants/${currentApplication.dataset.tenantId}/status`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status, reviewNotes: notes })
         });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || "Unable to update application.");
     }
 
-    if (rejectButton) {
-        rejectButton.addEventListener("click", () => {
+    tabs.forEach(tab => tab.addEventListener("click", () => {
+        tabs.forEach(item => item.classList.remove("active"));
+        tab.classList.add("active");
+        currentStatus = tab.dataset.status;
+        filterApplications();
+    }));
+    searchInput?.addEventListener("input", filterApplications);
+    closeReviewModal?.addEventListener("click", closeModal);
+    reviewModalOverlay?.addEventListener("click", closeModal);
 
-            if (!currentApplication) {
-                return;
-            }
+    approveButton?.addEventListener("click", async () => {
+        if (!currentApplication || !confirm("Approve this resort application?")) return;
+        try {
+            await changeStatus("approved", "");
+            closeModal();
+            await loadApplications();
+        } catch (error) { alert(error.message); }
+    });
 
-            const resort = currentApplication.querySelector(".application-resort strong");
-            const resortName = resort ? resort.textContent : "this report";
-            const notes = reviewNotes ? reviewNotes.value.trim() : "";
+    rejectButton?.addEventListener("click", async () => {
+        const notes = reviewNotes?.value.trim() || "";
+        if (!currentApplication) return;
+        if (!notes) {
+            alert("Please provide a review note before rejecting this application.");
+            reviewNotes?.focus();
+            return;
+        }
+        if (!confirm("Reject this resort application?")) return;
+        try {
+            await changeStatus("rejected", notes);
+            if (reviewNotes) reviewNotes.value = "";
+            closeModal();
+            await loadApplications();
+        } catch (error) { alert(error.message); }
+    });
 
-            if (!notes) {
-                alert("Please provide a review note before rejecting this application.");
-
-                if (reviewNotes) {
-                    reviewNotes.focus();
-                }
-
-                return;
-            }
-
-            const confirmed = confirm("Are you sure you want to reject" + resortName + "?");
-
-            if (!confirmed) {
-                return;
-            }
-
-            const status = currentApplication.querySelector(".approval-status");
-
-            if (status) {
-                status.textContent = "Rejected";
-                status.classList.remove("pending");
-                status.classList.add("rejected");
-            }
-
-            closeReviewModalFunction();
-            currentApplication = null;
-
-            if (reviewNotes) {
-                reviewNotes.value = "";
-            }
-
-            updateCounts();
-            filterApplications();
-        });
-    }
+    loadApplications();
 });
