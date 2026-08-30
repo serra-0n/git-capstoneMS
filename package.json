@@ -18,4 +18,8 @@
         "mysql2": "^3.24.2",
         "tesseract.js": "^7.0.0"
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> backend-sample
