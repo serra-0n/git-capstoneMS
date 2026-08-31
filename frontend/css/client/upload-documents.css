@@ -1,0 +1,953 @@
+/* =========================================================
+   RESORTHUB - CLIENT UPLOAD DOCUMENTS
+   File: css/client/upload-documents.css
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.upload-documents-content {
+    padding-bottom: 40px;
+}
+
+
+/* =========================================================
+   CARD SPACING
+   ========================================================= */
+
+.document-upload-card,
+.uploaded-documents-card {
+    margin-bottom: 20px;
+}
+
+.document-detail-card {
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   CARD HEADERS
+   ========================================================= */
+
+.document-upload-card .card-header,
+.uploaded-documents-card .card-header,
+.document-detail-card .card-header {
+    padding: 18px 20px;
+}
+
+.document-upload-card .card-body,
+.uploaded-documents-card .card-body,
+.document-detail-card .card-body {
+    padding: 20px;
+}
+
+.document-upload-card .card-heading h2,
+.uploaded-documents-card .card-heading h2,
+.document-detail-card .card-heading h2 {
+    margin: 0 0 3px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.document-upload-card .card-heading p,
+.uploaded-documents-card .card-heading p,
+.document-detail-card .card-heading p {
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   FORM GRID
+   ========================================================= */
+
+.document-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+
+/* =========================================================
+   FILE GROUP
+   ========================================================= */
+
+.document-file-group {
+    margin-top: 18px;
+}
+
+
+/* =========================================================
+   FILE UPLOAD AREA
+   ========================================================= */
+
+.document-file-upload {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    min-height: 105px;
+
+    padding: 18px;
+
+    border: 1px dashed #cbd5e1;
+    border-radius: var(--radius-medium);
+
+    background: var(--surface-soft);
+
+    cursor: pointer;
+
+    transition:
+        border-color var(--transition),
+        background-color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition);
+}
+
+.document-file-upload:hover {
+    border-color: var(--primary);
+
+    background: var(--primary-light);
+
+    box-shadow: var(--shadow-small);
+
+    transform: translateY(-1px);
+}
+
+.document-file-upload:focus-within {
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+
+/* Actual input */
+
+.document-file-upload input[type="file"] {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   UPLOAD ICON
+   ========================================================= */
+
+.document-upload-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-medium);
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    transition:
+        transform 0.22s ease,
+        background-color 0.22s ease,
+        color 0.22s ease;
+}
+
+.document-upload-icon svg {
+    width: 23px;
+    height: 23px;
+
+    transition:
+        transform 0.22s ease,
+        stroke 0.22s ease;
+}
+
+.document-file-upload:hover .document-upload-icon {
+    background: var(--primary);
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+}
+
+.document-file-upload:hover .document-upload-icon svg {
+    transform: translateY(-2px) scale(1.08);
+}
+
+
+/* =========================================================
+   UPLOAD TEXT
+   ========================================================= */
+
+.document-upload-text {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+.document-upload-text strong {
+    margin-bottom: 4px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: var(--text-primary);
+}
+
+.document-upload-text small {
+    font-size: 12px;
+    line-height: 1.5;
+
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   SELECTED FILE
+   ========================================================= */
+
+.selected-document-file {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 12px;
+
+    padding: 12px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-medium);
+
+    background: var(--surface);
+}
+
+.selected-document-file[hidden] {
+    display: none;
+}
+
+
+/* Selected icon */
+
+.selected-document-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-small);
+
+    background: var(--success-background);
+
+    color: var(--success);
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.selected-document-icon svg {
+    width: 19px;
+    height: 19px;
+
+    transition: transform 0.2s ease;
+}
+
+.selected-document-file:hover .selected-document-icon {
+    transform: scale(1.05);
+}
+
+.selected-document-file:hover .selected-document-icon svg {
+    transform: scale(1.06);
+}
+
+
+/* Selected file details */
+
+.selected-document-file-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+.selected-document-file-info strong {
+    overflow: hidden;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    color: var(--text-primary);
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.selected-document-file-info small {
+    margin-top: 3px;
+
+    font-size: 11px;
+
+    color: var(--text-muted);
+}
+
+
+/* Remove button */
+
+.remove-document-button {
+    flex-shrink: 0;
+}
+
+.remove-document-button svg {
+    transition: transform 0.18s ease;
+}
+
+.remove-document-button:hover svg {
+    transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   OCR QUALITY NOTICE
+   ========================================================= */
+
+.ocr-quality-notice {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-top: 18px;
+
+    padding: 13px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-medium);
+
+    background: var(--surface-soft);
+}
+
+.ocr-quality-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-small);
+
+    background: var(--warning-background);
+
+    color: var(--warning);
+}
+
+.ocr-quality-icon svg {
+    width: 18px;
+    height: 18px;
+
+    transition:
+        transform 0.25s ease,
+        color 0.2s ease;
+}
+
+.ocr-quality-notice:hover .ocr-quality-icon svg {
+    transform: scale(1.1) rotate(-3deg);
+}
+
+.ocr-quality-notice strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.ocr-quality-notice p {
+    margin: 0;
+
+    font-size: 11px;
+    line-height: 1.55;
+
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   FORM MESSAGE
+   ========================================================= */
+
+.document-form-message {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 18px;
+
+    padding: 11px 13px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-medium);
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.document-form-message[hidden] {
+    display: none;
+}
+
+.document-form-message.success {
+    border-color: #bbf7d0;
+
+    background: var(--success-background);
+
+    color: var(--success);
+}
+
+.document-form-message.error {
+    border-color: #fecaca;
+
+    background: var(--danger-background);
+
+    color: var(--danger);
+}
+
+.document-form-message.info {
+    border-color: #bfdbfe;
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+}
+
+.document-form-message svg {
+    width: 16px;
+    height: 16px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+   ========================================================= */
+
+.document-form-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 20px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid var(--border-light);
+}
+
+#submitDocumentButton {
+    min-width: 155px;
+}
+
+#submitDocumentButton svg {
+    transition:
+        transform 0.2s ease,
+        stroke 0.2s ease;
+}
+
+#submitDocumentButton:hover:not(:disabled) svg {
+    transform: translateY(-2px) rotate(-5deg);
+}
+
+#submitDocumentButton:active:not(:disabled) svg {
+    transform: scale(0.92);
+}
+
+#submitDocumentButton:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   UPLOAD BUTTON LOADING ICON
+   ========================================================= */
+
+#submitDocumentButton.is-loading svg {
+    animation:
+        upload-icon-pulse 0.9s ease-in-out infinite;
+}
+
+@keyframes upload-icon-pulse {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(-2px) scale(0.92);
+        opacity: 0.65;
+    }
+
+}
+
+
+/* =========================================================
+   UPLOADED DOCUMENT LIST
+   ========================================================= */
+
+.uploaded-document-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+
+/* =========================================================
+   DOCUMENT ITEM
+   ========================================================= */
+
+.uploaded-document-item {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-medium);
+
+    background: var(--surface);
+
+    color: inherit;
+
+    font: inherit;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.uploaded-document-item:hover {
+    border-color: #cbd5e1;
+
+    background: var(--surface-soft);
+
+    box-shadow: var(--shadow-small);
+
+    transform: translateY(-2px);
+}
+
+.uploaded-document-item.selected {
+    border-color: #bfdbfe;
+
+    background: var(--primary-light);
+}
+
+
+/* =========================================================
+   DOCUMENT ITEM ICON
+   ========================================================= */
+
+.uploaded-document-item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-small);
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.uploaded-document-item-icon svg {
+    width: 19px;
+    height: 19px;
+
+    transition: transform 0.2s ease;
+}
+
+.uploaded-document-item:hover .uploaded-document-item-icon {
+    transform: scale(1.05);
+
+    background: var(--primary);
+
+    color: #ffffff;
+}
+
+.uploaded-document-item:hover .uploaded-document-item-icon svg {
+    transform: scale(1.08);
+}
+
+.uploaded-document-item.selected .uploaded-document-item-icon {
+    background: var(--primary);
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   DOCUMENT ITEM CONTENT
+   ========================================================= */
+
+.uploaded-document-item-content {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.uploaded-document-item-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 4px;
+}
+
+.uploaded-document-item-heading strong {
+    overflow: hidden;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: var(--text-primary);
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.uploaded-document-item-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 6px 12px;
+
+    font-size: 11px;
+
+    color: var(--text-secondary);
+}
+
+.uploaded-document-item-meta span {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 4px;
+}
+
+.uploaded-document-item-meta svg {
+    width: 13px;
+    height: 13px;
+}
+
+
+/* =========================================================
+   DOCUMENT STATUS
+   ========================================================= */
+
+.document-status {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   EMPTY STATE ICON
+   ========================================================= */
+
+.uploaded-documents-empty-state > svg {
+    transition:
+        transform 0.25s ease,
+        color 0.2s ease;
+}
+
+.uploaded-documents-empty-state:hover > svg {
+    transform: translateY(-3px) scale(1.07);
+
+    color: var(--primary);
+}
+
+
+/* =========================================================
+   DOCUMENT DETAIL GRID
+   ========================================================= */
+
+.document-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 0;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-medium);
+
+    overflow: hidden;
+}
+
+.document-detail-item {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    min-width: 0;
+
+    padding: 14px 16px;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.document-detail-item:nth-child(odd) {
+    border-right: 1px solid var(--border-light);
+}
+
+.document-detail-item:nth-last-child(-n + 2) {
+    border-bottom: 0;
+}
+
+.document-detail-item > span:first-child {
+    font-size: 11px;
+    font-weight: 500;
+
+    color: var(--text-muted);
+}
+
+.document-detail-item strong {
+    min-width: 0;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: var(--text-primary);
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   LUCIDE CARD EFFECTS
+   ========================================================= */
+
+.document-upload-card .card-heading-icon,
+.uploaded-documents-card .card-heading-icon,
+.document-detail-card .card-heading-icon {
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.document-upload-card .card-heading-icon svg,
+.uploaded-documents-card .card-heading-icon svg,
+.document-detail-card .card-heading-icon svg {
+    transition:
+        transform 0.2s ease,
+        stroke 0.2s ease;
+}
+
+.document-upload-card:hover .card-heading-icon,
+.uploaded-documents-card:hover .card-heading-icon,
+.document-detail-card:hover .card-heading-icon {
+    transform: translateY(-2px);
+
+    background: var(--primary);
+
+    color: #ffffff;
+}
+
+.document-upload-card:hover .card-heading-icon svg,
+.uploaded-documents-card:hover .card-heading-icon svg {
+    transform: scale(1.08);
+}
+
+.document-detail-card:hover .card-heading-icon svg {
+    transform: rotate(-4deg) scale(1.08);
+}
+
+
+/* =========================================================
+   KEYBOARD FOCUS
+   ========================================================= */
+
+.uploaded-document-item:focus-visible,
+.document-file-upload:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .document-upload-card .card-header,
+    .uploaded-documents-card .card-header,
+    .document-detail-card .card-header {
+        padding: 16px;
+    }
+
+    .document-upload-card .card-body,
+    .uploaded-documents-card .card-body,
+    .document-detail-card .card-body {
+        padding: 16px;
+    }
+
+    .document-form-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 560px) {
+
+    .document-file-upload {
+        align-items: flex-start;
+
+        min-height: 0;
+
+        padding: 15px;
+    }
+
+    .document-upload-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .document-upload-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .document-form-actions {
+        justify-content: stretch;
+    }
+
+    #submitDocumentButton {
+        width: 100%;
+    }
+
+    .uploaded-document-item-heading {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 6px;
+    }
+
+    .document-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .document-detail-item,
+    .document-detail-item:nth-child(odd),
+    .document-detail-item:nth-last-child(-n + 2) {
+        border-right: 0;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .document-detail-item:last-child {
+        border-bottom: 0;
+    }
+
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) {
+
+    .document-file-upload:hover,
+    .uploaded-document-item:hover,
+    .document-upload-card:hover .card-heading-icon,
+    .uploaded-documents-card:hover .card-heading-icon,
+    .document-detail-card:hover .card-heading-icon,
+    .uploaded-document-item:hover .uploaded-document-item-icon,
+    .uploaded-documents-empty-state:hover > svg {
+        transform: none;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .upload-documents-content *,
+    .upload-documents-content *::before,
+    .upload-documents-content *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+    }
+
+}

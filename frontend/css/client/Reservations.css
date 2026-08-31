@@ -1,0 +1,305 @@
+/* RESORTHUB - CLIENT NEW RESERVATION */
+
+.reservation-page {
+    padding-bottom: 32px;
+}
+
+.page-header {
+    align-items: flex-start;
+}
+
+.page-header p,
+.card-title p {
+    margin: 0;
+    color: #71809a;
+}
+
+.secondary-button,
+.primary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 0 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.secondary-button {
+    border: 1px solid #dce4ef;
+    background: #fff;
+    color: #0b1b38;
+}
+
+.primary-button {
+    width: 100%;
+    border: 0;
+    background: #1764ff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.primary-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.reservation-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    align-items: start;
+    gap: 20px;
+}
+
+.form-column {
+    display: grid;
+    gap: 20px;
+}
+
+.form-card,
+.summary-card {
+    padding: 20px;
+    border: 1px solid #dce4ef;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(22, 43, 77, 0.04);
+}
+
+.summary-card {
+    position: sticky;
+    top: 96px;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.card-title h2 {
+    margin: 0 0 4px;
+    color: #0b1b38;
+    font-size: 19px;
+}
+
+.card-icon {
+    display: grid;
+    flex: 0 0 48px;
+    place-items: center;
+    height: 48px;
+    border-radius: 11px;
+    background: #edf4ff;
+    color: #1764ff;
+}
+
+.field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.field-wide {
+    grid-column: 1 / -1;
+}
+
+.form-field {
+    display: grid;
+    gap: 8px;
+    color: #465673;
+    font-size: 14px;
+}
+
+.form-field > span {
+    font-weight: 600;
+}
+
+.form-field input,
+.form-field select {
+    box-sizing: border-box;
+    width: 100%;
+    height: 46px;
+    padding: 0 13px;
+    border: 1px solid #d8e0ec;
+    border-radius: 9px;
+    background: #f9fbfd;
+    color: #132443;
+    font: inherit;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+    border-color: #1764ff;
+    outline: 3px solid rgba(23, 100, 255, 0.12);
+}
+
+.accommodation-empty {
+    display: grid;
+    min-height: 128px;
+    margin-top: 18px;
+    border: 1px dashed #ccd7e6;
+    border-radius: 12px;
+    place-items: center;
+    color: #8390a5;
+    text-align: center;
+}
+
+.accommodation-empty svg {
+    margin-bottom: 8px;
+}
+
+.accommodation-empty p {
+    margin: 0;
+}
+
+.accommodation-details {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 12px;
+    background: #f6f9fd;
+}
+
+.detail-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e1e7f0;
+}
+
+.detail-heading span,
+.detail-grid span {
+    display: block;
+    margin-bottom: 5px;
+    color: #8290a6;
+    font-size: 13px;
+}
+
+.detail-heading h3 {
+    margin: 0;
+    color: #10203d;
+}
+
+.detail-heading > strong {
+    align-self: flex-start;
+    color: #16834c;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    padding-top: 16px;
+}
+
+.detail-grid strong {
+    color: #263855;
+    font-size: 14px;
+}
+
+.summary-list {
+    margin: 0 0 20px;
+}
+
+.summary-list > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid #e7ecf3;
+}
+
+.summary-list > div:first-child {
+    padding-top: 0;
+}
+
+.summary-list dt {
+    color: #7c899d;
+}
+
+.summary-list dd {
+    margin: 0;
+    color: #172946;
+    font-weight: 700;
+    text-align: right;
+}
+
+.form-message {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    border-radius: 9px;
+    font-size: 14px;
+}
+
+.form-message.error {
+    background: #fff0f0;
+    color: #a92727;
+}
+
+.form-message.success {
+    background: #eaf8f1;
+    color: #137344;
+}
+
+.form-message.info {
+    background: #edf5ff;
+    color: #285b9c;
+}
+
+@media (max-width: 1050px) {
+    .reservation-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-card {
+        position: static;
+    }
+}
+
+@media (max-width: 700px) {
+    .page-header {
+        flex-direction: column;
+    }
+
+    .field-grid,
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .field-wide {
+        grid-column: auto;
+    }
+
+    .form-card,
+    .summary-card {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .reservation-page {
+        padding-bottom: 20px;
+    }
+
+    .card-title {
+        align-items: flex-start;
+        margin-bottom: 16px;
+    }
+
+    .card-icon {
+        flex-basis: 44px;
+        height: 44px;
+    }
+
+    .detail-heading,
+    .summary-list > div {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .summary-list dd {
+        text-align: left;
+    }
+}

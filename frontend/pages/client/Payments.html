@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Billing & Payment | ResortHub</title>
+
+    <!-- Shared CSS -->
+    <link
+        rel="stylesheet"
+        href="../../css//client-global/style..css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../../css//client-global/nav.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../../css///client-global/sidebar.css"
+    >
+
+    <!-- Page CSS -->
+    <link
+        rel="stylesheet"
+        href="../../css/client/payments.css"
+    >
+
+    <!-- Lucide Icons -->
+    <script
+        src="https://unpkg.com/lucide@latest"
+        defer
+    ></script>
+
+    <!-- Page JavaScript -->
+    <script
+        src="../../js/client/Payments.js"
+        defer
+    ></script>
+</head>
+
+
+<body>
+
+    <div
+        class="client-app"
+        id="clientApp"
+    >
+
+        <!-- =====================================================
+             TOP NAVIGATION
+             ===================================================== -->
+
+        <header class="client-topbar">
+
+            <div class="topbar-left">
+
+                <a
+                    href="Dashboard.html"
+                    class="client-brand"
+                    aria-label="ResortHub Dashboard"
+                >
+                    <i data-lucide="building-2"></i>
+
+                    <span>ResortHub</span>
+                </a>
+
+
+                <button
+                    type="button"
+                    class="sidebar-toggle"
+                    id="sidebarToggle"
+                    aria-label="Toggle sidebar"
+                    aria-expanded="true"
+                >
+                    <i data-lucide="menu"></i>
+                </button>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <button
+                    type="button"
+                    class="client-profile"
+                    id="clientProfileButton"
+                    aria-label="Client profile"
+                >
+
+                    <span class="profile-avatar">
+                        <i data-lucide="user"></i>
+                    </span>
+
+
+                    <span class="profile-info">
+
+                        <strong id="clientDisplayName">
+                            Client
+                        </strong>
+
+                        <small>
+                            Client
+                        </small>
+
+                    </span>
+
+
+                    <i
+                        class="profile-chevron"
+                        data-lucide="chevron-down"
+                    ></i>
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             PAGE LAYOUT
+             ===================================================== -->
+
+        <div class="client-layout">
+
+
+            <!-- =================================================
+                 SIDEBAR
+                 ================================================= -->
+
+            <aside
+                class="client-sidebar"
+                id="clientSidebar"
+            >
+
+                <nav
+                    class="sidebar-navigation"
+                    aria-label="Client navigation"
+                >
+
+                    <!-- Dashboard -->
+
+                    <a
+                        href="Dashboard.html"
+                        class="sidebar-link"
+                    >
+                        <i data-lucide="layout-dashboard"></i>
+
+                        <span>
+                            Dashboard
+                        </span>
+                    </a>
+
+
+                    <!-- Booking -->
+
+                    <div class="sidebar-section">
+
+                        <span class="sidebar-section-title">
+                            BOOKING
+                        </span>
+
+
+                        <a
+                            href="Reservations.html"
+                            class="sidebar-link"
+                        >
+                            <i data-lucide="calendar-plus"></i>
+
+                            <span>
+                                New Reservation
+                            </span>
+                        </a>
+
+
+                        <a
+                            href="MyReservations.html"
+                            class="sidebar-link"
+                        >
+                            <i data-lucide="calendar-days"></i>
+
+                            <span>
+                                My Reservations
+                            </span>
+                        </a>
+
+
+                        <a
+                            href="Resorts.html"
+                            class="sidebar-link"
+                        >
+                            <i data-lucide="building"></i>
+
+                            <span>
+                                Resorts
+                            </span>
+                        </a>
+
+                    </div>
+
+
+                    <!-- Payment -->
+
+                    <div class="sidebar-section">
+
+                        <span class="sidebar-section-title">
+                            PAYMENT
+                        </span>
+
+
+                        <a
+                            href="Payments.html"
+                            class="sidebar-link active"
+                            aria-current="page"
+                        >
+                            <i data-lucide="wallet-cards"></i>
+
+                            <span>
+                                Billing & Payment
+                            </span>
+                        </a>
+
+                    </div>
+
+
+                    <!-- Documents -->
+
+                    <div class="sidebar-section">
+
+                        <span class="sidebar-section-title">
+                            DOCUMENTS
+                        </span>
+
+
+                        <a
+                            href="UploadDocuments.html"
+                            class="sidebar-link"
+                        >
+                            <i data-lucide="file-up"></i>
+
+                            <span>
+                                Upload Documents
+                            </span>
+                        </a>
+
+                    </div>
+
+
+                    <!-- Status -->
+
+                    <div class="sidebar-section">
+
+                        <span class="sidebar-section-title">
+                            STATUS
+                        </span>
+
+
+                        <a
+                            href="ReservationStatus.html"
+                            class="sidebar-link"
+                        >
+                            <i data-lucide="clock-3"></i>
+
+                            <span>
+                                Reservation Status
+                            </span>
+                        </a>
+
+
+                        <a
+                            href="Notifications.html"
+                            class="sidebar-link"
+                        >
+                            <i data-lucide="bell"></i>
+
+                            <span>
+                                Notifications
+                            </span>
+                        </a>
+
+                    </div>
+
+
+                    <!-- Account -->
+
+                    <div class="sidebar-section">
+
+                        <span class="sidebar-section-title">
+                            ACCOUNT
+                        </span>
+
+
+                        <a
+                            href="Profile.html"
+                            class="sidebar-link"
+                        >
+                            <i data-lucide="user-round"></i>
+
+                            <span>
+                                Profile
+                            </span>
+                        </a>
+
+                    </div>
+
+                </nav>
+
+            </aside>
+
+
+            <!-- =================================================
+                 MAIN CONTENT
+                 ================================================= -->
+
+            <main class="client-main">
+
+                <div class="page-container">
+
+
+                    <!-- =========================================
+                         PAGE HEADER
+                         ========================================= -->
+
+                    <div class="page-header">
+
+                        <div>
+
+                            <h1>
+                                Billing & Payment
+                            </h1>
+
+                            <p>
+                                View billing information, submit payment
+                                information, and monitor payment status.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================================
+                         NO BILLING RECORD
+                         ========================================= -->
+
+                    <section
+                        class="card payment-empty-card"
+                        id="paymentEmptyState"
+                        hidden
+                    >
+
+                        <div class="empty-state">
+
+                            <i data-lucide="receipt-text"></i>
+
+                            <h2>
+                                No Billing Information
+                            </h2>
+
+                            <p>
+                                There is currently no billing information
+                                available for this reservation.
+                            </p>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =========================================
+                         PAYMENT CONTENT
+                         ========================================= -->
+
+                    <div
+                        class="payment-content"
+                        id="paymentContent"
+                    >
+
+
+                        <!-- =====================================
+                             BILLING INFORMATION
+                             ===================================== -->
+
+                        <section class="card billing-card">
+
+                            <div class="card-header">
+
+                                <div class="card-heading">
+
+                                    <span class="card-heading-icon">
+                                        <i data-lucide="receipt-text"></i>
+                                    </span>
+
+
+                                    <div>
+
+                                        <h2>
+                                            Billing Information
+                                        </h2>
+
+                                        <p>
+                                            Reservation billing details.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <span
+                                    class="status-badge"
+                                    id="paymentStatusBadge"
+                                >
+                                    —
+                                </span>
+
+                            </div>
+
+
+                            <div class="card-body">
+
+                                <div class="billing-information-grid">
+
+
+                                    <!-- Reservation Reference -->
+
+                                    <div class="billing-information-item">
+
+                                        <span>
+                                            Reservation Reference
+                                        </span>
+
+                                        <strong id="billingReservationReference">
+                                            —
+                                        </strong>
+
+                                    </div>
+
+
+                                    <!-- Resort -->
+
+                                    <div class="billing-information-item">
+
+                                        <span>
+                                            Resort
+                                        </span>
+
+                                        <strong id="billingResortName">
+                                            —
+                                        </strong>
+
+                                    </div>
+
+
+                                    <!-- Accommodation -->
+
+                                    <div class="billing-information-item">
+
+                                        <span>
+                                            Accommodation
+                                        </span>
+
+                                        <strong id="billingAccommodationName">
+                                            —
+                                        </strong>
+
+                                    </div>
+
+
+                                    <!-- Billing Amount -->
+
+                                    <div class="billing-information-item">
+
+                                        <span>
+                                            Billing Amount
+                                        </span>
+
+                                        <strong
+                                            class="billing-amount"
+                                            id="billingAmount"
+                                        >
+                                            —
+                                        </strong>
+
+                                    </div>
+
+
+                                    <!-- Payment Status -->
+
+                                    <div class="billing-information-item billing-information-wide">
+
+                                        <span>
+                                            Payment Status
+                                        </span>
+
+                                        <strong id="billingPaymentStatus">
+                                            —
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+                        <!-- =====================================
+                             PAYMENT SUBMISSION
+                             ===================================== -->
+
+                        <section class="card payment-submission-card">
+
+                            <div class="card-header">
+
+                                <div class="card-heading">
+
+                                    <span class="card-heading-icon">
+                                        <i data-lucide="wallet-cards"></i>
+                                    </span>
+
+
+                                    <div>
+
+                                        <h2>
+                                            Payment Submission
+                                        </h2>
+
+                                        <p>
+                                            Submit payment information for
+                                            manual verification.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="card-body">
+
+                                <form
+                                    id="paymentForm"
+                                    enctype="multipart/form-data"
+                                    novalidate
+                                >
+
+                                    <!-- Hidden database relationships -->
+
+                                    <input
+                                        type="hidden"
+                                        id="paymentReservationId"
+                                        name="reservation_id"
+                                    >
+
+                                    <input
+                                        type="hidden"
+                                        id="paymentBillingId"
+                                        name="billing_id"
+                                    >
+
+
+                                    <!-- =================================
+                                         PAYMENT METHOD
+                                         ================================= -->
+
+                                    <div class="form-group">
+
+                                        <label for="paymentMethod">
+                                            Payment Method
+                                            <span aria-hidden="true">*</span>
+                                        </label>
+
+
+                                        <select
+                                            id="paymentMethod"
+                                            name="payment_method"
+                                            required
+                                        >
+
+                                            <option value="">
+                                                Select payment method
+                                            </option>
+
+                                            <option value="gcash">
+                                                GCash
+                                            </option>
+
+                                            <option value="manual_transaction">
+                                                Manual Transaction
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+
+                                    <!-- =================================
+                                         TRANSACTION REFERENCE
+                                         ================================= -->
+
+                                    <div class="form-group">
+
+                                        <label for="transactionReference">
+                                            Transaction Reference Number
+                                            <span aria-hidden="true">*</span>
+                                        </label>
+
+
+                                        <input
+                                            type="text"
+                                            id="transactionReference"
+                                            name="transaction_reference"
+                                            autocomplete="off"
+                                            required
+                                        >
+
+                                    </div>
+
+
+                                    <!-- =================================
+                                         PROOF OF PAYMENT
+                                         ================================= -->
+
+                                    <div class="form-group">
+
+                                        <label for="proofOfPayment">
+                                            Proof of Payment
+                                            <span aria-hidden="true">*</span>
+                                        </label>
+
+
+                                        <div class="payment-upload-area">
+
+                                            <div class="payment-upload-icon">
+                                                <i data-lucide="upload"></i>
+                                            </div>
+
+
+                                            <div class="payment-upload-content">
+
+                                                <strong>
+                                                    Upload proof of payment
+                                                </strong>
+
+                                                <p id="proofOfPaymentFileName">
+                                                    No file selected
+                                                </p>
+
+                                            </div>
+
+
+                                            <label
+                                                for="proofOfPayment"
+                                                class="secondary-button payment-upload-button"
+                                            >
+                                                <i data-lucide="file-up"></i>
+
+                                                <span>
+                                                    Choose File
+                                                </span>
+                                            </label>
+
+
+                                            <input
+                                                type="file"
+                                                id="proofOfPayment"
+                                                name="proof_of_payment"
+                                                accept="image/*,.pdf"
+                                                required
+                                            >
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- =================================
+                                         VERIFICATION NOTICE
+                                         ================================= -->
+
+                                    <div class="payment-verification-notice">
+
+                                        <i data-lucide="info"></i>
+
+
+                                        <p>
+                                            Submitted payment information and
+                                            proof of payment will be reviewed
+                                            by authorized resort personnel
+                                            before the payment status is updated.
+                                        </p>
+
+                                    </div>
+
+
+                                    <!-- =================================
+                                         FORM MESSAGE
+                                         ================================= -->
+
+                                    <div
+                                        class="payment-form-message"
+                                        id="paymentFormMessage"
+                                        role="status"
+                                        aria-live="polite"
+                                        hidden
+                                    ></div>
+
+
+                                    <!-- =================================
+                                         SUBMIT
+                                         ================================= -->
+
+                                    <div class="payment-form-actions">
+
+                                        <button
+                                            type="submit"
+                                            class="primary-button"
+                                            id="submitPaymentButton"
+                                        >
+                                            <i data-lucide="send"></i>
+
+                                            <span>
+                                                Submit Payment
+                                            </span>
+                                        </button>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </section>
+
+
+                        <!-- =====================================
+                             PAYMENT STATUS
+                             ===================================== -->
+
+                        <section class="card payment-status-card">
+
+                            <div class="card-header">
+
+                                <div class="card-heading">
+
+                                    <span class="card-heading-icon">
+                                        <i data-lucide="circle-dollar-sign"></i>
+                                    </span>
+
+
+                                    <div>
+
+                                        <h2>
+                                            Payment Status
+                                        </h2>
+
+                                        <p>
+                                            Current payment verification status.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="card-body">
+
+                                <div class="payment-status-information">
+
+
+                                    <div class="payment-status-icon">
+                                        <i data-lucide="clock-3"></i>
+                                    </div>
+
+
+                                    <div class="payment-status-content">
+
+                                        <span>
+                                            Status
+                                        </span>
+
+                                        <strong id="currentPaymentStatus">
+                                            —
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+                    </div>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

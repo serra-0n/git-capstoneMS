@@ -39,7 +39,7 @@ if (rememberMe && emailInput) {
 }
 
 if (loginForm) {
-    loginForm.addEventListener("submit", function (event) {
+    loginForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         const email = emailInput.value.trim();
@@ -78,18 +78,58 @@ if (loginForm) {
         continueButton.disabled = true;
         continueButton.textContent = "Signing in...";
 
-        /*  TEMPORARY LOGIN SIMULATION 
-            We will replace this section 
-            with the PHP/MySQL authentication 
-            once the backend login endpoint 
-            is ready. */
+        try {
+            const response = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            });
 
+            const result = await response.json();
 
-        setTimeout(function () {
-            alert("Login system is ready for backend connection.");
-            continueButton.disabled = false;
-            continueButton.textContent = "Sign in";
-        }, 1000);
+            if (!response.ok) {
+                throw new Error(
+                    result.message || "Login failed."
+                );
+            }
+
+            sessionStorage.setItem(
+                "resorthub_access_token",
+                result.token
+            );
+
+            switch (result.user.role) {
+                case "system_admin":
+                    window.location.href =
+                        "../system-admin/Dashboard.html";
+                    break;
+
+                case "resort_admin":
+                    window.location.href =
+                        "../resort-admin/Dashboard.html";
+                    break;
+
+                case "client":
+                    window.location.href =
+                        "../client/Dashboard.html";
+                    break;
+
+                default:
+                    throw new Error(
+                        "The account role is invalid."
+                    );
+            }
+
+            } catch (error) {
+                alert(error.message);
+                continueButton.disabled = false;
+                continueButton.textContent = "Continue";
+            }
     });
 }
 

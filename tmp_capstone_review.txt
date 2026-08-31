@@ -1,0 +1,1537 @@
+   
+ 
+STI College Muñoz-EDSA                                                                                                                                                 
+Web-Based Resort Management as a SaaS for Selected Resorts in the National 
+Capital Region with OCR 
+ 
+ 
+     
+A Capstone Project Proposal 
+Presented to the Faculty of the 
+ Information and Communication Technology Program 
+STI College Muñoz- EDSA 
+ 
+ 
+ 
+ 
+In Partial Fulfilment 
+of the Requirement for the Degree 
+Bachelor of Science in Information Technology 
+ 
+ 
+ 
+ 
+Abegail H. Ardenio 
+Jeffer S. Serraon 
+Mark Anthony A. Sese 
+Karl Benedict C. Valdez 
+ 
+ 
+ 
+May 2026 
+ 
+===PAGE===
+   
+ 
+ii 
+STI College Muñoz-EDSA 
+ENDORSEMENT FORM FOR FINAL DEFENSE 
+ 
+TITLE OF RESEARCH:  Web-Based Resort Management 
+  as a SaaS for National Capital 
+  Region (NCR) with OCR 
+ 
+NAME OF THE DEVELOPERS:  Abegail H. Ardenio  
+  Jeffer S. Serraon 
+  Mark Anthony A. Sese 
+  Karl Benedict C. Valdez 
+ 
+In Partial Fulfilment of the Requirements 
+for the degree Bachelor of Science in Information Technology 
+has been examined and is recommended for Final Defense. 
+ 
+ENDORSE BY: 
+Mr. Joshua Rhey N. Oliveros     Ms. Alaiza Bautista 
+Capstone Project Adviser          English Adviser 
+ 
+APPROVE FOR FINAL DEFENSE: 
+ 
+Ms. Cristelyn Q. Esporsado 
+Capstone Project Coordinator 
+ 
+NOTED BY: 
+ 
+Mr. Anthony F. Molacruz 
+Program Head 
+ 
+ 
+ 
+May 2026 
+===PAGE===
+   
+ 
+iii 
+STI College Muñoz-EDSA 
+APPROVAL SHEET 
+ 
+This capstone project proposal titled “ Web-Based Resort Management as a S aaS for 
+National Capital Region  (NCR) with OCR ” prepared and submitted by Abegail H. 
+Ardenio, Jeffer S. Serraon, Mark Anthony A. Sese, Karl Benedict C. Valdez, in partial 
+fulfilment of the requirements for the degree of Bachelor of Science in Information 
+Technology, has been examined and is recommended for acceptance and approval. 
+        Mr. Joshua Rhey N. Oliveros 
+          Capstone Project Adviser 
+ 
+Acceptance and approved by Capstone Project Review Panel 
+in partial fulfilment of the requirements for the degree of Bachelor 
+of Science in Information Technology 
+ 
+Ramil Madriaga           Miguel Jerome Silverio 
+Panel Member       Panel Member 
+Lead Panelist 
+Cristylen Esporsado 
+ 
+Noted: 
+ 
+Ms. Devie O. Patricio, MTM, PCpE 
+Academic Head 
+ 
+    Ms. Cristelyn Q. Esporsado    Mr. Anthony F. Molacruz 
+Capstone Project Coordinator    ICT-CPE Program Head 
+ 
+ 
+ 
+ 
+May 2026 
+ 
+TABLE OF CONTENTS  
+===PAGE===
+   
+ 
+iv 
+STI College Muñoz-EDSA 
+Page 
+Title Page          i 
+Endorsement form for proposal defense      ii 
+Approval Sheet         iii 
+ Introduction         1 
+Project Context        1 
+Background of the Study       4 
+Purpose and Description       6 
+Statement of the Problem       8 
+Objectives         15 
+Scope and Limitations       22 
+Review of Related Literature/Studies/System    32 
+Methodology 
+Technical Background       43 
+Requirements Analysis       44 
+References          51 
+ 
+===PAGE===
+   
+ 
+ 
+1 
+STI College Muñoz-EDSA 
+INTRODUCTION 
+Project Context 
+The resort industry continues to apply digital technologies to increase operational 
+efficiency, reservation management, and customer service. However, many resorts still 
+face operational challenges due to manual reservation processing, paper records, 
+disconnected communication channels, and conventional transaction processing. Such 
+operational problems could cause delays in confirming reservations, booking conflicts, 
+inaccurate record keeping, slow document verification and difficulties in managing guest 
+transactions and resort operations. 
+Based on initial observations and data collection made from selected private and public 
+resorts in National Capital Region, many resort establishments still use manual operational 
+procedures and messaging applications in managing reservations, accommodation 
+availability, payment monitoring, and guest -related transactions. As these operational 
+activities are often managed manually or through separate digital platforms, resort owners 
+may face challenges in keeping organized records, tracking reservations, and  processing 
+client documents efficiently.  These might cause an impact on operations like service, 
+coordination, productivity and overall customer experience with the resort establishment. 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+2 
+STI College Muñoz-EDSA 
+The Philippine Statistics Authority (2024) reported that the accommodation and food 
+service activities sector in the Philippines continues to increase, and become part of the 
+tourism and hospitality industry of the country. As hospitality operations are becoming 
+more customer -centered and transaction -oriented, the demand for centralized and 
+accessible digital systems is also increasing. However, several resort esta blishments still 
+do not have integrated web-based platforms that can manage reservations, accommodation 
+monitoring, billing transactions, and document processing within a single operational 
+environment. 
+To address these operational concerns, the proponents propose a Web -Based Resort 
+Management System as a Software as a Service (SaaS) with Optical Character Recognition 
+(OCR) for selected private and public resorts in NCR. The proposed study is to provide a 
+centralized SaaS based platform where the resort owners can register and manage the resort 
+operations and the clients can browse the resorts, process the reservations, uplo ad the 
+documents and monitor the booking transactions through a web-based environment. With 
+Software as a Service (SaaS), a number of resorts can access the platform with centralized 
+web technologies, while keeping separate resort information and operational records within 
+the system. 
+ 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+3 
+STI College Muñoz-EDSA 
+ 
+The system proposed will implement Optical Character Recognition (OCR) technology to 
+improve the resorts operations in the process of document verification and information 
+extraction. The system will use the OCR functionality to extract text -based information 
+from uploaded documents such as valid IDs, proof of payment, reservation forms, and other 
+uploaded files of the clients. The proposed system shall include the management of 
+reservations, monitoring of rooms and cottages, management of invoices and paym ents, 
+management of staff, reporting and monitoring, and central SaaS administration. The 
+operational needs and problems discussed in this study will be validated using data 
+gathered from twenty (20) resort respondents in NCR, ten (10) private resorts and ten (10) 
+public resorts. The project seeks to establish a centralized SaaS-based platform with OCR 
+technology for selected resort establishments in NCR to provide a more structured, 
+accessible, and efficient digital solution. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+4 
+STI College Muñoz-EDSA 
+ 
+Background of the Study 
+Due to the growth of the hospitality and tourism industry, the resort establishments have 
+adopted the use of digital technologies to improve their operational efficiency, 
+management of reservations, and customer service. As resort operations become more 
+transactional, many establishments are expected to handle large volumes of reservations, 
+guest information, billing records, and operational documents efficiently. However, many 
+resorts still use manual reservation processing, paper records, spreadsheets and messaging 
+applications to manage their day -to-day operations. These conventional practices could 
+lead to delay in reservation confirmation, clashes in booking, erroneous transaction records, 
+sluggish document verification and trouble in keeping systematic operational information. 
+According to the Philippine Statistics Authority (2024) the accommodation and food 
+service industry will continue to grow as the Philippine tourism and hospitality related 
+services continue to develop.  With the increasing demand of customers for online 
+reservation systems and digital hospitality services, it is also expected that resort 
+establishments will improve operational accessibility and transaction management by 
+using modern web-based technologies. Even with the digital tools available, many resort 
+businesses face difficulties in managing reservations, confirming payments, handling 
+accommodations, and processing documents through a unified operational platform. 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+5 
+STI College Muñoz-EDSA 
+The importance of web -based management systems and Software as a Service (SaaS) 
+platform has grown in terms of enhancing accessibility, centralized management and 
+operational efficiency in hospitality businesses. SaaS based platforms offer web -based 
+services to multiple establishments through centralized online systems, removing the need 
+for separate installations and expensive infrastructure. The centralization of access can 
+facilitate the operation of resort owners in managing reservations, accommodations, client 
+transaction, and operational records while ensuring system accessibility through internet -
+connected devices. 
+In addition to reservation and transaction management, document verification and 
+information extraction are still key operational activities in resort establishments. 
+Documents that resort usually handle during reservation and transaction processes are valid 
+IDs, proof of payment, reservation forms, and guest -related records. However, manual 
+checking and encoding of information from uploaded documents could be a time -
+consuming and risky process for incomplete and inaccurate data records. The use of Optical 
+Character Recognition (OCR) technology helps in more efficient ways to extract text-based 
+information from uploaded files and digitize operational documents for easier verification 
+and record management. 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+6 
+STI College Muñoz-EDSA 
+To address these operational concerns, the proponents suggest a Web -Based Resort 
+Management System as SaaS with OCR for the selected private and public in NCR. The 
+proposed system aims at providing a centralized web -based platform which is capable of 
+enhancing reservation management, accommodation monitoring, billing transactions, 
+document verification based on OCR, staff management and operational coordination 
+between the resort owners and clients. The operational needs and challenges tackled in this 
+study will be validated through data gathered from twenty (20) selected resort respondents 
+in NCR consisting of ten (10) private resorts and ten (10) public resorts. The proposed 
+study aims to provide a more organized, accessible and efficient digital solution through 
+the adoption of SaaS architecture and OCR technology to the resort management and client 
+transaction processing in selected resort establishments in NCR. 
+Purpose and Description 
+The system will be developed as a SaaS-based web application that can be accessed using 
+standard internet browsers on computers, laptops, tablets and mobile devices that are 
+connected to the internet. The centralized SaaS structure allows resort owners to register 
+and operate resorts on one online platform but still have separate operational records and 
+resort information. Guests can view information about resorts and accommodations 
+available without registering. Registered clients can make reservations, upload operational 
+documents and track reservation transactions through the system. 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+7 
+STI College Muñoz-EDSA 
+The system to be developed will incorporate Optical Character Recognition (OCR) 
+technology to enhance document verification and information extraction in resort 
+operations. The OCR feature will allow the system to pull text -based information from 
+uploaded documents such as valid IDs, proof of payment, reservation forms and other files 
+submitted by clients. This feature aims at reducing manual encoding, improving the 
+efficiency of document processing, and allowing a more systematic verification and 
+transaction management in the operations of the resort. 
+The proposed system will include operational features such as reservation management, 
+room and cottage monitoring, billing and payment management, document verification 
+using OCR, staff management, reporting and monitoring, and centralized SaaS 
+administration. Resort owners can manage accommodation, client transactions, operational 
+records, and staff related information. The system administrator can manage resort 
+registration management, tenant monitoring, and centralized SaaS platform operations. The 
+proposed study seeks to help the selected resort establishments in NCR to have a more 
+organized, accessible and efficient digital solution by creating a centralized SaaS based 
+platform integrated with OCR technology. 
+ 
+ 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+8 
+STI College Muñoz-EDSA 
+Statement of the Problem 
+General Problem 
+How can a Web -Based Resort Management System as a SaaS with OCR be developed 
+for private and public resorts in NCR to improve resort operations and client transaction 
+management? 
+The preliminary observations and data gathering done among private and public resorts in 
+NCR show that many resort establishments still manage guest transactions and resort 
+operations using manual reservation handling, paper -based records, messaging 
+applications, and disconnected operational procedures. These operational activities are 
+mainly performed manually or on different digital platforms. Resort owners may encounter 
+difficulties in tracking reservations, verifying uploaded documents, organizing payme nt 
+records, maintaining accommodation availability, and managing operational information 
+efficiently. These operational limits can result in delays in confirming reservations, 
+booking conflicts, inaccurate records, slow document verification, and problems 
+maintaining the organization of resort operations and coordinating customer service. 
+ 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+9 
+STI College Muñoz-EDSA 
+The accommodation and food service sector in the Philippines continues to grow as part of 
+the Philippines’ tourism and hospitality industry (Philippine Statistics Authority, 2024). 
+With hospitality properties adopting digital technologies, there is a growi ng need for 
+centralized and accessible web -based management systems. However, many resorts are 
+still lacking integrated platforms that allow them to handle reservations, billing transactions, 
+accommodation monitoring, client records and document processing  in one operating 
+environment. 
+The operational problems identified in this study shall be validated by data from twenty 
+(20) selected resort respondents in NCR consisting of ten (10) private resorts and ten (10) 
+public resorts. Existing resort management systems may also be technically complex with 
+fragmented operational processes and limited functionalities for document verification that 
+may not fully support the operational needs of selected resort establishments. These 
+operational and technological constraints suggest the requirement of a centralized SaaS 
+based resort management platform with OCR technology that can improve the reservation 
+management, document processing, operational coordination and client transaction 
+management in the selected resorts in NCR. 
+ 
+ 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+10 
+STI College Muñoz-EDSA 
+Specific Problem 
+• How can the proposed system manage reservations and reduce booking conflicts? 
+Many resort establishments are still struggling with reservation management, since 
+reservation processes are often carried out manually using notebooks, spreadsheets, 
+messaging applications, or social media platforms. Manual operational processes can lead 
+to delays in reservation confirmation, inconsistent reservation monitoring, booking 
+conflicts, and challenges in maintaining organized accommodation schedules, particularly 
+during peak seasons. 
+The data collected from the respondents of the selected resort in NCR showed that many 
+resorts are currently processing reservations via Facebook page, messaging apps, and face-
+to-face transaction. Respondents also indicated cancellation of reservation, inconvenience 
+and manual coordination of reservation as some of the common operational problems 
+experienced during reservation processing. The findings here support the need for a more 
+centralized and organized system to manage reservations. 
+• How can the proposed system monitor room and cottage availability? 
+The importance of keeping the room and cottage availability monitored was to maintain 
+the organized coordination of the operation and accommodation  tasks. However, many 
+resort establishments still employ manual procedures for monitoring accommodation, 
+which can lead to delays in room preparation, inaccurate updates on occupancy, 
+inconsistent tracking of available accommodation, and challenges in overseeing  
+maintenance schedules within the resort's operations. 
+===PAGE===
+   
+ 
+ 
+11 
+STI College Muñoz-EDSA 
+Based on respondent data collection carried out among selected resorts, room occupancy 
+and availability of accommodation are still monitored manually by resort personnel. 
+During daily operations, staff members also update accommodation and occupancy 
+information manually. Respondents stressed that real -time accommodation monitoring is 
+important in maintaining cleanliness, operational organization and room preparation in 
+resort establishments. 
+• How can the proposed system manage billing transactions and payment 
+monitoring? 
+Billing and payment management still remains an important operational activity in resort 
+establishments. The manual monitoring of payments and recording of transactions can lead 
+to incomplete financial records, delayed verification, difficulties in tracking guest balances, 
+and challenges in organizing billing information within the operations of the resort. 
+Based on respondent data collected, multiple resorts are currently processing payments 
+through online transactions and bank transfers while guests are often submitting proof of 
+payment through screenshots. During resort operations, transaction organization and 
+payment confirmation may become less efficient because payment verification procedures 
+are still manually monitored. 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+12 
+STI College Muñoz-EDSA 
+• How can OCR technology be integrated into the proposed system for document 
+verification and information extraction? 
+Operational processes within the resorts are concerned with document verification and 
+information extraction as resorts regularly process valid IDs, proof of payment, reservation 
+forms and guest-related documents during reservation and transaction processes. However, 
+manual verification and encoding of information from uploaded documents can take time 
+and increase the possibility of incomplete or inaccurate operational records. 
+Based on initial observations and respondent data gathering, resorts and clients often share 
+operational documents during reservation and payment transactions. Screenshots of 
+payment are also often submitted and manually reviewed as part of the transaction  
+verification process, respondents said. The results indicate the need for a more structured 
+and automated process for document verification and information extraction in resort 
+operations. 
+• How can the proposed system manage staff information and operational 
+coordination? 
+Managing staff information and operational coordination is important in maintaining 
+organized resort operations and workforce responsibilities. However, staff-related records 
+and operational tasks are often handled manually or through disconnected operatio nal 
+procedures, which may affect personnel coordination, operational monitoring, and 
+workforce organization within resort establishments. 
+ 
+===PAGE===
+   
+ 
+ 
+13 
+STI College Muñoz-EDSA 
+Based on gathered respondent data, staff responsibilities and operational tasks are 
+commonly assigned manually within resort operations. Respondents also stated that each 
+staff member is assigned specific operational responsibilities and roles during daily  resort 
+activities. The data gathered supports the need for having a centralized system that is 
+capable of handling the staff information. operational coordination, and workforce 
+management more efficiently 
+• How can the proposed system provide centralized SaaS-based resort management 
+access? 
+Many resort establishments still lack centralized online platforms capable of managing 
+reservations, accommodations, billing records, operational documents, staff information, 
+and client transactions within a single operational environment. Because operati onal 
+activities are often handled through separate systems or manual procedures, maintaining 
+accessible and organized resort operations may become difficult for resort owners and 
+personnel. 
+Based on respondent data gathering conducted among selected resorts, several resort 
+establishments still rely on manual operational coordination and disconnected procedures 
+in handling reservation updates, accommodation monitoring, and operational management. 
+Respondents also emphasized the importance of having operational functionalities capable 
+of improving reservation handling and resort operational updates through a centralized 
+platform. 
+ 
+===PAGE===
+   
+ 
+ 
+14 
+STI College Muñoz-EDSA 
+• How can the proposed system secure operational and client information through 
+authentication and role-based access? 
+Operational and client-related information contains important data that must be protected 
+from unauthorized access, accidental modification, and unorganized system usage. 
+Without centralized authentication and controlled system access, it may be difficult for 
+resort establishments to maintain operational security, information reliability and 
+organized data management. 
+Based on the data gathered, resort establishments assign their operational responsibilities 
+to personnel according to their specific roles and tasks within daily operations . These 
+operational practices indicate the importance of implementing organized role-based access 
+and controlled user permissions within the proposed system to improve operational security 
+and information management. 
+• How can the proposed system generate operational and financial reports? 
+Operational and financial reports are important in monitoring resort performance, 
+transaction coordination, and operational decision -making. However, many resort 
+establishments still prepare reports manually by gathering records from spreadsheets, 
+paper-based files, and separate operational procedures, which may result in delayed 
+reporting, incomplete records, and difficulties in analyzing resort operations efficiently. 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+15 
+STI College Muñoz-EDSA 
+Based on respondent data gathering, operational and financial reports within some resort 
+establishments are still handled separately by assigned accounting personnel. Respondents 
+also emphasized that automated reporting may significantly improve operational efficiency 
+and simplify resort management processes. These findings support the need for a 
+centralized reporting and monitoring functionality within the proposed system. 
+Objectives 
+General Objectives 
+To develop a Web -Based Resort Management System as a SaaS with OCR for private 
+and public resorts in NCR that improves reservation management, accommodation 
+monitoring, billing transactions, document verification, staff coordination, and 
+operational management through a centralized web-based platform. 
+The primary objective of this study is to develop a centralized Web -Based resort 
+management system to enhance resort operations by organized digital processes and OCR 
+based document handling. Initial observations and data gathering from selected resort 
+respondents in NCR revealed that a lot of resort establishments continue to employ manual 
+reservation procedures, paper -based records, messaging applications and disconnected 
+operational processes in managing reservations, accommodations, payment transactions  
+and client records. These operational practices can lead to delays in reservation processing, 
+booking conflicts, inaccurate record keeping, slow document verification and problems in 
+ensuring organized operational coordination. 
+ 
+===PAGE===
+   
+ 
+ 
+16 
+STI College Muñoz-EDSA 
+The proposed study also aims to provide a web -based platform to enable resort owners to 
+manage resort operations and enable clients to process reservations, upload operational 
+documents, and track the transactions related to the booking in a centralized online 
+environment. The proposed system aims to enhance document verification and information 
+extraction in resort operations by incorporating Optical Character Recognition (OCR) 
+technology to reduce manual encoding and improve document processing efficiency. 
+The operational needs and challenges identified in this study will be validated using data 
+from twenty (20) resorts selected in NCR, comprised of ten (10) private resorts and ten 
+(10) public resorts. The proposed study aims to implement a centralized SaaS -based 
+platform integrated with OCR technology in selected resort establishments in NCR to 
+provide a more organized, accessible, and efficient digital solution for reservation 
+management, transaction coordination, document verification, and operational monitoring. 
+Specific Objectives 
+• To develop a reservation management module that allows reservation processing 
+and reduces booking conflicts. 
+Manually doing the reservations may cause delayed booking confi rmations, double 
+bookings. and the monitoring of reservations within the resort would be inconsistent.  
+Because many resort establishments still rely on paper -based records, spreadsheets, and 
+messaging applications, maintaining organized reservation schedules may become difficult, 
+especially during peak seasons. 
+===PAGE===
+   
+ 
+ 
+17 
+STI College Muñoz-EDSA 
+The studies related to web -based reservation systems pointed out that centralized 
+reservation management helps improves booking organization, operational coordination, 
+and customer transactions within hospitality establishments. As resort operations continue 
+adopting digital technologies, organized reservation processing becomes more important 
+for maintaining efficient resort services and reducing operational delays (Ramento et al., 
+2024). 
+• To develop a room and cottage management module that monitors room and 
+cottage availability. 
+Accommodation monitoring is important because manual room tracking may lead to 
+incorrect room assignments, delayed room preparation, and inconsistent occupancy 
+updates within resort operations. Because accommodation records are often managed 
+manually or through disconnected operational procedures, maintaining accurate room and 
+cottage availability may become difficult for resort establishments. 
+Studies related to hospitality management systems emphasized that centralized 
+accommodation monitoring improves operational coordination, room availability tracking, 
+and service efficiency within hospitality establishments. As the accommodation industry 
+continues to expand in the Philippines, organized room and cottage monitoring also 
+becomes more important for maintaining smooth resort operations (Apolinar et al., 2022).  
+ 
+ 
+===PAGE===
+   
+ 
+ 
+18 
+STI College Muñoz-EDSA 
+• To develop a billing and payment management module that records transactions 
+and monitors payment information. 
+Manual billing and payment monitoring may result in incomplete transaction records, 
+delayed payment verification, and difficulties in organizing financial information within 
+resort operations. Because many resort establishments still process payment transa ctions 
+manually, maintaining organized billing records and transaction monitoring may become 
+challenging for resort owners. 
+Studies related to digital hospitality systems emphasized that centralized billing and 
+transaction management improve operational organization, customer coordination, and 
+financial monitoring efficiency within hospitality -related establishments. As digital  
+transactions continue becoming more common in hospitality operations, organized billing 
+management also becomes more important for improving operational efficiency and 
+customer service coordination (Bernal & Matriano, 2025). 
+• To develop an OCR -based document verification module that extracts and 
+processes information from uploaded documents. 
+Manual checking and encoding of operational documents such as valid IDs, proof of 
+payment, and reservation forms may consume time and increase the possibility of 
+incomplete or inaccurate records. Because resort establishments regularly process client -
+submitted documents during reservation and transaction procedures, a more organized 
+document verification method becomes necessary within resort operations. 
+ 
+===PAGE===
+   
+ 
+ 
+19 
+STI College Muñoz-EDSA 
+ 
+Studies related to Optical Character Recognition (OCR) technology emphasized that 
+automated information extraction improves document processing efficiency, operational 
+accuracy, and digital record management. As organizations continue adopting digital 
+document processing technologies, OCR -based verification systems become more 
+important for reducing manual encoding and improving operational document handling 
+(Ha & Horák, 2021). 
+• To develop a staff management module that organizes staff information and 
+operational responsibilities. 
+Managing staff-related records manually may result in difficulties in monitoring 
+workforce responsibilities, operational coordination, and personnel organization within 
+resort establishments. Because staff information is often handled through separate 
+operational procedures, maintaining organized personnel records and staff coordination 
+may become difficult during daily resort operations. 
+Studies related to digital hospitality management systems emphasized that centralized 
+operational platforms improve workforce coordination, organizational monitoring, and 
+operational management efficiency within hospitality-related establishments. As 
+hospitality operations continue becoming more service-oriented, organized staff 
+management also becomes important for maintaining efficient resort coordination and 
+service operations (Bernal & Matriano, 2025). 
+ 
+===PAGE===
+   
+ 
+ 
+20 
+STI College Muñoz-EDSA 
+• To develop a SaaS -based platform that provides centralized resort management 
+access. 
+Many resort establishments still lack centralized online platforms capable of managing 
+reservations, accommodations, billing records, operational documents, and client 
+transactions within a single operational environment. Because the operational activities 
+within the resorts are handled through manual procedures, it is difficult to maintain and 
+organized the operations within the resort. 
+Studies related to SaaS -based and web -based hospitality platforms emphasized that 
+centralized online systems improve accessibility, operational coordination, and service 
+management efficiency within tourism and hospitality -related businesses. As digital 
+hospitality technologies continue to develop,  SaaS-based platforms become more 
+important for improving centralized resort management and online operational 
+accessibility (Bernal & Matriano, 2025). 
+• To develop a security and access control module that protects operational and 
+client information. 
+Operational records and client information contain important data that must be protected 
+from unauthorized access and accidental modification. Without organized authentication 
+and controlled access management, maintaining operational security, information 
+reliability, and secure transaction processing may become difficult for resort 
+establishments. 
+===PAGE===
+   
+ 
+ 
+21 
+STI College Muñoz-EDSA 
+Studies related to web -based management systems emphasized that authentication and 
+role-based access control improve information security, operational reliability, and user 
+management within digital hospitality platforms. As resort operations continue 
+transitioning into digital envir onments, organized access control also becomes important 
+for protecting operational and client-related information (Apolinar et al., 2022). 
+• To develop a reporting and analytics module that generates operational and 
+financial reports. 
+Preparing operational and financial reports manually may result in delayed reporting, 
+incomplete records, and difficulties in monitoring resort performance and daily operational 
+activities. Because many resort establishments still gather information from s preadsheets, 
+paper-based files, and separate operational procedures, maintaining organized operational 
+and financial reporting may become difficult for resort owners and administrators. 
+The study of Mohammed and Denizci Guillet (2025) emphasized that intelligent digital 
+systems improve financial monitoring, operational coordination, and management 
+efficiency within hospitality establishments. The study supports the proposed capstone 
+because the reporting and analytics module of the proposed system also aims to improve 
+operational monitoring, financial reporting, and decision -making within resort operations 
+through a centralized web-based platform. 
+ 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+22 
+STI College Muñoz-EDSA 
+Scope and Limitations 
+Scope 
+This study is about the development of a Web-Based Resort Management System as a SaaS 
+with OCR for the chosen private and public resorts in NCR. This system is intended to 
+consolidate all the major resort operations in one web -based platform such as reservation 
+management, accommodation tracking, billing transactions, document verification through 
+OCR, staff coordination, reporting and operational monitoring. The system is designed to 
+assist in reducing manual operational procedures, improving organizational efficiency and 
+providing centralized access to resort information to authorized users. 
+The proposed system will be designed as a web -based application that can be accessed 
+through computers, laptops, tablets and mobile devices which are connected to the internet 
+via common internet browsers. The system will implement centralized database 
+management and role-based access control to improve operational organization and secure 
+management of resort information. Through the SaaS -based system offered, the resort 
+establishment can manage the operational activities independently based on the operational 
+needs and service requirements of the business. 
+ 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+23 
+STI College Muñoz-EDSA 
+The proposed system consists of the following operational modules: 
+Front-End Modules  
+Guest and Client Interface Modules 
+The guest and client interface modules refer to the customer-accessible interfaces used 
+for browsing resort accommodations, processing reservation requests, uploading 
+operational documents, and monitoring reservation-related transactions through the web-
+based platform. 
+• Reservation and Booking Interface 
+This module allows clients to browse available accommodations, submit 
+reservation requests, select preferred schedules, and provide reservation 
+information through the web-based platform. 
+• Room and Cottage Viewing Interface 
+This module allows guests and clients to view available rooms and cottages offered 
+by the resort. The interface displays accommodation details such as room type, 
+capacity, amenities, pricing information, and accommodation availability. 
+• Billing and Payment Submission Interface 
+This module allows clients to view billing information, upload proof of payment, 
+submit transaction reference numbers, and monitor reservation payment status 
+within the platform. 
+===PAGE===
+   
+ 
+ 
+24 
+STI College Muñoz-EDSA 
+• OCR Document Upload Interface 
+This module allows clients to upload valid IDs, proof of payment, reservation forms, 
+and other operational documents for OCR -based information extraction and 
+document verification within the system. 
+Resort Owner Interface Modules 
+The resort owner interface modules refer to the operational interfaces used by authorized 
+resort owners to manage reservations, accommodations, billing records, operational 
+documents, staff-related information, and resort operational activities within the platform. 
+• Reservation Management Interface 
+This module allows authorized users to validate reservations, monitor booking 
+schedules, update reservation status, and reduce reservation conflicts through real-
+time accommodation monitoring. 
+• Room and Cottage Monitoring Interface 
+This module allows authorized users to monitor room occupancy, accommodation 
+availability, reservation tracking, maintenance schedules, and accommodation 
+status within resort operations. 
+• Billing and Payment Management Interface 
+This module allows authorized users to manage billing transactions, verify 
+submitted payments, monitor guest balances, and organize financial transaction 
+records. 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+25 
+STI College Muñoz-EDSA 
+• OCR Verification Interface 
+This module allows authorized users to review uploaded operational documents, 
+validate OCR -extracted information, and organize digital document verification 
+procedures within the system. 
+• Staff Management Interface 
+This module allows authorized users to manage staff -related records, organize 
+workforce information, assign operational responsibilities, and maintain personnel-
+related operational coordination within the resort establishment. 
+• Operational Dashboard Interface 
+This module provides summarized operational information such as reservation 
+updates, occupancy summaries, financial monitoring, document verification status, 
+and operational notifications relevant to resort management. 
+System Administrator Interface Modules 
+The system administrator interface modules refer to the centralized SaaS administrative 
+interfaces used for platform supervision, tenant management, resort onboarding, 
+operational monitoring, and system maintenance within the SaaS environment. 
+• Resort Registration Management Interface 
+This module allows the system administrator to review, approve, or reject resort 
+registration requests before granting access to the SaaS platform. 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+26 
+STI College Muñoz-EDSA 
+• Tenant Monitoring Interface 
+This module allows the system administrator to monitor registered resorts, 
+operational activities, tenant records, and system -wide platform usage within the 
+SaaS environment. 
+• Role and Access Control Interface 
+This module allows the system administrator to regulate user permissions, role -
+based access, authentication processes, and platform security management. 
+• Platform Monitoring and Maintenance Interface 
+This module allows the system administrator to supervise centralized SaaS platform 
+operations, monitor operational performance, maintain system functionality, and 
+organize platform-level maintenance activities. 
+Back-End System Modules 
+The back -end modules refer to the administrative and system -processing components 
+responsible for centralized data management, operational monitoring, document 
+processing, and system security. 
+• Reservation Management Module 
+This module manages reservation processing, booking validation, accommodation 
+availability monitoring, and reservation scheduling to reduce booking conflicts and 
+delayed reservation updates. 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+27 
+STI College Muñoz-EDSA 
+• Accommodation Management Module 
+This module manages room and cottage records, accommodation categories, 
+occupancy monitoring, reservation tracking, and maintenance management within 
+resort operations. 
+• Billing and Payment Management Module 
+This module automates billing computation, stores financial transaction records, 
+monitors payment information, and organizes billing management within the 
+centralized database. 
+• OCR-Based Document Verification Module 
+This module processes uploaded operational documents, extracts text -based 
+information using OCR technology, stores extracted information, and supports 
+digital document verification within the system. 
+• Staff Management and Access Control Module 
+This module manages staff records, role -based access permissions, authentication 
+processes, and user account management to regulate system access and improve 
+operational coordination. 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+28 
+STI College Muñoz-EDSA 
+• Reporting and Analytics Module 
+This module generates operational and financial reports such as reservation 
+summaries, occupancy monitoring, payment records, document verification reports, 
+and transaction summaries to support resort management and operational decision-
+making. 
+• System Security and Database Management Module 
+This module is responsible on handling the centralized database storage, 
+authentication mechanisms, controlled system access, and operational security to 
+protect confidential resort information and operational records. 
+• System Administrator Module 
+This module would manage the centralized SaaS platform operations such as resort 
+onboarding, tenant monitoring, operational supervision, and role administration. it 
+would ensure that tenant separation and centralized web -based access for multiple 
+resort establishments within the SaaS environment 
+• SaaS Architecture and Tenant Separation 
+The implementation of the SaaS -based multi -tenant architecture that allows 
+multiple resort establishments to operate within a single centralized web -based 
+platform would be the proposed system.  Each resort will have its own resort 
+account, administrative users, operational records, reservation information, and 
+client transaction data while maintaining operational separation from other 
+registered resorts within the system. 
+===PAGE===
+   
+ 
+ 
+29 
+STI College Muñoz-EDSA 
+• User Role and Access Matrix 
+User Role Access 
+Guest 
+Browse resorts, view rooms/cottages, check accommodation details, 
+view amenities, and explore resort information without creating an 
+account. 
+Client 
+Create account, log into the system, submit reservation requests, 
+select rooms/cottages, upload proof of payment, upload operational 
+documents, access OCR upload functionalities, and monitor 
+reservation status and transactions. 
+Resort Owner 
+Oversee and manage the overall resort operations including reservations, 
+room and cottage availability, billing and payment verification, OCR -
+based document validation, staff supervision, guest transaction 
+monitoring, operational reports, and resort inform ation management 
+within the system 
+System 
+Administrator 
+Manage registered resorts, approve resort onboarding, monitor 
+tenant resorts, supervise SaaS platform operations, manage role -
+based access control, maintain system security, and perform 
+centralized platform maintenance. 
+===PAGE===
+   
+ 
+ 
+30 
+STI College Muñoz-EDSA 
+Limitations 
+• System Coverage 
+The proposed system is intended only for private and public resorts in NCR. The 
+study focuses only on reservation management, accommodation monitoring, billing 
+transactions, OCR-based document verification, staff management, reporting, and 
+operational monitoring within resort establishments. Other hospitality sectors such 
+as hotels, restaurants, travel agencies, and transportation services are outside the 
+scope of the study. 
+• Third-Party Booking Integration 
+The proposed system will not include direct integration with external booking 
+platforms, online travel agencies, or third -party reservation systems. Reservations 
+originating from external platforms must be manually entered into the system by 
+authorized personnel. 
+• Digital Payment Verification 
+The proposed system supports manual digital payment verification through GCash, 
+Maya, and bank transfer transactions. Clients may submit proof of payment or 
+transaction reference numbers within the system, while authorized resort personnel 
+manually verify submitted payments before updating reservation or billing status. 
+However, direct banking integrations, automated real -time financial processing, 
+and advanced third -party payment gateway services are outside the scope of the 
+study. 
+===PAGE===
+   
+ 
+ 
+31 
+STI College Muñoz-EDSA 
+• OCR Document Processing Accuracy 
+The OCR functionality of the proposed system depends on the readability and 
+quality of uploaded documents. Blurred images, damaged files, handwritten 
+information, poor lighting conditions, and low -resolution uploads may affect the 
+accuracy of text extraction and document verification results within the system. 
+• Advanced Analytics and Artificial Intelligence 
+The reporting and analytics module will generate operational and financial 
+summaries based on available system data. However, advanced predictive analytics, 
+artificial intelligence forecasting, automated business intelligence features, and 
+machine learning-based recommendations are outside the scope of the study. 
+• Mobile Application Development 
+The study focuses only on web -based implementation accessible through internet 
+browsers. A separate mobile application version for Android or iOS devices will 
+not be developed during the current stage of the study. 
+• Internet Connectivity Dependency 
+The proposed SaaS -based platform requires stable internet connectivity to access 
+system functionalities, process reservations, upload operational documents, and 
+manage resort operations. System accessibility and operational performance may 
+be affected during internet interruptions or connectivity issues. 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+32 
+STI College Muñoz-EDSA 
+Review of Related Literature/Studies/Systems 
+Requirement Analysis 
+The Philippine Statistics Authority (2024) report talked about the continuing increase of 
+accommodation and food service establishments in the Philippines. It emphasized the 
+growing need for organized operational management, accurate record -keeping, and better 
+service coordination in the hospitality businesses. The proposed capstone aims to improve 
+reservation management, accommodation monitoring, billing coordination, document 
+verification, and operational organization among selected private and public res orts in 
+NCR through the Web-Based Resort Management System as a SaaS with OCR. 
+Ramento et al. (2024) presented the development of a web -based reservation and 
+management system for Nature Spring Resort. The system enhances the organization of 
+bookings, monitoring of reservations, handling of customer transactions, and operational 
+efficiency of resort establishments. The study supports the proposed capstone because the 
+proposed system is also focused on centralized management of reservation, monitoring of 
+accommodation, coordination of operations and organized validation of bookings in the 
+operations of the resort. 
+Escala et al. (2026) investigated the use of technology business tools to improve customer 
+experiences, operational coordination, service accessibility, and hospitality service 
+delivery in hospitality establishments in Cebu City. The proposed system suppor ts the 
+proposed capstone as the proposed system utilizes digital technologies for reservation 
+management, billing coordination, customer accessibility, accommodation monitoring, and 
+operational efficiency in resort establishments. 
+===PAGE===
+   
+ 
+ 
+33 
+STI College Muñoz-EDSA 
+Bajado (2025) discussed the use of hotel business tools and technologies in improving 
+guest satisfaction, customer communication, transaction management, and operational 
+coordination in hospitality establishments in Tagaytay City. This study supports the 
+proposed capstone as the proposed system also uses web-based technologies to improve 
+customer accessibility, reservation processing, billing handling and operational 
+organization within resort establishments. 
+Borbon et al. (2021) studied the importance of operational practices that focus on guests in 
+improving customer satisfaction, hospitality accessibility, service management, and 
+operational coordination of resort establishments in Cagayan Valley Region. The  study 
+supports the proposed capstone because the proposed Web -Based Resort Management 
+System as a SaaS with OCR also highlights the improvement of reservation accessibility, 
+monitoring of accommodation, billing coordination, customer interaction, and cent ralized 
+operational management within resort establishments. 
+System Design 
+Apolinar et al. (2022) dealt with the systems analysis and design of a hotel information 
+management system for better management of reservations, coordination of operations, 
+organization of records and digital management in hospitality establishments. The study 
+supports the proposed capstone as the proposed system also focuses on managing 
+accommodations, client transactions, staff records and operational data through a 
+centralized web-based platform with role-based access control. 
+ 
+===PAGE===
+   
+ 
+ 
+34 
+STI College Muñoz-EDSA 
+In Bernal and Matriano (2025) study on the adoption of online business platforms by 
+tourism-related businesses, the authors found that digital platforms allow for greater 
+operational accessibility, customer engagement, transaction coordination, and management 
+of digital services in tourism firms. The study is relevant to the proposed capstone as the 
+proposed SaaS-based resort management system also aims to improve centralized access, 
+reservation management, operations management, and transaction monitoring via a web-
+based platform. 
+Wong and Loo (2026) examined the impact of smart hotel management systems and digital 
+operational technologies on organizational efficiency, operational coordination, and 
+customer service accessibility in the hospitality industry. The proposed capstone is 
+supported by the study since the proposed system also uses centralized digital technologies 
+to enhance reservation management, accommodation monitoring, billing coordination and 
+operational accessibility in resort establishments. 
+Daza et al. (2026) described the creation of a web -based booking system that enhances 
+scheduling coordination, reservation monitoring, operational accessibility, and conflict 
+reduction by means of centralized digital management. The study supports the prop osed 
+capstone for the proposed system also contains centralized reservation processing, 
+accommodation monitoring, and booking validation functionalities that help minimize 
+scheduling conflicts within resort operations. 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+35 
+STI College Muñoz-EDSA 
+Implementation 
+Kumar and Patel (2025) discussed the implementation of the web-based resort booking and 
+management system that can improve reservation handling, accommodation monitoring, 
+payment verification, and operational coordination in hospitality operations. The stu dy 
+supports the proposed capstone because the proposed system also focuses on centralized 
+reservation management, billing coordination, payment verification and accommodation 
+monitoring through a web-based hospitality platform. 
+Ha and Horák (2021) researched the effectiveness of Optical Character Recognition (OCR) 
+technology in the improvement of automated document processing and digital text 
+extraction in information systems. Researchers pointed out that OCR technologies enhance 
+operational efficiency by reducing manual data entry and improving the accessibility of 
+digital documents. The proposed system also uses OCR for processing documents related 
+to reservation, checking proof of payments and managing customer documents for re sort 
+operation. 
+OCR based document management systems improve automated text extraction, digitized 
+records collection and processing efficiency of documents in computerized systems (Mihir 
+et al.,2022). But the researchers noted that OCR technology decreases manual encodin g, 
+enhances document accessibility, and enables organized information management. This 
+study supports the proposed capstone as the proposed Web -Based Resort Management 
+System as a SaaS with OCR that utilizes OCR technology to process uploaded documents 
+such as valid IDs, proof of payment, and reservation forms to enhance document 
+verification and operational efficiency within resort establishments. 
+===PAGE===
+   
+ 
+ 
+36 
+STI College Muñoz-EDSA 
+In a study conducted by Balintag et al. (2025) on the development of Steffi’s Online 
+Reservation Management System for Steffi’s Garden Resort, it was discovered that the 
+web-based system improved the efficiency of reservation, reduced manual errors, provided 
+digital payment options and improved coordination between customers and staff. This 
+study validates the proposed capstone because both systems are designed to enhance the 
+management of resort reservations, monitoring of accommodations, billing coordinat ion, 
+and customer transaction management through a centralized web-based platform. 
+Testing 
+Mohammed and Denizci Guillet (2025) investigated the role of intelligent digital systems 
+in improving financial monitoring, operational coordination, and management efficiency 
+in the hospitality industry. The study supports the proposed capstone as the proposed Web-
+Based Resort Management System as SaaS with OCR also covers centralized reservation 
+management, billing coordination, operational monitoring, and customer accessibility 
+through a web-based hospitality platform. 
+Abalajon et al. (2025) studied the operational practices and management systems adopted 
+by hotel establishments in Boracay to improve customer coordination, service quality and 
+operational efficiency during the transition toward the “better normal” hospita lity 
+environment. The study supports the proposed capstone because the proposed SaaS-based 
+resort management system also aims to improve reservation management, accommodation 
+monitoring, billing coordination and operational organization within a centralize d web-
+based platform. 
+ 
+===PAGE===
+   
+ 
+ 
+37 
+STI College Muñoz-EDSA 
+Deployment 
+Verma and Singh (2025) reviewed the importance of cloud -based hospitality systems in 
+enhancing operational accessibility, centralized management, scalability, and 
+organizational efficiency of accommodation establishments. The study supports the 
+proposed ca pstone. The proposed SaaS -based resort management system also supports 
+reservation processing, accommodation monitoring, billing coordination and multi -resort 
+operational management via centralized operational management and web -based 
+accessibility. 
+The study by Anwar et al., 2024) emphasized that centralized digital platforms improve 
+digital transformation of operational efficiency, customer interaction, service accessibility, 
+and reservation coordination in hospitality establishments. The study supports the proposed 
+capstone since the proposed Web-Based Resort Management System as a SaaS with OCR 
+also aims to improve the reservation management, accommodation monitoring, billing 
+coordination, and customer interaction within the resorts through digital  operational 
+technologies. 
+ 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+38 
+STI College Muñoz-EDSA 
+Smirnova et al. (2024) Development of digital solutions for the organization of resort 
+treatment and hospitality services with the help of technology-driven operational systems. 
+The researchers observed that digital technologies enhance operational coordin ation, 
+service accessibility, customer management, and organizational efficiency in resort and 
+hospitality environments. The study favors the proposed capstone because the proposed 
+Web-Based Resort Management System as a SaaS with OCR also uses centralized  digital 
+technologies to improve reservation management, accommodation monitoring, billing 
+coordination, customer accessibility, and operational efficiency in resort establishments. 
+Maintenance 
+Rivera et al. (2025) investigated the development and digital transformation of the 
+Philippine tourism sector and emphasized the importance of digital technologies, tourism 
+competitiveness, and coordinated development in improving hospitality operations. T he 
+study supports the proposed capstone since the proposed system contributes to the tourism 
+digitalization through a centralized SaaS -based resort management platform that can 
+support reservation coordination, accommodation monitoring, billing transaction s, and 
+customer accessibility. 
+ 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+39 
+STI College Muñoz-EDSA 
+Fouad et al., 2024) Generative artificial intelligence and digital technologies are playing 
+an increasing role in tourism and hospitality operations. The study revealed that the digital 
+transformation improves operational accessibility, customer interactio n, information 
+management, and service coordination in hospitality establishments. The study conforms 
+to the proposed capstone as the proposed system also applies modern digital technologies 
+like the SaaS architecture and OCR -based document processing to i mprove operational 
+coordination, reservation management, billing transactions, and customer interaction in the 
+resort establishments. 
+San Martín et al. (2026) explored the effects of smart technologies on customer experience, 
+operational coordination, service availability, and digital interaction in the tourism and 
+hospitality sectors. The study supports the proposed capstone because the proposed system 
+also utilizes smart digital technologies to enhance reservation accessibility, 
+accommodation monitoring, billing coordination, customer interaction, and operational 
+efficiency within resorts. 
+Synthesis 
+The reviewed literature and studies showed that many hospitality and resort establishments 
+continue to have difficulties on their operations caused by manual reservation handling, 
+disconnected operational processes, delayed transaction coordination, and inefficient 
+information management. Many of the studies pointed out that traditional operational 
+practices frequently result in booking conflicts, inaccurate accommodation monitoring, 
+delayed billing verification, and difficulties in having to maintain organized customer and 
+operational records within hospitality environments 
+===PAGE===
+   
+ 
+ 
+40 
+STI College Muñoz-EDSA 
+Local and foreign studies consistently highlighted the importance of adopting web -based 
+hospitality management systems and digital operational technologies to improve 
+reservation coordination, customer accessibility, accommodation monitoring, and 
+operational efficiency. Studies conducted by Ramento et al. (2024), Escala et al. (2026), 
+Bajado (2025), Anwar et al. (2024), Verma and Singh (2025), and Kumar and Patel (2025) 
+emphasized that centralized digital systems improve operational organization, reservatio n 
+accuracy, customer interaction, and service coordination within hospitality establishments. 
+The studies further explained that SaaS -based and web -based operational systems help 
+improve accessibility, scalability, operational monitoring, and organized hos pitality 
+management through centralized digital platforms.  
+The reviewed studies also emphasized the growing importance of intelligent and automated 
+technologies within hospitality operations. Studies conducted by Ha and Horák (202 1), 
+Fouad et al. (2024), Mohammed and Denizci Guillet (2025)  discussed how digital 
+technologies such as Optical Character Recognition (OCR), intelligent information 
+systems, and automated document processing improve operational coordination, customer 
+service accessibility, and digital transaction management within t ourism and hospitality 
+environments. These given studies showed that integrating OCR technology inside the 
+proposed system to help in document verification, payment reference monitoring, and 
+customer transaction process will help the resort establishments. 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+41 
+STI College Muñoz-EDSA 
+In addition, the reviewed literature consistently showed that having centralized operational 
+systems improve customer accessibility, operational coordination, data organization, and 
+hospitality management efficiency within resort establishments. Implementing role -based 
+access control, automated reservation processing, accommodation monitoring, and  
+centralized operational management was identified to be an important feature that supports 
+organized hospitality operations and improved customer experience withi n modern resort 
+management. 
+Although existing studies emphasized the importance of web -based hospitality systems, 
+SaaS platforms, and digital technologies in improving operational efficiency and 
+reservation management within hospitality establishments (Ramento et al., 2024; Bernal & 
+Matriano, 2025; Apolinar et al., 2022), a lot of the existing systems focuses on hotel 
+environments, reservation-focused functions, or separate operational processes. Some of 
+the studies is lacking on centralized multi -tenant SaaS architecture and OCR -based 
+document verification specifically designed for resort establishments. Furthermore, limited 
+studies integrate reservation management, accommodation monitoring, billing 
+coordination, OCR-based document verification, reporting, and role -based access control 
+within a single web -based platform for selected private and public reso rts in NCR. 
+Therefore, the proposed study aims to address these gaps by developing a centralized Web-
+Based Resort Management System as a SaaS with OCR capable of improving operational 
+coordination, document verification, and transaction management within r esort 
+establishments. 
+ 
+===PAGE===
+   
+ 
+ 
+42 
+STI College Muñoz-EDSA 
+Overall, the reviewed literature and studies established the relevance of implementing a 
+Web-Based Resort Management System as a SaaS with OCR for selected private and 
+public resorts in NCR. The studies support the development of a centralized web -based 
+platform capable of improving reservation management, accommodation monitoring, 
+billing coordination , OCR -based document verification, customer accessibility, and 
+operational efficiency within resort establishments. 
+Conceptual Framework 
+ 
+ 
+ 
+
+===PAGE===
+   
+ 
+ 
+43 
+STI College Muñoz-EDSA 
+Chapter III 
+TECHNICAL BACKGROUND 
+This section presents the technologies and development tools to be used in the 
+proposed system. 
+The proposed system entitled Web -Based Resort Management as a SaaS for National 
+Capital Region with OCR will use several web -based technologies necessary for the 
+development, database management, centralized processing, and web -based deployment 
+of the proposed platform. These technologies will support the operational functionalities, 
+SaaS-based architecture, OCR processing, and centralized resort management processes of 
+the system. 
+Modified Waterfall System 
+ 
+Figure 1. Modified Waterfall Model 
+ 
+
+===PAGE===
+   
+ 
+ 
+44 
+STI College Muñoz-EDSA 
+Requirement Analysis 
+During the Requirements Analysis phase, the proponents will gather information about the 
+current operations and challenges experienced by selected private and public resorts in 
+NCR. This phase includes identifying the needed modules such as reservation management, 
+accommodation monitoring, billing and payment management, OCR -based document 
+verification, staff management, reporting, and SaaS -based operational management. The 
+proponents will also review existing manual processes and determine the system 
+requirements needed to improve resort operations. 
+System Design 
+During the System Design phase, the proponents will create the overall structure and design 
+of the system. This includes designing the database structure, Data Flow Diagrams (DFD), 
+system architecture, OCR processing workflow, role -based access, and user i nterface 
+layouts. The proponents will also prepare the system flow and module structure to ensure 
+proper organization of system functions and user interactions. 
+ 
+ 
+ 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+45 
+STI College Muñoz-EDSA 
+Implementation 
+During the Implementation phase, the proponents will develop the web -based SaaS resort 
+management system using HTML, CSS, JavaScript, Node.js, and Express.js. The system 
+will include modules for reservations, accommodation monitoring, billing transactions,  
+OCR-based document verification, staff management, and report generation. MySQL will 
+be used for database management, while GitHub will be used for version control and 
+Render will serve as the cloud deployment platform to allow centralized and online system 
+access. 
+Testing 
+During the Testing phase, the proponents will conduct system testing, module testing, and 
+debugging to identify and fix errors within the system. The proponents will evaluate 
+whether the modules function properly, including reservation processing, billing 
+computation, accommodation monitoring, OCR extraction, and document verification. 
+User testing may also be conducted to gather feedback regarding the usability and 
+functionality of the system. 
+Deployment 
+During the Deployment phase, the finalized system will be deployed through a cloud-based 
+platform to provide online accessibility for resort owners and clients. The deployment 
+process will ensure that the system can be accessed through web browsers and sup port 
+centralized management of resort operations within the SaaS environment. 
+ 
+===PAGE===
+   
+ 
+ 
+46 
+STI College Muñoz-EDSA 
+Maintenance 
+During the Maintenance phase, the proponents will monitor the performance and 
+functionality of the deployed system to ensure continuous and stable operation. This phase 
+includes fixing system errors, improving existing features, updating modules when 
+necessary, and maintaining the cloud -based database and server connection. The 
+proponents will also address user feedback and apply necessary improvements to enhance 
+the efficiency, security, and usability of the SaaS -based Resort Management System with 
+OCR. 
+Calendar of the Activities 
+February- The proponents conducted initial research, identified possible project topics, 
+and gathered relevant information for the study 
+March- The proponents continued data gathering, prepared necessary documents, and 
+finalized requirements for the proposed system in preparation for the defense 
+April- The proponents revised the proposed topic and system after identifying that the 
+previous project topic had already been used in past studies. Additional data gathering was 
+then conducted for the revised topic. 
+May- The proponents continued the revisions on the manuscript to prepare for the final 
+defense. 
+===PAGE===
+   
+ 
+ 
+47 
+STI College Muñoz-EDSA 
+ 
+Figure 2. Gantt Chart 
+ 
+
+===PAGE===
+   
+ 
+ 
+48 
+STI College Muñoz-EDSA 
+Resources: 
+Hardware: 
+Mobile Phone 
+A mobile phone with internet connectivity and support for modern web browsers such as 
+Google Chrome, Microsoft Edge, Firefox, or Safari will be used to access and test the 
+proposed web-based platform. 
+Computer/Laptop 
+A computer or laptop with at least Windows 10, 8GB RAM, 256GB storage, and a stable 
+internet connection will be used for system development, testing, database management, 
+and documentation processes. 
+Software: 
+Browser 
+Web browsers such as Google Chrome and Mozilla Firefox will be used for system access, 
+interface testing, and compatibility checking during development. 
+HTML 
+HTML will be used to create and structure the web pages and interface components of the 
+proposed system. 
+ 
+===PAGE===
+   
+ 
+ 
+49 
+STI College Muñoz-EDSA 
+CSS 
+CSS will be used to design the visual layout, responsiveness, spacing, and overall 
+appearance of the web-based platform. 
+JavaScript 
+JavaScript will be used to implement interactive functionalities, dynamic content 
+processing, and client-side operations within the system. 
+MySQL 
+MySQL will be used as the centralized database management system for storing, 
+organizing, and retrieving operational records and system information within the proposed 
+platform. 
+GITHUB 
+GitHub will be used as the version control and source code repository platform of the 
+proposed system. It will support file management, source code monitoring, collaboration, 
+and tracking of system development updates during the project implementation process. 
+Node.js 
+Node.js will be used for server -side processing, authentication, reservation validation, 
+billing management, OCR processing, staff coordination, and communication between the 
+system interface and centralized database. 
+ 
+===PAGE===
+   
+ 
+ 
+50 
+STI College Muñoz-EDSA 
+Express.js 
+Express.js will be used to simplify back -end development by handling routing, 
+authentication, server requests, and operational processing within the proposed system. 
+Render 
+Render will serve as the cloud deployment platform of the proposed SaaS system, allowing 
+authorized users and resort establishments to access the platform through centralized online 
+hosting. 
+Tesseract OCR 
+Tesseract OCR will be used for Optical Character Recognition (OCR) functionality within 
+the proposed system. The technology will allow the system to extract text -based 
+information from uploaded documents such as valid IDs, proof of payment, and 
+reservation-related files to improve document verification and reduce manual encoding 
+procedures. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+===PAGE===
+   
+ 
+ 
+51 
+STI College Muñoz-EDSA 
+References 
+Local Studies  
+Abalajon, J. (2025). Critical success factors for Boracay Island hotels’ transition to a better 
+normal: Developing effective business continuity strategies. Multidisciplinary 
+Reviews, 9(4), 2026174. https://doi.org/10.31893/multirev.2026174 
+Apolinar, M. S. A., Regala, M. M. K. B., Santiago, J. A. I., Intal, G. L. D., School of 
+Information Technology, & Mapua University. (2022). System Analysis and 
+Design of Hotel Information System using Design Thinking Methodology. In 
+Proceedings of the 7th North American International Conference on Industrial 
+Engineering and Operations Management  [Conference-proceeding]. 
+https://ieomsociety.org/proceedings/2022orlando/165.pdf 
+Bajado, L. J. L. (2025). Assessment of hotel business tools and technologies usage towards 
+guest satisfaction in Tagaytay City, Philippines: Basis for an excellent service 
+provision. International Journal of Research and Innovation in Social Science, 9(9), 
+3227–3237. https://rsisinternational.org/journals/ijriss/articles/assessment-of-
+hotel-business-tools-and-technologies-usage-towards-guest-satisfaction-in-
+tagaytay-city-philippines-basis-for-an-excellent-service-provision/ 
+Bernal, E., & Matriano, M. T. (2025). Adoption of Online Business Platform Among Small 
+and Medium Enterprises (SMEs) in the Tourism Industry in Muscat, Sultanate of 
+Oman and Bicol Region, Philippines. Research Square (Research Square). 
+https://doi.org/10.21203/rs.3.rs-6381193/v1  
+===PAGE===
+   
+ 
+ 
+52 
+STI College Muñoz-EDSA 
+Daza, R. J., Tambalque, J. E., Ho, C. A., & Moreno, K. C. (2026). Courtyard Reserva: A 
+Web-Based Booking System for Community Sports Facilities with Data 
+Visualization and Scheduling Algorithm. International Journal of Research and 
+Scientific Innovation , 13(2), 673 –687. 
+https://doi.org/10.51244/ijrsi.2026.13020059 
+Escala, M. S. D., Secretaria, N. M., Narvios, L. E., Jesus, J., & Bastida, T. A., Jr. (2026). 
+Revolutionizing customer experiences through technology business tools in the 
+Cebu City hospitality sector. Human Behavior, Development and Society . 
+https://doi.org/10.62370/hbds.v27i1.280014 
+Mones, J., & Borbon, N. M. D. (2021). Framework of guest focused among resorts in 
+Cagayan Valley Region, Philippines. International Journal of Research Studies in 
+Management, 9(3). https://doi.org/10.5861/ijrsm.2021.m7733 
+Philippine Statistics Authority. (2022).  2022 Annual Survey of Philippine Business and 
+Industry (ASPBI): Accommodation and food service 
+activities. https://psa.gov.ph/content/2022-annual-survey-philippine-business-and-
+industry-aspbi-accommodation-and-food-service 
+Ramento, L. F., Dancel, D. M., Taberlo, E., & Anquillano, K. J. (2024). Web-Based 
+Reservation and Management System for Nature Spring Resort . 
+https://csu.org.ph/jpas/article/view/43 
+ 
+===PAGE===
+   
+ 
+ 
+53 
+STI College Muñoz-EDSA 
+Rivera, J. P. R., Bolalin, M. C. P., Ocbina, J. J. S., & Philippine Institute for Development 
+Studies. (2025). Philippine Tourism Sectoral Review (2000 to 2025): From Promise 
+to Power – Accelerating the Philippines’ Tourism Transformation toward 
+Sustainability, Competitiveness, and Inclusion. In DISCUSSION PAPER SERIES  
+(Vols. 2025–43). https://pidswebs.pids.gov.ph/CDN/document/pidsdps2543.pdf 
+ Foreign Studies  
+Anwar, F. A., Deliana, D., & Suyamto, S. (2024). Digital transformation in the hospitality 
+industry: Improving efficiency and guest experience. International Journal of 
+Management Science and Information Technology , 4(2), 428 –437. 
+https://doi.org/10.35870/ijmsit.v4i2.3201 
+Fouad, A. M., Salem, I. E., & Fathy, E. A. (2024). Generative AI insights in tourism and 
+hospitality: A comprehensive review and strategic research roadmap. Tourism and 
+Hospitality Research. https://doi.org/10.1177/14673584241293125 
+Ha, H., & Horák, A. (2021). Information extraction from scanned invoice images using 
+text analysis and layout features. Signal Processing Image Communication , 102, 
+116601. https://doi.org/10.1016/j.image.2021.116601 
+Kumar, R., & Patel, S. (2025).  A web-based resort booking and management system with 
+online reservation and payment 
+verification. https://www.researchgate.net/publication/403683727_A_Web-
+Based_Resort_Booking_and_Management_System_with_Online_Reservation_an
+d_Payment_Verification  
+===PAGE===
+   
+ 
+ 
+54 
+STI College Muñoz-EDSA 
+Martín, H. S., Collado, J., & Herrero, A. (2026). The role of smart technologies in shaping 
+tourist experience. Spanish Journal of Marketing - ESIC, 1 –23. 
+https://doi.org/10.1108/sjme-08-2025-0253 
+Mihir P, Ritik D, Vivek V, Shrinit P, & Chandrayani Rokade. (2022). Smart Document 
+Management System using OCR. International Journal of Progressive Research in 
+Science and Engineering , 3(05), 32 –35. Retrieved from 
+https://journal.ijprse.com/index.php/ijprse/article/view/558 
+Mohammed, I., & Guillet, B. D. (2025). Stakeholder perspectives on integrating 
+explainable artificial intelligence into hotel revenue management system. Tourism 
+Economics, 32(4), 804–824. https://doi.org/10.1177/13548166251382289 
+Smirnova, Y., Grankina, V., Laamarti, Y., & Atakhodjaev, S. (2024). Development of 
+digital solutions for organizing resort treatment. BIO Web of Conferences , 120, 
+01068. https://doi.org/10.1051/bioconf/202412001068 
+Verma, A., & Singh, K. (2025).  Cloud-based solutions for hospitality management 
+systems. International Conference on Software Engineering and 
+IT. https://doi.org/10.32628/CSEIT251112211  
+Wong, R. W. M., & Loo, B. P. Y. (2026). Integrated sustainable building features and smart 
+hotel management: Evidence from seven years of hotel operational 
+data. International Journal of Hospitality Management , 133, 104488. 
+https://doi.org/10.1016/j.ijhm.2025.104488 
+ 

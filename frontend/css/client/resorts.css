@@ -1,0 +1,852 @@
+/* =========================================================
+   RESORTHUB - CLIENT RESORTS
+   File: css/client/resorts.css
+   ========================================================= */
+
+
+/* =========================================================
+   RESORTS SECTION
+   ========================================================= */
+
+.resorts-section,
+.selected-resort-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.selected-resort-section {
+    margin-top: 24px;
+}
+
+
+/* =========================================================
+   SECTION HEADING
+   ========================================================= */
+
+.resorts-section .section-heading,
+.selected-resort-section .section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.resorts-section .section-heading h2,
+.selected-resort-section .section-heading h2 {
+    margin: 0 0 4px;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.resorts-section .section-heading p,
+.selected-resort-section .section-heading p {
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   RESORT GRID
+   ========================================================= */
+
+.resort-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+/* =========================================================
+   RESORT CARD
+   Created dynamically by Resorts.js
+   ========================================================= */
+
+.resort-card {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-large);
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow-small);
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.resort-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #d4dce8;
+
+    box-shadow: var(--shadow-medium);
+}
+
+
+/* =========================================================
+   RESORT CARD HEADER
+   ========================================================= */
+
+.resort-card-header {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    padding: 18px 18px 14px;
+}
+
+
+/* Resort icon */
+
+.resort-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-medium);
+
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.resort-card-icon svg {
+    width: 21px;
+    height: 21px;
+}
+
+
+/* Resort name */
+
+.resort-card-title {
+    min-width: 0;
+}
+
+.resort-card-title h3 {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   RESORT CARD BODY
+   ========================================================= */
+
+.resort-card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 14px;
+
+    padding: 0 18px 18px;
+}
+
+
+/* Resort supporting text */
+
+.resort-card-description {
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.55;
+
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   RESORT CARD ACTION
+   ========================================================= */
+
+.resort-card-actions {
+    display: flex;
+    align-items: center;
+
+    margin-top: auto;
+    padding-top: 2px;
+}
+
+.resort-view-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    width: 100%;
+    min-height: 38px;
+
+    padding: 9px 13px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-medium);
+
+    background: var(--surface);
+
+    color: var(--text-primary);
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        border-color var(--transition),
+        color var(--transition);
+}
+
+.resort-view-button:hover {
+    border-color: #cbd5e1;
+
+    background: var(--surface-soft);
+
+    color: var(--primary);
+}
+
+.resort-view-button svg {
+    width: 16px;
+    height: 16px;
+}
+
+
+/* Selected resort card */
+
+.resort-card.selected {
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 1px rgba(37, 99, 235, 0.08),
+        var(--shadow-medium);
+}
+
+.resort-card.selected .resort-card-icon {
+    background: var(--primary);
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   RESORT EMPTY STATE
+   ========================================================= */
+
+.resorts-empty-state,
+.accommodations-empty-state {
+    overflow: hidden;
+}
+
+.resorts-empty-state .empty-state,
+.accommodations-empty-state .empty-state {
+    min-height: 240px;
+
+    padding: 40px 22px;
+}
+
+.resorts-empty-state .empty-state > svg,
+.accommodations-empty-state .empty-state > svg {
+    width: 38px;
+    height: 38px;
+
+    margin-bottom: 13px;
+
+    color: var(--text-muted);
+}
+
+.resorts-empty-state .empty-state h2,
+.accommodations-empty-state .empty-state h2 {
+    margin: 0 0 6px;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.resorts-empty-state .empty-state p,
+.accommodations-empty-state .empty-state p {
+    max-width: 430px;
+
+    margin: 0 auto;
+
+    font-size: 13px;
+    line-height: 1.6;
+
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   ACCOMMODATION GRID
+   ========================================================= */
+
+.accommodation-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+/* =========================================================
+   ACCOMMODATION CARD
+   Created dynamically by Resorts.js
+   ========================================================= */
+
+.accommodation-card {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-large);
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow-small);
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.accommodation-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #d4dce8;
+
+    box-shadow: var(--shadow-medium);
+}
+
+
+/* =========================================================
+   ACCOMMODATION CARD HEADER
+   ========================================================= */
+
+.accommodation-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 17px 17px 12px;
+}
+
+.accommodation-card-heading {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    min-width: 0;
+}
+
+.accommodation-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-medium);
+
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.accommodation-card-icon svg {
+    width: 19px;
+    height: 19px;
+}
+
+.accommodation-card-title {
+    min-width: 0;
+}
+
+.accommodation-card-title h3 {
+    margin: 0 0 3px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+
+    overflow-wrap: anywhere;
+}
+
+.accommodation-card-title span {
+    display: block;
+
+    font-size: 12px;
+
+    color: var(--text-muted);
+}
+
+
+/* =========================================================
+   ACCOMMODATION CARD BODY
+   ========================================================= */
+
+.accommodation-card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 12px;
+
+    padding: 0 17px 17px;
+}
+
+
+/* Small information rows */
+
+.accommodation-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.accommodation-card-info-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+
+    font-size: 12px;
+}
+
+.accommodation-card-info-row span {
+    color: var(--text-muted);
+}
+
+.accommodation-card-info-row strong {
+    max-width: 65%;
+
+    font-weight: 600;
+
+    text-align: right;
+
+    color: var(--text-primary);
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   ACCOMMODATION CARD ACTION
+   ========================================================= */
+
+.accommodation-card-actions {
+    display: flex;
+    gap: 8px;
+
+    margin-top: auto;
+    padding-top: 4px;
+}
+
+.accommodation-view-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    width: 100%;
+    min-height: 37px;
+
+    padding: 8px 12px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-medium);
+
+    background: var(--surface);
+
+    color: var(--text-primary);
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        border-color var(--transition),
+        color var(--transition);
+}
+
+.accommodation-view-button:hover {
+    border-color: #cbd5e1;
+
+    background: var(--surface-soft);
+
+    color: var(--primary);
+}
+
+.accommodation-view-button svg {
+    width: 15px;
+    height: 15px;
+}
+
+
+/* Selected accommodation */
+
+.accommodation-card.selected {
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 1px rgba(37, 99, 235, 0.08),
+        var(--shadow-medium);
+}
+
+
+/* =========================================================
+   ACCOMMODATION DETAIL CARD
+   ========================================================= */
+
+.accommodation-detail-card {
+    margin-top: 24px;
+
+    overflow: hidden;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.accommodation-detail-card:hover {
+    border-color: #d7dfeb;
+
+    box-shadow: var(--shadow-medium);
+}
+
+
+/* =========================================================
+   DETAIL CARD HEADER
+   ========================================================= */
+
+.accommodation-detail-card .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+
+    padding: 18px 20px;
+}
+
+.accommodation-detail-card .card-heading {
+    align-items: flex-start;
+}
+
+.accommodation-detail-card .card-heading h2 {
+    margin: 0 0 4px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.accommodation-detail-card .card-heading p {
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    color: var(--text-secondary);
+}
+
+#accommodationDetailAvailability {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   DETAIL CARD BODY
+   ========================================================= */
+
+.accommodation-detail-card .card-body {
+    padding: 20px;
+}
+
+
+/* =========================================================
+   ACCOMMODATION DETAIL GRID
+   ========================================================= */
+
+.accommodation-detail-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 13px;
+}
+
+.accommodation-detail-item {
+    min-width: 0;
+
+    padding: 14px;
+
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-medium);
+
+    background: var(--surface-soft);
+
+    transition:
+        background var(--transition),
+        border-color var(--transition),
+        transform var(--transition);
+}
+
+.accommodation-detail-item:hover {
+    transform: translateY(-1px);
+
+    border-color: #d7dfeb;
+
+    background: var(--surface);
+}
+
+.accommodation-detail-item span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 12px;
+
+    color: var(--text-muted);
+}
+
+.accommodation-detail-item strong {
+    display: block;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: var(--text-primary);
+
+    overflow-wrap: anywhere;
+}
+
+.accommodation-detail-wide {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   DETAIL ACTION
+   ========================================================= */
+
+.accommodation-detail-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 18px;
+    padding-top: 18px;
+
+    border-top: 1px solid var(--border-light);
+}
+
+.accommodation-detail-actions .primary-button {
+    min-width: 130px;
+}
+
+
+/* =========================================================
+   RESPONSIVE - MEDIUM DESKTOP
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .resort-grid,
+    .accommodation-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .selected-resort-section,
+    .accommodation-detail-card {
+        margin-top: 20px;
+    }
+
+
+    .resort-grid,
+    .accommodation-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .resort-card-header {
+        padding: 16px 16px 12px;
+    }
+
+
+    .resort-card-body {
+        padding: 0 16px 16px;
+    }
+
+
+    .accommodation-card-header {
+        padding: 16px 16px 12px;
+    }
+
+
+    .accommodation-card-body {
+        padding: 0 16px 16px;
+    }
+
+
+    .accommodation-detail-card .card-header {
+        align-items: flex-start;
+        flex-direction: column;
+
+        padding: 16px;
+    }
+
+
+    .accommodation-detail-card .card-body {
+        padding: 16px;
+    }
+
+
+    .accommodation-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .accommodation-detail-wide {
+        grid-column: auto;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 560px) {
+
+    .resorts-section .section-heading,
+    .selected-resort-section .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+
+    .resort-card-header {
+        align-items: flex-start;
+    }
+
+
+    .accommodation-card-header {
+        flex-direction: column;
+    }
+
+
+    .accommodation-card-info-row {
+        flex-direction: column;
+        gap: 3px;
+    }
+
+
+    .accommodation-card-info-row strong {
+        max-width: 100%;
+
+        text-align: left;
+    }
+
+
+    .accommodation-detail-item {
+        padding: 12px;
+    }
+
+
+    .accommodation-detail-actions {
+        justify-content: stretch;
+    }
+
+
+    .accommodation-detail-actions .primary-button {
+        width: 100%;
+    }
+
+
+    .resorts-empty-state .empty-state,
+    .accommodations-empty-state .empty-state {
+        min-height: 210px;
+
+        padding: 34px 18px;
+    }
+
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) {
+
+    .resort-card:hover,
+    .accommodation-card:hover,
+    .accommodation-detail-card:hover,
+    .accommodation-detail-item:hover {
+        transform: none;
+
+        box-shadow: var(--shadow-small);
+    }
+
+
+    .resort-view-button:hover,
+    .accommodation-view-button:hover {
+        background: var(--surface);
+
+        color: var(--text-primary);
+    }
+
+}

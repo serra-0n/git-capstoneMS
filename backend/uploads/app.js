@@ -5,14 +5,22 @@ const bcrypt = require("bcryptjs");
 const pool = require("../config/database");
 const upload = require("../middleware/uploadMiddleware");
 const { extractText } = require("../services/ocrService");
+const authRoutes = require("../routes/authRoutes");
+
+const {
+    authenticateUser,
+    requireRole
+} = require("../middleware/authMiddleware");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/api/auth", authRoutes);
 app.use(express.static(path.resolve(__dirname, "../../frontend")));
 app.use("/uploads", express.static(path.resolve(__dirname)));
+
 
 app.get("/api/health", async (request, response) => {
 	try {

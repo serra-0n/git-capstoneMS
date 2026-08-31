@@ -1,0 +1,532 @@
+/* =========================================================
+   RESORTHUB - CLIENT NOTIFICATIONS
+   File: css/client/notifications.css
+   ========================================================= */
+
+
+/* =========================================================
+   NOTIFICATIONS CARD
+   ========================================================= */
+
+.notifications-card {
+    overflow: hidden;
+}
+
+.notifications-card .card-header {
+    padding: 18px 20px;
+}
+
+.notifications-card .card-heading {
+    align-items: flex-start;
+}
+
+.notifications-card .card-heading h2 {
+    margin: 0 0 4px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.notifications-card .card-heading p {
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    color: var(--text-secondary);
+}
+
+.notifications-card .card-body {
+    padding: 0;
+}
+
+
+/* =========================================================
+   NOTIFICATION LIST
+   ========================================================= */
+
+.notification-list {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   NOTIFICATION ITEM
+   Created dynamically by Notifications.js
+   ========================================================= */
+
+.notification-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    width: 100%;
+
+    padding: 17px 20px;
+
+    border: 0;
+    border-bottom: 1px solid var(--border-light);
+
+    background: var(--surface);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        border-color var(--transition);
+}
+
+.notification-item:last-child {
+    border-bottom: 0;
+}
+
+.notification-item:hover {
+    background: var(--surface-soft);
+}
+
+.notification-item.selected {
+    background: var(--primary-light);
+}
+
+
+/* =========================================================
+   NOTIFICATION ICON
+   ========================================================= */
+
+.notification-item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-medium);
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+}
+
+.notification-item-icon svg {
+    width: 19px;
+    height: 19px;
+}
+
+
+/* =========================================================
+   NOTIFICATION CONTENT
+   ========================================================= */
+
+.notification-item-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 6px;
+
+    min-width: 0;
+}
+
+.notification-item-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.notification-item-heading strong {
+    min-width: 0;
+
+    font-size: 14px;
+    font-weight: 650;
+
+    color: var(--text-primary);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.notification-item-message {
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.55;
+
+    color: var(--text-secondary);
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   RELATED INFORMATION
+   ========================================================= */
+
+.notification-item-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px 12px;
+
+    margin-top: 1px;
+
+    font-size: 11px;
+
+    color: var(--text-muted);
+}
+
+.notification-item-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.notification-item-meta svg {
+    width: 13px;
+    height: 13px;
+}
+
+
+/* =========================================================
+   TYPE BADGE
+   ========================================================= */
+
+.notification-type-badge {
+    display: inline-flex;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    padding: 4px 8px;
+
+    border-radius: 999px;
+
+    background: var(--neutral-background);
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.notification-empty-state {
+    min-height: 300px;
+
+    padding: 44px 24px;
+}
+
+.notification-empty-state > svg {
+    width: 40px;
+    height: 40px;
+
+    margin-bottom: 13px;
+
+    color: var(--text-muted);
+}
+
+.notification-empty-state h3 {
+    margin: 0 0 6px;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.notification-empty-state p {
+    max-width: 390px;
+
+    margin: 0 auto;
+
+    font-size: 13px;
+    line-height: 1.6;
+
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   NOTIFICATION DETAIL CARD
+   ========================================================= */
+
+.notification-detail-card {
+    margin-top: 20px;
+
+    overflow: hidden;
+}
+
+.notification-detail-card .card-header {
+    padding: 18px 20px;
+}
+
+.notification-detail-card .card-heading {
+    align-items: flex-start;
+}
+
+.notification-detail-card .card-heading h2 {
+    margin: 0 0 4px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.notification-detail-card .card-heading p {
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    color: var(--text-secondary);
+}
+
+.notification-detail-card .card-body {
+    padding: 20px;
+}
+
+
+/* =========================================================
+   NOTIFICATION DETAIL GRID
+   ========================================================= */
+
+.notification-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.notification-detail-item {
+    min-width: 0;
+
+    padding: 14px;
+
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-medium);
+
+    background: var(--surface-soft);
+}
+
+.notification-detail-item > span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 12px;
+
+    color: var(--text-muted);
+}
+
+.notification-detail-item > strong {
+    display: block;
+
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.55;
+
+    color: var(--text-primary);
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   MESSAGE DETAIL
+   ========================================================= */
+
+.notification-detail-message {
+    grid-column: 1 / -1;
+}
+
+.notification-detail-message > strong {
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   DETAIL ACTION
+   ========================================================= */
+
+.notification-detail-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 16px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid var(--border-light);
+}
+
+.notification-detail-actions .secondary-button {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   DYNAMIC TYPE STYLES
+   These are presentation-only classes that can be applied
+   by Notifications.js.
+   ========================================================= */
+
+.notification-item[data-notification-type="reservation"]
+.notification-item-icon {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.notification-item[data-notification-type="payment"]
+.notification-item-icon {
+    background: var(--success-background);
+    color: var(--success);
+}
+
+.notification-item[data-notification-type="document"]
+.notification-item-icon {
+    background: var(--warning-background);
+    color: var(--warning);
+}
+
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+.notification-item:focus-visible {
+    position: relative;
+    z-index: 1;
+
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .notifications-card .card-header {
+        padding: 16px;
+    }
+
+    .notification-item {
+        padding: 15px 16px;
+    }
+
+    .notification-detail-card {
+        margin-top: 18px;
+    }
+
+    .notification-detail-card .card-header {
+        padding: 16px;
+    }
+
+    .notification-detail-card .card-body {
+        padding: 16px;
+    }
+
+    .notification-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .notification-detail-message {
+        grid-column: auto;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 560px) {
+
+    .notification-item {
+        gap: 11px;
+
+        padding: 14px;
+    }
+
+    .notification-item-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .notification-item-icon svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    .notification-item-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .notification-item-heading strong {
+        white-space: normal;
+    }
+
+    .notification-item-message {
+        font-size: 12px;
+    }
+
+    .notification-item-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .notification-detail-item {
+        padding: 12px;
+    }
+
+    .notification-detail-actions {
+        justify-content: stretch;
+    }
+
+    .notification-detail-actions .secondary-button {
+        width: 100%;
+    }
+
+    .notification-empty-state {
+        min-height: 250px;
+
+        padding: 34px 18px;
+    }
+
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) {
+
+    .notification-item:hover {
+        background: var(--surface);
+    }
+
+    .notification-item.selected:hover {
+        background: var(--primary-light);
+    }
+
+}

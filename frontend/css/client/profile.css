@@ -1,0 +1,342 @@
+/* =========================================================
+   RESORTHUB - CLIENT PROFILE
+   File: css/client/profile.css
+   ========================================================= */
+
+
+/* =========================================================
+   PROFILE OVERVIEW
+   ========================================================= */
+
+.profile-overview-card {
+    margin-bottom: 20px;
+}
+
+.profile-overview {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    padding: 22px;
+}
+
+.profile-overview-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 64px;
+    height: 64px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+}
+
+.profile-overview-avatar svg {
+    width: 30px;
+    height: 30px;
+}
+
+.profile-overview-information {
+    min-width: 0;
+}
+
+.profile-overview-information h2 {
+    margin: 0 0 4px;
+
+    font-size: 19px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+
+    overflow-wrap: anywhere;
+}
+
+.profile-overview-information p {
+    margin: 0 0 10px;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    color: var(--text-secondary);
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   ROLE
+   ========================================================= */
+
+.profile-role {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.profile-role svg {
+    width: 14px;
+    height: 14px;
+}
+
+
+/* =========================================================
+   PROFILE INFORMATION CARD
+   ========================================================= */
+
+.profile-information-card {
+    overflow: hidden;
+}
+
+.profile-information-card .card-header {
+    padding: 18px 20px;
+}
+
+.profile-information-card .card-heading {
+    align-items: flex-start;
+}
+
+.profile-information-card .card-heading h2 {
+    margin: 0 0 4px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.profile-information-card .card-heading p {
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    color: var(--text-secondary);
+}
+
+.profile-information-card .card-body {
+    padding: 20px;
+}
+
+
+/* =========================================================
+   PROFILE FORM GRID
+   ========================================================= */
+
+.profile-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+
+/* =========================================================
+   INPUT WRAPPER
+   ========================================================= */
+
+.profile-input-wrapper {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.profile-input-wrapper > svg {
+    position: absolute;
+    left: 12px;
+
+    width: 17px;
+    height: 17px;
+
+    color: var(--text-muted);
+
+    pointer-events: none;
+}
+
+.profile-input-wrapper input {
+    width: 100%;
+
+    padding-left: 40px;
+}
+
+
+/* =========================================================
+   READONLY FIELD
+   ========================================================= */
+
+.profile-input-wrapper input[readonly] {
+    background: var(--surface-soft);
+
+    color: var(--text-secondary);
+
+    cursor: default;
+}
+
+
+/* =========================================================
+   FORM MESSAGE
+   ========================================================= */
+
+.profile-form-message {
+    margin-top: 18px;
+
+    padding: 11px 13px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-medium);
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.profile-form-message.success {
+    border-color: var(--success);
+
+    background: var(--success-background);
+
+    color: var(--success);
+}
+
+.profile-form-message.error {
+    border-color: var(--danger);
+
+    background: var(--danger-background);
+
+    color: var(--danger);
+}
+
+.profile-form-message.info {
+    border-color: var(--primary);
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+   ========================================================= */
+
+.profile-form-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 20px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid var(--border-light);
+}
+
+.profile-form-actions .primary-button {
+    min-width: 135px;
+}
+
+
+/* =========================================================
+   DISABLED / SAVING STATE
+   ========================================================= */
+
+#saveProfileButton:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .profile-overview {
+        padding: 18px;
+    }
+
+    .profile-information-card .card-header {
+        padding: 16px;
+    }
+
+    .profile-information-card .card-body {
+        padding: 16px;
+    }
+
+    .profile-form-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 560px) {
+
+    .profile-overview {
+        align-items: flex-start;
+        gap: 13px;
+
+        padding: 16px;
+    }
+
+    .profile-overview-avatar {
+        width: 52px;
+        height: 52px;
+    }
+
+    .profile-overview-avatar svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .profile-overview-information h2 {
+        font-size: 17px;
+    }
+
+    .profile-overview-information p {
+        font-size: 12px;
+    }
+
+    .profile-form-actions {
+        justify-content: stretch;
+    }
+
+    .profile-form-actions .primary-button {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) {
+
+    .profile-form-actions .primary-button:hover {
+        transform: none;
+    }
+
+}
