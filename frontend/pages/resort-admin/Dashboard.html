@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <div class="app-shell">
+    <div class="app-shell">
 
     <aside class="sidebar">
   <a class="brand" href="Dashboard.html">
@@ -26,10 +26,10 @@
   </a>
 
   <div class="resort-switcher">
-    <span class="resort-avatar">BW</span>
+    <span class="resort-avatar" id="sidebarResortAvatar">--</span>
 
     <span>
-      <strong>Blue Waves Resort</strong>
+      <strong id="sidebarResortName">Resort</strong>
       <small>Resort Owner</small>
     </span>
   </div>
@@ -116,13 +116,13 @@
         </button>
 
         <button class="top-select">
-          <span class="avatar">BW</span>
-          Blue Waves Resort
+          <span class="avatar" id="topbarResortAvatar">--</span>
+          <span id="topbarResortName">Resort</span>
         </button>
 
         <button class="profile">
           <span>
-            <b>Juan Dela Cruz</b>
+            <b id="resortAdminName">Resort Administrator</b>
             <small>Resort Owner</small>
           </span>
         </button>
@@ -132,7 +132,7 @@
         <div class="page-title-row">
           <div>
             <h1>Operational Dashboard</h1>
-            <p class="subtitle">Welcome back, Juan!</p>
+            <p class="subtitle" id="resortAdminWelcome">Welcome back!</p>
           </div>
 
           <div class="date-card">

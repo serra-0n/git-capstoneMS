@@ -8,6 +8,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const confirmPasswordIcon = document.getElementById("confirmPasswordIcon");
     const agreeTerms = document.getElementById("agreeTerms");
 
+    const firstName = document.getElementById("firstName");
+    const lastName = document.getElementById("lastName");
+    const email = document.getElementById("email");
+    const createAccountButton = document.getElementById("createAccountButton");
+
 
     function togglePassword(input, icon, button) {
         if (!input || !icon || !button) {
@@ -18,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
             input.type = "text";
 
             button.setAttribute("aria-label", "Hide password");
-            icon.setAttribute()("data-lucide", "eye-off");
+            icon.setAttribute("data-lucide", "eye-off");
         } else {
             input.type = "password";
 
@@ -93,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (signupForm) {
-        signupForm.addEventListener("submit", function (event) {
+        signupForm.addEventListener("submit", async function (event) {
             event.preventDefault();
 
             const passwordValid = validatePassword();
@@ -115,7 +120,42 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            alert("Account information is valid");
+            createAccountButton.disabled = true;
+            createAccountButton.textContent = "Creating account...";
+
+            try {
+                const response = await fetch("/api/auth/signup", {
+                    method: "POST",
+                    headers: {
+                        "content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        firstName: firstName.value.trim(),
+                        lastName: lastName.value.trim(),
+                        email: email.value.trim().toLowerCase(),
+                        password: password.value
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        result.message || "Signup failed."
+                    );
+                }
+
+                alert(result.message);
+                window.location.href = "login.html";
+
+            }
+
+            catch (error) {
+                alert(error.message);
+
+                createAccountButton.disabled = false;
+                createAccountButton.textContent = "Create account";
+            }
         });
     }
 

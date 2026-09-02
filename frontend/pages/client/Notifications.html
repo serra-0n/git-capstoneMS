@@ -9,12 +9,12 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Profile | ResortHub</title>
+    <title>Notifications | ResortHub</title>
 
     <!-- Shared CSS -->
     <link
         rel="stylesheet"
-        href="../../css//client-global/style..css"
+        href="../../css///client-global/style..css"
     >
 
     <link
@@ -30,7 +30,7 @@
     <!-- Page CSS -->
     <link
         rel="stylesheet"
-        href="../../css/client/profile.css"
+        href="../../css/client/notification.css"
     >
 
     <!-- Lucide Icons -->
@@ -41,7 +41,7 @@
 
     <!-- Page JavaScript -->
     <script
-        src="../../js/client/Profile.js"
+        src="../../js/client/Notifications.js"
         defer
     ></script>
 </head>
@@ -147,8 +147,6 @@
                     class="sidebar-navigation"
                     aria-label="Client navigation"
                 >
-
-                    <!-- Dashboard -->
 
                     <a
                         href="Dashboard.html"
@@ -278,7 +276,8 @@
 
                         <a
                             href="Notifications.html"
-                            class="sidebar-link"
+                            class="sidebar-link active"
+                            aria-current="page"
                         >
                             <i data-lucide="bell"></i>
 
@@ -301,8 +300,7 @@
 
                         <a
                             href="Profile.html"
-                            class="sidebar-link active"
-                            aria-current="page"
+                            class="sidebar-link"
                         >
                             <i data-lucide="user-round"></i>
 
@@ -336,11 +334,12 @@
                         <div>
 
                             <h1>
-                                Profile
+                                Notifications
                             </h1>
 
                             <p>
-                                View and manage your account information.
+                                View updates related to your reservation,
+                                payment, and document verification.
                             </p>
 
                         </div>
@@ -349,71 +348,29 @@
 
 
                     <!-- =========================================
-                         PROFILE OVERVIEW
+                         NOTIFICATIONS CARD
                          ========================================= -->
 
-                    <section class="card profile-overview-card">
-
-                        <div class="profile-overview">
-
-                            <div class="profile-overview-avatar">
-
-                                <i data-lucide="user"></i>
-
-                            </div>
-
-
-                            <div class="profile-overview-information">
-
-                                <h2 id="profileDisplayName">
-                                    —
-                                </h2>
-
-                                <p id="profileDisplayEmail">
-                                    —
-                                </p>
-
-
-                                <span class="profile-role">
-
-                                    <i data-lucide="user-round"></i>
-
-                                    <span>
-                                        Client
-                                    </span>
-
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </section>
-
-
-                    <!-- =========================================
-                         ACCOUNT INFORMATION
-                         ========================================= -->
-
-                    <section class="card profile-information-card">
+                    <section class="card notifications-card">
 
                         <div class="card-header">
 
                             <div class="card-heading">
 
                                 <span class="card-heading-icon">
-                                    <i data-lucide="user-round"></i>
+                                    <i data-lucide="bell"></i>
                                 </span>
 
 
                                 <div>
 
                                     <h2>
-                                        Account Information
+                                        Notifications
                                     </h2>
 
                                     <p>
-                                        Your client account information.
+                                        Reservation-related transaction updates
+                                        will appear here.
                                     </p>
 
                                 </div>
@@ -425,161 +382,161 @@
 
                         <div class="card-body">
 
-                            <form
-                                id="profileForm"
-                                novalidate
+
+                            <!-- =================================
+                                 NOTIFICATION LIST
+                                 Populated by Notifications.js
+                                 ================================= -->
+
+                            <div
+                                class="notification-list"
+                                id="notificationList"
+                            ></div>
+
+
+                            <!-- =================================
+                                 EMPTY STATE
+                                 ================================= -->
+
+                            <div
+                                class="empty-state notification-empty-state"
+                                id="notificationEmptyState"
+                                hidden
                             >
 
-                                <!-- Client ID -->
+                                <i data-lucide="bell-off"></i>
 
-                                <input
-                                    type="hidden"
-                                    id="clientId"
-                                    name="client_id"
-                                >
+                                <h3>
+                                    No Notifications
+                                </h3>
 
+                                <p>
+                                    There are currently no notification
+                                    updates available.
+                                </p>
 
-                                <div class="profile-form-grid">
+                            </div>
 
+                        </div>
 
-                                    <!-- Full Name -->
-
-                                    <div class="form-group">
-
-                                        <label for="fullName">
-                                            Full Name
-                                        </label>
-
-                                        <div class="profile-input-wrapper">
-
-                                            <i data-lucide="user"></i>
-
-                                            <input
-                                                type="text"
-                                                id="fullName"
-                                                name="full_name"
-                                                autocomplete="name"
-                                                required
-                                            >
-
-                                        </div>
-
-                                    </div>
+                    </section>
 
 
-                                    <!-- Email -->
+                    <!-- =========================================
+                         NOTIFICATION DETAILS
+                         ========================================= -->
 
-                                    <div class="form-group">
+                    <section
+                        class="card notification-detail-card"
+                        id="notificationDetailCard"
+                        hidden
+                    >
 
-                                        <label for="emailAddress">
-                                            Email Address
-                                        </label>
+                        <div class="card-header">
 
-                                        <div class="profile-input-wrapper">
+                            <div class="card-heading">
 
-                                            <i data-lucide="mail"></i>
-
-                                            <input
-                                                type="email"
-                                                id="emailAddress"
-                                                name="email"
-                                                autocomplete="email"
-                                                required
-                                            >
-
-                                        </div>
-
-                                    </div>
+                                <span class="card-heading-icon">
+                                    <i data-lucide="message-square-text"></i>
+                                </span>
 
 
-                                    <!-- Contact Number -->
+                                <div>
 
-                                    <div class="form-group">
+                                    <h2>
+                                        Notification Details
+                                    </h2>
 
-                                        <label for="contactNumber">
-                                            Contact Number
-                                        </label>
-
-                                        <div class="profile-input-wrapper">
-
-                                            <i data-lucide="phone"></i>
-
-                                            <input
-                                                type="tel"
-                                                id="contactNumber"
-                                                name="contact_number"
-                                                autocomplete="tel"
-                                                required
-                                            >
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <!-- Account Role -->
-
-                                    <div class="form-group">
-
-                                        <label for="accountRole">
-                                            Account Role
-                                        </label>
-
-                                        <div class="profile-input-wrapper">
-
-                                            <i data-lucide="shield-check"></i>
-
-                                            <input
-                                                type="text"
-                                                id="accountRole"
-                                                name="role"
-                                                value="Client"
-                                                readonly
-                                            >
-
-                                        </div>
-
-                                    </div>
+                                    <p id="notificationDetailType">
+                                        —
+                                    </p>
 
                                 </div>
 
+                            </div>
 
-                                <!-- =================================
-                                     FORM MESSAGE
-                                     ================================= -->
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <div class="notification-detail-grid">
+
+
+                                <!-- Message -->
 
                                 <div
-                                    class="profile-form-message"
-                                    id="profileFormMessage"
-                                    role="status"
-                                    aria-live="polite"
-                                    hidden
-                                ></div>
+                                    class="notification-detail-item notification-detail-message"
+                                >
 
+                                    <span>
+                                        Message
+                                    </span>
 
-                                <!-- =================================
-                                     FORM ACTIONS
-                                     ================================= -->
-
-                                <div class="profile-form-actions">
-
-                                    <button
-                                        type="submit"
-                                        class="primary-button"
-                                        id="saveProfileButton"
-                                    >
-
-                                        <i data-lucide="save"></i>
-
-                                        <span>
-                                            Save Changes
-                                        </span>
-
-                                    </button>
+                                    <strong id="notificationDetailMessage">
+                                        —
+                                    </strong>
 
                                 </div>
 
-                            </form>
+
+                                <!-- Related Reservation -->
+
+                                <div class="notification-detail-item">
+
+                                    <span>
+                                        Reservation
+                                    </span>
+
+                                    <strong
+                                        id="notificationDetailReservation"
+                                    >
+                                        —
+                                    </strong>
+
+                                </div>
+
+
+                                <!-- Related Type -->
+
+                                <div class="notification-detail-item">
+
+                                    <span>
+                                        Related Update
+                                    </span>
+
+                                    <strong
+                                        id="notificationDetailRelatedType"
+                                    >
+                                        —
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =================================
+                                 RELATED PAGE ACTION
+                                 Set dynamically by JavaScript
+                                 ================================= -->
+
+                            <div class="notification-detail-actions">
+
+                                <a
+                                    href="ReservationStatus.html"
+                                    class="secondary-button"
+                                    id="notificationRelatedLink"
+                                    hidden
+                                >
+                                    <i data-lucide="arrow-right"></i>
+
+                                    <span id="notificationRelatedLinkText">
+                                        View Details
+                                    </span>
+                                </a>
+
+                            </div>
 
                         </div>
 

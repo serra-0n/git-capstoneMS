@@ -9,7 +9,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Profile | ResortHub</title>
+    <title>My Reservations | ResortHub</title>
 
     <!-- Shared CSS -->
     <link
@@ -30,7 +30,7 @@
     <!-- Page CSS -->
     <link
         rel="stylesheet"
-        href="../../css/client/profile.css"
+        href="../../css/client/my-reservations.css"
     >
 
     <!-- Lucide Icons -->
@@ -41,7 +41,7 @@
 
     <!-- Page JavaScript -->
     <script
-        src="../../js/client/Profile.js"
+        src="../../js/client/MyReservations.js"
         defer
     ></script>
 </head>
@@ -69,9 +69,7 @@
                 >
                     <i data-lucide="building-2"></i>
 
-                    <span>
-                        ResortHub
-                    </span>
+                    <span>ResortHub</span>
                 </a>
 
 
@@ -185,7 +183,8 @@
 
                         <a
                             href="MyReservations.html"
-                            class="sidebar-link"
+                            class="sidebar-link active"
+                            aria-current="page"
                         >
                             <i data-lucide="calendar-days"></i>
 
@@ -301,8 +300,7 @@
 
                         <a
                             href="Profile.html"
-                            class="sidebar-link active"
-                            aria-current="page"
+                            class="sidebar-link"
                         >
                             <i data-lucide="user-round"></i>
 
@@ -336,12 +334,29 @@
                         <div>
 
                             <h1>
-                                Profile
+                                My Reservations
                             </h1>
 
                             <p>
-                                View and manage your account information.
+                                View your submitted reservation
+                                requests and reservation information.
                             </p>
+
+                        </div>
+
+
+                        <div class="page-header-actions">
+
+                            <a
+                                href="Reservations.html"
+                                class="primary-button"
+                            >
+                                <i data-lucide="calendar-plus"></i>
+
+                                <span>
+                                    New Reservation
+                                </span>
+                            </a>
 
                         </div>
 
@@ -349,40 +364,67 @@
 
 
                     <!-- =========================================
-                         PROFILE OVERVIEW
+                         RESERVATION SUMMARY
                          ========================================= -->
 
-                    <section class="card profile-overview-card">
+                    <section class="reservation-overview">
 
-                        <div class="profile-overview">
+                        <div class="card reservation-overview-card">
 
-                            <div class="profile-overview-avatar">
+                            <div class="reservation-overview-icon">
 
-                                <i data-lucide="user"></i>
+                                <i data-lucide="calendar-days"></i>
 
                             </div>
 
 
-                            <div class="profile-overview-information">
+                            <div class="reservation-overview-content">
 
-                                <h2 id="profileDisplayName">
-                                    —
-                                </h2>
-
-                                <p id="profileDisplayEmail">
-                                    —
-                                </p>
-
-
-                                <span class="profile-role">
-
-                                    <i data-lucide="user-round"></i>
-
-                                    <span>
-                                        Client
-                                    </span>
-
+                                <span class="reservation-overview-label">
+                                    Total Reservations
                                 </span>
+
+                                <strong
+                                    class="reservation-overview-value"
+                                    id="totalReservationCount"
+                                >
+                                    0
+                                </strong>
+
+                                <small>
+                                    Reservation records
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="card reservation-overview-card">
+
+                            <div class="reservation-overview-icon">
+
+                                <i data-lucide="clock-3"></i>
+
+                            </div>
+
+
+                            <div class="reservation-overview-content">
+
+                                <span class="reservation-overview-label">
+                                    Current Reservation
+                                </span>
+
+                                <strong
+                                    class="reservation-overview-value reservation-overview-text"
+                                    id="currentReservationStatus"
+                                >
+                                    None
+                                </strong>
+
+                                <small>
+                                    Current reservation status
+                                </small>
 
                             </div>
 
@@ -392,28 +434,31 @@
 
 
                     <!-- =========================================
-                         ACCOUNT INFORMATION
+                         RESERVATION RECORDS
                          ========================================= -->
 
-                    <section class="card profile-information-card">
+                    <section class="card reservations-card">
 
                         <div class="card-header">
 
                             <div class="card-heading">
 
                                 <span class="card-heading-icon">
-                                    <i data-lucide="user-round"></i>
+
+                                    <i data-lucide="clipboard-list"></i>
+
                                 </span>
 
 
                                 <div>
 
                                     <h2>
-                                        Account Information
+                                        Reservation Records
                                     </h2>
 
                                     <p>
-                                        Your client account information.
+                                        Your submitted reservation
+                                        requests are listed below.
                                     </p>
 
                                 </div>
@@ -425,161 +470,56 @@
 
                         <div class="card-body">
 
-                            <form
-                                id="profileForm"
-                                novalidate
+
+                            <!-- =================================
+                                 RESERVATION LIST
+
+                                 JavaScript will create reservation
+                                 records inside this container.
+                                 ================================= -->
+
+                            <div
+                                class="reservation-list"
+                                id="reservationList"
+                                hidden
+                            ></div>
+
+
+                            <!-- =================================
+                                 EMPTY STATE
+                                 ================================= -->
+
+                            <div
+                                class="empty-state reservation-empty-state"
+                                id="reservationEmptyState"
                             >
 
-                                <!-- Client ID -->
+                                <i data-lucide="calendar-x"></i>
 
-                                <input
-                                    type="hidden"
-                                    id="clientId"
-                                    name="client_id"
+
+                                <h3>
+                                    No Reservations
+                                </h3>
+
+
+                                <p>
+                                    Your submitted reservation
+                                    requests will appear here.
+                                </p>
+
+
+                                <a
+                                    href="Reservations.html"
+                                    class="primary-button"
                                 >
+                                    <i data-lucide="calendar-plus"></i>
 
+                                    <span>
+                                        New Reservation
+                                    </span>
+                                </a>
 
-                                <div class="profile-form-grid">
-
-
-                                    <!-- Full Name -->
-
-                                    <div class="form-group">
-
-                                        <label for="fullName">
-                                            Full Name
-                                        </label>
-
-                                        <div class="profile-input-wrapper">
-
-                                            <i data-lucide="user"></i>
-
-                                            <input
-                                                type="text"
-                                                id="fullName"
-                                                name="full_name"
-                                                autocomplete="name"
-                                                required
-                                            >
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <!-- Email -->
-
-                                    <div class="form-group">
-
-                                        <label for="emailAddress">
-                                            Email Address
-                                        </label>
-
-                                        <div class="profile-input-wrapper">
-
-                                            <i data-lucide="mail"></i>
-
-                                            <input
-                                                type="email"
-                                                id="emailAddress"
-                                                name="email"
-                                                autocomplete="email"
-                                                required
-                                            >
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <!-- Contact Number -->
-
-                                    <div class="form-group">
-
-                                        <label for="contactNumber">
-                                            Contact Number
-                                        </label>
-
-                                        <div class="profile-input-wrapper">
-
-                                            <i data-lucide="phone"></i>
-
-                                            <input
-                                                type="tel"
-                                                id="contactNumber"
-                                                name="contact_number"
-                                                autocomplete="tel"
-                                                required
-                                            >
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <!-- Account Role -->
-
-                                    <div class="form-group">
-
-                                        <label for="accountRole">
-                                            Account Role
-                                        </label>
-
-                                        <div class="profile-input-wrapper">
-
-                                            <i data-lucide="shield-check"></i>
-
-                                            <input
-                                                type="text"
-                                                id="accountRole"
-                                                name="role"
-                                                value="Client"
-                                                readonly
-                                            >
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-
-                                <!-- =================================
-                                     FORM MESSAGE
-                                     ================================= -->
-
-                                <div
-                                    class="profile-form-message"
-                                    id="profileFormMessage"
-                                    role="status"
-                                    aria-live="polite"
-                                    hidden
-                                ></div>
-
-
-                                <!-- =================================
-                                     FORM ACTIONS
-                                     ================================= -->
-
-                                <div class="profile-form-actions">
-
-                                    <button
-                                        type="submit"
-                                        class="primary-button"
-                                        id="saveProfileButton"
-                                    >
-
-                                        <i data-lucide="save"></i>
-
-                                        <span>
-                                            Save Changes
-                                        </span>
-
-                                    </button>
-
-                                </div>
-
-                            </form>
+                            </div>
 
                         </div>
 
@@ -592,6 +532,10 @@
         </div>
 
     </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
 
 </body>
 

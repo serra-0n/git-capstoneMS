@@ -1,0 +1,255 @@
+/* =========================================================
+   RESORTHUB - SHARED CLIENT SIDEBAR
+   File: css/sidebar.css
+   ========================================================= */
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.client-sidebar {
+    position: fixed;
+    top: var(--topbar-height);
+    left: 0;
+    bottom: 0;
+
+    z-index: 900;
+
+    width: var(--sidebar-width);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    border-right: 1px solid var(--border);
+
+    background: var(--surface);
+
+    transition:
+        width var(--transition),
+        transform var(--transition);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.client-sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.client-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.client-sidebar::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+
+    background: #d8dee8;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.sidebar-navigation {
+    display: flex;
+    flex-direction: column;
+
+    padding: 16px 10px 24px;
+}
+
+
+/* =========================================================
+   SIDEBAR SECTION
+   ========================================================= */
+
+.sidebar-section {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 18px;
+}
+
+.sidebar-section-title {
+    display: block;
+
+    margin: 0 10px 7px;
+
+    overflow: hidden;
+
+    color: var(--text-muted);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   SIDEBAR LINK
+   ========================================================= */
+
+.sidebar-link {
+    position: relative;
+
+    min-height: 40px;
+
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    padding: 9px 11px;
+
+    border-radius: var(--radius-medium);
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+    font-weight: 550;
+
+    white-space: nowrap;
+
+    transition:
+        background var(--transition),
+        color var(--transition);
+}
+
+.sidebar-link:hover {
+    background: #f6f8fc;
+    color: var(--text-primary);
+}
+
+.sidebar-link svg {
+    width: 17px;
+    height: 17px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   ACTIVE LINK
+   ========================================================= */
+
+.sidebar-link.active {
+    background: var(--primary-light);
+    color: var(--primary);
+
+    font-weight: 650;
+}
+
+.sidebar-link.active svg {
+    color: var(--primary);
+}
+
+
+/* =========================================================
+   COLLAPSED SIDEBAR
+   ========================================================= */
+
+.client-app.sidebar-collapsed
+.client-sidebar {
+    width: var(--sidebar-collapsed-width);
+}
+
+.client-app.sidebar-collapsed
+.sidebar-navigation {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.client-app.sidebar-collapsed
+.sidebar-link {
+    justify-content: center;
+
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.client-app.sidebar-collapsed
+.sidebar-link span,
+.client-app.sidebar-collapsed
+.sidebar-section-title {
+    display: none;
+}
+
+.client-app.sidebar-collapsed
+.sidebar-link svg {
+    width: 19px;
+    height: 19px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .client-sidebar {
+        width: min(
+            var(--sidebar-width),
+            82vw
+        );
+
+        transform: translateX(-100%);
+
+        box-shadow:
+            10px 0 30px rgba(30, 45, 70, 0.08);
+    }
+
+
+    /* Open mobile sidebar */
+
+    .client-app.sidebar-mobile-open
+    .client-sidebar {
+        transform: translateX(0);
+    }
+
+
+    /* Reset desktop collapsed width */
+
+    .client-app.sidebar-collapsed
+    .client-sidebar {
+        width: min(
+            var(--sidebar-width),
+            82vw
+        );
+    }
+
+
+    .client-app.sidebar-collapsed
+    .sidebar-navigation {
+        padding: 16px 10px 24px;
+    }
+
+
+    .client-app.sidebar-collapsed
+    .sidebar-link {
+        justify-content: flex-start;
+
+        padding: 9px 11px;
+    }
+
+
+    .client-app.sidebar-collapsed
+    .sidebar-link span,
+    .client-app.sidebar-collapsed
+    .sidebar-section-title {
+        display: block;
+    }
+
+
+    .client-app.sidebar-collapsed
+    .sidebar-link svg {
+        width: 17px;
+        height: 17px;
+    }
+
+}

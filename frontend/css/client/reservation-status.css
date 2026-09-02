@@ -1,0 +1,1160 @@
+/* =========================================================
+   RESORTHUB - CLIENT RESERVATION STATUS
+   File: css/client/reservation-status.css
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE CONTENT
+   ========================================================= */
+
+.reservation-status-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;/* =========================================================
+   RESORTHUB - CLIENT RESERVATION STATUS
+   File: css/client/reservation-status.css
+   ========================================================= */
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.reservation-status-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+
+/* =========================================================
+   RESERVATION INFORMATION CARD
+   ========================================================= */
+
+.reservation-information-card {
+    overflow: hidden;
+}
+
+.reservation-information-card .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+
+    padding: 18px 20px;
+}
+
+.reservation-information-card .card-heading {
+    min-width: 0;
+}
+
+.reservation-information-card .card-heading h2 {
+    margin: 0 0 4px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.reservation-information-card .card-heading p {
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    color: var(--text-secondary);
+}
+
+#reservationMainStatus {
+    flex-shrink: 0;
+}
+
+.reservation-information-card .card-body {
+    padding: 20px;
+}
+
+
+/* =========================================================
+   RESERVATION INFORMATION GRID
+   ========================================================= */
+
+.reservation-information-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.reservation-information-item {
+    min-width: 0;
+
+    padding: 14px;
+
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-medium);
+
+    background: var(--surface-soft);
+}
+
+.reservation-information-item span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 12px;
+
+    color: var(--text-muted);
+}
+
+.reservation-information-item strong {
+    display: block;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: var(--text-primary);
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   STATUS OVERVIEW SECTION
+   ========================================================= */
+
+.reservation-overview-section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.reservation-overview-section .section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.reservation-overview-section .section-heading h2 {
+    margin: 0 0 4px;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.reservation-overview-section .section-heading p {
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   STATUS OVERVIEW GRID
+   ========================================================= */
+
+.reservation-status-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+
+/* =========================================================
+   STATUS OVERVIEW CARD
+   ========================================================= */
+
+.status-overview-card {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    min-width: 0;
+
+    padding: 16px;
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.status-overview-card:hover {
+    transform: translateY(-2px);
+
+    border-color: #d4dce8;
+
+    box-shadow: var(--shadow-medium);
+}
+
+
+/* =========================================================
+   STATUS ICON
+   ========================================================= */
+
+.status-overview-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-medium);
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+}
+
+.status-overview-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* =========================================================
+   STATUS CONTENT
+   ========================================================= */
+
+.status-overview-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+
+    min-width: 0;
+}
+
+.status-overview-content > span {
+    font-size: 12px;
+    font-weight: 500;
+
+    color: var(--text-secondary);
+}
+
+.status-overview-content .status-badge {
+    max-width: 100%;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   RELATED TRANSACTIONS
+   ========================================================= */
+
+.reservation-transaction-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+
+/* =========================================================
+   TRANSACTION CARD
+   ========================================================= */
+
+.transaction-card {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    overflow: hidden;
+}
+
+.transaction-card .card-header {
+    padding: 17px 18px;
+}
+
+.transaction-card .card-heading {
+    align-items: flex-start;
+}
+
+.transaction-card .card-heading h2 {
+    margin: 0 0 4px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.transaction-card .card-heading p {
+    margin: 0;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    color: var(--text-secondary);
+}
+
+.transaction-card .card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 16px;
+
+    padding: 17px 18px 18px;
+}
+
+
+/* =========================================================
+   TRANSACTION STATUS
+   ========================================================= */
+
+.transaction-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+
+    min-height: 38px;
+
+    padding: 11px 12px;
+
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-medium);
+
+    background: var(--surface-soft);
+}
+
+.transaction-status-row > span {
+    font-size: 12px;
+
+    color: var(--text-secondary);
+}
+
+.transaction-status-row .status-badge {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   TRANSACTION BUTTON
+   ========================================================= */
+
+.transaction-button {
+    width: 100%;
+
+    margin-top: auto;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.reservation-status-empty {
+    overflow: hidden;
+}
+
+.reservation-status-empty .empty-state {
+    min-height: 320px;
+
+    padding: 48px 24px;
+}
+
+.reservation-status-empty .empty-state > svg {
+    width: 42px;
+    height: 42px;
+
+    margin-bottom: 14px;
+
+    color: var(--text-muted);
+}
+
+.reservation-status-empty .empty-state h2 {
+    margin: 0 0 6px;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.reservation-status-empty .empty-state p {
+    max-width: 420px;
+
+    margin: 0 auto 18px;
+
+    font-size: 13px;
+    line-height: 1.6;
+
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   Uses the shared .status-badge class from style.css.
+
+   These classes are applied dynamically by
+   ReservationStatus.js.
+   ========================================================= */
+
+.status-badge.status-success {
+    background: var(--success-background);
+    color: var(--success);
+}
+
+.status-badge.status-warning {
+    background: var(--warning-background);
+    color: var(--warning);
+}
+
+.status-badge.status-danger {
+    background: var(--danger-background);
+    color: var(--danger);
+}
+
+.status-badge.status-info {
+    background: var(--info-background);
+    color: var(--info);
+}
+
+.status-badge.status-neutral {
+    background: var(--neutral-background);
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   PAGE HEADER BUTTON
+   ========================================================= */
+
+.page-header-actions .secondary-button {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .reservation-status-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .status-overview-card:last-child {
+        grid-column: 1 / -1;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .reservation-status-content {
+        gap: 20px;
+    }
+
+
+    /* Reservation Information */
+
+    .reservation-information-card .card-header {
+        align-items: flex-start;
+        flex-direction: column;
+
+        padding: 16px;
+    }
+
+    .reservation-information-card .card-body {
+        padding: 16px;
+    }
+
+    .reservation-information-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* Status Overview */
+
+    .reservation-status-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .status-overview-card:last-child {
+        grid-column: auto;
+    }
+
+
+    /* Related Transactions */
+
+    .reservation-transaction-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* Empty State */
+
+    .reservation-status-empty .empty-state {
+        min-height: 280px;
+
+        padding: 40px 20px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 560px) {
+
+    .reservation-overview-section .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+
+    /* Reservation Information */
+
+    .reservation-information-item {
+        padding: 12px;
+    }
+
+
+    /* Status Cards */
+
+    .status-overview-card {
+        align-items: flex-start;
+
+        padding: 14px;
+    }
+
+
+    /* Transactions */
+
+    .transaction-card .card-header {
+        padding: 15px;
+    }
+
+    .transaction-card .card-body {
+        padding: 15px;
+    }
+
+    .transaction-status-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+
+    /* Page Header */
+
+    .page-header-actions {
+        width: 100%;
+    }
+
+    .page-header-actions .secondary-button {
+        width: 100%;
+    }
+
+
+    /* Empty State */
+
+    .reservation-status-empty .empty-state {
+        min-height: 250px;
+
+        padding: 34px 18px;
+    }
+
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) {
+
+    .status-overview-card:hover {
+        transform: none;
+
+        border-color: var(--border);
+
+        box-shadow: var(--shadow-small);
+    }
+
+}
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.reservation-status-empty {
+    overflow: hidden;
+}
+
+.reservation-status-empty .empty-state {
+    min-height: 320px;
+    padding: 48px 24px;
+}
+
+.reservation-status-empty .empty-state > svg {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 14px;
+    color: var(--text-muted);
+}
+
+.reservation-status-empty .empty-state h2 {
+    margin: 0 0 7px;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.reservation-status-empty .empty-state p {
+    max-width: 430px;
+    margin: 0 auto 20px;
+
+    font-size: 13px;
+    line-height: 1.6;
+
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   RESERVATION STATUS SUMMARY
+   ========================================================= */
+
+.reservation-status-summary {
+    padding: 20px;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition);
+}
+
+.reservation-status-summary:hover {
+    transform: translateY(-2px);
+
+    border-color: #d7dfeb;
+
+    box-shadow: var(--shadow-medium);
+}
+
+.reservation-status-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.reservation-status-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    color: var(--text-muted);
+}
+
+.reservation-status-main h2 {
+    margin: 0;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   STATUS OVERVIEW GRID
+   ========================================================= */
+
+.status-overview-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+/* =========================================================
+   STATUS OVERVIEW CARD
+   ========================================================= */
+
+.status-overview-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    min-height: 104px;
+
+    padding: 17px;
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.status-overview-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #d7dfeb;
+
+    box-shadow: var(--shadow-medium);
+}
+
+
+/* =========================================================
+   STATUS OVERVIEW ICON
+   ========================================================= */
+
+.status-overview-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-medium);
+
+    background: var(--primary-light);
+    color: var(--primary);
+
+    transition:
+        transform var(--transition),
+        background var(--transition);
+}
+
+.status-overview-icon svg {
+    width: 21px;
+    height: 21px;
+}
+
+.status-overview-card:hover .status-overview-icon {
+    transform: scale(1.05);
+
+    background: #e2ecff;
+}
+
+
+/* =========================================================
+   STATUS OVERVIEW CONTENT
+   ========================================================= */
+
+.status-overview-content {
+    min-width: 0;
+}
+
+.status-overview-content span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 12px;
+
+    color: var(--text-muted);
+}
+
+.status-overview-content strong {
+    display: block;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   RESERVATION INFORMATION CARD
+   ========================================================= */
+
+.reservation-information-card {
+    overflow: hidden;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.reservation-information-card:hover {
+    border-color: #d7dfeb;
+
+    box-shadow: var(--shadow-medium);
+}
+
+.reservation-information-card .card-header {
+    padding: 18px 20px;
+}
+
+.reservation-information-card .card-body {
+    padding: 20px;
+}
+
+
+/* =========================================================
+   CARD HEADINGS
+   ========================================================= */
+
+.reservation-information-card .card-heading,
+.reservation-related-card .card-heading {
+    align-items: flex-start;
+}
+
+.reservation-information-card .card-heading h2,
+.reservation-related-card .card-heading h2 {
+    margin: 0 0 4px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.reservation-information-card .card-heading p,
+.reservation-related-card .card-heading p {
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   RESERVATION INFORMATION GRID
+   ========================================================= */
+
+.reservation-information-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   RESERVATION INFORMATION ITEM
+   ========================================================= */
+
+.reservation-information-item {
+    min-width: 0;
+
+    padding: 14px;
+
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-medium);
+
+    background: var(--surface-soft);
+
+    transition:
+        border-color var(--transition),
+        background var(--transition),
+        transform var(--transition);
+}
+
+.reservation-information-item:hover {
+    transform: translateY(-1px);
+
+    border-color: #d7dfeb;
+
+    background: var(--surface);
+}
+
+.reservation-information-item span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 12px;
+
+    color: var(--text-muted);
+}
+
+.reservation-information-item strong {
+    display: block;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: var(--text-primary);
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   RELATED STATUS CARDS
+   ========================================================= */
+
+.reservation-related-card {
+    overflow: hidden;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.reservation-related-card:hover {
+    border-color: #d7dfeb;
+
+    box-shadow: var(--shadow-medium);
+}
+
+.reservation-related-card .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+
+    padding: 18px 20px;
+}
+
+.reservation-related-card .card-body {
+    padding: 18px 20px;
+}
+
+
+/* =========================================================
+   INFO LIST OVERRIDES
+   ========================================================= */
+
+.reservation-related-card .info-list {
+    margin: 0;
+}
+
+.reservation-related-card .info-row {
+    min-height: 44px;
+
+    padding: 11px 0;
+}
+
+.reservation-related-card .info-row:first-child {
+    padding-top: 0;
+}
+
+.reservation-related-card .info-row:last-child {
+    padding-bottom: 0;
+}
+
+.reservation-related-card .info-row span {
+    font-size: 13px;
+
+    color: var(--text-secondary);
+}
+
+.reservation-related-card .info-row strong {
+    font-size: 13px;
+    font-weight: 600;
+
+    color: var(--text-primary);
+
+    text-align: right;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   STATUS BADGE
+   ========================================================= */
+
+#reservationStatusBadge {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON INSIDE CARDS
+   ========================================================= */
+
+.reservation-related-card .secondary-button {
+    flex-shrink: 0;
+}
+
+.reservation-related-card .secondary-button svg {
+    width: 16px;
+    height: 16px;
+}
+
+
+/* =========================================================
+   RESPONSIVE - MEDIUM DESKTOP
+   ========================================================= */
+
+@media (max-width: 1050px) {
+
+    .status-overview-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .status-overview-card:last-child {
+        grid-column: 1 / -1;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .reservation-status-content {
+        gap: 16px;
+    }
+
+
+    .reservation-status-summary {
+        padding: 17px;
+    }
+
+
+    .reservation-status-main {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+
+    .status-overview-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .status-overview-card:last-child {
+        grid-column: auto;
+    }
+
+
+    .reservation-information-card .card-header,
+    .reservation-related-card .card-header {
+        padding: 16px;
+    }
+
+
+    .reservation-information-card .card-body,
+    .reservation-related-card .card-body {
+        padding: 16px;
+    }
+
+
+    .reservation-related-card .card-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+
+    .reservation-related-card .secondary-button {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 560px) {
+
+    .reservation-status-main h2 {
+        font-size: 19px;
+    }
+
+
+    .status-overview-card {
+        min-height: 94px;
+
+        padding: 15px;
+    }
+
+
+    .reservation-information-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .reservation-information-item {
+        padding: 12px;
+    }
+
+
+    .reservation-related-card .info-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+
+    .reservation-related-card .info-row strong {
+        text-align: left;
+    }
+
+
+    .reservation-status-empty .empty-state {
+        min-height: 280px;
+
+        padding: 36px 18px;
+    }
+
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) {
+
+    .reservation-status-summary:hover,
+    .status-overview-card:hover,
+    .reservation-information-card:hover,
+    .reservation-information-item:hover,
+    .reservation-related-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+}

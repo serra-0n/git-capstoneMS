@@ -1,0 +1,268 @@
+/* =========================================================
+   RESORTHUB - SHARED CLIENT NAVIGATION
+   File: css/nav.css
+   ========================================================= */
+
+
+/* =========================================================
+   TOPBAR
+   ========================================================= */
+
+.client-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 1000;
+
+    height: var(--topbar-height);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 20px;
+
+    border-bottom: 1px solid var(--border);
+
+    background: var(--surface);
+}
+
+
+/* =========================================================
+   LEFT SIDE
+   ========================================================= */
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.client-brand {
+    width: 184px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    color: var(--primary);
+
+    font-size: 20px;
+    font-weight: 750;
+    line-height: 1;
+
+    white-space: nowrap;
+}
+
+.client-brand svg {
+    width: 24px;
+    height: 24px;
+
+    flex-shrink: 0;
+
+    stroke-width: 2;
+}
+
+
+/* =========================================================
+   SIDEBAR TOGGLE
+   ========================================================= */
+
+.sidebar-toggle {
+    width: 36px;
+    height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    padding: 0;
+
+    border: none;
+    border-radius: var(--radius-medium);
+
+    background: transparent;
+    color: var(--text-primary);
+
+    transition:
+        background var(--transition),
+        color var(--transition);
+}
+
+.sidebar-toggle:hover {
+    background: var(--neutral-background);
+    color: var(--primary);
+}
+
+.sidebar-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+   ========================================================= */
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+
+/* =========================================================
+   CLIENT PROFILE
+   ========================================================= */
+
+.client-profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    min-height: 42px;
+
+    padding: 4px 8px;
+
+    border: none;
+    border-radius: var(--radius-medium);
+
+    background: transparent;
+    color: var(--text-primary);
+
+    transition:
+        background var(--transition);
+}
+
+.client-profile:hover {
+    background: var(--neutral-background);
+}
+
+
+/* =========================================================
+   PROFILE AVATAR
+   ========================================================= */
+
+.profile-avatar {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.profile-avatar svg {
+    width: 17px;
+    height: 17px;
+}
+
+
+/* =========================================================
+   PROFILE INFORMATION
+   ========================================================= */
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    min-width: 0;
+
+    line-height: 1.25;
+}
+
+.profile-info strong {
+    max-width: 150px;
+
+    overflow: hidden;
+
+    color: var(--text-primary);
+
+    font-size: 12px;
+    font-weight: 650;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.profile-info small {
+    margin-top: 2px;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   PROFILE CHEVRON
+   ========================================================= */
+
+.profile-chevron {
+    width: 15px;
+    height: 15px;
+
+    flex-shrink: 0;
+
+    color: var(--text-muted);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .client-topbar {
+        padding: 0 14px;
+    }
+
+    .client-brand {
+        width: auto;
+
+        font-size: 18px;
+    }
+
+    .client-brand svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .topbar-left {
+        gap: 10px;
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .profile-info,
+    .profile-chevron {
+        display: none;
+    }
+
+    .client-profile {
+        padding: 4px;
+    }
+
+}

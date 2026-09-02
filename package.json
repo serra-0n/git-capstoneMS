@@ -6,7 +6,8 @@
     "main": "backend/uploads/server.js",
     "scripts": {
         "start": "node backend/uploads/server.js",
-        "dev": "node --watch backend/uploads/server.js"
+        "dev": "node --watch backend/uploads/server.js",
+        "seed:system-admin": "node backend/scripts/seedSystemAdmin.js"
     },
     "dependencies": {
         "bcryptjs": "^3.0.3",
