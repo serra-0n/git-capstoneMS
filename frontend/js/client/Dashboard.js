@@ -1,11 +1,24 @@
 "use strict";
 
-const { authenticateUser } = require("../../../backend/middleware/authMiddleware");
 
 /* =========================================================
    RESORTHUB - CLIENT DASHBOARD
    File: js/client/Dashboard.js
+
+   DEVELOPMENT MODE
+
+   true:
+   - Uses dummy data
+   - Does not call the API
+   - Does not use localStorage
+   - Does not write to MySQL
+
+   false:
+   - Loads dashboard data from Express
+   - Backend/database becomes source of truth
    ========================================================= */
+
+const USE_DUMMY_DATA = true;
 
 
 /* =========================================================
@@ -13,56 +26,88 @@ const { authenticateUser } = require("../../../backend/middleware/authMiddleware
    ========================================================= */
 
 const API_ENDPOINTS = {
+
     dashboard: "/api/client/dashboard"
+
 };
 
 
 /* =========================================================
    DUMMY DATA
-   Frontend testing only.
-   This is NOT database data.
    ========================================================= */
 
 const DUMMY_DASHBOARD_DATA = {
+
     client: {
+
         id: 1,
+
         name: "Juan Dela Cruz"
+
     },
+
 
     summary: {
-        active_reservation_count: 1,
-        payment_status: "Pending Verification",
-        uploaded_document_count: 2
+
+        active_reservations: 1,
+
+        payment_status:
+            "Pending Verification",
+
+        uploaded_documents: 2
+
     },
 
+
     current_reservation: {
-        id: 1,
-        reference_number: "RES-001",
-        status: "Pending",
-        resort_name: "Azure Garden Resort",
-        accommodation_name: "Family Room",
-        check_in: "2026-09-10",
-        check_out: "2026-09-12"
+
+        id: 105,
+
+        reservation_reference:
+            "RES-0105",
+
+        resort_name:
+            "Azure Garden Resort",
+
+        accommodation_name:
+            "Family Room",
+
+        check_in:
+            "2026-09-15",
+
+        check_out:
+            "2026-09-17",
+
+        reservation_status:
+            "Pending"
+
     }
+
 };
 
 
 /* =========================================================
-   DASHBOARD STATE
+   APPLICATION STATE
    ========================================================= */
 
 const dashboardState = {
+
     client: null,
 
+
     summary: {
-        active_reservation_count: 0,
-        payment_status: null,
-        uploaded_document_count: 0
+
+        active_reservations: 0,
+
+        payment_status: "",
+
+        uploaded_documents: 0
+
     },
 
-    current_reservation: null,
 
-    usingDummyData: false
+    current_reservation: null
+
 };
 
 
@@ -71,230 +116,402 @@ const dashboardState = {
    ========================================================= */
 
 const clientApp =
-    document.getElementById("clientApp");
+    document.getElementById(
+        "clientApp"
+    );
+
 
 const sidebarToggle =
-    document.getElementById("sidebarToggle");
+    document.getElementById(
+        "sidebarToggle"
+    );
+
 
 const clientProfileButton =
-    document.getElementById("clientProfileButton");
+    document.getElementById(
+        "clientProfileButton"
+    );
+
 
 const clientDisplayName =
-    document.getElementById("clientDisplayName");
+    document.getElementById(
+        "clientDisplayName"
+    );
 
-const dashboardClientName =
-    document.getElementById("dashboardClientName");
+
+const dashboardWelcomeTitle =
+    document.getElementById(
+        "dashboardWelcomeTitle"
+    );
 
 
-/* Dashboard Summary */
+/* Summary */
 
-const activeReservationCount =
-    document.getElementById("activeReservationCount");
+const activeReservationsCount =
+    document.getElementById(
+        "activeReservationsCount"
+    );
+
 
 const dashboardPaymentStatus =
-    document.getElementById("dashboardPaymentStatus");
+    document.getElementById(
+        "dashboardPaymentStatus"
+    );
 
-const uploadedDocumentCount =
-    document.getElementById("uploadedDocumentCount");
+
+const uploadedDocumentsCount =
+    document.getElementById(
+        "uploadedDocumentsCount"
+    );
 
 
-/* Current Reservation */
+/* Current reservation */
 
 const currentReservationContent =
-    document.getElementById("currentReservationContent");
+    document.getElementById(
+        "currentReservationContent"
+    );
+
 
 const currentReservationEmptyState =
-    document.getElementById("currentReservationEmptyState");
+    document.getElementById(
+        "currentReservationEmptyState"
+    );
+
 
 const currentReservationReference =
-    document.getElementById("currentReservationReference");
+    document.getElementById(
+        "currentReservationReference"
+    );
+
 
 const currentReservationStatus =
-    document.getElementById("currentReservationStatus");
+    document.getElementById(
+        "currentReservationStatus"
+    );
 
-const currentResortName =
-    document.getElementById("currentResortName");
 
-const currentAccommodationName =
-    document.getElementById("currentAccommodationName");
+const currentReservationResort =
+    document.getElementById(
+        "currentReservationResort"
+    );
 
-const currentCheckIn =
-    document.getElementById("currentCheckIn");
 
-const currentCheckOut =
-    document.getElementById("currentCheckOut");
+const currentReservationAccommodation =
+    document.getElementById(
+        "currentReservationAccommodation"
+    );
+
+
+const currentReservationCheckIn =
+    document.getElementById(
+        "currentReservationCheckIn"
+    );
+
+
+const currentReservationCheckOut =
+    document.getElementById(
+        "currentReservationCheckOut"
+    );
+
 
 const viewReservationStatusButton =
-    document.getElementById("viewReservationStatusButton");
+    document.getElementById(
+        "viewReservationStatusButton"
+    );
 
 
 /* =========================================================
-   INITIALIZE DASHBOARD
+   START PAGE
+
+   Dashboard.js is loaded at the bottom of the HTML, after
+   Lucide, so the DOM and Lucide library are already ready.
    ========================================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    initializeDashboard
-);
+initializeDashboard();
 
-async function requireAuthenticatedClient() {
-    const token = sessionStorage.getItem("resorthub_access_token");
-
-    if (!token) {
-        window.location.href = "../auth/login.html";
-        return null;
-    }
-
-    try {
-        const response = await fetch("/api/auth/me", {
-            method: "GET",
-            headers: {
-                "Accept": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error("Session is invalid.");
-        }
-
-        const result = await response.json();
-
-        if (result.user.role !== "client") {
-            throw new Error("This page is only available to clients.");
-        }
-
-        return result.user;
-    } catch (error) {
-        sessionStorage.removeItem("resorthub_access_token");
-        window.location.href = "../auth/login.html";
-        return null;
-    }
-}
 
 async function initializeDashboard() {
+
     initializeIcons();
+
     initializeSidebar();
+
     initializeProfileButton();
 
-    const authenticatedUser = await requireAuthenticatedClient();
 
-    if (!authenticatedUser) {
+    if (USE_DUMMY_DATA) {
+
+        loadDummyDashboard();
+
         return;
     }
 
-    useDummyDashboardData(authenticatedUser);
-    await loadDashboardData();
+
+    await loadDashboardFromApi();
 }
 
 
 /* =========================================================
-   USE DUMMY DATA
+   DUMMY MODE
    ========================================================= */
 
-function useDummyDashboardData() {
-    dashboardState.usingDummyData = true;
+function loadDummyDashboard() {
 
-    const fullName = [
-        authenticateUser.firstName,
-        authenticateUser.lastName
-    ]
+    dashboardState.client = {
 
-        .filter(Boolean)
-        .join(" ");
+        ...DUMMY_DASHBOARD_DATA.client
 
-    updateDashboardState({
-        ...DUMMY_DASHBOARD_DATA,
+    };
 
-        client: {
-            id: authenticateUser.id,
-            name: fullName || "Client"
-        }
-    });
+
+    dashboardState.summary = {
+
+        ...DUMMY_DASHBOARD_DATA.summary
+
+    };
+
+
+    dashboardState.current_reservation =
+        DUMMY_DASHBOARD_DATA.current_reservation
+            ? {
+                ...DUMMY_DASHBOARD_DATA
+                    .current_reservation
+            }
+            : null;
+
 
     renderDashboard();
 }
 
 
 /* =========================================================
-   LOAD DATABASE DATA
+   API MODE
    ========================================================= */
 
-async function loadDashboardData() {
-    const token = sessionStorage.getItem("resorthub_access_token");
+async function loadDashboardFromApi() {
+
     try {
-        const response = await fetch(
-            API_ENDPOINTS.dashboard,
-            {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${token}`
+
+        const response =
+            await fetch(
+                API_ENDPOINTS.dashboard,
+                {
+                    method: "GET",
+
+                    credentials:
+                        "include",
+
+                    headers: {
+
+                        "Accept":
+                            "application/json"
+
+                    }
                 }
-            }
-        );
+            );
 
 
         if (!response.ok) {
+
             throw new Error(
-                "Dashboard data could not be loaded."
+                "Unable to load dashboard information."
             );
+
         }
 
 
-        const data = await response.json();
-        dashboardState.usingDummyData = false;
+        const data =
+            await response.json();
 
-        updateDashboardState(data);
+
+        const normalized =
+            normalizeDashboardData(
+                data
+            );
+
+
+        dashboardState.client =
+            normalized.client;
+
+
+        dashboardState.summary =
+            normalized.summary;
+
+
+        dashboardState.current_reservation =
+            normalized.current_reservation;
+
+
         renderDashboard();
 
 
     } catch (error) {
 
-        /*
-         * The backend is not connected yet.
-         * Keep displaying the dummy data.
-         */
-
-        console.info(
-            "Dashboard API is unavailable. Dummy frontend data is being displayed."
+        console.error(
+            "Dashboard loading error:",
+            error
         );
+
+
+        dashboardState.client =
+            null;
+
+
+        dashboardState.summary = {
+
+            active_reservations: 0,
+
+            payment_status: "",
+
+            uploaded_documents: 0
+
+        };
+
+
+        dashboardState.current_reservation =
+            null;
+
+
+        renderDashboard();
     }
 }
 
 
 /* =========================================================
-   UPDATE DASHBOARD STATE
+   NORMALIZE API RESPONSE
    ========================================================= */
 
-function updateDashboardState(data) {
-    if (!data || typeof data !== "object") {
-        return;
-    }
+function normalizeDashboardData(
+    data
+) {
+
+    const dashboard =
+        data?.dashboard ||
+        data?.data ||
+        data ||
+        {};
 
 
-    dashboardState.client =
-        data.client || null;
+    const client =
+        dashboard.client
+            ? {
+
+                id:
+                    dashboard.client.id ??
+                    dashboard.client.client_id ??
+                    null,
+
+                name:
+                    dashboard.client.name ||
+                    dashboard.client.full_name ||
+                    ""
+
+            }
+            : null;
 
 
-    dashboardState.summary = {
-        active_reservation_count:
-            Number(
-                data.summary?.active_reservation_count
-            ) || 0,
+    const sourceSummary =
+        dashboard.summary ||
+        {};
+
+
+    const summary = {
+
+        active_reservations:
+            toSafeNumber(
+                sourceSummary
+                    .active_reservations
+            ),
 
         payment_status:
-            data.summary?.payment_status || null,
+            sourceSummary
+                .payment_status ||
+            "",
 
-        uploaded_document_count:
-            Number(
-                data.summary?.uploaded_document_count
-            ) || 0
+        uploaded_documents:
+            toSafeNumber(
+                sourceSummary
+                    .uploaded_documents
+            )
+
     };
 
 
-    dashboardState.current_reservation =
-        data.current_reservation || null;
+    return {
+
+        client,
+
+        summary,
+
+        current_reservation:
+            normalizeReservation(
+                dashboard
+                    .current_reservation
+            )
+
+    };
+}
+
+
+/* =========================================================
+   NORMALIZE RESERVATION
+   ========================================================= */
+
+function normalizeReservation(
+    reservation
+) {
+
+    if (
+        !reservation ||
+        typeof reservation !==
+            "object"
+    ) {
+
+        return null;
+    }
+
+
+    return {
+
+        id:
+            reservation.id ??
+            reservation.reservation_id ??
+            null,
+
+        reservation_reference:
+            reservation
+                .reservation_reference ||
+            reservation.reference ||
+            reservation.reference_number ||
+            "",
+
+        resort_name:
+            reservation.resort_name ||
+            "",
+
+        accommodation_name:
+            reservation
+                .accommodation_name ||
+            "",
+
+        check_in:
+            reservation.check_in ||
+            reservation.check_in_date ||
+            "",
+
+        check_out:
+            reservation.check_out ||
+            reservation.check_out_date ||
+            "",
+
+        reservation_status:
+            reservation
+                .reservation_status ||
+            reservation.status ||
+            ""
+
+    };
 }
 
 
@@ -303,337 +520,415 @@ function updateDashboardState(data) {
    ========================================================= */
 
 function renderDashboard() {
+
     renderClient();
 
     renderSummary();
 
     renderCurrentReservation();
 
+
+    /*
+     * Re-run Lucide after rendering.
+     * This also supports future dynamically inserted icons.
+     */
+
     initializeIcons();
 }
 
 
 /* =========================================================
-   RENDER CLIENT
+   CLIENT
    ========================================================= */
 
 function renderClient() {
+
     const clientName =
         dashboardState.client?.name ||
         "Client";
 
 
-    if (clientDisplayName) {
-        clientDisplayName.textContent =
-            clientName;
-    }
+    setText(
+        clientDisplayName,
+        clientName
+    );
 
 
-    if (dashboardClientName) {
-        dashboardClientName.textContent =
-            clientName;
+    if (dashboardWelcomeTitle) {
+
+        dashboardWelcomeTitle.textContent =
+            `Welcome, ${clientName}`;
+
     }
 }
 
 
 /* =========================================================
-   RENDER SUMMARY
+   SUMMARY
    ========================================================= */
 
 function renderSummary() {
-    if (activeReservationCount) {
-        activeReservationCount.textContent =
-            dashboardState.summary
-                .active_reservation_count;
-    }
+
+    setText(
+        activeReservationsCount,
+
+        dashboardState.summary
+            .active_reservations
+    );
 
 
-    if (dashboardPaymentStatus) {
-        dashboardPaymentStatus.textContent =
-            dashboardState.summary
-                .payment_status ||
-            "No Payment";
-    }
+    setText(
+        dashboardPaymentStatus,
+
+        dashboardState.summary
+            .payment_status
+    );
 
 
-    if (uploadedDocumentCount) {
-        uploadedDocumentCount.textContent =
-            dashboardState.summary
-                .uploaded_document_count;
-    }
+    setText(
+        uploadedDocumentsCount,
+
+        dashboardState.summary
+            .uploaded_documents
+    );
 }
 
 
 /* =========================================================
-   RENDER CURRENT RESERVATION
+   CURRENT RESERVATION
    ========================================================= */
 
 function renderCurrentReservation() {
+
     const reservation =
-        dashboardState.current_reservation;
+        dashboardState
+            .current_reservation;
 
 
     if (!reservation) {
-        showReservationEmptyState();
+
+        showCurrentReservationEmptyState();
 
         return;
     }
 
 
-    showReservationContent();
+    hideCurrentReservationEmptyState();
 
 
-    if (currentReservationReference) {
-        currentReservationReference.textContent =
-            reservation.reference_number ||
-            "—";
-    }
+    setText(
+        currentReservationReference,
 
-
-    if (currentReservationStatus) {
-        currentReservationStatus.textContent =
-            reservation.status ||
-            "—";
-
-        updateStatusBadge(
-            currentReservationStatus,
-            reservation.status
-        );
-    }
-
-
-    if (currentResortName) {
-        currentResortName.textContent =
-            reservation.resort_name ||
-            "—";
-    }
-
-
-    if (currentAccommodationName) {
-        currentAccommodationName.textContent =
-            reservation.accommodation_name ||
-            "—";
-    }
-
-
-    if (currentCheckIn) {
-        currentCheckIn.textContent =
-            formatDate(
-                reservation.check_in
-            );
-    }
-
-
-    if (currentCheckOut) {
-        currentCheckOut.textContent =
-            formatDate(
-                reservation.check_out
-            );
-    }
-
-
-    updateReservationStatusLink(
         reservation
+            .reservation_reference
     );
+
+
+    setText(
+        currentReservationResort,
+
+        reservation.resort_name
+    );
+
+
+    setText(
+        currentReservationAccommodation,
+
+        reservation
+            .accommodation_name
+    );
+
+
+    setText(
+        currentReservationCheckIn,
+
+        formatDate(
+            reservation.check_in
+        )
+    );
+
+
+    setText(
+        currentReservationCheckOut,
+
+        formatDate(
+            reservation.check_out
+        )
+    );
+
+
+    renderReservationStatus(
+        reservation.reservation_status
+    );
+
+
+    if (
+        viewReservationStatusButton &&
+        reservation.id
+    ) {
+
+        viewReservationStatusButton.href =
+            `ReservationStatus.html?id=${encodeURIComponent(
+                reservation.id
+            )}`;
+
+    }
 }
 
 
 /* =========================================================
-   RESERVATION CONTENT
+   STATUS
    ========================================================= */
 
-function showReservationContent() {
-    if (currentReservationContent) {
-        currentReservationContent.hidden =
-            false;
-    }
+function renderReservationStatus(
+    status
+) {
 
+    if (!currentReservationStatus) {
 
-    if (currentReservationEmptyState) {
-        currentReservationEmptyState.hidden =
-            true;
-    }
-}
-
-
-/* =========================================================
-   RESERVATION EMPTY STATE
-   ========================================================= */
-
-function showReservationEmptyState() {
-    if (currentReservationContent) {
-        currentReservationContent.hidden =
-            true;
-    }
-
-
-    if (currentReservationEmptyState) {
-        currentReservationEmptyState.hidden =
-            false;
-    }
-}
-
-
-/* =========================================================
-   STATUS BADGE
-   Presentation only.
-   This does NOT change reservation status.
-   ========================================================= */
-
-function updateStatusBadge(element, status) {
-    if (!element) {
         return;
     }
 
 
-    element.classList.remove(
-        "status-success",
-        "status-warning",
-        "status-danger",
-        "status-info"
-    );
+    currentReservationStatus.textContent =
+        status || "—";
 
 
-    const normalizedStatus =
+    currentReservationStatus
+        .classList.remove(
+            "status-success",
+            "status-warning",
+            "status-danger",
+            "status-info",
+            "status-neutral"
+        );
+
+
+    currentReservationStatus
+        .classList.add(
+            getStatusClass(
+                status
+            )
+        );
+}
+
+
+/* =========================================================
+   STATUS PRESENTATION
+   ========================================================= */
+
+function getStatusClass(
+    status
+) {
+
+    const normalized =
         String(status || "")
             .trim()
             .toLowerCase();
 
 
-    if (
-        normalizedStatus.includes("pending")
-    ) {
-        element.classList.add(
-            "status-warning"
-        );
+    switch (normalized) {
 
-        return;
-    }
+        case "confirmed":
+        case "verified":
+
+            return "status-success";
 
 
-    if (
-        normalizedStatus.includes("approved") ||
-        normalizedStatus.includes("confirmed") ||
-        normalizedStatus.includes("verified")
-    ) {
-        element.classList.add(
-            "status-success"
-        );
+        case "pending":
+        case "pending verification":
 
-        return;
-    }
+            return "status-warning";
 
 
-    if (
-        normalizedStatus.includes("rejected") ||
-        normalizedStatus.includes("failed")
-    ) {
-        element.classList.add(
-            "status-danger"
-        );
+        case "rejected":
 
-        return;
-    }
+            return "status-danger";
 
 
-    if (normalizedStatus) {
-        element.classList.add(
-            "status-info"
-        );
+        default:
+
+            return "status-neutral";
     }
 }
 
 
 /* =========================================================
-   RESERVATION STATUS LINK
+   EMPTY STATE
    ========================================================= */
 
-function updateReservationStatusLink(
-    reservation
+function showCurrentReservationEmptyState() {
+
+    if (currentReservationContent) {
+
+        currentReservationContent.hidden =
+            true;
+
+    }
+
+
+    if (currentReservationEmptyState) {
+
+        currentReservationEmptyState.hidden =
+            false;
+
+    }
+}
+
+
+function hideCurrentReservationEmptyState() {
+
+    if (currentReservationContent) {
+
+        currentReservationContent.hidden =
+            false;
+
+    }
+
+
+    if (currentReservationEmptyState) {
+
+        currentReservationEmptyState.hidden =
+            true;
+
+    }
+}
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
+
+function formatDate(
+    dateValue
 ) {
-    if (!viewReservationStatusButton) {
-        return;
-    }
 
+    if (!dateValue) {
 
-    const reservationId =
-        reservation.id;
-
-
-    if (!reservationId) {
-        viewReservationStatusButton.href =
-            "ReservationStatus.html";
-
-        return;
-    }
-
-
-    viewReservationStatusButton.href =
-        `ReservationStatus.html?id=${
-            encodeURIComponent(
-                reservationId
-            )
-        }`;
-}
-
-
-/* =========================================================
-   DATE FORMATTER
-   ========================================================= */
-
-function formatDate(value) {
-    if (!value) {
         return "—";
     }
 
 
-    /*
-     * Parse YYYY-MM-DD manually so the displayed
-     * calendar date does not shift because of
-     * browser timezone differences.
-     */
-
-    const parts =
-        String(value).split("-");
+    const dateParts =
+        String(dateValue)
+            .split("-");
 
 
-    if (parts.length === 3) {
-        const year =
-            Number(parts[0]);
+    if (dateParts.length !== 3) {
 
-        const month =
-            Number(parts[1]);
+        return String(
+            dateValue
+        );
 
-        const day =
-            Number(parts[2]);
-
-
-        if (
-            Number.isInteger(year) &&
-            Number.isInteger(month) &&
-            Number.isInteger(day)
-        ) {
-            const date =
-                new Date(
-                    year,
-                    month - 1,
-                    day
-                );
-
-
-            return new Intl.DateTimeFormat(
-                "en-PH",
-                {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric"
-                }
-            ).format(date);
-        }
     }
 
 
-    return String(value);
+    const year =
+        Number(
+            dateParts[0]
+        );
+
+
+    const month =
+        Number(
+            dateParts[1]
+        );
+
+
+    const day =
+        Number(
+            dateParts[2]
+        );
+
+
+    if (
+        !Number.isInteger(year) ||
+        !Number.isInteger(month) ||
+        !Number.isInteger(day)
+    ) {
+
+        return String(
+            dateValue
+        );
+
+    }
+
+
+    const date =
+        new Date(
+            Date.UTC(
+                year,
+                month - 1,
+                day
+            )
+        );
+
+
+    return new Intl.DateTimeFormat(
+        "en-PH",
+        {
+            year: "numeric",
+
+            month: "short",
+
+            day: "numeric",
+
+            timeZone: "UTC"
+        }
+    ).format(
+        date
+    );
+}
+
+
+/* =========================================================
+   SAFE NUMBER
+   ========================================================= */
+
+function toSafeNumber(
+    value
+) {
+
+    const number =
+        Number(value);
+
+
+    return Number.isFinite(number)
+        ? number
+        : 0;
+}
+
+
+/* =========================================================
+   SET TEXT
+   ========================================================= */
+
+function setText(
+    element,
+    value
+) {
+
+    if (!element) {
+
+        return;
+    }
+
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+
+        element.textContent =
+            "—";
+
+        return;
+    }
+
+
+    element.textContent =
+        String(value);
 }
 
 
@@ -642,10 +937,12 @@ function formatDate(value) {
    ========================================================= */
 
 function initializeSidebar() {
+
     if (
         !sidebarToggle ||
         !clientApp
     ) {
+
         return;
     }
 
@@ -658,6 +955,7 @@ function initializeSidebar() {
 
 
 function handleSidebarToggle() {
+
     const isMobile =
         window.matchMedia(
             "(max-width: 760px)"
@@ -665,9 +963,11 @@ function handleSidebarToggle() {
 
 
     if (isMobile) {
+
         clientApp.classList.toggle(
             "sidebar-mobile-open"
         );
+
 
         return;
     }
@@ -678,7 +978,7 @@ function handleSidebarToggle() {
     );
 
 
-    const isCollapsed =
+    const collapsed =
         clientApp.classList.contains(
             "sidebar-collapsed"
         );
@@ -686,17 +986,19 @@ function handleSidebarToggle() {
 
     sidebarToggle.setAttribute(
         "aria-expanded",
-        String(!isCollapsed)
+        String(!collapsed)
     );
 }
 
 
 /* =========================================================
-   PROFILE BUTTON
+   PROFILE
    ========================================================= */
 
 function initializeProfileButton() {
+
     if (!clientProfileButton) {
+
         return;
     }
 
@@ -704,23 +1006,47 @@ function initializeProfileButton() {
     clientProfileButton.addEventListener(
         "click",
         () => {
+
             window.location.href =
                 "Profile.html";
+
         }
     );
 }
 
 
 /* =========================================================
-   LUCIDE ICONS
+   LUCIDE ICON INITIALIZATION
    ========================================================= */
 
 function initializeIcons() {
+
     if (
-        typeof lucide !== "undefined" &&
-        typeof lucide.createIcons ===
-            "function"
+        typeof window.lucide ===
+            "undefined"
     ) {
-        lucide.createIcons();
+
+        console.error(
+            "Lucide library did not load."
+        );
+
+        return;
     }
+
+
+    if (
+        typeof window.lucide
+            .createIcons !==
+        "function"
+    ) {
+
+        console.error(
+            "lucide.createIcons() is unavailable."
+        );
+
+        return;
+    }
+
+
+    window.lucide.createIcons();
 }

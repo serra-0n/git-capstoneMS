@@ -27,23 +27,11 @@
         href="../../css//client-global/sidebar.css"
     >
 
-    <!-- Dashboard CSS -->
+    <!-- Page CSS -->
     <link
         rel="stylesheet"
         href="../../css/client/Dashboard.css"
     >
-
-    <!-- Lucide Icons -->
-    <script
-        src="https://unpkg.com/lucide@latest"
-        defer
-    ></script>
-
-    <!-- Dashboard JavaScript -->
-    <script
-        src="../../js/client/Dashboard.js"
-        defer
-    ></script>
 </head>
 
 
@@ -69,7 +57,9 @@
                 >
                     <i data-lucide="building-2"></i>
 
-                    <span>ResortHub</span>
+                    <span>
+                        ResortHub
+                    </span>
                 </a>
 
 
@@ -99,15 +89,19 @@
                         <i data-lucide="user"></i>
                     </span>
 
+
                     <span class="profile-info">
 
                         <strong id="clientDisplayName">
                             Client
                         </strong>
 
-                        <small>Client</small>
+                        <small>
+                            Client
+                        </small>
 
                     </span>
+
 
                     <i
                         class="profile-chevron"
@@ -122,687 +116,732 @@
 
 
         <!-- =====================================================
-             SIDEBAR
+             CLIENT LAYOUT
              ===================================================== -->
 
-        <aside
-            class="client-sidebar"
-            id="clientSidebar"
-        >
+        <div class="client-layout">
 
-            <nav
-                class="sidebar-navigation"
-                aria-label="Client navigation"
+
+            <!-- =================================================
+                 SIDEBAR
+                 ================================================= -->
+
+            <aside
+                class="client-sidebar"
+                id="clientSidebar"
             >
 
-                <!-- Dashboard -->
-
-                <a
-                    href="Dashboard.html"
-                    class="sidebar-link active"
-                    aria-current="page"
+                <nav
+                    class="sidebar-navigation"
+                    aria-label="Client navigation"
                 >
-                    <i data-lucide="layout-dashboard"></i>
-                    <span>Dashboard</span>
-                </a>
-
-
-                <!-- Booking -->
-
-                <div class="sidebar-section">
-
-                    <span class="sidebar-section-title">
-                        BOOKING
-                    </span>
-
 
                     <a
-                        href="Reservations.html"
-                        class="sidebar-link"
+                        href="Dashboard.html"
+                        class="sidebar-link active"
+                        aria-current="page"
                     >
-                        <i data-lucide="calendar-plus"></i>
-                        <span>New Reservation</span>
+                        <i data-lucide="layout-dashboard"></i>
+
+                        <span>
+                            Dashboard
+                        </span>
                     </a>
 
 
-                    <a
-                        href="MyReservations.html"
-                        class="sidebar-link"
-                    >
-                        <i data-lucide="calendar-days"></i>
-                        <span>My Reservations</span>
-                    </a>
+                    <!-- BOOKING -->
 
+                    <div class="sidebar-section">
 
-                    <a
-                        href="Resorts.html"
-                        class="sidebar-link"
-                    >
-                        <i data-lucide="building-2"></i>
-                        <span>Resorts</span>
-                    </a>
+                        <span class="sidebar-section-title">
+                            BOOKING
+                        </span>
 
-                </div>
-
-
-                <!-- Payment -->
-
-                <div class="sidebar-section">
-
-                    <span class="sidebar-section-title">
-                        PAYMENT
-                    </span>
-
-
-                    <a
-                        href="Payments.html"
-                        class="sidebar-link"
-                    >
-                        <i data-lucide="wallet-cards"></i>
-                        <span>Billing &amp; Payment</span>
-                    </a>
-
-                </div>
-
-
-                <!-- Documents -->
-
-                <div class="sidebar-section">
-
-                    <span class="sidebar-section-title">
-                        DOCUMENTS
-                    </span>
-
-
-                    <a
-                        href="UploadDocuments.html"
-                        class="sidebar-link"
-                    >
-                        <i data-lucide="upload"></i>
-                        <span>Upload Documents</span>
-                    </a>
-
-                </div>
-
-
-                <!-- Status -->
-
-                <div class="sidebar-section">
-
-                    <span class="sidebar-section-title">
-                        STATUS
-                    </span>
-
-
-                    <a
-                        href="ReservationStatus.html"
-                        class="sidebar-link"
-                    >
-                        <i data-lucide="circle-check-big"></i>
-                        <span>Reservation Status</span>
-                    </a>
-
-
-                    <a
-                        href="Notifications.html"
-                        class="sidebar-link"
-                    >
-                        <i data-lucide="bell"></i>
-                        <span>Notifications</span>
-                    </a>
-
-                </div>
-
-
-                <!-- Account -->
-
-                <div class="sidebar-section">
-
-                    <span class="sidebar-section-title">
-                        ACCOUNT
-                    </span>
-
-
-                    <a
-                        href="Profile.html"
-                        class="sidebar-link"
-                    >
-                        <i data-lucide="user-round"></i>
-                        <span>Profile</span>
-                    </a>
-
-                </div>
-
-            </nav>
-
-        </aside>
-
-
-        <!-- =====================================================
-             MAIN CONTENT
-             ===================================================== -->
-
-        <main class="client-main">
-
-            <div class="page-container">
-
-
-                <!-- =================================================
-                     PAGE HEADER
-                     ================================================= -->
-
-                <section class="page-header">
-
-                    <div class="page-header-content">
-
-                        <h1>
-                            Welcome,
-                            <span id="dashboardClientName">
-                                Client
-                            </span>
-                        </h1>
-
-                        <p>
-                            View your reservation, payment, and
-                            document information.
-                        </p>
-
-                    </div>
-
-
-                    <div class="page-header-actions">
 
                         <a
                             href="Reservations.html"
-                            class="primary-button"
+                            class="sidebar-link"
                         >
-                            <i data-lucide="plus"></i>
-                            <span>New Reservation</span>
+                            <i data-lucide="calendar-plus"></i>
+
+                            <span>
+                                New Reservation
+                            </span>
+                        </a>
+
+
+                        <a
+                            href="MyReservations.html"
+                            class="sidebar-link"
+                        >
+                            <i data-lucide="calendar-days"></i>
+
+                            <span>
+                                My Reservations
+                            </span>
+                        </a>
+
+
+                        <a
+                            href="Resorts.html"
+                            class="sidebar-link"
+                        >
+                            <i data-lucide="building"></i>
+
+                            <span>
+                                Resorts
+                            </span>
                         </a>
 
                     </div>
 
-                </section>
+
+                    <!-- PAYMENT -->
+
+                    <div class="sidebar-section">
+
+                        <span class="sidebar-section-title">
+                            PAYMENT
+                        </span>
 
 
-                <!-- =================================================
-                     DASHBOARD SUMMARY
-                     ================================================= -->
-
-                <section
-                    class="dashboard-summary"
-                    aria-label="Dashboard summary"
-                >
-
-
-                    <!-- Active Reservations -->
-
-                    <article class="card dashboard-summary-card">
-
-                        <div class="dashboard-summary-icon">
-
-                            <i data-lucide="calendar-check"></i>
-
-                        </div>
-
-
-                        <div class="dashboard-summary-content">
-
-                            <span class="dashboard-summary-label">
-                                Active Reservations
-                            </span>
-
-                            <strong
-                                class="dashboard-summary-value"
-                                id="activeReservationCount"
-                            >
-                                0
-                            </strong>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- Payment Status -->
-
-                    <article class="card dashboard-summary-card">
-
-                        <div class="dashboard-summary-icon">
-
+                        <a
+                            href="Payments.html"
+                            class="sidebar-link"
+                        >
                             <i data-lucide="wallet-cards"></i>
 
-                        </div>
-
-
-                        <div class="dashboard-summary-content">
-
-                            <span class="dashboard-summary-label">
-                                Payment Status
+                            <span>
+                                Billing & Payment
                             </span>
+                        </a>
 
-                            <strong
-                                class="dashboard-summary-value dashboard-summary-text"
-                                id="dashboardPaymentStatus"
-                            >
-                                No Payment
-                            </strong>
-
-                        </div>
-
-                    </article>
+                    </div>
 
 
-                    <!-- Uploaded Documents -->
+                    <!-- DOCUMENTS -->
 
-                    <article class="card dashboard-summary-card">
+                    <div class="sidebar-section">
 
-                        <div class="dashboard-summary-icon">
-
-                            <i data-lucide="files"></i>
-
-                        </div>
+                        <span class="sidebar-section-title">
+                            DOCUMENTS
+                        </span>
 
 
-                        <div class="dashboard-summary-content">
+                        <a
+                            href="UploadDocuments.html"
+                            class="sidebar-link"
+                        >
+                            <i data-lucide="file-up"></i>
 
-                            <span class="dashboard-summary-label">
-                                Uploaded Documents
+                            <span>
+                                Upload Documents
                             </span>
+                        </a>
 
-                            <strong
-                                class="dashboard-summary-value"
-                                id="uploadedDocumentCount"
-                            >
-                                0
-                            </strong>
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="sidebar-section">
+
+                        <span class="sidebar-section-title">
+                            STATUS
+                        </span>
+
+
+                        <a
+                            href="ReservationStatus.html"
+                            class="sidebar-link"
+                        >
+                            <i data-lucide="clock-3"></i>
+
+                            <span>
+                                Reservation Status
+                            </span>
+                        </a>
+
+
+                        <a
+                            href="Notifications.html"
+                            class="sidebar-link"
+                        >
+                            <i data-lucide="bell"></i>
+
+                            <span>
+                                Notifications
+                            </span>
+                        </a>
+
+                    </div>
+
+
+                    <!-- ACCOUNT -->
+
+                    <div class="sidebar-section">
+
+                        <span class="sidebar-section-title">
+                            ACCOUNT
+                        </span>
+
+
+                        <a
+                            href="Profile.html"
+                            class="sidebar-link"
+                        >
+                            <i data-lucide="user-round"></i>
+
+                            <span>
+                                Profile
+                            </span>
+                        </a>
+
+                    </div>
+
+                </nav>
+
+            </aside>
+
+
+            <!-- =================================================
+                 MAIN CONTENT
+                 ================================================= -->
+
+            <main class="client-main">
+
+                <div class="page-container">
+
+
+                    <!-- =========================================
+                         PAGE HEADER
+                         ========================================= -->
+
+                    <div class="page-header dashboard-page-header">
+
+                        <div>
+
+                            <h1 id="dashboardWelcomeTitle">
+                                Welcome, Client
+                            </h1>
+
+                            <p>
+                                View your reservation, payment, and document information.
+                            </p>
 
                         </div>
 
-                    </article>
 
-                </section>
-
-
-                <!-- =================================================
-                     DASHBOARD CONTENT
-                     ================================================= -->
-
-                <section class="dashboard-content">
-
-
-                    <!-- =============================================
-                         CURRENT RESERVATION
-                         ============================================= -->
-
-                    <article class="card current-reservation-card">
-
-                        <div class="card-header">
-
-                            <div class="card-heading">
-
-                                <div class="card-heading-icon">
-                                    <i data-lucide="calendar-days"></i>
-                                </div>
-
-
-                                <div class="card-heading-text">
-
-                                    <h2>
-                                        Current Reservation
-                                    </h2>
-
-                                    <p>
-                                        View your current reservation
-                                        information and status.
-                                    </p>
-
-                                </div>
-
-                            </div>
-
+                        <div class="page-header-actions">
 
                             <a
-                                href="MyReservations.html"
-                                class="secondary-button"
+                                href="Reservations.html"
+                                class="primary-button"
                             >
-                                View Reservations
+                                <i data-lucide="calendar-plus"></i>
+
+                                <span>
+                                    New Reservation
+                                </span>
                             </a>
 
                         </div>
 
+                    </div>
 
-                        <div class="card-body">
+
+                    <!-- =========================================
+                         SUMMARY CARDS
+                         ========================================= -->
+
+                    <section
+                        class="dashboard-summary-grid"
+                        aria-label="Account summary"
+                    >
+
+                        <!-- Active Reservations -->
+
+                        <article class="card dashboard-summary-card">
+
+                            <div class="dashboard-summary-icon">
+
+                                <i data-lucide="calendar-check-2"></i>
+
+                            </div>
 
 
-                            <!-- Reservation content -->
+                            <div class="dashboard-summary-content">
 
-                            <div
-                                class="current-reservation-content"
-                                id="currentReservationContent"
-                                hidden
-                            >
+                                <span class="dashboard-summary-label">
+                                    Active Reservations
+                                </span>
 
-                                <div class="reservation-header">
+                                <strong
+                                    class="dashboard-summary-value"
+                                    id="activeReservationsCount"
+                                >
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </article>
+
+
+                        <!-- Payment Status -->
+
+                        <article class="card dashboard-summary-card">
+
+                            <div class="dashboard-summary-icon">
+
+                                <i data-lucide="wallet"></i>
+
+                            </div>
+
+
+                            <div class="dashboard-summary-content">
+
+                                <span class="dashboard-summary-label">
+                                    Payment Status
+                                </span>
+
+                                <strong
+                                    class="dashboard-summary-value dashboard-summary-text"
+                                    id="dashboardPaymentStatus"
+                                >
+                                    —
+                                </strong>
+
+                            </div>
+
+                        </article>
+
+
+                        <!-- Uploaded Documents -->
+
+                        <article class="card dashboard-summary-card">
+
+                            <div class="dashboard-summary-icon">
+
+                                <i data-lucide="files"></i>
+
+                            </div>
+
+
+                            <div class="dashboard-summary-content">
+
+                                <span class="dashboard-summary-label">
+                                    Uploaded Documents
+                                </span>
+
+                                <strong
+                                    class="dashboard-summary-value"
+                                    id="uploadedDocumentsCount"
+                                >
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </article>
+
+                    </section>
+
+
+                    <!-- =========================================
+                         MAIN DASHBOARD GRID
+                         ========================================= -->
+
+                    <div class="dashboard-content-grid">
+
+
+                        <!-- =====================================
+                             CURRENT RESERVATION
+                             ===================================== -->
+
+                        <section class="card current-reservation-card">
+
+                            <div class="card-header">
+
+                                <div class="card-heading">
+
+                                    <span class="card-heading-icon">
+
+                                        <i data-lucide="calendar-days"></i>
+
+                                    </span>
+
 
                                     <div>
 
-                                        <span class="reservation-reference-label">
-                                            Reservation Reference
-                                        </span>
+                                        <h2>
+                                            Current Reservation
+                                        </h2>
 
-                                        <strong
-                                            class="reservation-reference"
-                                            id="currentReservationReference"
+                                        <p>
+                                            View your current reservation information and status.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <a
+                                    href="MyReservations.html"
+                                    class="secondary-button dashboard-card-link"
+                                >
+                                    View Reservations
+                                </a>
+
+                            </div>
+
+
+                            <div class="card-body">
+
+
+                                <!-- Current Reservation -->
+
+                                <div
+                                    id="currentReservationContent"
+                                    hidden
+                                >
+
+                                    <div class="current-reservation-header">
+
+                                        <div>
+
+                                            <span class="reservation-reference-label">
+                                                Reservation
+                                            </span>
+
+                                            <strong
+                                                id="currentReservationReference"
+                                            >
+                                                —
+                                            </strong>
+
+                                        </div>
+
+
+                                        <span
+                                            class="status-badge"
+                                            id="currentReservationStatus"
                                         >
                                             —
-                                        </strong>
+                                        </span>
 
                                     </div>
 
 
-                                    <span
-                                        class="status-badge"
-                                        id="currentReservationStatus"
-                                    >
-                                        —
-                                    </span>
+                                    <div class="info-list">
+
+
+                                        <div class="info-row">
+
+                                            <span>
+                                                Resort
+                                            </span>
+
+                                            <strong id="currentReservationResort">
+                                                —
+                                            </strong>
+
+                                        </div>
+
+
+                                        <div class="info-row">
+
+                                            <span>
+                                                Accommodation
+                                            </span>
+
+                                            <strong id="currentReservationAccommodation">
+                                                —
+                                            </strong>
+
+                                        </div>
+
+
+                                        <div class="info-row">
+
+                                            <span>
+                                                Check-in
+                                            </span>
+
+                                            <strong id="currentReservationCheckIn">
+                                                —
+                                            </strong>
+
+                                        </div>
+
+
+                                        <div class="info-row">
+
+                                            <span>
+                                                Check-out
+                                            </span>
+
+                                            <strong id="currentReservationCheckOut">
+                                                —
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="current-reservation-actions">
+
+                                        <a
+                                            href="ReservationStatus.html"
+                                            class="primary-button"
+                                            id="viewReservationStatusButton"
+                                        >
+                                            <i data-lucide="eye"></i>
+
+                                            <span>
+                                                View Status
+                                            </span>
+                                        </a>
+
+                                    </div>
 
                                 </div>
 
 
-                                <div class="reservation-information">
+                                <!-- Empty State -->
 
-                                    <div class="reservation-info-item">
+                                <div
+                                    class="empty-state"
+                                    id="currentReservationEmptyState"
+                                >
 
-                                        <span>
-                                            Resort
-                                        </span>
+                                    <i data-lucide="calendar-x"></i>
 
-                                        <strong id="currentResortName">
-                                            —
-                                        </strong>
+                                    <h3>
+                                        No Current Reservation
+                                    </h3>
 
-                                    </div>
-
-
-                                    <div class="reservation-info-item">
-
-                                        <span>
-                                            Accommodation
-                                        </span>
-
-                                        <strong id="currentAccommodationName">
-                                            —
-                                        </strong>
-
-                                    </div>
-
-
-                                    <div class="reservation-info-item">
-
-                                        <span>
-                                            Check-in
-                                        </span>
-
-                                        <strong id="currentCheckIn">
-                                            —
-                                        </strong>
-
-                                    </div>
-
-
-                                    <div class="reservation-info-item">
-
-                                        <span>
-                                            Check-out
-                                        </span>
-
-                                        <strong id="currentCheckOut">
-                                            —
-                                        </strong>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div class="current-reservation-actions">
+                                    <p>
+                                        Your current reservation will appear here once reservation information is available.
+                                    </p>
 
                                     <a
-                                        href="ReservationStatus.html"
+                                        href="Reservations.html"
                                         class="primary-button"
-                                        id="viewReservationStatusButton"
                                     >
-                                        View Reservation Status
+                                        <i data-lucide="calendar-plus"></i>
+
+                                        <span>
+                                            New Reservation
+                                        </span>
                                     </a>
 
                                 </div>
 
                             </div>
 
-
-                            <!-- No reservation -->
-
-                            <div
-                                class="empty-state"
-                                id="currentReservationEmptyState"
-                            >
-
-                                <div class="empty-state-icon">
-
-                                    <i data-lucide="calendar"></i>
-
-                                </div>
-
-                                <h3>
-                                    No Current Reservation
-                                </h3>
-
-                                <p>
-                                    Your current reservation will
-                                    appear here once reservation
-                                    information is available.
-                                </p>
-
-                                <a
-                                    href="Reservations.html"
-                                    class="primary-button"
-                                >
-                                    <i data-lucide="plus"></i>
-                                    New Reservation
-                                </a>
-
-                            </div>
-
-                        </div>
-
-                    </article>
+                        </section>
 
 
-                    <!-- =============================================
-                         QUICK ACCESS
-                         ============================================= -->
+                        <!-- =====================================
+                             QUICK ACCESS
+                             ===================================== -->
 
-                    <aside class="card quick-access-card">
+                        <section class="card quick-access-card">
 
-                        <div class="card-header">
+                            <div class="card-header">
 
-                            <div class="card-heading">
+                                <div class="card-heading">
 
-                                <div class="card-heading-icon">
-                                    <i data-lucide="grid-2x2"></i>
-                                </div>
+                                    <span class="card-heading-icon">
+
+                                        <i data-lucide="grid-2x2"></i>
+
+                                    </span>
 
 
-                                <div class="card-heading-text">
+                                    <div>
 
-                                    <h2>
-                                        Quick Access
-                                    </h2>
+                                        <h2>
+                                            Quick Access
+                                        </h2>
 
-                                    <p>
-                                        Access your main client
-                                        functions.
-                                    </p>
+                                        <p>
+                                            Access your main client functions.
+                                        </p>
+
+                                    </div>
 
                                 </div>
 
                             </div>
 
-                        </div>
+
+                            <div class="card-body">
+
+                                <div class="quick-access-list">
 
 
-                        <div class="card-body">
+                                    <!-- Reservation -->
 
-                            <div class="quick-access-list">
+                                    <a
+                                        href="Reservations.html"
+                                        class="quick-access-item"
+                                    >
 
-
-                                <!-- New Reservation -->
-
-                                <a
-                                    href="Reservations.html"
-                                    class="quick-access-item"
-                                >
-
-                                    <span class="quick-access-icon">
-                                        <i data-lucide="calendar-plus"></i>
-                                    </span>
+                                        <span class="quick-access-icon">
+                                            <i data-lucide="calendar-plus"></i>
+                                        </span>
 
 
-                                    <span class="quick-access-text">
+                                        <span class="quick-access-content">
 
-                                        <strong>
-                                            New Reservation
-                                        </strong>
+                                            <strong>
+                                                New Reservation
+                                            </strong>
 
-                                        <small>
-                                            Submit a reservation request
-                                        </small>
+                                            <small>
+                                                Submit a reservation request.
+                                            </small>
 
-                                    </span>
-
-
-                                    <i
-                                        class="quick-access-arrow"
-                                        data-lucide="chevron-right"
-                                    ></i>
-
-                                </a>
+                                        </span>
 
 
-                                <!-- My Reservations -->
+                                        <i
+                                            class="quick-access-arrow"
+                                            data-lucide="chevron-right"
+                                        ></i>
 
-                                <a
-                                    href="MyReservations.html"
-                                    class="quick-access-item"
-                                >
-
-                                    <span class="quick-access-icon">
-                                        <i data-lucide="calendar-days"></i>
-                                    </span>
+                                    </a>
 
 
-                                    <span class="quick-access-text">
+                                    <!-- My Reservations -->
 
-                                        <strong>
-                                            My Reservations
-                                        </strong>
+                                    <a
+                                        href="MyReservations.html"
+                                        class="quick-access-item"
+                                    >
 
-                                        <small>
-                                            View your reservations
-                                        </small>
-
-                                    </span>
-
-
-                                    <i
-                                        class="quick-access-arrow"
-                                        data-lucide="chevron-right"
-                                    ></i>
-
-                                </a>
+                                        <span class="quick-access-icon">
+                                            <i data-lucide="calendar-days"></i>
+                                        </span>
 
 
-                                <!-- Billing & Payment -->
+                                        <span class="quick-access-content">
 
-                                <a
-                                    href="Payments.html"
-                                    class="quick-access-item"
-                                >
+                                            <strong>
+                                                My Reservations
+                                            </strong>
 
-                                    <span class="quick-access-icon">
-                                        <i data-lucide="wallet-cards"></i>
-                                    </span>
+                                            <small>
+                                                View your reservations.
+                                            </small>
 
-
-                                    <span class="quick-access-text">
-
-                                        <strong>
-                                            Billing &amp; Payment
-                                        </strong>
-
-                                        <small>
-                                            View billing and payment
-                                            information
-                                        </small>
-
-                                    </span>
+                                        </span>
 
 
-                                    <i
-                                        class="quick-access-arrow"
-                                        data-lucide="chevron-right"
-                                    ></i>
+                                        <i
+                                            class="quick-access-arrow"
+                                            data-lucide="chevron-right"
+                                        ></i>
 
-                                </a>
-
-
-                                <!-- Upload Documents -->
-
-                                <a
-                                    href="UploadDocuments.html"
-                                    class="quick-access-item"
-                                >
-
-                                    <span class="quick-access-icon">
-                                        <i data-lucide="upload"></i>
-                                    </span>
+                                    </a>
 
 
-                                    <span class="quick-access-text">
+                                    <!-- Billing -->
 
-                                        <strong>
-                                            Upload Documents
-                                        </strong>
+                                    <a
+                                        href="Payments.html"
+                                        class="quick-access-item"
+                                    >
 
-                                        <small>
-                                            Submit required documents
-                                        </small>
-
-                                    </span>
+                                        <span class="quick-access-icon">
+                                            <i data-lucide="wallet-cards"></i>
+                                        </span>
 
 
-                                    <i
-                                        class="quick-access-arrow"
-                                        data-lucide="chevron-right"
-                                    ></i>
+                                        <span class="quick-access-content">
 
-                                </a>
+                                            <strong>
+                                                Billing & Payment
+                                            </strong>
+
+                                            <small>
+                                                View billing and payment information.
+                                            </small>
+
+                                        </span>
+
+
+                                        <i
+                                            class="quick-access-arrow"
+                                            data-lucide="chevron-right"
+                                        ></i>
+
+                                    </a>
+
+
+                                    <!-- Documents -->
+
+                                    <a
+                                        href="UploadDocuments.html"
+                                        class="quick-access-item"
+                                    >
+
+                                        <span class="quick-access-icon">
+                                            <i data-lucide="file-up"></i>
+                                        </span>
+
+
+                                        <span class="quick-access-content">
+
+                                            <strong>
+                                                Upload Documents
+                                            </strong>
+
+                                            <small>
+                                                Submit reservation-related documents.
+                                            </small>
+
+                                        </span>
+
+
+                                        <i
+                                            class="quick-access-arrow"
+                                            data-lucide="chevron-right"
+                                        ></i>
+
+                                    </a>
+
+                                </div>
 
                             </div>
 
-                        </div>
+                        </section>
 
-                    </aside>
+                    </div>
 
-                </section>
+                </div>
 
-            </div>
+            </main>
 
-        </main>
+        </div>
 
     </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+
+         Lucide is loaded FIRST.
+         Dashboard.js is loaded AFTER Lucide.
+         ===================================================== -->
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script src="../../js/client/Dashboard.js"></script>
 
 </body>
 
