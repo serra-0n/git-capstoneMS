@@ -75,6 +75,7 @@ async function findById(userId) {
             id,
             tenant_id,
             first_name,
+            last_name,
             email,
             role,
             account_status,
@@ -82,7 +83,7 @@ async function findById(userId) {
         FROM users
         WHERE id = ?
         LIMIT 1`,
-        [usersId]
+        [userId]
     );
 
     return users[0] || null;

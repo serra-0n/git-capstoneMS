@@ -153,6 +153,7 @@ async function getCurrentUser(request, response) {
                 id: user.id,
                 tenantId: user.tenant_id,
                 firstName: user.first_name,
+                lastName: user.last_name,
                 email: user.email,
                 role: user.role,
                 accountStatus: user.account_status

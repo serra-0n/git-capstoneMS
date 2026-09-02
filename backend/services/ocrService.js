@@ -5,7 +5,10 @@ async function extractText(filePath) {
 
 	try {
 		const result = await worker.recognize(filePath);
-		return result.data.text.trim();
+		return {
+			text: result.data.text.trim(),
+			confidence: Math.round(Number(result.data.confidence) || 0)
+		};
 	} finally {
 		await worker.terminate();
 	}

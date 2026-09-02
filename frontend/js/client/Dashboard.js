@@ -1,5 +1,7 @@
 "use strict";
 
+const { authenticateUser } = require("../../../backend/middleware/authMiddleware");
+
 /* =========================================================
    RESORTHUB - CLIENT DASHBOARD
    File: js/client/Dashboard.js
@@ -135,24 +137,53 @@ document.addEventListener(
     initializeDashboard
 );
 
+async function requireAuthenticatedClient() {
+    const token = sessionStorage.getItem("resorthub_access_token");
+
+    if (!token) {
+        window.location.href = "../auth/login.html";
+        return null;
+    }
+
+    try {
+        const response = await fetch("/api/auth/me", {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Session is invalid.");
+        }
+
+        const result = await response.json();
+
+        if (result.user.role !== "client") {
+            throw new Error("This page is only available to clients.");
+        }
+
+        return result.user;
+    } catch (error) {
+        sessionStorage.removeItem("resorthub_access_token");
+        window.location.href = "../auth/login.html";
+        return null;
+    }
+}
 
 async function initializeDashboard() {
     initializeIcons();
-
     initializeSidebar();
-
     initializeProfileButton();
 
-    /*
-     * Display dummy data immediately so the frontend
-     * can be tested without the backend.
-     */
-    useDummyDashboardData();
+    const authenticatedUser = await requireAuthenticatedClient();
 
-    /*
-     * Then try to retrieve real database-backed data
-     * from the future Express API.
-     */
+    if (!authenticatedUser) {
+        return;
+    }
+
+    useDummyDashboardData(authenticatedUser);
     await loadDashboardData();
 }
 
@@ -164,9 +195,22 @@ async function initializeDashboard() {
 function useDummyDashboardData() {
     dashboardState.usingDummyData = true;
 
-    updateDashboardState(
-        DUMMY_DASHBOARD_DATA
-    );
+    const fullName = [
+        authenticateUser.firstName,
+        authenticateUser.lastName
+    ]
+
+        .filter(Boolean)
+        .join(" ");
+
+    updateDashboardState({
+        ...DUMMY_DASHBOARD_DATA,
+
+        client: {
+            id: authenticateUser.id,
+            name: fullName || "Client"
+        }
+    });
 
     renderDashboard();
 }
@@ -177,16 +221,15 @@ function useDummyDashboardData() {
    ========================================================= */
 
 async function loadDashboardData() {
+    const token = sessionStorage.getItem("resorthub_access_token");
     try {
         const response = await fetch(
             API_ENDPOINTS.dashboard,
             {
                 method: "GET",
-
-                credentials: "include",
-
                 headers: {
-                    "Accept": "application/json"
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${token}`
                 }
             }
         );
@@ -200,15 +243,9 @@ async function loadDashboardData() {
 
 
         const data = await response.json();
-
-
-        /*
-         * Real API data replaces the dummy data.
-         */
         dashboardState.usingDummyData = false;
 
         updateDashboardState(data);
-
         renderDashboard();
 
 

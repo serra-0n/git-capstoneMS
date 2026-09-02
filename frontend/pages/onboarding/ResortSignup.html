@@ -29,11 +29,11 @@
 			<form class="signup-form" id="resortSignupForm" enctype="multipart/form-data">
 				<div class="form-row">
 					<label class="form-group">
-						Resort name
+						<span class="form-label">Resort name</span>
 						<input type="text" name="resortName" required maxlength="150">
 					</label>
 					<label class="form-group">
-						Resort type
+						<span class="form-label">Resort type</span>
 						<select class="resort-type-select" name="resortType" required>
 							<option value="">Select type</option>
 							<option value="Private Resort">Private Resort</option>
@@ -42,24 +42,47 @@
 					</label>
 				</div>
 
+				<div class="form-row">
+					<label class="form-group">
+						<span class="form-label">Registered business name</span>
+						<input
+							type="text"
+							name="businessName"
+							required
+							maxlength="150"
+							placeholder="Name shown on the registration document"
+						>
+					</label>
+					<label class="form-group">
+						<span class="form-label">DTI / Business registration number</span>
+						<input
+							type="text"
+							name="businessRegistrationNumber"
+							required
+							maxlength="100"
+							placeholder="Enter the registered number"
+						>
+					</label>
+				</div>
+
 				<label class="form-group">
-					Location
+					<span class="form-label">Location</span>
 					<input type="text" name="location" required maxlength="255" placeholder="City, province">
 				</label>
 
 				<div class="form-row">
 					<label class="form-group">
-						Owner name
+						<span class="form-label">Owner name</span>
 						<input type="text" name="ownerName" required maxlength="150">
 					</label>
 					<label class="form-group">
-						Owner email
+						<span class="form-label">Owner email</span>
 						<input type="email" name="ownerEmail" required maxlength="150">
 					</label>
 				</div>
 
 				<label class="file-field">
-					Resort license image
+					<span class="form-label">Resort license image</span>
 					<input type="file" name="license" accept="image/jpeg,image/png,image/webp" required>
 					<small>JPG, PNG, or WEBP. Maximum 5 MB.</small>
 				</label>

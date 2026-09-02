@@ -18,7 +18,7 @@
    false = use real backend API
    ========================================================= */
 
-const USE_DUMMY_DATA = true;
+const USE_DUMMY_DATA = false;
 
 
 /* =========================================================
@@ -37,6 +37,11 @@ const API_ENDPOINTS = {
     createReservation: "/api/client/reservations"
 };
 
+const accessToken = sessionStorage.getItem("resorthub_access_token");
+
+if (!accessToken) {
+    window.location.href = "../auth/login.html";
+}
 
 /* =========================================================
    DUMMY CLIENT DATA
@@ -379,7 +384,8 @@ async function loadInitialApiData() {
                     method: "GET",
                     credentials: "include",
                     headers: {
-                        "Accept": "application/json"
+                        "Accept": "application/json",
+                        "Authorization": `Bearer ${accessToken}`
                     }
                 }
             ),
@@ -390,7 +396,8 @@ async function loadInitialApiData() {
                     method: "GET",
                     credentials: "include",
                     headers: {
-                        "Accept": "application/json"
+                        "Accept": "application/json",
+                        "Authorization": `Bearer ${accessToken}`
                     }
                 }
             )
@@ -785,7 +792,8 @@ async function loadAccommodations(
                     method: "GET",
                     credentials: "include",
                     headers: {
-                        "Accept": "application/json"
+                        "Accept": "application/json",
+                        "Authorization": `Bearer ${accessToken}`
                     }
                 }
             );
@@ -1458,34 +1466,24 @@ async function submitReservation(
                 API_ENDPOINTS.createReservation,
                 {
                     method: "POST",
-
                     credentials: "include",
-
                     headers: {
                         "Accept": "application/json",
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${accessToken}`
                     },
-
-                    body:
-                        JSON.stringify(payload)
+                    body: JSON.stringify(payload)
                 }
             );
 
-
-        const data =
-            await readJsonResponse(
-                response
-            );
-
+        const data = await readJsonResponse(response);
 
         if (!response.ok) {
-
             throw new Error(
                 data?.message ||
                 "Unable to submit reservation."
             );
         }
-
 
         showFormMessage(
             data?.message ||
@@ -1493,172 +1491,102 @@ async function submitReservation(
             "success"
         );
 
-
-        /*
-         * Navigate only if the backend actually
-         * returns a database reservation ID.
-         */
+        /*Navigate only if the backend actually
+          returns a database reservation ID. */
         const reservationId =
             data?.reservation?.id ??
             data?.reservation_id ??
             data?.id ??
             null;
 
-
         if (reservationId !== null) {
-
             window.location.href =
-                `ReservationStatus.html?id=${encodeURIComponent(
-                    reservationId
-                )}`;
+                `ReservationStatus.html?id=${encodeURIComponent(reservationId)}`;
         }
 
-
     } catch (error) {
-
         console.error(
             "Reservation submission error:",
             error
         );
-
 
         showFormMessage(
             error.message ||
             "Unable to submit reservation.",
             "error"
         );
-
-
     } finally {
-
         setSubmittingState(
             false
         );
     }
 }
+/* SUBMITTING STATE */
 
-
-/* =========================================================
-   SUBMITTING STATE
-   ========================================================= */
-
-function setSubmittingState(
-    submitting
-) {
-
-    reservationState.submitting =
-        submitting;
-
+function setSubmittingState(submitting) {
+    reservationState.submitting = submitting;
 
     if (!submitReservationButton) {
         return;
     }
 
-
-    submitReservationButton.disabled =
-        submitting;
-
+    submitReservationButton.disabled = submitting;
 
     submitReservationButton.setAttribute(
         "aria-busy",
         String(submitting)
     );
 
-
     const textElement =
         submitReservationButton.querySelector(
             "span"
         );
 
-
     if (textElement) {
-
         textElement.textContent =
             submitting
                 ? "Submitting..."
                 : "Submit Reservation";
     }
 }
+/*JSON RESPONSE*/
 
+async function readJsonResponse(response) {
+    const contentType = response.headers.get("content-type");
 
-/* =========================================================
-   JSON RESPONSE
-   ========================================================= */
-
-async function readJsonResponse(
-    response
-) {
-
-    const contentType =
-        response.headers.get(
-            "content-type"
-        );
-
-
-    if (
-        contentType &&
-        contentType.includes(
-            "application/json"
-        )
-    ) {
-
+    if (contentType && contentType.includes("application/json")) {
         return await response.json();
     }
-
-
     return null;
 }
+/*FORM MESSAGE*/
 
-
-/* =========================================================
-   FORM MESSAGE
-   ========================================================= */
-
-function showFormMessage(
-    message,
-    type = "info"
-) {
-
+function showFormMessage(message, type = "info") {
     if (!reservationFormMessage) {
         return;
     }
 
-
-    reservationFormMessage.hidden =
-        false;
-
-
-    reservationFormMessage.textContent =
-        message;
-
+    reservationFormMessage.hidden = false;
+    reservationFormMessage.textContent = message;
 
     reservationFormMessage.classList.remove(
         "success",
         "error",
         "info"
     );
-
 
     reservationFormMessage.classList.add(
         type
     );
 }
 
-
 function clearFormMessage() {
-
     if (!reservationFormMessage) {
         return;
     }
 
-
-    reservationFormMessage.hidden =
-        true;
-
-
-    reservationFormMessage.textContent =
-        "";
-
+    reservationFormMessage.hidden = true;
+    reservationFormMessage.textContent = "";
 
     reservationFormMessage.classList.remove(
         "success",
@@ -1668,55 +1596,32 @@ function clearFormMessage() {
 }
 
 
-/* =========================================================
-   SCHEDULE MESSAGE
-   ========================================================= */
+/*SCHEDULE MESSAGE*/
 
-function showScheduleMessage(
-    message,
-    type = "error"
-) {
-
+function showScheduleMessage(message, type = "error") {
     if (!scheduleMessage) {
         return;
     }
 
-
-    scheduleMessage.hidden =
-        false;
-
-
-    scheduleMessage.textContent =
-        message;
-
+    scheduleMessage.hidden = false;
+    scheduleMessage.textContent = message;
 
     scheduleMessage.classList.remove(
         "success",
         "error",
         "info"
     );
-
-
-    scheduleMessage.classList.add(
-        type
-    );
+    scheduleMessage.classList.add(type);
 }
 
 
 function clearScheduleMessage() {
-
     if (!scheduleMessage) {
         return;
     }
 
-
-    scheduleMessage.hidden =
-        true;
-
-
-    scheduleMessage.textContent =
-        "";
-
+    scheduleMessage.hidden = true;
+    scheduleMessage.textContent = "";
 
     scheduleMessage.classList.remove(
         "success",
@@ -1724,21 +1629,12 @@ function clearScheduleMessage() {
         "info"
     );
 }
+/*GENERIC TEXT SETTER*/
 
-
-/* =========================================================
-   GENERIC TEXT SETTER
-   ========================================================= */
-
-function setText(
-    element,
-    value
-) {
-
+function setText(element, value) {
     if (!element) {
         return;
     }
-
 
     const text =
         value === null ||
@@ -1747,33 +1643,20 @@ function setText(
             ? "—"
             : String(value);
 
-
-    element.textContent =
-        text;
+    element.textContent = text;
 }
+/*FORMAT PRICE*/
 
-
-/* =========================================================
-   FORMAT PRICE
-   ========================================================= */
-
-function formatCurrency(
-    value
-) {
-
-    const numericValue =
-        Number(value);
-
+function formatCurrency(value) {
+    const numericValue = Number(value);
 
     if (
         value === null ||
         value === undefined ||
         Number.isNaN(numericValue)
     ) {
-
         return "—";
     }
-
 
     return new Intl.NumberFormat(
         "en-PH",
@@ -1786,88 +1669,48 @@ function formatCurrency(
         numericValue
     );
 }
+/*FORMAT CAPACITY*/
 
-
-/* =========================================================
-   FORMAT CAPACITY
-   ========================================================= */
-
-function formatCapacity(
-    capacity
-) {
-
+function formatCapacity(capacity) {
     if (
         capacity === null ||
         capacity === undefined ||
         capacity === ""
     ) {
-
         return "—";
     }
-
-
     return String(capacity);
 }
+/*FORMAT AMENITIES*/
 
-
-/* =========================================================
-   FORMAT AMENITIES
-   ========================================================= */
-
-function formatAmenities(
-    amenities
-) {
-
+function formatAmenities(amenities) {
     if (
         !Array.isArray(amenities) ||
         amenities.length === 0
     ) {
-
         return "—";
     }
-
-
     return amenities.join(", ");
 }
+/*FORMAT DATE*/
 
-
-/* =========================================================
-   FORMAT DATE
-   ========================================================= */
-
-function formatDate(
-    value
-) {
-
+function formatDate(value) {
     if (!value) {
         return "—";
     }
 
-
-    const dateString =
-        String(value)
+    const dateString = String(value)
             .slice(0, 10);
 
-
-    const parts =
-        dateString.split("-");
-
+    const parts = dateString.split("-");
 
     if (parts.length !== 3) {
-
         return dateString;
     }
 
-
-    const year =
-        Number(parts[0]);
-
-    const month =
-        Number(parts[1]);
-
-    const day =
-        Number(parts[2]);
-
+    const year = Number(parts[0]);
+    const month = Number(parts[1]);
+    const day = Number(parts[2]);
 
     const date =
         new Date(
@@ -1876,16 +1719,9 @@ function formatDate(
             day
         );
 
-
-    if (
-        Number.isNaN(
-            date.getTime()
-        )
-    ) {
-
+    if (Number.isNaN(date.getTime())) {
         return dateString;
     }
-
 
     return new Intl.DateTimeFormat(
         "en-PH",
@@ -1896,37 +1732,18 @@ function formatDate(
         }
     ).format(date);
 }
-
-
-/* =========================================================
-   DATE HELPERS
-   ========================================================= */
-
+/*DATE HELPERS*/
 function getTodayDateString() {
-
-    const today =
-        new Date();
-
-
-    return formatDateForInput(
-        today
-    );
+    const today = new Date();
+    return formatDateForInput(today);
 }
 
-
-function getNextDateString(
-    dateValue
-) {
-
-    const parts =
-        dateValue.split("-");
-
+function getNextDateString(dateValue) {
+    const parts = dateValue.split("-");
 
     if (parts.length !== 3) {
-
         return getTodayDateString();
     }
-
 
     const date =
         new Date(
@@ -1935,159 +1752,76 @@ function getNextDateString(
             Number(parts[2])
         );
 
-
-    date.setDate(
-        date.getDate() + 1
-    );
-
-
-    return formatDateForInput(
-        date
-    );
+    date.setDate(date.getDate() + 1);
+    return formatDateForInput(date);
 }
 
-
-function formatDateForInput(
-    date
-) {
-
-    const year =
-        date.getFullYear();
-
-
-    const month =
-        String(
-            date.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
-
-
-    const day =
-        String(
-            date.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
-
+function formatDateForInput(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
 }
 
-
-function compareDates(
-    firstDate,
-    secondDate
-) {
-
+function compareDates(firstDate, secondDate) {
     if (firstDate > secondDate) {
         return 1;
     }
 
-
     if (firstDate < secondDate) {
         return -1;
     }
-
-
     return 0;
 }
-
-
-/* =========================================================
-   SIDEBAR
-   ========================================================= */
+/*SIDEBAR*/
 
 function initializeSidebar() {
-
-    if (
-        !sidebarToggle ||
-        !clientApp
-    ) {
-
+    if (!sidebarToggle || !clientApp) {
         return;
     }
-
-
-    sidebarToggle.addEventListener(
-        "click",
-        handleSidebarToggle
-    );
+    sidebarToggle.addEventListener("click", handleSidebarToggle);
 }
 
-
 function handleSidebarToggle() {
-
-    const isMobile =
-        window.matchMedia(
-            "(max-width: 760px)"
-        ).matches;
-
+    const isMobile = window.matchMedia("(max-width: 760px)").matches;
 
     if (isMobile) {
-
-        clientApp.classList.toggle(
-            "sidebar-mobile-open"
-        );
-
+        clientApp.classList.toggle("sidebar-mobile-open");
         return;
     }
 
-
-    clientApp.classList.toggle(
-        "sidebar-collapsed"
-    );
-
+    clientApp.classList.toggle("sidebar-collapsed");
 
     const isCollapsed =
         clientApp.classList.contains(
             "sidebar-collapsed"
         );
 
-
     sidebarToggle.setAttribute(
         "aria-expanded",
         String(!isCollapsed)
     );
 }
-
-
-/* =========================================================
-   PROFILE BUTTON
-   ========================================================= */
+/*PROFILE BUTTON*/
 
 function initializeProfileButton() {
-
     if (!clientProfileButton) {
         return;
     }
 
-
     clientProfileButton.addEventListener(
         "click",
         () => {
-
             window.location.href =
                 "Profile.html";
         }
     );
 }
-
-
-/* =========================================================
-   LUCIDE ICONS
-   ========================================================= */
+/*LUCIDE ICONS*/
 
 function initializeIcons() {
-
-    if (
-        typeof lucide !== "undefined" &&
-        typeof lucide.createIcons ===
-            "function"
-    ) {
-
+    if (typeof lucide !== "undefined" && typeof lucide.createIcons === "function") {
         lucide.createIcons();
     }
 }

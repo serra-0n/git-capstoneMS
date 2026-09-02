@@ -224,108 +224,7 @@
             </div>
 
             <div class="application-list" id="applicationList">
-                <article class="application-item">
-                    <div class="application-resort">
-                        <div class="resort-avatar">
-                            <i data-lucide="building-2"></i>
-                        </div>
-
-                        <div>
-                            <strong>Blue Lagoon Resort</strong>
-                            <span>Panglao, Bohol</span>
-                        </div>
-                    </div>
-
-                    <div class="application-owner">
-                        <span class="application-label">Owner</span>
-                        <strong>Juan Dela Cruz</strong>
-                    </div>
-
-                    <div class="application-date">
-                        <span class="application-label">Submitted</span>
-                        <strong>May 31, 2025</strong>
-                    </div>
-
-                    <div>
-                        <span class="approval-status pending">Pending</span>
-                    </div>
-
-                    <div>
-                        <button type="button" class="view-button">
-                            <i data-lucide="eye"></i>
-                            Review
-                        </button>
-                    </div>
-                </article>
-
-                <!-- APPLICATION 2 -->
-                 <article class="application-item">
-                    <div class="application-resort">
-                        <div class="resort-avatar">
-                            <i data-lucide="building-2"></i>
-                        </div>
-                        
-                        <div>
-                            <strong>Seaside View Resort</strong>
-                            <span>San Juan, La Union</span>
-                        </div>
-                    </div>
-
-                    <div class="application-owner">
-                        <span class="application-label">Owner</span>
-                        <strong>Maria Santos</strong>
-                    </div>
-
-                    <div class="application-date">
-                        <span class="application-label">Submitted</span>
-                        <strong>May 30, 2025</strong>
-                    </div>
-
-                    <div>
-                        <span class="approval-status pending">Pending</span>
-                    </div>
-
-                    <div>
-                        <button type="button" class="view-button">
-                            <i data-lucide="eye"></i>
-                            Review
-                        </button>
-                    </div>
-                 </article>
-
-                 <article class="application-item">
-                    <div class="application-resort">
-                        <div class="resort-avatar">
-                            <i data-lucide="building-2"></i>
-                        </div>
-
-                        <div>
-                            <strong>Mountain Breeze Resort</strong>
-                            <span>Baguio City, Benguet</span>
-                        </div>
-                    </div>
-
-                    <div class="application-owner">
-                        <span class="application-label">Owner</span>
-                        <strong>Pedro Reyes</strong>
-                    </div>
-
-                    <div class="application-date">
-                        <span class="application-label">Submitted</span>
-                        <strong>May 30, 2025</strong>
-                    </div>
-
-                    <div>
-                        <span class="approval-status pending">Pending</span>
-                    </div>
-
-                    <div>
-                        <button type="button" class="view-button">
-                            <i data-lucide="eye"></i>
-                            Review
-                        </button>
-                    </div>
-                 </article>
+                <p class="message">Loading resort applications...</p>
             </div>
         </section>
 
@@ -362,28 +261,17 @@
                 <div class="review-grid">
                     <div class="review-field">
                         <span>Resort Name</span>
-                        <strong id="reviewResortName">
-                            Blue Lagoon Resort
-                        </strong>
+                        <strong id="reviewResortName">—</strong>
                     </div>
 
                     <div class="review-field">
                         <span>Location</span>
-                        <strong id="reviewLocation">
-                            Panglao, Bohol
-                        </strong>
+                        <strong id="reviewLocation">—</strong>
                     </div>
 
                     <div class="review-field">
                         <span>Resort Type</span>
-                        <strong>
-                            Beach Resort
-                        </strong>
-                    </div>
-
-                    <div class="review-field">
-                        <span>Number of Rooms</span>
-                        <strong>24 Rooms</strong>
+                        <strong id="reviewResortType">—</strong>
                     </div>
                 </div>
             </section>
@@ -400,30 +288,12 @@
                 <div class="review-grid">
                     <div class="review-field">
                         <span>Owner Name</span>
-                        <strong>
-                            Juan Dela Cruz
-                        </strong>
+                        <strong id="reviewOwnerName">—</strong>
                     </div>
 
                     <div class="review-field">
                         <span>Email</span>
-                        <strong>
-                            juandelacruz@example.com
-                        </strong>
-                    </div>
-
-                    <div class="review-field">
-                        <span>Contact Number</span>
-                        <strong>
-                            +63 912 345 6789
-                        </strong>
-                    </div>
-
-                    <div class="review-field">
-                        <span>Valid ID</span>
-                        <strong>
-                            Driver's License
-                        </strong>
+                        <strong id="reviewOwnerEmail">—</strong>
                     </div>
                 </div>
             </section>
@@ -442,22 +312,22 @@
                 <div class="review-grid">
                     <div class="review-field">
                         <span>Business Name</span>
-                        <strong>Blue Lagoon Resort and Services</strong>
+                        <strong id="reviewBusinessName">—</strong>
                     </div>
 
                     <div class="review-field">
                         <span>DTI / Business No.</span>
-                        <strong>DTI-BOH-2025-00123</strong>
+                        <strong id="reviewBusinessRegistrationNumber">—</strong>
                     </div>
 
                     <div class="review-field">
                         <span>Business Address</span>
-                        <strong>Purok 5, Dauis, Bohol</strong>
+                        <strong id="reviewBusinessAddress">—</strong>
                     </div>
 
                     <div class="review-field">
-                        <span>Date Established</span>
-                        <strong>March 15, 2023</strong>
+                        <span>Application Submitted</span>
+                        <strong id="reviewSubmittedDate">—</strong>
                     </div>
                 </div>
             </section>
@@ -473,91 +343,82 @@
                 </div>
 
                 <div class="document-list">
-                    <div class="document-item">
+                    <div class="document-item" id="licenseDocumentItem">
                         <i data-lucide="file-text"></i>
 
                         <div>
-                            <strong>DTI Registration</strong>
-                            <span>PDF Document</span>
+                            <strong id="reviewLicenseName">Resort License</strong>
+                            <span id="reviewLicenseStatus">No uploaded license</span>
                         </div>
 
-                        <button type="button">View</button>
-                    </div>
-
-                    <div class="document-item">
-                        <i data-lucide="file-text"></i>
-
-                        <div>
-                            <strong>Business Permit</strong>
-                            <span>PDF Document</span>
-                        </div>
-
-                        <button type="button">View</button>
-                    </div>
-
-                    <div class="document-item">
-                        <i data-lucide="file-text"></i>
-
-                        <div>
-                            <strong>Barangay Clearance</strong>
-                            <span>PDF Document</span>
-                        </div>
-
-                        <button type="button">View</button>
-                    </div>
-
-                    <div class="document-item">
-                        <i data-lucide="file-text"></i>
-
-                        <div>
-                            <strong>Mayor's Permit</strong>
-                            <span>PDF Document</span>
-                        </div>
-
-                        <button type="button">View</button>
+                        <button type="button" id="viewLicenseButton">View</button>
                     </div>
                 </div>
             </section>
- <!-- Validation Checklist -->
+ <!-- OCR Decision Support -->
             <section class="review-section">
                 <div class="review-section-header">
-                    <i data-lucide="clipboard-check"></i>
+                    <i data-lucide="scan-text"></i>
                     
                     <div>
-                        <h3>Validation Checklist</h3>
-                        <p>Application verification results.</p>
+                        <h3>OCR-Assisted Analysis</h3>
+                        <p>Automated consistency checks for decision support only. Final approval remains with the system administrator.</p>
                     </div>
                 </div>
 
-                <div class="validation-list">
-                    <div class="validation-item valid">
-                        <i data-lucide="circle-check"></i>
-
-                        <span>Business Documents</span>
-                        <strong>Valid</strong>
+                <div class="ocr-summary" id="ocrSummary" data-recommendation="unavailable">
+                    <div>
+                        <span>OCR Recommendation</span>
+                        <strong id="ocrRecommendation">Not analyzed</strong>
                     </div>
-
-                    <div class="validation-item valid">
-                        <i data-lucide="circle-check"></i>
-
-                        <span>Owner Identification</span>
-                        <strong>Valid</strong>
+                    <div>
+                        <span>Consistency Score</span>
+                        <strong id="ocrConsistencyScore">—</strong>
                     </div>
-
-                    <div class="validation-item valid">
-                        <i data-lucide="circle-check"></i>
-
-                        <span>Business Information</span>
-                        <strong>Valid</strong>
-                    </div>
-
-                    <div class="validation-item valid">
-                        <i data-lucide="circle-check"></i>
-
-                        <span>Resort Information</span>
-                        <strong>Valid</strong>
+                    <div>
+                        <span>OCR Confidence</span>
+                        <strong id="ocrConfidence">—</strong>
                     </div>
                 </div>
+
+                <div class="validation-list ocr-comparisons">
+                    <div class="validation-item" id="registrationMatchItem">
+                        <i data-lucide="hash"></i>
+                        <span>DTI / Registration Number</span>
+                        <strong id="registrationMatchResult">Not checked</strong>
+                    </div>
+                    <div class="validation-item" id="businessNameMatchItem">
+                        <i data-lucide="building"></i>
+                        <span>Registered Business Name</span>
+                        <strong id="businessNameMatchResult">Not checked</strong>
+                    </div>
+                    <div class="validation-item" id="keywordMatchItem">
+                        <i data-lucide="text-search"></i>
+                        <span>Expected Document Keywords</span>
+                        <strong id="keywordMatchResult">Not checked</strong>
+                    </div>
+                </div>
+
+                <div class="ocr-detected-grid">
+                    <div class="review-field">
+                        <span>Submitted Registration Number</span>
+                        <strong id="ocrSubmittedNumber">—</strong>
+                    </div>
+                    <div class="review-field">
+                        <span>OCR-Detected Registration Number</span>
+                        <strong id="ocrDetectedNumber">—</strong>
+                    </div>
+                </div>
+
+                <details class="ocr-text-panel">
+                    <summary>View extracted OCR text</summary>
+                    <pre id="ocrExtractedText">No OCR text is available.</pre>
+                </details>
+
+                <button type="button" class="ocr-rerun-button" id="rerunOcrButton">
+                    <i data-lucide="refresh-cw"></i>
+                    Run OCR Again
+                </button>
             </section>
 
             <section class="review-section">
