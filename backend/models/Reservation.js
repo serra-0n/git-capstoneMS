@@ -9,6 +9,27 @@ const RESERVATION_SELECT = `
            r.payment_status, r.review_notes, r.reviewed_at, r.accepted_at,
            r.deposit_due_at, r.expired_at, r.created_at,
            t.resort_name, t.location AS resort_location,
+        CASE
+            WHEN r.reservation_status = 'awaiting_deposit'
+            AND r.deposit_due_at > NOW()
+            THEN t.gcash_account_name
+            ELSE NULL
+        END AS gcash_account_name,
+
+        CASE
+            WHEN r.reservation_status = 'awaiting_deposit'
+            AND r.deposit_due_at > NOW()
+            THEN t.gcash_number
+            ELSE NULL
+        END AS gcash_number,
+
+        CASE
+            WHEN r.reservation_status = 'awaiting_deposit'
+            AND r.deposit_due_at > NOW()
+            THEN t.gcash_qr_path
+            ELSE NULL
+        END AS gcash_qr_path,
+
            a.name AS accommodation_name,
            a.accommodation_type, a.capacity,
            CONCAT(u.first_name, ' ', u.last_name) AS client_account_name
@@ -84,7 +105,7 @@ async function create({
         const [conflicts] = await connection.execute(
             `SELECT id FROM reservations
               WHERE accommodation_id = ?
-                AND reservation_status IN ('pending', 'confirmed')
+                AND reservation_status IN ('pending', 'awaiting_deposit', 'confirmed')
                 AND check_in < ? AND check_out > ?
               LIMIT 1 FOR UPDATE`,
             [accommodationId, checkOut, checkIn]

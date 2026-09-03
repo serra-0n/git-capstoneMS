@@ -8,6 +8,7 @@ const { extractText } = require("../services/ocrService");
 const { analyzeBusinessLicense } = require("../services/ocrAnalysisService");
 const authRoutes = require("../routes/authRoutes");
 const reservationRoutes = require("../routes/reservationRoutes");
+const paymentRoutes = require("../routes/paymentRoutes");
 
 const {
     authenticateUser,
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes);
 app.use("/api", reservationRoutes);
+app.use("/api", paymentRoutes);
 app.use(express.static(path.resolve(__dirname, "../../frontend")));
 app.use("/uploads", express.static(path.resolve(__dirname)));
 

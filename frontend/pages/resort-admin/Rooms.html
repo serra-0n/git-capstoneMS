@@ -1,667 +1,562 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Rooms & Cottages | ResortHub</title>
-
-  <!-- Global CSS -->
-  <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css">
-  <link rel="stylesheet" href="../../css/resort-adminGlobal/sidebar.css">
-  <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css">
-  <link rel="stylesheet" href="../../css/resort-admin/Rooms.css">
-
-  <!-- Page CSS -->
-  <link rel="stylesheet" href="../../css/resort-admin/rooms.css">
-
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-
-<body>
-
-<div class="app-shell">
-
-  <!-- =====================================================
-       SIDEBAR
-       ===================================================== -->
-
-  <aside class="sidebar">
-
-    <a class="brand" href="Dashboard.html">
-      <i class="brand-mark" data-lucide="building-2"></i>
-
-      <span>
-        <strong>ResortHub</strong>
-        <small>Resort Owner</small>
-      </span>
-    </a>
-
-    <div class="resort-switcher">
-      <span class="resort-avatar">BW</span>
-
-      <span>
-        <strong>Blue Waves Resort</strong>
-        <small>Resort Owner</small>
-      </span>
-    </div>
-
-
-    <div class="nav-section">MAIN</div>
-
-    <a class="nav-link" href="Dashboard.html">
-      <i data-lucide="layout-dashboard"></i>
-      Dashboard
-    </a>
-
-
-    <div class="nav-section">RESERVATIONS</div>
-
-    <a class="nav-link" href="Reservations.html">
-      <i data-lucide="calendar-days"></i>
-      Reservations
-    </a>
-
-    <a class="nav-link" href="Guests.html">
-      <i data-lucide="contact-round"></i>
-      Guests
-    </a>
-
-
-    <div class="nav-section">ACCOMMODATION</div>
-
-    <a class="nav-link active" href="Rooms.html">
-      <i data-lucide="bed-double"></i>
-      Rooms &amp; Cottages
-    </a>
-
-
-    <div class="nav-section">FINANCE</div>
-
-    <a class="nav-link" href="BillingPayments.html">
-      <i data-lucide="credit-card"></i>
-      Billing &amp; Payments
-    </a>
-
-
-    <div class="nav-section">OPERATIONS</div>
-
-    <a class="nav-link" href="OCRVerification.html">
-      <i data-lucide="scan-search"></i>
-      OCR Verification
-    </a>
-
-    <a class="nav-link" href="StaffManagement.html">
-      <i data-lucide="users"></i>
-      Staff Management
-    </a>
-
-    <a class="nav-link" href="Reports.html">
-      <i data-lucide="chart-no-axes-combined"></i>
-      Reports
-    </a>
-
-
-    <div class="nav-section">SETTINGS</div>
-
-    <a class="nav-link" href="Settings.html">
-      <i data-lucide="settings"></i>
-      Settings
-    </a>
-
-
-    <a class="nav-link logout" href="#">
-      <i data-lucide="log-out"></i>
-      Logout
-    </a>
-
-  </aside>
-
-
-  <!-- =====================================================
-       MAIN CONTENT
-       ===================================================== -->
-
-  <main class="main">
-
-    <!-- TOP NAVIGATION -->
-
-    <header class="topbar">
-
-      <button class="sidebar-toggle" type="button">
-        <i data-lucide="menu"></i>
-      </button>
-
-      <input
-        class="search"
-        type="search"
-        placeholder="Search room or cottage..."
-      >
-
-      <div class="topbar-spacer"></div>
-
-      <button class="notification" type="button">
-        <i data-lucide="bell"></i>
-      </button>
-
-      <button class="top-select" type="button">
-        <span class="avatar">BW</span>
-        <span>Blue Waves Resort</span>
-        <i data-lucide="chevron-down"></i>
-      </button>
-
-      <div class="profile">
-        <span>
-          <strong>Juan Dela Cruz</strong>
-          <small>Resort Owner</small>
-        </span>
-      </div>
-
-    </header>
-
-
-    <!-- =====================================================
-         ROOM & COTTAGE MONITORING
-         ===================================================== -->
-
-    <section class="rooms-page">
-
-      <!-- PAGE HEADER -->
-
-      <div class="page-header">
-
-        <div>
-          <h1>Room &amp; Cottage Monitoring</h1>
-
-          <div class="breadcrumb">
-            <span>Dashboard</span>
-            <i data-lucide="chevron-right"></i>
-            <span>Room &amp; Cottage Monitoring</span>
-          </div>
-        </div>
-
-        <div class="page-actions">
-
-          <button class="btn btn-secondary" type="button">
-            <i data-lucide="download"></i>
-            Export Report
-          </button>
-
-          <button class="btn btn-primary" type="button">
-            <i data-lucide="plus"></i>
-            Add Room / Cottage
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- ===================================================
-           SUMMARY CARDS
-           OPTION A: SAMPLE DATA
-           =================================================== -->
-
-      <div class="stats-grid">
-
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i data-lucide="building-2"></i>
-          </div>
-
-          <span>Total Rooms / Cottages</span>
-          <strong>60</strong>
-          <small>Sample data</small>
-        </div>
-
-
-        <div class="stat-card available">
-          <div class="stat-icon">
-            <i data-lucide="circle-check"></i>
-          </div>
-
-          <span>Available</span>
-          <strong>24</strong>
-          <small>Sample data</small>
-        </div>
-
-
-        <div class="stat-card reserved">
-          <div class="stat-icon">
-            <i data-lucide="calendar-days"></i>
-          </div>
-
-          <span>Reserved</span>
-          <strong>12</strong>
-          <small>Sample data</small>
-        </div>
-
-
-        <div class="stat-card occupied">
-          <div class="stat-icon">
-            <i data-lucide="user-round"></i>
-          </div>
-
-          <span>Occupied</span>
-          <strong>18</strong>
-          <small>Sample data</small>
-        </div>
-
-
-        <div class="stat-card maintenance">
-          <div class="stat-icon">
-            <i data-lucide="wrench"></i>
-          </div>
-
-          <span>Maintenance</span>
-          <strong>6</strong>
-          <small>Sample data</small>
-        </div>
-
-      </div>
-
-
-      <!-- ===================================================
-           FILTERS
-           =================================================== -->
-
-      <div class="filter-bar">
-
-        <select>
-          <option>All Types</option>
-          <option>Room</option>
-          <option>Cottage</option>
-        </select>
-
-
-        <select>
-          <option>All Status</option>
-          <option>Available</option>
-          <option>Reserved</option>
-          <option>Occupied</option>
-          <option>Maintenance</option>
-        </select>
-
-
-        <input
-          type="search"
-          placeholder="Search room or cottage..."
-        >
-
-
-        <button class="clear-filter" type="button">
-          Clear Filters
-        </button>
-
-
-        <button class="view-button active" type="button">
-          <i data-lucide="grid-2x2"></i>
-          Grid View
-        </button>
-
-
-        <button class="view-button" type="button">
-          <i data-lucide="list"></i>
-          List View
-        </button>
-
-      </div>
-
-
-      <!-- ===================================================
-           ROOMS & COTTAGES
-           =================================================== -->
-
-      <div class="rooms-layout">
-
-        <section class="rooms-section">
-
-          <div class="section-heading">
-            <h2>Rooms &amp; Cottages</h2>
-          </div>
-
-
-          <div class="rooms-grid">
-
-            <!-- ROOM 1 -->
-
-            <article class="room-card">
-
-              <div class="room-image">
-                   <i data-lucide="bed-double"></i>
-              </div>
-
-              <div class="room-card-content">
-
-                <h3>Family Cottage 1</h3>
-
-                <span class="room-type">
-                  Cottage
-                </span>
-
-                <span class="status-badge available-badge">
-                  Available
-                </span>
-
-                <button class="status-button" type="button">
-                  Update Status
-                </button>
-
-              </div>
-
-            </article>
-
-
-            <!-- ROOM 2 -->
-
-            <article class="room-card">
-
-              <div class="room-image"></div>
-
-              <div class="room-card-content">
-
-                <h3>Family Cottage 2</h3>
-
-                <span class="room-type">
-                  Cottage
-                </span>
-
-                <span class="status-badge reserved-badge">
-                  Reserved
-                </span>
-
-                <button class="status-button" type="button">
-                  Update Status
-                </button>
-
-              </div>
-
-            </article>
-
-
-            <!-- ROOM 3 -->
-
-            <article class="room-card">
-
-              <div class="room-image"></div>
-
-              <div class="room-card-content">
-
-                <h3>Deluxe Room 101</h3>
-
-                <span class="room-type">
-                  Room
-                </span>
-
-                <span class="status-badge occupied-badge">
-                  Occupied
-                </span>
-
-                <button class="status-button" type="button">
-                  Update Status
-                </button>
-
-              </div>
-
-            </article>
-
-
-            <!-- ROOM 4 -->
-
-            <article class="room-card">
-
-              <div class="room-image"></div>
-
-              <div class="room-card-content">
-
-                <h3>Deluxe Room 102</h3>
-
-                <span class="room-type">
-                  Room
-                </span>
-
-                <span class="status-badge maintenance-badge">
-                  Maintenance
-                </span>
-
-                <button class="status-button" type="button">
-                  Update Status
-                </button>
-
-              </div>
-
-            </article>
-
-
-            <!-- ROOM 5 -->
-
-            <article class="room-card">
-
-              <div class="room-image"></div>
-
-              <div class="room-card-content">
-
-                <h3>Beachfront Villa 1</h3>
-
-                <span class="room-type">
-                  Cottage
-                </span>
-
-                <span class="status-badge available-badge">
-                  Available
-                </span>
-
-                <button class="status-button" type="button">
-                  Update Status
-                </button>
-
-              </div>
-
-            </article>
-
-
-            <!-- ROOM 6 -->
-
-            <article class="room-card">
-
-              <div class="room-image"></div>
-
-              <div class="room-card-content">
-
-                <h3>Standard Cottage 1</h3>
-
-                <span class="room-type">
-                  Cottage
-                </span>
-
-                <span class="status-badge occupied-badge">
-                  Occupied
-                </span>
-
-                <button class="status-button" type="button">
-                  Update Status
-                </button>
-
-              </div>
-
-            </article>
-
-          </div>
-
-
-          <!-- =================================================
-               QUICK ACTIONS
-               ================================================= -->
-
-          <div class="quick-actions">
-
-            <h2>Quick Actions</h2>
-
-            <button type="button">
-              <span>
-                <i data-lucide="calendar-days"></i>
-                Room Status Calendar
-              </span>
-
-              <i data-lucide="chevron-right"></i>
-            </button>
-
-            <button type="button">
-              <span>
-                <i data-lucide="wrench"></i>
-                Maintenance Records
-              </span>
-
-              <i data-lucide="chevron-right"></i>
-            </button>
-
-          </div>
-
-        </section>
-
-
-        <!-- =================================================
-             OCCUPANCY SUMMARY
-             OPTION A: SAMPLE DATA
-             ================================================= -->
-
-        <aside class="room-summary">
-
-          <section class="summary-card">
-
-            <h2>Occupancy Summary</h2>
-
-            <div class="occupancy-chart">
-
-              <div class="donut">
-
-                <div class="donut-center">
-                  <strong>60</strong>
-                  <span>Total</span>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Rooms & Cottages | ResortHub</title>
+
+        <!-- Global CSS -->
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css" />
+        <link
+            rel="stylesheet"
+            href="../../css/resort-adminGlobal/sidebar.css"
+        />
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css" />
+        <link rel="stylesheet" href="../../css/resort-admin/Rooms.css" />
+
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="../../css/resort-admin/rooms.css" />
+
+        <!-- Lucide Icons -->
+        <script src="https://unpkg.com/lucide@latest"></script>
+    </head>
+
+    <body>
+        <div class="app-shell">
+            <!-- SIDEBAR -->
+
+            <aside class="sidebar">
+                <a class="brand" href="Dashboard.html">
+                    <i class="brand-mark" data-lucide="building-2"></i>
+
+                    <span>
+                        <strong>ResortHub</strong>
+                        <small>Resort Owner</small>
+                    </span>
+                </a>
+
+                <div class="resort-switcher">
+                    <span class="resort-avatar">BW</span>
+
+                    <span>
+                        <strong>Blue Waves Resort</strong>
+                        <small>Resort Owner</small>
+                    </span>
                 </div>
 
-              </div>
+                <div class="nav-section">MAIN</div>
 
-            </div>
+                <a class="nav-link" href="Dashboard.html">
+                    <i data-lucide="layout-dashboard"></i>
+                    Dashboard
+                </a>
 
+                <div class="nav-section">RESERVATIONS</div>
 
-            <div class="occupancy-list">
+                <a class="nav-link" href="Reservations.html">
+                    <i data-lucide="calendar-days"></i>
+                    Reservations
+                </a>
 
-              <div>
-                <span>
-                  <i class="dot available-dot"></i>
-                  Available
-                </span>
+                <a class="nav-link" href="Guests.html">
+                    <i data-lucide="contact-round"></i>
+                    Guests
+                </a>
 
-                <strong>24 (40%)</strong>
-              </div>
+                <div class="nav-section">ACCOMMODATION</div>
 
+                <a class="nav-link active" href="Rooms.html">
+                    <i data-lucide="bed-double"></i>
+                    Rooms &amp; Cottages
+                </a>
 
-              <div>
-                <span>
-                  <i class="dot reserved-dot"></i>
-                  Reserved
-                </span>
+                <div class="nav-section">FINANCE</div>
 
-                <strong>12 (20%)</strong>
-              </div>
+                <a class="nav-link" href="BillingPayments.html">
+                    <i data-lucide="credit-card"></i>
+                    Billing &amp; Payments
+                </a>
 
+                <div class="nav-section">OPERATIONS</div>
 
-              <div>
-                <span>
-                  <i class="dot occupied-dot"></i>
-                  Occupied
-                </span>
+                <a class="nav-link" href="OCRVerification.html">
+                    <i data-lucide="scan-search"></i>
+                    OCR Verification
+                </a>
 
-                <strong>18 (30%)</strong>
-              </div>
+                <a class="nav-link" href="StaffManagement.html">
+                    <i data-lucide="users"></i>
+                    Staff Management
+                </a>
 
+                <a class="nav-link" href="Reports.html">
+                    <i data-lucide="chart-no-axes-combined"></i>
+                    Reports
+                </a>
 
-              <div>
-                <span>
-                  <i class="dot maintenance-dot"></i>
-                  Maintenance
-                </span>
+                <div class="nav-section">SETTINGS</div>
 
-                <strong>6 (10%)</strong>
-              </div>
+                <a class="nav-link" href="Settings.html">
+                    <i data-lucide="settings"></i>
+                    Settings
+                </a>
 
-            </div>
+                <a class="nav-link logout" href="#">
+                    <i data-lucide="log-out"></i>
+                    Logout
+                </a>
+            </aside>
 
-          </section>
+            <!-- MAIN CONTENT -->
 
+            <main class="main">
+                <!-- TOP NAVIGATION -->
 
-          <!-- STATUS OVERVIEW -->
+                <header class="topbar">
+                    <button class="sidebar-toggle" type="button">
+                        <i data-lucide="menu"></i>
+                    </button>
 
-          <section class="summary-card">
+                    <input
+                        class="search"
+                        type="search"
+                        placeholder="Search room or cottage..."
+                    />
 
-            <h2>Status Overview</h2>
+                    <div class="topbar-spacer"></div>
 
-            <div class="status-row">
+                    <button class="notification" type="button">
+                        <i data-lucide="bell"></i>
+                    </button>
 
-              <span>
-                <i class="status-dot available-dot"></i>
-                Available
-              </span>
+                    <button class="top-select" type="button">
+                        <span class="avatar">BW</span>
+                        <span>Blue Waves Resort</span>
+                        <i data-lucide="chevron-down"></i>
+                    </button>
 
-              <strong>Ready for booking</strong>
+                    <div class="profile">
+                        <span>
+                            <strong>Juan Dela Cruz</strong>
+                            <small>Resort Owner</small>
+                        </span>
+                    </div>
+                </header>
 
-            </div>
+                <!-- ROOM & COTTAGE MONITORING -->
 
+                <section class="rooms-page">
+                    <!-- PAGE HEADER -->
 
-            <div class="status-row">
+                    <div class="page-header">
+                        <div>
+                            <h1>Room &amp; Cottage Monitoring</h1>
 
-              <span>
-                <i class="status-dot reserved-dot"></i>
-                Reserved
-              </span>
+                            <div class="breadcrumb">
+                                <span>Dashboard</span>
+                                <i data-lucide="chevron-right"></i>
+                                <span>Room &amp; Cottage Monitoring</span>
+                            </div>
+                        </div>
 
-              <strong>Confirmed booking</strong>
+                        <div class="page-actions">
+                            <button class="btn btn-secondary" type="button">
+                                <i data-lucide="download"></i>
+                                Export Report
+                            </button>
 
-            </div>
+                            <button class="btn btn-primary" type="button">
+                                <i data-lucide="plus"></i>
+                                Add Room / Cottage
+                            </button>
+                        </div>
+                    </div>
 
+                    <!-- SUMMARY CARDS OPTION A: SAMPLE DATA -->
 
-            <div class="status-row">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i data-lucide="building-2"></i>
+                            </div>
 
-              <span>
-                <i class="status-dot occupied-dot"></i>
-                Occupied
-              </span>
+                            <span>Total Rooms / Cottages</span>
+                            <strong>60</strong>
+                            <small>Sample data</small>
+                        </div>
 
-              <strong>Currently occupied</strong>
+                        <div class="stat-card available">
+                            <div class="stat-icon">
+                                <i data-lucide="circle-check"></i>
+                            </div>
 
-            </div>
+                            <span>Available</span>
+                            <strong>24</strong>
+                            <small>Sample data</small>
+                        </div>
 
+                        <div class="stat-card reserved">
+                            <div class="stat-icon">
+                                <i data-lucide="calendar-days"></i>
+                            </div>
 
-            <div class="status-row">
+                            <span>Reserved</span>
+                            <strong>12</strong>
+                            <small>Sample data</small>
+                        </div>
 
-              <span>
-                <i class="status-dot maintenance-dot"></i>
-                Maintenance
-              </span>
+                        <div class="stat-card occupied">
+                            <div class="stat-icon">
+                                <i data-lucide="user-round"></i>
+                            </div>
 
-              <strong>Under maintenance</strong>
+                            <span>Occupied</span>
+                            <strong>18</strong>
+                            <small>Sample data</small>
+                        </div>
 
-            </div>
+                        <div class="stat-card maintenance">
+                            <div class="stat-icon">
+                                <i data-lucide="wrench"></i>
+                            </div>
 
-          </section>
+                            <span>Maintenance</span>
+                            <strong>6</strong>
+                            <small>Sample data</small>
+                        </div>
+                    </div>
 
-        </aside>
+                    <!-- FILTERS -->
 
-      </div>
+                    <div class="filter-bar">
+                        <select>
+                            <option>All Types</option>
+                            <option>Room</option>
+                            <option>Cottage</option>
+                        </select>
 
-    </section>
+                        <select>
+                            <option>All Status</option>
+                            <option>Available</option>
+                            <option>Reserved</option>
+                            <option>Occupied</option>
+                            <option>Maintenance</option>
+                        </select>
 
-  </main>
+                        <input
+                            type="search"
+                            placeholder="Search room or cottage..."
+                        />
 
-</div>
+                        <button class="clear-filter" type="button">
+                            Clear Filters
+                        </button>
 
+                        <button class="view-button active" type="button">
+                            <i data-lucide="grid-2x2"></i>
+                            Grid View
+                        </button>
 
-<script>
-  lucide.createIcons();
-</script>
-<script src="../../js/resort-admin/rooms.js"></script>
+                        <button class="view-button" type="button">
+                            <i data-lucide="list"></i>
+                            List View
+                        </button>
+                    </div>
 
-</body>
+                    <!-- ROOMS & COTTAGES -->
+
+                    <div class="rooms-layout">
+                        <section class="rooms-section">
+                            <div class="section-heading">
+                                <h2>Rooms &amp; Cottages</h2>
+                            </div>
+
+                            <div class="rooms-grid">
+                                <!-- ROOM 1 -->
+
+                                <article class="room-card">
+                                    <div class="room-image">
+                                        <i data-lucide="bed-double"></i>
+                                    </div>
+
+                                    <div class="room-card-content">
+                                        <h3>Family Cottage 1</h3>
+
+                                        <span class="room-type"> Cottage </span>
+
+                                        <span
+                                            class="status-badge available-badge"
+                                        >
+                                            Available
+                                        </span>
+
+                                        <button
+                                            class="status-button"
+                                            type="button"
+                                        >
+                                            Update Status
+                                        </button>
+                                    </div>
+                                </article>
+
+                                <!-- ROOM 2 -->
+
+                                <article class="room-card">
+                                    <div class="room-image"></div>
+
+                                    <div class="room-card-content">
+                                        <h3>Family Cottage 2</h3>
+
+                                        <span class="room-type"> Cottage </span>
+
+                                        <span
+                                            class="status-badge reserved-badge"
+                                        >
+                                            Reserved
+                                        </span>
+
+                                        <button
+                                            class="status-button"
+                                            type="button"
+                                        >
+                                            Update Status
+                                        </button>
+                                    </div>
+                                </article>
+
+                                <!-- ROOM 3 -->
+
+                                <article class="room-card">
+                                    <div class="room-image"></div>
+
+                                    <div class="room-card-content">
+                                        <h3>Deluxe Room 101</h3>
+
+                                        <span class="room-type"> Room </span>
+
+                                        <span
+                                            class="status-badge occupied-badge"
+                                        >
+                                            Occupied
+                                        </span>
+
+                                        <button
+                                            class="status-button"
+                                            type="button"
+                                        >
+                                            Update Status
+                                        </button>
+                                    </div>
+                                </article>
+
+                                <!-- ROOM 4 -->
+
+                                <article class="room-card">
+                                    <div class="room-image"></div>
+
+                                    <div class="room-card-content">
+                                        <h3>Deluxe Room 102</h3>
+
+                                        <span class="room-type"> Room </span>
+
+                                        <span
+                                            class="status-badge maintenance-badge"
+                                        >
+                                            Maintenance
+                                        </span>
+
+                                        <button
+                                            class="status-button"
+                                            type="button"
+                                        >
+                                            Update Status
+                                        </button>
+                                    </div>
+                                </article>
+
+                                <!-- ROOM 5 -->
+
+                                <article class="room-card">
+                                    <div class="room-image"></div>
+
+                                    <div class="room-card-content">
+                                        <h3>Beachfront Villa 1</h3>
+
+                                        <span class="room-type"> Cottage </span>
+
+                                        <span
+                                            class="status-badge available-badge"
+                                        >
+                                            Available
+                                        </span>
+
+                                        <button
+                                            class="status-button"
+                                            type="button"
+                                        >
+                                            Update Status
+                                        </button>
+                                    </div>
+                                </article>
+
+                                <!-- ROOM 6 -->
+
+                                <article class="room-card">
+                                    <div class="room-image"></div>
+
+                                    <div class="room-card-content">
+                                        <h3>Standard Cottage 1</h3>
+
+                                        <span class="room-type"> Cottage </span>
+
+                                        <span
+                                            class="status-badge occupied-badge"
+                                        >
+                                            Occupied
+                                        </span>
+
+                                        <button
+                                            class="status-button"
+                                            type="button"
+                                        >
+                                            Update Status
+                                        </button>
+                                    </div>
+                                </article>
+                            </div>
+
+                            <!-- QUICK ACTIONS -->
+
+                            <div class="quick-actions">
+                                <h2>Quick Actions</h2>
+
+                                <button type="button">
+                                    <span>
+                                        <i data-lucide="calendar-days"></i>
+                                        Room Status Calendar
+                                    </span>
+
+                                    <i data-lucide="chevron-right"></i>
+                                </button>
+
+                                <button type="button">
+                                    <span>
+                                        <i data-lucide="wrench"></i>
+                                        Maintenance Records
+                                    </span>
+
+                                    <i data-lucide="chevron-right"></i>
+                                </button>
+                            </div>
+                        </section>
+
+                        <!-- OCCUPANCY SUMMARY OPTION A: SAMPLE DATA -->
+
+                        <aside class="room-summary">
+                            <section class="summary-card">
+                                <h2>Occupancy Summary</h2>
+
+                                <div class="occupancy-chart">
+                                    <div class="donut">
+                                        <div class="donut-center">
+                                            <strong>60</strong>
+                                            <span>Total</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="occupancy-list">
+                                    <div>
+                                        <span>
+                                            <i class="dot available-dot"></i>
+                                            Available
+                                        </span>
+
+                                        <strong>24 (40%)</strong>
+                                    </div>
+
+                                    <div>
+                                        <span>
+                                            <i class="dot reserved-dot"></i>
+                                            Reserved
+                                        </span>
+
+                                        <strong>12 (20%)</strong>
+                                    </div>
+
+                                    <div>
+                                        <span>
+                                            <i class="dot occupied-dot"></i>
+                                            Occupied
+                                        </span>
+
+                                        <strong>18 (30%)</strong>
+                                    </div>
+
+                                    <div>
+                                        <span>
+                                            <i class="dot maintenance-dot"></i>
+                                            Maintenance
+                                        </span>
+
+                                        <strong>6 (10%)</strong>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- STATUS OVERVIEW -->
+
+                            <section class="summary-card">
+                                <h2>Status Overview</h2>
+
+                                <div class="status-row">
+                                    <span>
+                                        <i class="status-dot available-dot"></i>
+                                        Available
+                                    </span>
+
+                                    <strong>Ready for booking</strong>
+                                </div>
+
+                                <div class="status-row">
+                                    <span>
+                                        <i class="status-dot reserved-dot"></i>
+                                        Reserved
+                                    </span>
+
+                                    <strong>Confirmed booking</strong>
+                                </div>
+
+                                <div class="status-row">
+                                    <span>
+                                        <i class="status-dot occupied-dot"></i>
+                                        Occupied
+                                    </span>
+
+                                    <strong>Currently occupied</strong>
+                                </div>
+
+                                <div class="status-row">
+                                    <span>
+                                        <i
+                                            class="status-dot maintenance-dot"
+                                        ></i>
+                                        Maintenance
+                                    </span>
+
+                                    <strong>Under maintenance</strong>
+                                </div>
+                            </section>
+                        </aside>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <script>
+            lucide.createIcons();
+        </script>
+        <script src="../../js/resort-admin/rooms.js"></script>
+    </body>
 </html>

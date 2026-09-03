@@ -1,1422 +1,853 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Guests | ResortHub</title>
 
-  <title>Guests | ResortHub</title>
+        <!-- GLOBAL STYLES -->
 
-  <!-- =====================================================
-       GLOBAL STYLES
-       ===================================================== -->
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css" />
+        <link
+            rel="stylesheet"
+            href="../../css/resort-adminGlobal/Sidebar.css"
+        />
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css" />
 
-  <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css">
-  <link rel="stylesheet" href="../../css/resort-adminGlobal/Sidebar.css">
-  <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css">
+        <!-- PAGE STYLE -->
 
-  <!-- =====================================================
-       PAGE STYLE
-       ===================================================== -->
+        <link rel="stylesheet" href="../../css/resort-admin/guests.css" />
 
-  <link rel="stylesheet" href="../../css/resort-admin/guests.css">
+        <!-- LUCIDE ICONS -->
 
-  <!-- =====================================================
-       LUCIDE ICONS
-       ===================================================== -->
+        <script src="https://unpkg.com/lucide@latest"></script>
+    </head>
 
-  <script src="https://unpkg.com/lucide@latest"></script>
+    <body>
+        <!-- APPLICATION SHELL -->
 
-</head>
+        <div class="app-shell">
+            <!-- GLOBAL SHARED SIDEBAR -->
 
+            <aside class="sidebar">
+                <!-- ResortHub Brand -->
 
-<body>
+                <a class="brand" href="Dashboard.html">
+                    <i class="brand-mark" data-lucide="building-2"> </i>
 
-  <!-- =====================================================
-       APPLICATION SHELL
-       ===================================================== -->
+                    <span>
+                        <strong>ResortHub</strong>
+                        <small>Resort Owner</small>
+                    </span>
+                </a>
 
-  <div class="app-shell">
+                <!-- Resort Switcher -->
 
+                <div class="resort-switcher">
+                    <span class="resort-avatar"> BW </span>
 
-    <!-- ===================================================
-         GLOBAL SHARED SIDEBAR
-         =================================================== -->
-
-    <aside class="sidebar">
-
-      <!-- ResortHub Brand -->
-
-      <a class="brand" href="Dashboard.html">
-
-        <i
-          class="brand-mark"
-          data-lucide="building-2">
-        </i>
-
-        <span>
-          <strong>ResortHub</strong>
-          <small>Resort Owner</small>
-        </span>
-
-      </a>
-
-
-      <!-- Resort Switcher -->
-
-      <div class="resort-switcher">
-
-        <span class="resort-avatar">
-          BW
-        </span>
-
-        <span>
-          <strong>Blue Waves Resort</strong>
-          <small>Resort Owner</small>
-        </span>
-
-      </div>
-
-
-      <!-- =================================================
-           MAIN
-           ================================================= -->
-
-      <div class="nav-section">
-        MAIN
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="Dashboard.html">
-
-        <i data-lucide="layout-dashboard"></i>
-
-        Dashboard
-
-      </a>
-
-
-      <!-- =================================================
-           RESERVATIONS
-           ================================================= -->
-
-      <div class="nav-section">
-        RESERVATIONS
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="Reservations.html">
-
-        <i data-lucide="calendar-days"></i>
-
-        Reservations
-
-      </a>
-
-
-      <a
-        class="nav-link active"
-        href="Guests.html">
-
-        <i data-lucide="contact-round"></i>
-
-        Guests
-
-      </a>
-
-
-      <!-- =================================================
-           ACCOMMODATION
-           ================================================= -->
-
-      <div class="nav-section">
-        ACCOMMODATION
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="Rooms.html">
-
-        <i data-lucide="bed-double"></i>
-
-        Rooms & Cottages
-
-      </a>
-
-
-      <!-- =================================================
-           FINANCE
-           ================================================= -->
-
-      <div class="nav-section">
-        FINANCE
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="BillingPayments.html">
-
-        <i data-lucide="credit-card"></i>
-
-        Billing & Payments
-
-      </a>
-
-
-      <!-- =================================================
-           OPERATIONS
-           ================================================= -->
-
-      <div class="nav-section">
-        OPERATIONS
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="OCRVerification.html">
-
-        <i data-lucide="scan-search"></i>
-
-        OCR Verification
-
-      </a>
-
-
-      <a
-        class="nav-link"
-        href="StaffManagement.html">
-
-        <i data-lucide="users"></i>
-
-        Staff Management
-
-      </a>
-
-
-      <a
-        class="nav-link"
-        href="Reports.html">
-
-        <i data-lucide="chart-no-axes-combined"></i>
-
-        Reports
-
-      </a>
-
-
-      <!-- =================================================
-           SETTINGS
-           ================================================= -->
-
-      <div class="nav-section">
-        SETTINGS
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="Settings.html">
-
-        <i data-lucide="settings"></i>
-
-        Settings
-
-      </a>
-
-
-      <!-- Logout -->
-
-      <a
-        class="nav-link logout"
-        href="#">
-
-        <i data-lucide="log-out"></i>
-
-        Logout
-
-      </a>
-
-    </aside>
-
-
-    <!-- ===================================================
-         MAIN CONTENT
-         =================================================== -->
-
-    <main class="main">
-
-
-      <!-- =================================================
-           GLOBAL TOPBAR
-           ================================================= -->
-
-      <header class="topbar">
-
-
-        <!-- Sidebar Toggle -->
-
-        <button
-          class="sidebar-toggle"
-          type="button"
-          aria-label="Toggle sidebar">
-
-          <i data-lucide="menu"></i>
-
-        </button>
-
-
-        <!-- Search -->
-
-        <input
-          class="search"
-          type="search"
-          id="globalSearch"
-          placeholder="Search guests...">
-
-
-        <div class="topbar-spacer"></div>
-
-
-        <!-- Notification -->
-
-        <button
-          class="notification"
-          type="button"
-          aria-label="Notifications">
-
-          <i data-lucide="bell"></i>
-
-        </button>
-
-
-        <!-- Resort Selector -->
-
-        <button
-          class="top-select"
-          type="button">
-
-          <span>
-            Blue Waves Resort
-          </span>
-
-          <i data-lucide="chevron-down"></i>
-
-        </button>
-
-
-        <!-- Profile -->
-
-        <button
-          class="profile"
-          type="button">
-
-          <span class="avatar">
-            BW
-          </span>
-
-          <span>
-            Resort Owner
-            <small>Administrator</small>
-          </span>
-
-          <i data-lucide="chevron-down"></i>
-
-        </button>
-
-      </header>
-
-
-      <!-- =================================================
-           PAGE CONTENT
-           ================================================= -->
-
-      <div class="page-content">
-
-
-        <!-- =================================================
-             PAGE HEADER
-             ================================================= -->
-
-        <section class="page-header">
-
-
-          <div>
-
-            <div class="breadcrumb">
-
-              <span>
-                Reservations
-              </span>
-
-              <i data-lucide="chevron-right"></i>
-
-              <strong>
-                Guests
-              </strong>
-
-            </div>
-
-
-            <h1>
-              Guests
-            </h1>
-
-
-            <p>
-              Manage guest records associated with resort
-              reservations.
-            </p>
-
-          </div>
-
-
-          <!-- Page Action -->
-
-          <div class="page-actions">
-
-            <button
-              class="btn-secondary"
-              type="button"
-              id="refreshGuestsButton">
-
-              <i data-lucide="refresh-cw"></i>
-
-              Refresh
-
-            </button>
-
-          </div>
-
-        </section>
-
-
-        <!-- =================================================
-             GUEST SUMMARY
-             ================================================= -->
-
-        <section class="stats-grid">
-
-
-          <!-- Total Guests -->
-
-          <article class="stat-card">
-
-            <div class="stat-icon">
-
-              <i data-lucide="users"></i>
-
-            </div>
-
-            <span>
-              Total Guests
-            </span>
-
-            <strong id="totalGuests">
-              24
-            </strong>
-
-            <small>
-              Guest records
-            </small>
-
-          </article>
-
-
-          <!-- Active Reservations -->
-
-          <article class="stat-card">
-
-            <div class="stat-icon reservation-icon">
-
-              <i data-lucide="calendar-check"></i>
-
-            </div>
-
-            <span>
-              With Reservations
-            </span>
-
-            <strong id="guestsWithReservations">
-              18
-            </strong>
-
-            <small>
-              Current reservation records
-            </small>
-
-          </article>
-
-
-          <!-- Current Guests -->
-
-          <article class="stat-card">
-
-            <div class="stat-icon current-icon">
-
-              <i data-lucide="user-check"></i>
-
-            </div>
-
-            <span>
-              Current Guests
-            </span>
-
-            <strong id="currentGuests">
-              6
-            </strong>
-
-            <small>
-              Currently staying
-            </small>
-
-          </article>
-
-
-          <!-- Pending Records -->
-
-          <article class="stat-card">
-
-            <div class="stat-icon pending-icon">
-
-              <i data-lucide="clock-3"></i>
-
-            </div>
-
-            <span>
-              Pending
-            </span>
-
-            <strong id="pendingGuests">
-              3
-            </strong>
-
-            <small>
-              Pending reservation records
-            </small>
-
-          </article>
-
-        </section>
-
-
-        <!-- =================================================
-             GUEST RECORDS
-             ================================================= -->
-
-        <section class="content-card guest-records-card">
-
-
-          <!-- Section Header -->
-
-          <div class="section-header">
-
-
-            <div>
-
-              <div class="section-title-with-icon">
-
-                <div class="section-icon">
-
-                  <i data-lucide="contact-round"></i>
-
+                    <span>
+                        <strong>Blue Waves Resort</strong>
+                        <small>Resort Owner</small>
+                    </span>
                 </div>
 
-                <div>
+                <!-- MAIN -->
 
-                  <h2>
-                    Guest Records
-                  </h2>
+                <div class="nav-section">MAIN</div>
 
-                  <p>
-                    Guest information linked to reservation
-                    records.
-                  </p>
+                <a class="nav-link" href="Dashboard.html">
+                    <i data-lucide="layout-dashboard"></i>
 
+                    Dashboard
+                </a>
+
+                <!-- RESERVATIONS -->
+
+                <div class="nav-section">RESERVATIONS</div>
+
+                <a class="nav-link" href="Reservations.html">
+                    <i data-lucide="calendar-days"></i>
+
+                    Reservations
+                </a>
+
+                <a class="nav-link active" href="Guests.html">
+                    <i data-lucide="contact-round"></i>
+
+                    Guests
+                </a>
+
+                <!-- ACCOMMODATION -->
+
+                <div class="nav-section">ACCOMMODATION</div>
+
+                <a class="nav-link" href="Rooms.html">
+                    <i data-lucide="bed-double"></i>
+
+                    Rooms & Cottages
+                </a>
+
+                <!-- FINANCE -->
+
+                <div class="nav-section">FINANCE</div>
+
+                <a class="nav-link" href="BillingPayments.html">
+                    <i data-lucide="credit-card"></i>
+
+                    Billing & Payments
+                </a>
+
+                <!-- OPERATIONS -->
+
+                <div class="nav-section">OPERATIONS</div>
+
+                <a class="nav-link" href="OCRVerification.html">
+                    <i data-lucide="scan-search"></i>
+
+                    OCR Verification
+                </a>
+
+                <a class="nav-link" href="StaffManagement.html">
+                    <i data-lucide="users"></i>
+
+                    Staff Management
+                </a>
+
+                <a class="nav-link" href="Reports.html">
+                    <i data-lucide="chart-no-axes-combined"></i>
+
+                    Reports
+                </a>
+
+                <!-- SETTINGS -->
+
+                <div class="nav-section">SETTINGS</div>
+
+                <a class="nav-link" href="Settings.html">
+                    <i data-lucide="settings"></i>
+
+                    Settings
+                </a>
+
+                <!-- Logout -->
+
+                <a class="nav-link logout" href="#">
+                    <i data-lucide="log-out"></i>
+
+                    Logout
+                </a>
+            </aside>
+
+            <!-- MAIN CONTENT -->
+
+            <main class="main">
+                <!-- GLOBAL TOPBAR -->
+
+                <header class="topbar">
+                    <!-- Sidebar Toggle -->
+
+                    <button
+                        class="sidebar-toggle"
+                        type="button"
+                        aria-label="Toggle sidebar"
+                    >
+                        <i data-lucide="menu"></i>
+                    </button>
+
+                    <!-- Search -->
+
+                    <input
+                        class="search"
+                        type="search"
+                        id="globalSearch"
+                        placeholder="Search guests..."
+                    />
+
+                    <div class="topbar-spacer"></div>
+
+                    <!-- Notification -->
+
+                    <button
+                        class="notification"
+                        type="button"
+                        aria-label="Notifications"
+                    >
+                        <i data-lucide="bell"></i>
+                    </button>
+
+                    <!-- Resort Selector -->
+
+                    <button class="top-select" type="button">
+                        <span> Blue Waves Resort </span>
+
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+
+                    <!-- Profile -->
+
+                    <button class="profile" type="button">
+                        <span class="avatar"> BW </span>
+
+                        <span>
+                            Resort Owner
+                            <small>Administrator</small>
+                        </span>
+
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                </header>
+
+                <!-- PAGE CONTENT -->
+
+                <div class="page-content">
+                    <!-- PAGE HEADER -->
+
+                    <section class="page-header">
+                        <div>
+                            <div class="breadcrumb">
+                                <span> Reservations </span>
+
+                                <i data-lucide="chevron-right"></i>
+
+                                <strong> Guests </strong>
+                            </div>
+
+                            <h1>Guests</h1>
+
+                            <p>
+                                Manage guest records associated with resort
+                                reservations.
+                            </p>
+                        </div>
+
+                        <!-- Page Action -->
+
+                        <div class="page-actions">
+                            <button
+                                class="btn-secondary"
+                                type="button"
+                                id="refreshGuestsButton"
+                            >
+                                <i data-lucide="refresh-cw"></i>
+
+                                Refresh
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- GUEST SUMMARY -->
+
+                    <section class="stats-grid">
+                        <!-- Total Guests -->
+
+                        <article class="stat-card">
+                            <div class="stat-icon">
+                                <i data-lucide="users"></i>
+                            </div>
+
+                            <span> Total Guests </span>
+
+                            <strong id="totalGuests"> 24 </strong>
+
+                            <small> Guest records </small>
+                        </article>
+
+                        <!-- Active Reservations -->
+
+                        <article class="stat-card">
+                            <div class="stat-icon reservation-icon">
+                                <i data-lucide="calendar-check"></i>
+                            </div>
+
+                            <span> With Reservations </span>
+
+                            <strong id="guestsWithReservations"> 18 </strong>
+
+                            <small> Current reservation records </small>
+                        </article>
+
+                        <!-- Current Guests -->
+
+                        <article class="stat-card">
+                            <div class="stat-icon current-icon">
+                                <i data-lucide="user-check"></i>
+                            </div>
+
+                            <span> Current Guests </span>
+
+                            <strong id="currentGuests"> 6 </strong>
+
+                            <small> Currently staying </small>
+                        </article>
+
+                        <!-- Pending Records -->
+
+                        <article class="stat-card">
+                            <div class="stat-icon pending-icon">
+                                <i data-lucide="clock-3"></i>
+                            </div>
+
+                            <span> Pending </span>
+
+                            <strong id="pendingGuests"> 3 </strong>
+
+                            <small> Pending reservation records </small>
+                        </article>
+                    </section>
+
+                    <!-- GUEST RECORDS -->
+
+                    <section class="content-card guest-records-card">
+                        <!-- Section Header -->
+
+                        <div class="section-header">
+                            <div>
+                                <div class="section-title-with-icon">
+                                    <div class="section-icon">
+                                        <i data-lucide="contact-round"></i>
+                                    </div>
+
+                                    <div>
+                                        <h2>Guest Records</h2>
+
+                                        <p>
+                                            Guest information linked to
+                                            reservation records.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Record Count -->
+
+                            <span class="record-count" id="recordCount">
+                                6 records
+                            </span>
+                        </div>
+
+                        <!-- GUEST FILTERS -->
+
+                        <div class="guest-filters">
+                            <!-- Search -->
+
+                            <div class="guest-search">
+                                <i data-lucide="search"></i>
+
+                                <input
+                                    type="search"
+                                    id="guestSearch"
+                                    placeholder="Search guest name or reservation..."
+                                />
+                            </div>
+
+                            <!-- Status Filter -->
+
+                            <select
+                                id="guestStatusFilter"
+                                aria-label="Filter guest status"
+                            >
+                                <option value="all">All Status</option>
+
+                                <option value="Current">Current</option>
+
+                                <option value="Reserved">Reserved</option>
+
+                                <option value="Completed">Completed</option>
+
+                                <option value="Pending">Pending</option>
+                            </select>
+
+                            <!-- Clear Filter -->
+
+                            <button
+                                class="clear-filter"
+                                type="button"
+                                id="clearGuestFilter"
+                            >
+                                <i data-lucide="x"></i>
+
+                                Clear
+                            </button>
+                        </div>
+
+                        <!-- GUEST TABLE -->
+
+                        <div class="table-wrapper">
+                            <table class="guest-table">
+                                <thead>
+                                    <tr>
+                                        <th>Guest</th>
+
+                                        <th>Contact</th>
+
+                                        <th>Reservation</th>
+
+                                        <th>Accommodation</th>
+
+                                        <th>Stay Dates</th>
+
+                                        <th>Status</th>
+
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="guestTableBody">
+                                    <!-- SAMPLE GUEST RECORD 1 -->
+
+                                    <tr
+                                        data-status="Current"
+                                        data-guest="Juan Dela Cruz"
+                                        data-reservation="RES-0001"
+                                    >
+                                        <td>
+                                            <div class="guest-cell">
+                                                <div class="guest-avatar">
+                                                    JD
+                                                </div>
+
+                                                <div>
+                                                    <strong>
+                                                        Juan Dela Cruz
+                                                    </strong>
+
+                                                    <small>
+                                                        Guest ID: GST-0001
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="contact-cell">
+                                                <span> 0917 123 4567 </span>
+
+                                                <small>
+                                                    juan@example.com
+                                                </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <strong> RES-0001 </strong>
+                                        </td>
+
+                                        <td>Deluxe Room 01</td>
+
+                                        <td>
+                                            <div class="date-cell">
+                                                <span> Aug 20, 2026 </span>
+
+                                                <small> Aug 22, 2026 </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span class="status-badge current">
+                                                Current
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="table-action"
+                                                type="button"
+                                                title="View guest"
+                                            >
+                                                <i data-lucide="eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- SAMPLE GUEST RECORD 2 -->
+
+                                    <tr
+                                        data-status="Reserved"
+                                        data-guest="Maria Santos"
+                                        data-reservation="RES-0002"
+                                    >
+                                        <td>
+                                            <div class="guest-cell">
+                                                <div class="guest-avatar">
+                                                    MS
+                                                </div>
+
+                                                <div>
+                                                    <strong>
+                                                        Maria Santos
+                                                    </strong>
+
+                                                    <small>
+                                                        Guest ID: GST-0002
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="contact-cell">
+                                                <span> 0918 234 5678 </span>
+
+                                                <small>
+                                                    maria@example.com
+                                                </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <strong> RES-0002 </strong>
+                                        </td>
+
+                                        <td>Family Cottage 01</td>
+
+                                        <td>
+                                            <div class="date-cell">
+                                                <span> Aug 28, 2026 </span>
+
+                                                <small> Aug 30, 2026 </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span class="status-badge reserved">
+                                                Reserved
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="table-action"
+                                                type="button"
+                                                title="View guest"
+                                            >
+                                                <i data-lucide="eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- SAMPLE GUEST RECORD 3 -->
+
+                                    <tr
+                                        data-status="Completed"
+                                        data-guest="Pedro Reyes"
+                                        data-reservation="RES-0003"
+                                    >
+                                        <td>
+                                            <div class="guest-cell">
+                                                <div class="guest-avatar">
+                                                    PR
+                                                </div>
+
+                                                <div>
+                                                    <strong>
+                                                        Pedro Reyes
+                                                    </strong>
+
+                                                    <small>
+                                                        Guest ID: GST-0003
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="contact-cell">
+                                                <span> 0919 345 6789 </span>
+
+                                                <small>
+                                                    pedro@example.com
+                                                </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <strong> RES-0003 </strong>
+                                        </td>
+
+                                        <td>Standard Room 01</td>
+
+                                        <td>
+                                            <div class="date-cell">
+                                                <span> Aug 15, 2026 </span>
+
+                                                <small> Aug 17, 2026 </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span
+                                                class="status-badge completed"
+                                            >
+                                                Completed
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="table-action"
+                                                type="button"
+                                                title="View guest"
+                                            >
+                                                <i data-lucide="eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- SAMPLE GUEST RECORD 4 -->
+
+                                    <tr
+                                        data-status="Pending"
+                                        data-guest="Ana Garcia"
+                                        data-reservation="RES-0004"
+                                    >
+                                        <td>
+                                            <div class="guest-cell">
+                                                <div class="guest-avatar">
+                                                    AG
+                                                </div>
+
+                                                <div>
+                                                    <strong>
+                                                        Ana Garcia
+                                                    </strong>
+
+                                                    <small>
+                                                        Guest ID: GST-0004
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="contact-cell">
+                                                <span> 0920 456 7890 </span>
+
+                                                <small> ana@example.com </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <strong> RES-0004 </strong>
+                                        </td>
+
+                                        <td>Beach Cottage 01</td>
+
+                                        <td>
+                                            <div class="date-cell">
+                                                <span> Aug 29, 2026 </span>
+
+                                                <small> Aug 31, 2026 </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span class="status-badge pending">
+                                                Pending
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="table-action"
+                                                type="button"
+                                                title="View guest"
+                                            >
+                                                <i data-lucide="eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- SAMPLE GUEST RECORD 5 -->
+
+                                    <tr
+                                        data-status="Current"
+                                        data-guest="Carlos Mendoza"
+                                        data-reservation="RES-0005"
+                                    >
+                                        <td>
+                                            <div class="guest-cell">
+                                                <div class="guest-avatar">
+                                                    CM
+                                                </div>
+
+                                                <div>
+                                                    <strong>
+                                                        Carlos Mendoza
+                                                    </strong>
+
+                                                    <small>
+                                                        Guest ID: GST-0005
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="contact-cell">
+                                                <span> 0921 567 8901 </span>
+
+                                                <small>
+                                                    carlos@example.com
+                                                </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <strong> RES-0005 </strong>
+                                        </td>
+
+                                        <td>Deluxe Room 02</td>
+
+                                        <td>
+                                            <div class="date-cell">
+                                                <span> Aug 23, 2026 </span>
+
+                                                <small> Aug 25, 2026 </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span class="status-badge current">
+                                                Current
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="table-action"
+                                                type="button"
+                                                title="View guest"
+                                            >
+                                                <i data-lucide="eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- SAMPLE GUEST RECORD 6 -->
+
+                                    <tr
+                                        data-status="Reserved"
+                                        data-guest="Sofia Cruz"
+                                        data-reservation="RES-0006"
+                                    >
+                                        <td>
+                                            <div class="guest-cell">
+                                                <div class="guest-avatar">
+                                                    SC
+                                                </div>
+
+                                                <div>
+                                                    <strong>
+                                                        Sofia Cruz
+                                                    </strong>
+
+                                                    <small>
+                                                        Guest ID: GST-0006
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="contact-cell">
+                                                <span> 0922 678 9012 </span>
+
+                                                <small>
+                                                    sofia@example.com
+                                                </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <strong> RES-0006 </strong>
+                                        </td>
+
+                                        <td>Family Cottage 02</td>
+
+                                        <td>
+                                            <div class="date-cell">
+                                                <span> Sep 01, 2026 </span>
+
+                                                <small> Sep 03, 2026 </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span class="status-badge reserved">
+                                                Reserved
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="table-action"
+                                                type="button"
+                                                title="View guest"
+                                            >
+                                                <i data-lucide="eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Empty State -->
+
+                            <div
+                                class="empty-state"
+                                id="emptyGuestState"
+                                hidden
+                            >
+                                <div class="empty-icon">
+                                    <i data-lucide="users-round"></i>
+                                </div>
+
+                                <strong> No guest records found </strong>
+
+                                <p>Try changing your search or filter.</p>
+                            </div>
+                        </div>
+
+                        <!-- TABLE FOOTER -->
+
+                        <div class="table-footer">
+                            <span id="tableResultText">
+                                Showing 6 guest records
+                            </span>
+                        </div>
+                    </section>
+
+                    <!-- INFORMATION NOTE -->
+
+                    <div class="guest-note">
+                        <i data-lucide="info"></i>
+
+                        <span>
+                            Guest records are maintained in connection with
+                            reservation information for resort operations.
+                        </span>
+                    </div>
                 </div>
-
-              </div>
-
-            </div>
-
-
-            <!-- Record Count -->
-
-            <span
-              class="record-count"
-              id="recordCount">
-
-              6 records
-
-            </span>
-
-          </div>
-
-
-          <!-- =================================================
-               GUEST FILTERS
-               ================================================= -->
-
-          <div class="guest-filters">
-
-
-            <!-- Search -->
-
-            <div class="guest-search">
-
-              <i data-lucide="search"></i>
-
-              <input
-                type="search"
-                id="guestSearch"
-                placeholder="Search guest name or reservation...">
-
-            </div>
-
-
-            <!-- Status Filter -->
-
-            <select
-              id="guestStatusFilter"
-              aria-label="Filter guest status">
-
-              <option value="all">
-                All Status
-              </option>
-
-              <option value="Current">
-                Current
-              </option>
-
-              <option value="Reserved">
-                Reserved
-              </option>
-
-              <option value="Completed">
-                Completed
-              </option>
-
-              <option value="Pending">
-                Pending
-              </option>
-
-            </select>
-
-
-            <!-- Clear Filter -->
-
-            <button
-              class="clear-filter"
-              type="button"
-              id="clearGuestFilter">
-
-              <i data-lucide="x"></i>
-
-              Clear
-
-            </button>
-
-          </div>
-
-
-          <!-- =================================================
-               GUEST TABLE
-               ================================================= -->
-
-          <div class="table-wrapper">
-
-            <table class="guest-table">
-
-
-              <thead>
-
-                <tr>
-
-                  <th>
-                    Guest
-                  </th>
-
-                  <th>
-                    Contact
-                  </th>
-
-                  <th>
-                    Reservation
-                  </th>
-
-                  <th>
-                    Accommodation
-                  </th>
-
-                  <th>
-                    Stay Dates
-                  </th>
-
-                  <th>
-                    Status
-                  </th>
-
-                  <th>
-                    Action
-                  </th>
-
-                </tr>
-
-              </thead>
-
-
-              <tbody id="guestTableBody">
-
-                <!-- =========================================
-                     SAMPLE GUEST RECORD 1
-                     ========================================= -->
-
-                <tr
-                  data-status="Current"
-                  data-guest="Juan Dela Cruz"
-                  data-reservation="RES-0001">
-
-                  <td>
-
-                    <div class="guest-cell">
-
-                      <div class="guest-avatar">
-                        JD
-                      </div>
-
-                      <div>
-
-                        <strong>
-                          Juan Dela Cruz
-                        </strong>
-
-                        <small>
-                          Guest ID: GST-0001
-                        </small>
-
-                      </div>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <div class="contact-cell">
-
-                      <span>
-                        0917 123 4567
-                      </span>
-
-                      <small>
-                        juan@example.com
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <strong>
-                      RES-0001
-                    </strong>
-
-                  </td>
-
-
-                  <td>
-                    Deluxe Room 01
-                  </td>
-
-
-                  <td>
-
-                    <div class="date-cell">
-
-                      <span>
-                        Aug 20, 2026
-                      </span>
-
-                      <small>
-                        Aug 22, 2026
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <span class="status-badge current">
-                      Current
-                    </span>
-
-                  </td>
-
-
-                  <td>
-
-                    <button
-                      class="table-action"
-                      type="button"
-                      title="View guest">
-
-                      <i data-lucide="eye"></i>
-
-                    </button>
-
-                  </td>
-
-                </tr>
-
-
-                <!-- =========================================
-                     SAMPLE GUEST RECORD 2
-                     ========================================= -->
-
-                <tr
-                  data-status="Reserved"
-                  data-guest="Maria Santos"
-                  data-reservation="RES-0002">
-
-                  <td>
-
-                    <div class="guest-cell">
-
-                      <div class="guest-avatar">
-                        MS
-                      </div>
-
-                      <div>
-
-                        <strong>
-                          Maria Santos
-                        </strong>
-
-                        <small>
-                          Guest ID: GST-0002
-                        </small>
-
-                      </div>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <div class="contact-cell">
-
-                      <span>
-                        0918 234 5678
-                      </span>
-
-                      <small>
-                        maria@example.com
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <strong>
-                      RES-0002
-                    </strong>
-
-                  </td>
-
-
-                  <td>
-                    Family Cottage 01
-                  </td>
-
-
-                  <td>
-
-                    <div class="date-cell">
-
-                      <span>
-                        Aug 28, 2026
-                      </span>
-
-                      <small>
-                        Aug 30, 2026
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <span class="status-badge reserved">
-                      Reserved
-                    </span>
-
-                  </td>
-
-
-                  <td>
-
-                    <button
-                      class="table-action"
-                      type="button"
-                      title="View guest">
-
-                      <i data-lucide="eye"></i>
-
-                    </button>
-
-                  </td>
-
-                </tr>
-
-
-                <!-- =========================================
-                     SAMPLE GUEST RECORD 3
-                     ========================================= -->
-
-                <tr
-                  data-status="Completed"
-                  data-guest="Pedro Reyes"
-                  data-reservation="RES-0003">
-
-                  <td>
-
-                    <div class="guest-cell">
-
-                      <div class="guest-avatar">
-                        PR
-                      </div>
-
-                      <div>
-
-                        <strong>
-                          Pedro Reyes
-                        </strong>
-
-                        <small>
-                          Guest ID: GST-0003
-                        </small>
-
-                      </div>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <div class="contact-cell">
-
-                      <span>
-                        0919 345 6789
-                      </span>
-
-                      <small>
-                        pedro@example.com
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <strong>
-                      RES-0003
-                    </strong>
-
-                  </td>
-
-
-                  <td>
-                    Standard Room 01
-                  </td>
-
-
-                  <td>
-
-                    <div class="date-cell">
-
-                      <span>
-                        Aug 15, 2026
-                      </span>
-
-                      <small>
-                        Aug 17, 2026
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <span class="status-badge completed">
-                      Completed
-                    </span>
-
-                  </td>
-
-
-                  <td>
-
-                    <button
-                      class="table-action"
-                      type="button"
-                      title="View guest">
-
-                      <i data-lucide="eye"></i>
-
-                    </button>
-
-                  </td>
-
-                </tr>
-
-
-                <!-- =========================================
-                     SAMPLE GUEST RECORD 4
-                     ========================================= -->
-
-                <tr
-                  data-status="Pending"
-                  data-guest="Ana Garcia"
-                  data-reservation="RES-0004">
-
-                  <td>
-
-                    <div class="guest-cell">
-
-                      <div class="guest-avatar">
-                        AG
-                      </div>
-
-                      <div>
-
-                        <strong>
-                          Ana Garcia
-                        </strong>
-
-                        <small>
-                          Guest ID: GST-0004
-                        </small>
-
-                      </div>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <div class="contact-cell">
-
-                      <span>
-                        0920 456 7890
-                      </span>
-
-                      <small>
-                        ana@example.com
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <strong>
-                      RES-0004
-                    </strong>
-
-                  </td>
-
-
-                  <td>
-                    Beach Cottage 01
-                  </td>
-
-
-                  <td>
-
-                    <div class="date-cell">
-
-                      <span>
-                        Aug 29, 2026
-                      </span>
-
-                      <small>
-                        Aug 31, 2026
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <span class="status-badge pending">
-                      Pending
-                    </span>
-
-                  </td>
-
-
-                  <td>
-
-                    <button
-                      class="table-action"
-                      type="button"
-                      title="View guest">
-
-                      <i data-lucide="eye"></i>
-
-                    </button>
-
-                  </td>
-
-                </tr>
-
-
-                <!-- =========================================
-                     SAMPLE GUEST RECORD 5
-                     ========================================= -->
-
-                <tr
-                  data-status="Current"
-                  data-guest="Carlos Mendoza"
-                  data-reservation="RES-0005">
-
-                  <td>
-
-                    <div class="guest-cell">
-
-                      <div class="guest-avatar">
-                        CM
-                      </div>
-
-                      <div>
-
-                        <strong>
-                          Carlos Mendoza
-                        </strong>
-
-                        <small>
-                          Guest ID: GST-0005
-                        </small>
-
-                      </div>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <div class="contact-cell">
-
-                      <span>
-                        0921 567 8901
-                      </span>
-
-                      <small>
-                        carlos@example.com
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <strong>
-                      RES-0005
-                    </strong>
-
-                  </td>
-
-
-                  <td>
-                    Deluxe Room 02
-                  </td>
-
-
-                  <td>
-
-                    <div class="date-cell">
-
-                      <span>
-                        Aug 23, 2026
-                      </span>
-
-                      <small>
-                        Aug 25, 2026
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <span class="status-badge current">
-                      Current
-                    </span>
-
-                  </td>
-
-
-                  <td>
-
-                    <button
-                      class="table-action"
-                      type="button"
-                      title="View guest">
-
-                      <i data-lucide="eye"></i>
-
-                    </button>
-
-                  </td>
-
-                </tr>
-
-
-                <!-- =========================================
-                     SAMPLE GUEST RECORD 6
-                     ========================================= -->
-
-                <tr
-                  data-status="Reserved"
-                  data-guest="Sofia Cruz"
-                  data-reservation="RES-0006">
-
-                  <td>
-
-                    <div class="guest-cell">
-
-                      <div class="guest-avatar">
-                        SC
-                      </div>
-
-                      <div>
-
-                        <strong>
-                          Sofia Cruz
-                        </strong>
-
-                        <small>
-                          Guest ID: GST-0006
-                        </small>
-
-                      </div>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <div class="contact-cell">
-
-                      <span>
-                        0922 678 9012
-                      </span>
-
-                      <small>
-                        sofia@example.com
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <strong>
-                      RES-0006
-                    </strong>
-
-                  </td>
-
-
-                  <td>
-                    Family Cottage 02
-                  </td>
-
-
-                  <td>
-
-                    <div class="date-cell">
-
-                      <span>
-                        Sep 01, 2026
-                      </span>
-
-                      <small>
-                        Sep 03, 2026
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <span class="status-badge reserved">
-                      Reserved
-                    </span>
-
-                  </td>
-
-
-                  <td>
-
-                    <button
-                      class="table-action"
-                      type="button"
-                      title="View guest">
-
-                      <i data-lucide="eye"></i>
-
-                    </button>
-
-                  </td>
-
-                </tr>
-
-
-              </tbody>
-
-            </table>
-
-
-            <!-- Empty State -->
-
-            <div
-              class="empty-state"
-              id="emptyGuestState"
-              hidden>
-
-              <div class="empty-icon">
-
-                <i data-lucide="users-round"></i>
-
-              </div>
-
-              <strong>
-                No guest records found
-              </strong>
-
-              <p>
-                Try changing your search or filter.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <!-- =================================================
-               TABLE FOOTER
-               ================================================= -->
-
-          <div class="table-footer">
-
-            <span id="tableResultText">
-              Showing 6 guest records
-            </span>
-
-          </div>
-
-        </section>
-
-
-        <!-- =================================================
-             INFORMATION NOTE
-             ================================================= -->
-
-        <div class="guest-note">
-
-          <i data-lucide="info"></i>
-
-          <span>
-            Guest records are maintained in connection
-            with reservation information for resort
-            operations.
-          </span>
-
+            </main>
         </div>
 
+        <!-- JAVASCRIPT -->
 
-      </div>
+        <script src="../../js/resort-admin/guests.js"></script>
 
-    </main>
+        <!-- INITIALIZE LUCIDE -->
 
-  </div>
-
-
-  <!-- =====================================================
-       JAVASCRIPT
-       ===================================================== -->
-
-  <script src="../../js/resort-admin/guests.js"></script>
-
-
-  <!-- =====================================================
-       INITIALIZE LUCIDE
-       ===================================================== -->
-
-  <script>
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      function () {
-
-        if (
-          typeof lucide !== "undefined" &&
-          typeof lucide.createIcons === "function"
-        ) {
-
-          lucide.createIcons();
-
-        }
-
-      }
-    );
-
-  </script>
-
-
-</body>
-
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                if (
+                    typeof lucide !== "undefined" &&
+                    typeof lucide.createIcons === "function"
+                ) {
+                    lucide.createIcons();
+                }
+            });
+        </script>
+    </body>
 </html>

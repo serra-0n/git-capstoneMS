@@ -1,555 +1,333 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
 
-<head>
-    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+        <title>Notifications | ResortHub</title>
 
-    <title>Notifications | ResortHub</title>
+        <!-- Shared CSS -->
+        <link rel="stylesheet" href="../../css///client-global/style..css" />
 
-    <!-- Shared CSS -->
-    <link
-        rel="stylesheet"
-        href="../../css///client-global/style..css"
-    >
+        <link rel="stylesheet" href="../../css//client-global/nav.css" />
 
-    <link
-        rel="stylesheet"
-        href="../../css//client-global/nav.css"
-    >
+        <link rel="stylesheet" href="../../css//client-global/sidebar.css" />
 
-    <link
-        rel="stylesheet"
-        href="../../css//client-global/sidebar.css"
-    >
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="../../css/client/notification.css" />
 
-    <!-- Page CSS -->
-    <link
-        rel="stylesheet"
-        href="../../css/client/notification.css"
-    >
+        <!-- Lucide Icons -->
+        <script src="https://unpkg.com/lucide@latest" defer></script>
 
-    <!-- Lucide Icons -->
-    <script
-        src="https://unpkg.com/lucide@latest"
-        defer
-    ></script>
+        <!-- Page JavaScript -->
+        <script src="../../js/client/Notifications.js" defer></script>
+    </head>
 
-    <!-- Page JavaScript -->
-    <script
-        src="../../js/client/Notifications.js"
-        defer
-    ></script>
-</head>
+    <body>
+        <div class="client-app" id="clientApp">
+            <!-- TOP NAVIGATION -->
 
-
-<body>
-
-    <div
-        class="client-app"
-        id="clientApp"
-    >
-
-        <!-- =====================================================
-             TOP NAVIGATION
-             ===================================================== -->
-
-        <header class="client-topbar">
-
-            <div class="topbar-left">
-
-                <a
-                    href="Dashboard.html"
-                    class="client-brand"
-                    aria-label="ResortHub Dashboard"
-                >
-                    <i data-lucide="building-2"></i>
-
-                    <span>
-                        ResortHub
-                    </span>
-                </a>
-
-
-                <button
-                    type="button"
-                    class="sidebar-toggle"
-                    id="sidebarToggle"
-                    aria-label="Toggle sidebar"
-                    aria-expanded="true"
-                >
-                    <i data-lucide="menu"></i>
-                </button>
-
-            </div>
-
-
-            <div class="topbar-right">
-
-                <button
-                    type="button"
-                    class="client-profile"
-                    id="clientProfileButton"
-                    aria-label="Client profile"
-                >
-
-                    <span class="profile-avatar">
-                        <i data-lucide="user"></i>
-                    </span>
-
-
-                    <span class="profile-info">
-
-                        <strong id="clientDisplayName">
-                            Client
-                        </strong>
-
-                        <small>
-                            Client
-                        </small>
-
-                    </span>
-
-
-                    <i
-                        class="profile-chevron"
-                        data-lucide="chevron-down"
-                    ></i>
-
-                </button>
-
-            </div>
-
-        </header>
-
-
-        <!-- =====================================================
-             PAGE LAYOUT
-             ===================================================== -->
-
-        <div class="client-layout">
-
-
-            <!-- =================================================
-                 SIDEBAR
-                 ================================================= -->
-
-            <aside
-                class="client-sidebar"
-                id="clientSidebar"
-            >
-
-                <nav
-                    class="sidebar-navigation"
-                    aria-label="Client navigation"
-                >
-
+            <header class="client-topbar">
+                <div class="topbar-left">
                     <a
                         href="Dashboard.html"
-                        class="sidebar-link"
+                        class="client-brand"
+                        aria-label="ResortHub Dashboard"
                     >
-                        <i data-lucide="layout-dashboard"></i>
+                        <i data-lucide="building-2"></i>
 
-                        <span>
-                            Dashboard
-                        </span>
+                        <span> ResortHub </span>
                     </a>
 
-
-                    <!-- Booking -->
-
-                    <div class="sidebar-section">
-
-                        <span class="sidebar-section-title">
-                            BOOKING
-                        </span>
-
-
-                        <a
-                            href="Reservations.html"
-                            class="sidebar-link"
-                        >
-                            <i data-lucide="calendar-plus"></i>
-
-                            <span>
-                                New Reservation
-                            </span>
-                        </a>
-
-
-                        <a
-                            href="MyReservations.html"
-                            class="sidebar-link"
-                        >
-                            <i data-lucide="calendar-days"></i>
-
-                            <span>
-                                My Reservations
-                            </span>
-                        </a>
-
-
-                        <a
-                            href="Resorts.html"
-                            class="sidebar-link"
-                        >
-                            <i data-lucide="building"></i>
-
-                            <span>
-                                Resorts
-                            </span>
-                        </a>
-
-                    </div>
-
-
-                    <!-- Payment -->
-
-                    <div class="sidebar-section">
-
-                        <span class="sidebar-section-title">
-                            PAYMENT
-                        </span>
-
-
-                        <a
-                            href="Payments.html"
-                            class="sidebar-link"
-                        >
-                            <i data-lucide="wallet-cards"></i>
-
-                            <span>
-                                Billing & Payment
-                            </span>
-                        </a>
-
-                    </div>
-
-
-                    <!-- Documents -->
-
-                    <div class="sidebar-section">
-
-                        <span class="sidebar-section-title">
-                            DOCUMENTS
-                        </span>
-
-
-                        <a
-                            href="UploadDocuments.html"
-                            class="sidebar-link"
-                        >
-                            <i data-lucide="file-up"></i>
-
-                            <span>
-                                Upload Documents
-                            </span>
-                        </a>
-
-                    </div>
-
-
-                    <!-- Status -->
-
-                    <div class="sidebar-section">
-
-                        <span class="sidebar-section-title">
-                            STATUS
-                        </span>
-
-
-                        <a
-                            href="ReservationStatus.html"
-                            class="sidebar-link"
-                        >
-                            <i data-lucide="clock-3"></i>
-
-                            <span>
-                                Reservation Status
-                            </span>
-                        </a>
-
-
-                        <a
-                            href="Notifications.html"
-                            class="sidebar-link active"
-                            aria-current="page"
-                        >
-                            <i data-lucide="bell"></i>
-
-                            <span>
-                                Notifications
-                            </span>
-                        </a>
-
-                    </div>
-
-
-                    <!-- Account -->
-
-                    <div class="sidebar-section">
-
-                        <span class="sidebar-section-title">
-                            ACCOUNT
-                        </span>
-
-
-                        <a
-                            href="Profile.html"
-                            class="sidebar-link"
-                        >
-                            <i data-lucide="user-round"></i>
-
-                            <span>
-                                Profile
-                            </span>
-                        </a>
-
-                    </div>
-
-                </nav>
-
-            </aside>
-
-
-            <!-- =================================================
-                 MAIN CONTENT
-                 ================================================= -->
-
-            <main class="client-main">
-
-                <div class="page-container">
-
-
-                    <!-- =========================================
-                         PAGE HEADER
-                         ========================================= -->
-
-                    <div class="page-header">
-
-                        <div>
-
-                            <h1>
-                                Notifications
-                            </h1>
-
-                            <p>
-                                View updates related to your reservation,
-                                payment, and document verification.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- =========================================
-                         NOTIFICATIONS CARD
-                         ========================================= -->
-
-                    <section class="card notifications-card">
-
-                        <div class="card-header">
-
-                            <div class="card-heading">
-
-                                <span class="card-heading-icon">
-                                    <i data-lucide="bell"></i>
-                                </span>
-
-
-                                <div>
-
-                                    <h2>
-                                        Notifications
-                                    </h2>
-
-                                    <p>
-                                        Reservation-related transaction updates
-                                        will appear here.
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="card-body">
-
-
-                            <!-- =================================
-                                 NOTIFICATION LIST
-                                 Populated by Notifications.js
-                                 ================================= -->
-
-                            <div
-                                class="notification-list"
-                                id="notificationList"
-                            ></div>
-
-
-                            <!-- =================================
-                                 EMPTY STATE
-                                 ================================= -->
-
-                            <div
-                                class="empty-state notification-empty-state"
-                                id="notificationEmptyState"
-                                hidden
-                            >
-
-                                <i data-lucide="bell-off"></i>
-
-                                <h3>
-                                    No Notifications
-                                </h3>
-
-                                <p>
-                                    There are currently no notification
-                                    updates available.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                    </section>
-
-
-                    <!-- =========================================
-                         NOTIFICATION DETAILS
-                         ========================================= -->
-
-                    <section
-                        class="card notification-detail-card"
-                        id="notificationDetailCard"
-                        hidden
+                    <button
+                        type="button"
+                        class="sidebar-toggle"
+                        id="sidebarToggle"
+                        aria-label="Toggle sidebar"
+                        aria-expanded="true"
                     >
-
-                        <div class="card-header">
-
-                            <div class="card-heading">
-
-                                <span class="card-heading-icon">
-                                    <i data-lucide="message-square-text"></i>
-                                </span>
-
-
-                                <div>
-
-                                    <h2>
-                                        Notification Details
-                                    </h2>
-
-                                    <p id="notificationDetailType">
-                                        —
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="card-body">
-
-                            <div class="notification-detail-grid">
-
-
-                                <!-- Message -->
-
-                                <div
-                                    class="notification-detail-item notification-detail-message"
-                                >
-
-                                    <span>
-                                        Message
-                                    </span>
-
-                                    <strong id="notificationDetailMessage">
-                                        —
-                                    </strong>
-
-                                </div>
-
-
-                                <!-- Related Reservation -->
-
-                                <div class="notification-detail-item">
-
-                                    <span>
-                                        Reservation
-                                    </span>
-
-                                    <strong
-                                        id="notificationDetailReservation"
-                                    >
-                                        —
-                                    </strong>
-
-                                </div>
-
-
-                                <!-- Related Type -->
-
-                                <div class="notification-detail-item">
-
-                                    <span>
-                                        Related Update
-                                    </span>
-
-                                    <strong
-                                        id="notificationDetailRelatedType"
-                                    >
-                                        —
-                                    </strong>
-
-                                </div>
-
-                            </div>
-
-
-                            <!-- =================================
-                                 RELATED PAGE ACTION
-                                 Set dynamically by JavaScript
-                                 ================================= -->
-
-                            <div class="notification-detail-actions">
-
-                                <a
-                                    href="ReservationStatus.html"
-                                    class="secondary-button"
-                                    id="notificationRelatedLink"
-                                    hidden
-                                >
-                                    <i data-lucide="arrow-right"></i>
-
-                                    <span id="notificationRelatedLinkText">
-                                        View Details
-                                    </span>
-                                </a>
-
-                            </div>
-
-                        </div>
-
-                    </section>
-
+                        <i data-lucide="menu"></i>
+                    </button>
                 </div>
 
-            </main>
+                <div class="topbar-right">
+                    <button
+                        type="button"
+                        class="client-profile"
+                        id="clientProfileButton"
+                        aria-label="Client profile"
+                    >
+                        <span class="profile-avatar">
+                            <i data-lucide="user"></i>
+                        </span>
 
+                        <span class="profile-info">
+                            <strong id="clientDisplayName"> Client </strong>
+
+                            <small> Client </small>
+                        </span>
+
+                        <i
+                            class="profile-chevron"
+                            data-lucide="chevron-down"
+                        ></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- PAGE LAYOUT -->
+
+            <div class="client-layout">
+                <!-- SIDEBAR -->
+
+                <aside class="client-sidebar" id="clientSidebar">
+                    <nav
+                        class="sidebar-navigation"
+                        aria-label="Client navigation"
+                    >
+                        <a href="Dashboard.html" class="sidebar-link">
+                            <i data-lucide="layout-dashboard"></i>
+
+                            <span> Dashboard </span>
+                        </a>
+
+                        <!-- Booking -->
+
+                        <div class="sidebar-section">
+                            <span class="sidebar-section-title"> BOOKING </span>
+
+                            <a href="Reservations.html" class="sidebar-link">
+                                <i data-lucide="calendar-plus"></i>
+
+                                <span> New Reservation </span>
+                            </a>
+
+                            <a href="MyReservations.html" class="sidebar-link">
+                                <i data-lucide="calendar-days"></i>
+
+                                <span> My Reservations </span>
+                            </a>
+
+                            <a href="Resorts.html" class="sidebar-link">
+                                <i data-lucide="building"></i>
+
+                                <span> Resorts </span>
+                            </a>
+                        </div>
+
+                        <!-- Payment -->
+
+                        <div class="sidebar-section">
+                            <span class="sidebar-section-title"> PAYMENT </span>
+
+                            <a href="Payments.html" class="sidebar-link">
+                                <i data-lucide="wallet-cards"></i>
+
+                                <span> Billing & Payment </span>
+                            </a>
+                        </div>
+
+                        <!-- Documents -->
+
+                        <div class="sidebar-section">
+                            <span class="sidebar-section-title">
+                                DOCUMENTS
+                            </span>
+
+                            <a href="UploadDocuments.html" class="sidebar-link">
+                                <i data-lucide="file-up"></i>
+
+                                <span> Upload Documents </span>
+                            </a>
+                        </div>
+
+                        <!-- Status -->
+
+                        <div class="sidebar-section">
+                            <span class="sidebar-section-title"> STATUS </span>
+
+                            <a
+                                href="ReservationStatus.html"
+                                class="sidebar-link"
+                            >
+                                <i data-lucide="clock-3"></i>
+
+                                <span> Reservation Status </span>
+                            </a>
+
+                            <a
+                                href="Notifications.html"
+                                class="sidebar-link active"
+                                aria-current="page"
+                            >
+                                <i data-lucide="bell"></i>
+
+                                <span> Notifications </span>
+                            </a>
+                        </div>
+
+                        <!-- Account -->
+
+                        <div class="sidebar-section">
+                            <span class="sidebar-section-title"> ACCOUNT </span>
+
+                            <a href="Profile.html" class="sidebar-link">
+                                <i data-lucide="user-round"></i>
+
+                                <span> Profile </span>
+                            </a>
+                        </div>
+                    </nav>
+                </aside>
+
+                <!-- MAIN CONTENT -->
+
+                <main class="client-main">
+                    <div class="page-container">
+                        <!-- PAGE HEADER -->
+
+                        <div class="page-header">
+                            <div>
+                                <h1>Notifications</h1>
+
+                                <p>
+                                    View updates related to your reservation,
+                                    payment, and document verification.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- NOTIFICATIONS CARD -->
+
+                        <section class="card notifications-card">
+                            <div class="card-header">
+                                <div class="card-heading">
+                                    <span class="card-heading-icon">
+                                        <i data-lucide="bell"></i>
+                                    </span>
+
+                                    <div>
+                                        <h2>Notifications</h2>
+
+                                        <p>
+                                            Reservation-related transaction
+                                            updates will appear here.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <!-- NOTIFICATION LIST Populated by Notifications.js -->
+
+                                <div
+                                    class="notification-list"
+                                    id="notificationList"
+                                ></div>
+
+                                <!-- EMPTY STATE -->
+
+                                <div
+                                    class="empty-state notification-empty-state"
+                                    id="notificationEmptyState"
+                                    hidden
+                                >
+                                    <i data-lucide="bell-off"></i>
+
+                                    <h3>No Notifications</h3>
+
+                                    <p>
+                                        There are currently no notification
+                                        updates available.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- NOTIFICATION DETAILS -->
+
+                        <section
+                            class="card notification-detail-card"
+                            id="notificationDetailCard"
+                            hidden
+                        >
+                            <div class="card-header">
+                                <div class="card-heading">
+                                    <span class="card-heading-icon">
+                                        <i
+                                            data-lucide="message-square-text"
+                                        ></i>
+                                    </span>
+
+                                    <div>
+                                        <h2>Notification Details</h2>
+
+                                        <p id="notificationDetailType">—</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="notification-detail-grid">
+                                    <!-- Message -->
+
+                                    <div
+                                        class="notification-detail-item notification-detail-message"
+                                    >
+                                        <span> Message </span>
+
+                                        <strong id="notificationDetailMessage">
+                                            —
+                                        </strong>
+                                    </div>
+
+                                    <!-- Related Reservation -->
+
+                                    <div class="notification-detail-item">
+                                        <span> Reservation </span>
+
+                                        <strong
+                                            id="notificationDetailReservation"
+                                        >
+                                            —
+                                        </strong>
+                                    </div>
+
+                                    <!-- Related Type -->
+
+                                    <div class="notification-detail-item">
+                                        <span> Related Update </span>
+
+                                        <strong
+                                            id="notificationDetailRelatedType"
+                                        >
+                                            —
+                                        </strong>
+                                    </div>
+                                </div>
+
+                                <!-- RELATED PAGE ACTION Set dynamically by JavaScript -->
+
+                                <div class="notification-detail-actions">
+                                    <a
+                                        href="ReservationStatus.html"
+                                        class="secondary-button"
+                                        id="notificationRelatedLink"
+                                        hidden
+                                    >
+                                        <i data-lucide="arrow-right"></i>
+
+                                        <span id="notificationRelatedLinkText">
+                                            View Details
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </main>
+            </div>
         </div>
-
-    </div>
-
-</body>
-
+    </body>
 </html>

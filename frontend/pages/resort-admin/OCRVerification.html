@@ -1,1066 +1,656 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>OCR Verification | ResortHub</title>
 
-  <title>OCR Verification | ResortHub</title>
+        <!-- GLOBAL STYLES -->
 
-  <!-- =====================================================
-       GLOBAL STYLES
-       ===================================================== -->
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css" />
+        <link
+            rel="stylesheet"
+            href="../../css/resort-adminGlobal/sidebar.css"
+        />
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css" />
 
-  <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css">
-  <link rel="stylesheet" href="../../css/resort-adminGlobal/sidebar.css">
-  <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css">
+        <!-- PAGE STYLE -->
 
-  <!-- =====================================================
-       PAGE STYLE
-       ===================================================== -->
+        <link
+            rel="stylesheet"
+            href="../../css/resort-admin/ocr-verification.css"
+        />
 
-  <link rel="stylesheet" href="../../css/resort-admin/ocr-verification.css">
+        <!-- LUCIDE ICONS -->
 
-  <!-- =====================================================
-       LUCIDE ICONS
-       ===================================================== -->
+        <script src="https://unpkg.com/lucide@latest"></script>
+    </head>
 
-  <script src="https://unpkg.com/lucide@latest"></script>
+    <body>
+        <!-- APPLICATION SHELL -->
 
-</head>
+        <div class="app-shell">
+            <!-- GLOBAL SHARED SIDEBAR -->
 
+            <aside class="sidebar">
+                <!-- ResortHub Brand -->
 
-<body>
+                <a class="brand" href="Dashboard.html">
+                    <i class="brand-mark" data-lucide="building-2"> </i>
 
-  <!-- =====================================================
-       APPLICATION SHELL
-       ===================================================== -->
+                    <span>
+                        <strong>ResortHub</strong>
+                        <small>Resort Owner</small>
+                    </span>
+                </a>
 
-  <div class="app-shell">
+                <!-- Resort Switcher -->
 
+                <div class="resort-switcher">
+                    <span class="resort-avatar"> BW </span>
 
-    <!-- ===================================================
-         GLOBAL SHARED SIDEBAR
-         =================================================== -->
-
-    <aside class="sidebar">
-
-      <!-- ResortHub Brand -->
-
-      <a class="brand" href="Dashboard.html">
-
-        <i
-          class="brand-mark"
-          data-lucide="building-2">
-        </i>
-
-        <span>
-          <strong>ResortHub</strong>
-          <small>Resort Owner</small>
-        </span>
-
-      </a>
-
-
-      <!-- Resort Switcher -->
-
-      <div class="resort-switcher">
-
-        <span class="resort-avatar">
-          BW
-        </span>
-
-        <span>
-          <strong>Blue Waves Resort</strong>
-          <small>Resort Owner</small>
-        </span>
-
-      </div>
-
-
-      <!-- =================================================
-           MAIN
-           ================================================= -->
-
-      <div class="nav-section">
-        MAIN
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="Dashboard.html">
-
-        <i data-lucide="layout-dashboard"></i>
-
-        Dashboard
-
-      </a>
-
-
-      <!-- =================================================
-           RESERVATIONS
-           ================================================= -->
-
-      <div class="nav-section">
-        RESERVATIONS
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="Reservations.html">
-
-        <i data-lucide="calendar-days"></i>
-
-        Reservations
-
-      </a>
-
-
-      <a
-        class="nav-link"
-        href="Guests.html">
-
-        <i data-lucide="contact-round"></i>
-
-        Guests
-
-      </a>
-
-
-      <!-- =================================================
-           ACCOMMODATION
-           ================================================= -->
-
-      <div class="nav-section">
-        ACCOMMODATION
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="Rooms.html">
-
-        <i data-lucide="bed-double"></i>
-
-        Rooms & Cottages
-
-      </a>
-
-
-      <!-- =================================================
-           FINANCE
-           ================================================= -->
-
-      <div class="nav-section">
-        FINANCE
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="BillingPayments.html">
-
-        <i data-lucide="credit-card"></i>
-
-        Billing & Payments
-
-      </a>
-
-
-      <!-- =================================================
-           OPERATIONS
-           ================================================= -->
-
-      <div class="nav-section">
-        OPERATIONS
-      </div>
-
-
-      <a
-        class="nav-link active"
-        href="OCRVerification.html">
-
-        <i data-lucide="scan-search"></i>
-
-        OCR Verification
-
-      </a>
-
-
-      <a
-        class="nav-link"
-        href="StaffManagement.html">
-
-        <i data-lucide="users"></i>
-
-        Staff Management
-
-      </a>
-
-
-      <a
-        class="nav-link"
-        href="Reports.html">
-
-        <i data-lucide="chart-no-axes-combined"></i>
-
-        Reports
-
-      </a>
-
-
-      <!-- =================================================
-           SETTINGS
-           ================================================= -->
-
-      <div class="nav-section">
-        SETTINGS
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="Settings.html">
-
-        <i data-lucide="settings"></i>
-
-        Settings
-
-      </a>
-
-
-      <!-- Logout -->
-
-      <a
-        class="nav-link logout"
-        href="#">
-
-        <i data-lucide="log-out"></i>
-
-        Logout
-
-      </a>
-
-    </aside>
-
-
-    <!-- ===================================================
-         MAIN CONTENT
-         =================================================== -->
-
-    <main class="main">
-
-
-      <!-- =================================================
-           GLOBAL TOPBAR
-           ================================================= -->
-
-      <header class="topbar">
-
-
-        <!-- Sidebar Toggle -->
-
-        <button
-          class="sidebar-toggle"
-          type="button"
-          aria-label="Toggle sidebar">
-
-          <i data-lucide="menu"></i>
-
-        </button>
-
-
-        <!-- Search -->
-
-        <input
-          class="search"
-          type="search"
-          id="globalSearch"
-          placeholder="Search...">
-
-
-        <div class="topbar-spacer"></div>
-
-
-        <!-- Notification -->
-
-        <button
-          class="notification"
-          type="button"
-          aria-label="Notifications">
-
-          <i data-lucide="bell"></i>
-
-        </button>
-
-
-        <!-- Resort Selector -->
-
-        <button
-          class="top-select"
-          type="button">
-
-          <span>
-            Blue Waves Resort
-          </span>
-
-          <i data-lucide="chevron-down"></i>
-
-        </button>
-
-
-        <!-- Profile -->
-
-        <button
-          class="profile"
-          type="button">
-
-          <span class="avatar">
-            BW
-          </span>
-
-          <span>
-            Resort Owner
-            <small>Administrator</small>
-          </span>
-
-          <i data-lucide="chevron-down"></i>
-
-        </button>
-
-      </header>
-
-
-      <!-- =================================================
-           PAGE CONTENT
-           ================================================= -->
-
-      <div class="page-content">
-
-
-        <!-- =================================================
-             PAGE HEADER
-             ================================================= -->
-
-        <section class="page-header">
-
-
-          <div>
-
-            <div class="breadcrumb">
-
-              <span>
-                Operations
-              </span>
-
-              <i data-lucide="chevron-right"></i>
-
-              <strong>
-                OCR Verification
-              </strong>
-
-            </div>
-
-
-            <h1>
-              OCR Verification
-            </h1>
-
-
-            <p>
-              Verify uploaded guest documents and review
-              extracted information.
-            </p>
-
-          </div>
-
-
-          <div class="page-actions">
-
-            <button
-              class="btn-secondary"
-              type="button"
-              id="clearVerificationButton">
-
-              <i data-lucide="rotate-ccw"></i>
-
-              Clear
-
-            </button>
-
-          </div>
-
-        </section>
-
-
-        <!-- =================================================
-             VERIFICATION WORKSPACE
-             ================================================= -->
-
-        <section class="verification-layout">
-
-
-          <!-- =================================================
-               DOCUMENT VERIFICATION WIDGET
-               ================================================= -->
-
-          <div class="content-card verification-widget">
-
-
-            <!-- Widget Header -->
-
-            <div class="section-header">
-
-              <div class="section-title-with-icon">
-
-                <div class="section-icon">
-
-                  <i data-lucide="file-check-2"></i>
-
+                    <span>
+                        <strong>Blue Waves Resort</strong>
+                        <small>Resort Owner</small>
+                    </span>
                 </div>
 
-                <div>
+                <!-- MAIN -->
 
-                  <h2>
-                    Document Verification
-                  </h2>
+                <div class="nav-section">MAIN</div>
 
-                  <p>
-                    Upload a guest document for OCR
-                    verification.
-                  </p>
+                <a class="nav-link" href="Dashboard.html">
+                    <i data-lucide="layout-dashboard"></i>
 
+                    Dashboard
+                </a>
+
+                <!-- RESERVATIONS -->
+
+                <div class="nav-section">RESERVATIONS</div>
+
+                <a class="nav-link" href="Reservations.html">
+                    <i data-lucide="calendar-days"></i>
+
+                    Reservations
+                </a>
+
+                <a class="nav-link" href="Guests.html">
+                    <i data-lucide="contact-round"></i>
+
+                    Guests
+                </a>
+
+                <!-- ACCOMMODATION -->
+
+                <div class="nav-section">ACCOMMODATION</div>
+
+                <a class="nav-link" href="Rooms.html">
+                    <i data-lucide="bed-double"></i>
+
+                    Rooms & Cottages
+                </a>
+
+                <!-- FINANCE -->
+
+                <div class="nav-section">FINANCE</div>
+
+                <a class="nav-link" href="BillingPayments.html">
+                    <i data-lucide="credit-card"></i>
+
+                    Billing & Payments
+                </a>
+
+                <!-- OPERATIONS -->
+
+                <div class="nav-section">OPERATIONS</div>
+
+                <a class="nav-link active" href="OCRVerification.html">
+                    <i data-lucide="scan-search"></i>
+
+                    OCR Verification
+                </a>
+
+                <a class="nav-link" href="StaffManagement.html">
+                    <i data-lucide="users"></i>
+
+                    Staff Management
+                </a>
+
+                <a class="nav-link" href="Reports.html">
+                    <i data-lucide="chart-no-axes-combined"></i>
+
+                    Reports
+                </a>
+
+                <!-- SETTINGS -->
+
+                <div class="nav-section">SETTINGS</div>
+
+                <a class="nav-link" href="Settings.html">
+                    <i data-lucide="settings"></i>
+
+                    Settings
+                </a>
+
+                <!-- Logout -->
+
+                <a class="nav-link logout" href="#">
+                    <i data-lucide="log-out"></i>
+
+                    Logout
+                </a>
+            </aside>
+
+            <!-- MAIN CONTENT -->
+
+            <main class="main">
+                <!-- GLOBAL TOPBAR -->
+
+                <header class="topbar">
+                    <!-- Sidebar Toggle -->
+
+                    <button
+                        class="sidebar-toggle"
+                        type="button"
+                        aria-label="Toggle sidebar"
+                    >
+                        <i data-lucide="menu"></i>
+                    </button>
+
+                    <!-- Search -->
+
+                    <input
+                        class="search"
+                        type="search"
+                        id="globalSearch"
+                        placeholder="Search..."
+                    />
+
+                    <div class="topbar-spacer"></div>
+
+                    <!-- Notification -->
+
+                    <button
+                        class="notification"
+                        type="button"
+                        aria-label="Notifications"
+                    >
+                        <i data-lucide="bell"></i>
+                    </button>
+
+                    <!-- Resort Selector -->
+
+                    <button class="top-select" type="button">
+                        <span> Blue Waves Resort </span>
+
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+
+                    <!-- Profile -->
+
+                    <button class="profile" type="button">
+                        <span class="avatar"> BW </span>
+
+                        <span>
+                            Resort Owner
+                            <small>Administrator</small>
+                        </span>
+
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                </header>
+
+                <!-- PAGE CONTENT -->
+
+                <div class="page-content">
+                    <!-- PAGE HEADER -->
+
+                    <section class="page-header">
+                        <div>
+                            <div class="breadcrumb">
+                                <span> Operations </span>
+
+                                <i data-lucide="chevron-right"></i>
+
+                                <strong> OCR Verification </strong>
+                            </div>
+
+                            <h1>OCR Verification</h1>
+
+                            <p>
+                                Verify uploaded guest documents and review
+                                extracted information.
+                            </p>
+                        </div>
+
+                        <div class="page-actions">
+                            <button
+                                class="btn-secondary"
+                                type="button"
+                                id="clearVerificationButton"
+                            >
+                                <i data-lucide="rotate-ccw"></i>
+
+                                Clear
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- VERIFICATION WORKSPACE -->
+
+                    <section class="verification-layout">
+                        <!-- DOCUMENT VERIFICATION WIDGET -->
+
+                        <div class="content-card verification-widget">
+                            <!-- Widget Header -->
+
+                            <div class="section-header">
+                                <div class="section-title-with-icon">
+                                    <div class="section-icon">
+                                        <i data-lucide="file-check-2"></i>
+                                    </div>
+
+                                    <div>
+                                        <h2>Document Verification</h2>
+
+                                        <p>
+                                            Upload a guest document for OCR
+                                            verification.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <span
+                                    class="verification-status idle"
+                                    id="verificationStatus"
+                                >
+                                    Ready
+                                </span>
+                            </div>
+
+                            <!-- DOCUMENT UPLOAD AREA -->
+
+                            <div class="upload-section">
+                                <div class="upload-widget" id="uploadWidget">
+                                    <div class="upload-icon">
+                                        <i data-lucide="file-up"></i>
+                                    </div>
+
+                                    <h3>Upload Document</h3>
+
+                                    <p>
+                                        Select a document image to begin
+                                        verification.
+                                    </p>
+
+                                    <label
+                                        class="upload-button"
+                                        for="documentInput"
+                                    >
+                                        <i data-lucide="upload"></i>
+
+                                        Choose Document
+                                    </label>
+
+                                    <input
+                                        type="file"
+                                        id="documentInput"
+                                        accept="image/*,.pdf"
+                                        hidden
+                                    />
+
+                                    <small> Supported: JPG, PNG, PDF </small>
+                                </div>
+
+                                <!-- SELECTED DOCUMENT -->
+
+                                <div
+                                    class="document-preview"
+                                    id="documentPreview"
+                                    hidden
+                                >
+                                    <div class="preview-header">
+                                        <div>
+                                            <span class="preview-label">
+                                                Selected Document
+                                            </span>
+
+                                            <strong id="documentName">
+                                                No document selected
+                                            </strong>
+                                        </div>
+
+                                        <button
+                                            class="remove-document"
+                                            type="button"
+                                            id="removeDocumentButton"
+                                            aria-label="Remove document"
+                                        >
+                                            <i data-lucide="x"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="preview-area">
+                                        <div class="preview-placeholder">
+                                            <i data-lucide="file-text"></i>
+
+                                            <span id="documentType">
+                                                Document preview
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="document-details">
+                                        <div>
+                                            <span> File Name </span>
+
+                                            <strong id="previewFileName">
+                                                â€”
+                                            </strong>
+                                        </div>
+
+                                        <div>
+                                            <span> File Type </span>
+
+                                            <strong id="previewFileType">
+                                                â€”
+                                            </strong>
+                                        </div>
+
+                                        <div>
+                                            <span> File Size </span>
+
+                                            <strong id="previewFileSize">
+                                                â€”
+                                            </strong>
+                                        </div>
+                                    </div>
+
+                                    <button
+                                        class="verify-button"
+                                        type="button"
+                                        id="verifyDocumentButton"
+                                    >
+                                        <i data-lucide="scan-search"></i>
+
+                                        Verify Document
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- OCR RESULT -->
+
+                        <div class="content-card ocr-result-card">
+                            <div class="section-header">
+                                <div class="section-title-with-icon">
+                                    <div class="section-icon">
+                                        <i data-lucide="scan-text"></i>
+                                    </div>
+
+                                    <div>
+                                        <h2>OCR Result</h2>
+
+                                        <p>
+                                            Extracted information from the
+                                            uploaded document.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RESULT CONTENT -->
+
+                            <div class="result-content" id="resultContent">
+                                <!-- Initial State -->
+
+                                <div class="result-empty" id="resultEmpty">
+                                    <div class="result-empty-icon">
+                                        <i data-lucide="scan-line"></i>
+                                    </div>
+
+                                    <strong> No verification result </strong>
+
+                                    <p>
+                                        Upload a document and start verification
+                                        to view extracted information.
+                                    </p>
+                                </div>
+
+                                <!-- Extracted Data -->
+
+                                <div
+                                    class="extracted-data"
+                                    id="extractedData"
+                                    hidden
+                                >
+                                    <div class="result-heading">
+                                        <div>
+                                            <span> Verification Result </span>
+
+                                            <strong id="resultMessage">
+                                                Document verified
+                                            </strong>
+                                        </div>
+
+                                        <span
+                                            class="result-badge verified"
+                                            id="resultBadge"
+                                        >
+                                            Verified
+                                        </span>
+                                    </div>
+
+                                    <!-- EXTRACTED INFORMATION -->
+
+                                    <div class="data-grid">
+                                        <div class="data-item">
+                                            <span> Full Name </span>
+
+                                            <strong id="ocrFullName">
+                                                Juan Dela Cruz
+                                            </strong>
+                                        </div>
+
+                                        <div class="data-item">
+                                            <span> Document Type </span>
+
+                                            <strong id="ocrDocumentType">
+                                                Valid Identification
+                                            </strong>
+                                        </div>
+
+                                        <div class="data-item">
+                                            <span> Document Number </span>
+
+                                            <strong id="ocrDocumentNumber">
+                                                ************
+                                            </strong>
+                                        </div>
+
+                                        <div class="data-item">
+                                            <span> Date of Birth </span>
+
+                                            <strong id="ocrBirthDate">
+                                                â€”
+                                            </strong>
+                                        </div>
+
+                                        <div class="data-item">
+                                            <span> Expiration Date </span>
+
+                                            <strong id="ocrExpirationDate">
+                                                â€”
+                                            </strong>
+                                        </div>
+
+                                        <div class="data-item">
+                                            <span> Verification Status </span>
+
+                                            <strong id="ocrVerificationResult">
+                                                Verified
+                                            </strong>
+                                        </div>
+                                    </div>
+
+                                    <!-- VERIFICATION INFORMATION -->
+
+                                    <div class="verification-summary">
+                                        <div class="summary-row">
+                                            <span> Document Check </span>
+
+                                            <strong class="check-passed">
+                                                <i
+                                                    data-lucide="check-circle-2"
+                                                ></i>
+
+                                                Passed
+                                            </strong>
+                                        </div>
+
+                                        <div class="summary-row">
+                                            <span> OCR Extraction </span>
+
+                                            <strong class="check-passed">
+                                                <i
+                                                    data-lucide="check-circle-2"
+                                                ></i>
+
+                                                Completed
+                                            </strong>
+                                        </div>
+
+                                        <div class="summary-row">
+                                            <span> Record Status </span>
+
+                                            <strong class="check-passed">
+                                                <i
+                                                    data-lucide="check-circle-2"
+                                                ></i>
+
+                                                Ready for Record
+                                            </strong>
+                                        </div>
+                                    </div>
+
+                                    <!-- SAVE VERIFICATION -->
+
+                                    <button
+                                        class="save-verification"
+                                        type="button"
+                                        id="saveVerificationButton"
+                                    >
+                                        <i data-lucide="save"></i>
+
+                                        Save Verification Record
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- VERIFICATION INFORMATION -->
+
+                    <section class="content-card verification-info">
+                        <div class="info-header">
+                            <div class="info-icon">
+                                <i data-lucide="info"></i>
+                            </div>
+
+                            <div>
+                                <h2>Verification Process</h2>
+
+                                <p>
+                                    The document verification workflow uses
+                                    uploaded document data to support guest
+                                    record verification.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="process-steps">
+                            <!-- Step 1 -->
+
+                            <div class="process-step">
+                                <span class="step-number"> 1 </span>
+
+                                <div>
+                                    <strong> Upload Document </strong>
+
+                                    <small>
+                                        Select the guest document for
+                                        verification.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Step 2 -->
+
+                            <div class="process-step">
+                                <span class="step-number"> 2 </span>
+
+                                <div>
+                                    <strong> OCR Processing </strong>
+
+                                    <small>
+                                        Extract relevant information from the
+                                        uploaded document.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Step 3 -->
+
+                            <div class="process-step">
+                                <span class="step-number"> 3 </span>
+
+                                <div>
+                                    <strong> Verification </strong>
+
+                                    <small>
+                                        Review the extracted information and
+                                        verification result.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Step 4 -->
+
+                            <div class="process-step">
+                                <span class="step-number"> 4 </span>
+
+                                <div>
+                                    <strong> Save Record </strong>
+
+                                    <small>
+                                        Store the verification result for the
+                                        appropriate guest record.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-
-              </div>
-
-
-              <span class="verification-status idle" id="verificationStatus">
-                Ready
-              </span>
-
-            </div>
-
-
-            <!-- =================================================
-                 DOCUMENT UPLOAD AREA
-                 ================================================= -->
-
-            <div class="upload-section">
-
-
-              <div
-                class="upload-widget"
-                id="uploadWidget">
-
-
-                <div class="upload-icon">
-
-                  <i data-lucide="file-up"></i>
-
-                </div>
-
-
-                <h3>
-                  Upload Document
-                </h3>
-
-
-                <p>
-                  Select a document image to begin
-                  verification.
-                </p>
-
-
-                <label
-                  class="upload-button"
-                  for="documentInput">
-
-                  <i data-lucide="upload"></i>
-
-                  Choose Document
-
-                </label>
-
-
-                <input
-                  type="file"
-                  id="documentInput"
-                  accept="image/*,.pdf"
-                  hidden>
-
-
-                <small>
-                  Supported: JPG, PNG, PDF
-                </small>
-
-              </div>
-
-
-              <!-- =================================================
-                   SELECTED DOCUMENT
-                   ================================================= -->
-
-              <div
-                class="document-preview"
-                id="documentPreview"
-                hidden>
-
-
-                <div class="preview-header">
-
-                  <div>
-
-                    <span class="preview-label">
-                      Selected Document
-                    </span>
-
-                    <strong id="documentName">
-                      No document selected
-                    </strong>
-
-                  </div>
-
-
-                  <button
-                    class="remove-document"
-                    type="button"
-                    id="removeDocumentButton"
-                    aria-label="Remove document">
-
-                    <i data-lucide="x"></i>
-
-                  </button>
-
-                </div>
-
-
-                <div class="preview-area">
-
-                  <div class="preview-placeholder">
-
-                    <i data-lucide="file-text"></i>
-
-                    <span id="documentType">
-                      Document preview
-                    </span>
-
-                  </div>
-
-                </div>
-
-
-                <div class="document-details">
-
-                  <div>
-
-                    <span>
-                      File Name
-                    </span>
-
-                    <strong id="previewFileName">
-                      —
-                    </strong>
-
-                  </div>
-
-
-                  <div>
-
-                    <span>
-                      File Type
-                    </span>
-
-                    <strong id="previewFileType">
-                      —
-                    </strong>
-
-                  </div>
-
-
-                  <div>
-
-                    <span>
-                      File Size
-                    </span>
-
-                    <strong id="previewFileSize">
-                      —
-                    </strong>
-
-                  </div>
-
-                </div>
-
-
-                <button
-                  class="verify-button"
-                  type="button"
-                  id="verifyDocumentButton">
-
-                  <i data-lucide="scan-search"></i>
-
-                  Verify Document
-
-                </button>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- =================================================
-               OCR RESULT
-               ================================================= -->
-
-          <div class="content-card ocr-result-card">
-
-
-            <div class="section-header">
-
-              <div class="section-title-with-icon">
-
-                <div class="section-icon">
-
-                  <i data-lucide="scan-text"></i>
-
-                </div>
-
-                <div>
-
-                  <h2>
-                    OCR Result
-                  </h2>
-
-                  <p>
-                    Extracted information from the uploaded
-                    document.
-                  </p>
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <!-- =================================================
-                 RESULT CONTENT
-                 ================================================= -->
-
-            <div
-              class="result-content"
-              id="resultContent">
-
-
-              <!-- Initial State -->
-
-              <div
-                class="result-empty"
-                id="resultEmpty">
-
-                <div class="result-empty-icon">
-
-                  <i data-lucide="scan-line"></i>
-
-                </div>
-
-                <strong>
-                  No verification result
-                </strong>
-
-                <p>
-                  Upload a document and start verification
-                  to view extracted information.
-                </p>
-
-              </div>
-
-
-              <!-- Extracted Data -->
-
-              <div
-                class="extracted-data"
-                id="extractedData"
-                hidden>
-
-
-                <div class="result-heading">
-
-                  <div>
-
-                    <span>
-                      Verification Result
-                    </span>
-
-                    <strong id="resultMessage">
-                      Document verified
-                    </strong>
-
-                  </div>
-
-
-                  <span
-                    class="result-badge verified"
-                    id="resultBadge">
-
-                    Verified
-
-                  </span>
-
-                </div>
-
-
-                <!-- =================================================
-                     EXTRACTED INFORMATION
-                     ================================================= -->
-
-                <div class="data-grid">
-
-
-                  <div class="data-item">
-
-                    <span>
-                      Full Name
-                    </span>
-
-                    <strong id="ocrFullName">
-                      Juan Dela Cruz
-                    </strong>
-
-                  </div>
-
-
-                  <div class="data-item">
-
-                    <span>
-                      Document Type
-                    </span>
-
-                    <strong id="ocrDocumentType">
-                      Valid Identification
-                    </strong>
-
-                  </div>
-
-
-                  <div class="data-item">
-
-                    <span>
-                      Document Number
-                    </span>
-
-                    <strong id="ocrDocumentNumber">
-                      ************
-                    </strong>
-
-                  </div>
-
-
-                  <div class="data-item">
-
-                    <span>
-                      Date of Birth
-                    </span>
-
-                    <strong id="ocrBirthDate">
-                      —
-                    </strong>
-
-                  </div>
-
-
-                  <div class="data-item">
-
-                    <span>
-                      Expiration Date
-                    </span>
-
-                    <strong id="ocrExpirationDate">
-                      —
-                    </strong>
-
-                  </div>
-
-
-                  <div class="data-item">
-
-                    <span>
-                      Verification Status
-                    </span>
-
-                    <strong id="ocrVerificationResult">
-                      Verified
-                    </strong>
-
-                  </div>
-
-                </div>
-
-
-                <!-- =================================================
-                     VERIFICATION INFORMATION
-                     ================================================= -->
-
-                <div class="verification-summary">
-
-
-                  <div class="summary-row">
-
-                    <span>
-                      Document Check
-                    </span>
-
-                    <strong class="check-passed">
-
-                      <i data-lucide="check-circle-2"></i>
-
-                      Passed
-
-                    </strong>
-
-                  </div>
-
-
-                  <div class="summary-row">
-
-                    <span>
-                      OCR Extraction
-                    </span>
-
-                    <strong class="check-passed">
-
-                      <i data-lucide="check-circle-2"></i>
-
-                      Completed
-
-                    </strong>
-
-                  </div>
-
-
-                  <div class="summary-row">
-
-                    <span>
-                      Record Status
-                    </span>
-
-                    <strong class="check-passed">
-
-                      <i data-lucide="check-circle-2"></i>
-
-                      Ready for Record
-
-                    </strong>
-
-                  </div>
-
-
-                </div>
-
-
-                <!-- =================================================
-                     SAVE VERIFICATION
-                     ================================================= -->
-
-                <button
-                  class="save-verification"
-                  type="button"
-                  id="saveVerificationButton">
-
-                  <i data-lucide="save"></i>
-
-                  Save Verification Record
-
-                </button>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        <!-- =================================================
-             VERIFICATION INFORMATION
-             ================================================= -->
-
-        <section class="content-card verification-info">
-
-
-          <div class="info-header">
-
-            <div class="info-icon">
-
-              <i data-lucide="info"></i>
-
-            </div>
-
-            <div>
-
-              <h2>
-                Verification Process
-              </h2>
-
-              <p>
-                The document verification workflow uses
-                uploaded document data to support guest
-                record verification.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <div class="process-steps">
-
-
-            <!-- Step 1 -->
-
-            <div class="process-step">
-
-              <span class="step-number">
-                1
-              </span>
-
-              <div>
-
-                <strong>
-                  Upload Document
-                </strong>
-
-                <small>
-                  Select the guest document for verification.
-                </small>
-
-              </div>
-
-            </div>
-
-
-            <!-- Step 2 -->
-
-            <div class="process-step">
-
-              <span class="step-number">
-                2
-              </span>
-
-              <div>
-
-                <strong>
-                  OCR Processing
-                </strong>
-
-                <small>
-                  Extract relevant information from the
-                  uploaded document.
-                </small>
-
-              </div>
-
-            </div>
-
-
-            <!-- Step 3 -->
-
-            <div class="process-step">
-
-              <span class="step-number">
-                3
-              </span>
-
-              <div>
-
-                <strong>
-                  Verification
-                </strong>
-
-                <small>
-                  Review the extracted information and
-                  verification result.
-                </small>
-
-              </div>
-
-            </div>
-
-
-            <!-- Step 4 -->
-
-            <div class="process-step">
-
-              <span class="step-number">
-                4
-              </span>
-
-              <div>
-
-                <strong>
-                  Save Record
-                </strong>
-
-                <small>
-                  Store the verification result for the
-                  appropriate guest record.
-                </small>
-
-              </div>
-
-            </div>
-
-
-          </div>
-
-        </section>
-
-
-      </div>
-
-    </main>
-
-  </div>
-
-
-  <!-- =====================================================
-       JAVASCRIPT
-       ===================================================== -->
-
-  <script src="../../js/resort-admin/ocr-verification.js"></script>
-
-
-  <!-- =====================================================
-       INITIALIZE LUCIDE ICONS
-       ===================================================== -->
-
-  <script>
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      function () {
-
-        if (
-          typeof lucide !== "undefined" &&
-          typeof lucide.createIcons === "function"
-        ) {
-
-          lucide.createIcons();
-
-        }
-
-      }
-    );
-
-  </script>
-
-
-</body>
-
+            </main>
+        </div>
+
+        <!-- JAVASCRIPT -->
+
+        <script src="../../js/resort-admin/ocr-verification.js"></script>
+
+        <!-- INITIALIZE LUCIDE ICONS -->
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                if (
+                    typeof lucide !== "undefined" &&
+                    typeof lucide.createIcons === "function"
+                ) {
+                    lucide.createIcons();
+                }
+            });
+        </script>
+    </body>
 </html>

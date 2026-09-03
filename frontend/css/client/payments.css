@@ -159,6 +159,200 @@
         0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
+/* =========================================================
+   PAYMENT OPTIONS
+   ========================================================= */
+
+.payment-option-group {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+}
+
+.payment-option-group legend {
+    grid-column: 1 / -1;
+
+    margin-bottom: 2px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: var(--text-primary);
+}
+
+.payment-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    min-width: 0;
+    padding: 14px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-medium);
+
+    background: var(--surface);
+
+    color: var(--text-primary);
+    cursor: pointer;
+
+    font-family: inherit;
+    text-align: left;
+
+    transition:
+        border-color var(--transition),
+        background var(--transition),
+        box-shadow var(--transition);
+}
+
+.payment-option:hover {
+    border-color: var(--primary);
+}
+
+.payment-option:has(input:checked) {
+    border-color: var(--primary);
+
+    background: rgba(37, 99, 235, 0.06);
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.payment-option input[type="radio"] {
+    flex-shrink: 0;
+
+    margin-top: 3px;
+
+    accent-color: var(--primary);
+}
+
+.payment-option-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    min-width: 0;
+}
+
+.payment-option-content strong {
+    font-size: 13px;
+
+    color: var(--text-primary);
+}
+
+.payment-option-content small {
+    font-size: 12px;
+    line-height: 1.5;
+
+    color: var(--text-muted);
+}
+
+.payment-later-button {
+    width: 100%;
+}
+
+.payment-option:disabled,
+.payment-option:has(input:disabled) {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   GCASH PAYMENT DETAILS
+   ========================================================= */
+
+.gcash-payment-details {
+    padding: 16px;
+
+    border: 1px solid rgba(37, 99, 235, 0.2);
+    border-radius: var(--radius-medium);
+
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.gcash-payment-details[hidden],
+.gcash-qr-container[hidden],
+.gcash-unavailable-message[hidden] {
+    display: none;
+}
+
+.gcash-payment-heading strong {
+    font-size: 14px;
+
+    color: var(--text-primary);
+}
+
+.gcash-payment-heading p {
+    margin: 5px 0 0;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    color: var(--text-muted);
+}
+
+.gcash-account-information {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+
+    margin-top: 14px;
+}
+
+.gcash-account-information > div {
+    padding: 12px;
+
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-medium);
+
+    background: var(--surface);
+}
+
+.gcash-account-information span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    font-size: 12px;
+
+    color: var(--text-muted);
+}
+
+.gcash-account-information strong {
+    font-size: 14px;
+
+    color: var(--text-primary);
+}
+
+.gcash-qr-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    margin-top: 14px;
+}
+
+.gcash-qr-container img {
+    width: 100%;
+    max-width: 220px;
+
+    border-radius: var(--radius-medium);
+}
+
+.gcash-unavailable-message {
+    margin: 14px 0 0;
+
+    color: var(--danger);
+    font-size: 12px;
+    line-height: 1.5;
+}
 
 /* =========================================================
    FILE UPLOAD
@@ -545,6 +739,10 @@
         margin-left: 55px;
     }
 
+    .payment-option-group,
+    .gcash-account-information {
+        grid-template-columns: 1fr;
+    }
 }
 
 

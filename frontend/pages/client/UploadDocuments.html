@@ -1,793 +1,524 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
 
-<head>
-    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+        <title>Upload Documents | ResortHub</title>
 
-    <title>Upload Documents | ResortHub</title>
+        <!-- Shared CSS -->
+        <link rel="stylesheet" href="../../css//client-global/style..css" />
 
-    <!-- Shared CSS -->
-    <link
-        rel="stylesheet"
-        href="../../css//client-global/style..css"
-    >
+        <link rel="stylesheet" href="../../css//client-global/nav.css" />
 
-    <link
-        rel="stylesheet"
-        href="../../css//client-global/nav.css"
-    >
+        <link rel="stylesheet" href="../../css//client-global/sidebar.css" />
 
-    <link
-        rel="stylesheet"
-        href="../../css//client-global/sidebar.css"
-    >
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="../../css/client/upload-documents.css" />
 
-    <!-- Page CSS -->
-    <link
-        rel="stylesheet"
-        href="../../css/client/upload-documents.css"
-    >
+        <!-- Lucide Icons -->
+        <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Lucide Icons -->
-    <script
-        src="https://unpkg.com/lucide@latest"
-    ></script>
+        <!-- Page JavaScript -->
+        <script src="../../js/client/UploadDocuments.js"></script>
+    </head>
 
-    <!-- Page JavaScript -->
-    <script
-        src="../../js/client/UploadDocuments.js"
-    ></script>
-</head>
+    <body>
+        <div class="client-app" id="clientApp">
+            <!-- TOP NAVIGATION -->
 
-
-<body>
-
-    <div
-        class="client-app"
-        id="clientApp"
-    >
-
-        <!-- =====================================================
-             TOP NAVIGATION
-             ===================================================== -->
-
-        <header class="client-topbar">
-
-            <div class="topbar-left">
-
-                <a
-                    href="Dashboard.html"
-                    class="client-brand"
-                    aria-label="ResortHub Dashboard"
-                >
-                    <i data-lucide="building-2"></i>
-
-                    <span>
-                        ResortHub
-                    </span>
-                </a>
-
-
-                <button
-                    type="button"
-                    class="sidebar-toggle"
-                    id="sidebarToggle"
-                    aria-label="Toggle sidebar"
-                    aria-expanded="true"
-                >
-                    <i data-lucide="menu"></i>
-                </button>
-
-            </div>
-
-
-            <div class="topbar-right">
-
-                <button
-                    type="button"
-                    class="client-profile"
-                    id="clientProfileButton"
-                    aria-label="Client profile"
-                >
-
-                    <span class="profile-avatar">
-
-                        <i data-lucide="user"></i>
-
-                    </span>
-
-
-                    <span class="profile-info">
-
-                        <strong id="clientDisplayName">
-                            Client
-                        </strong>
-
-                        <small>
-                            Client
-                        </small>
-
-                    </span>
-
-
-                    <i
-                        class="profile-chevron"
-                        data-lucide="chevron-down"
-                    ></i>
-
-                </button>
-
-            </div>
-
-        </header>
-
-
-        <!-- =====================================================
-             PAGE LAYOUT
-             ===================================================== -->
-
-        <div class="client-layout">
-
-
-            <!-- =================================================
-                 SIDEBAR
-                 ================================================= -->
-
-            <aside
-                class="client-sidebar"
-                id="clientSidebar"
-            >
-
-                <nav
-                    class="sidebar-navigation"
-                    aria-label="Client navigation"
-                >
-
+            <header class="client-topbar">
+                <div class="topbar-left">
                     <a
                         href="Dashboard.html"
-                        class="sidebar-link"
+                        class="client-brand"
+                        aria-label="ResortHub Dashboard"
                     >
-                        <i data-lucide="layout-dashboard"></i>
+                        <i data-lucide="building-2"></i>
 
-                        <span>
-                            Dashboard
-                        </span>
+                        <span> ResortHub </span>
                     </a>
 
-
-                    <!-- Booking -->
-
-                    <div class="sidebar-section">
-
-                        <span class="sidebar-section-title">
-                            BOOKING
-                        </span>
-
-
-                        <a
-                            href="Reservations.html"
-                            class="sidebar-link"
-                        >
-                            <i data-lucide="calendar-plus"></i>
-
-                            <span>
-                                New Reservation
-                            </span>
-                        </a>
-
-
-                        <a
-                            href="MyReservations.html"
-                            class="sidebar-link"
-                        >
-                            <i data-lucide="calendar-days"></i>
-
-                            <span>
-                                My Reservations
-                            </span>
-                        </a>
-
-
-                        <a
-                            href="Resorts.html"
-                            class="sidebar-link"
-                        >
-                            <i data-lucide="building"></i>
-
-                            <span>
-                                Resorts
-                            </span>
-                        </a>
-
-                    </div>
-
-
-                    <!-- Payment -->
-
-                    <div class="sidebar-section">
-
-                        <span class="sidebar-section-title">
-                            PAYMENT
-                        </span>
-
-
-                        <a
-                            href="Payments.html"
-                            class="sidebar-link"
-                        >
-                            <i data-lucide="wallet-cards"></i>
-
-                            <span>
-                                Billing & Payment
-                            </span>
-                        </a>
-
-                    </div>
-
-
-                    <!-- Documents -->
-
-                    <div class="sidebar-section">
-
-                        <span class="sidebar-section-title">
-                            DOCUMENTS
-                        </span>
-
-
-                        <a
-                            href="UploadDocuments.html"
-                            class="sidebar-link active"
-                            aria-current="page"
-                        >
-                            <i data-lucide="file-up"></i>
-
-                            <span>
-                                Upload Documents
-                            </span>
-                        </a>
-
-                    </div>
-
-
-                    <!-- Status -->
-
-                    <div class="sidebar-section">
-
-                        <span class="sidebar-section-title">
-                            STATUS
-                        </span>
-
-
-                        <a
-                            href="ReservationStatus.html"
-                            class="sidebar-link"
-                        >
-                            <i data-lucide="clock-3"></i>
-
-                            <span>
-                                Reservation Status
-                            </span>
-                        </a>
-
-
-                        <a
-                            href="Notifications.html"
-                            class="sidebar-link"
-                        >
-                            <i data-lucide="bell"></i>
-
-                            <span>
-                                Notifications
-                            </span>
-                        </a>
-
-                    </div>
-
-
-                    <!-- Account -->
-
-                    <div class="sidebar-section">
-
-                        <span class="sidebar-section-title">
-                            ACCOUNT
-                        </span>
-
-
-                        <a
-                            href="Profile.html"
-                            class="sidebar-link"
-                        >
-                            <i data-lucide="user-round"></i>
-
-                            <span>
-                                Profile
-                            </span>
-                        </a>
-
-                    </div>
-
-                </nav>
-
-            </aside>
-
-
-            <!-- =================================================
-                 MAIN CONTENT
-                 ================================================= -->
-
-            <main class="client-main">
-
-                <div class="page-container upload-documents-content">
-
-
-                    <!-- =========================================
-                         PAGE HEADER
-                         ========================================= -->
-
-                    <div class="page-header">
-
-                        <div>
-
-                            <h1>
-                                Upload Documents
-                            </h1>
-
-                            <p>
-                                Upload reservation-related documents for document verification and OCR processing.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- =========================================
-                         UPLOAD FORM
-                         ========================================= -->
-
-                    <section class="card document-upload-card">
-
-                        <div class="card-header">
-
-                            <div class="card-heading">
-
-                                <span class="card-heading-icon">
-                                    <i data-lucide="cloud-upload"></i>
-                                </span>
-
-
-                                <div>
-
-                                    <h2>
-                                        Upload Document
-                                    </h2>
-
-                                    <p>
-                                        Select the reservation and document you want to submit.
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="card-body">
-
-                            <form
-                                id="documentUploadForm"
-                                enctype="multipart/form-data"
-                                novalidate
-                            >
-
-                                <div class="document-form-grid">
-
-
-                                    <!-- Reservation -->
-
-                                    <div class="form-group">
-
-                                        <label for="reservationId">
-                                            Reservation
-                                        </label>
-
-                                        <select
-                                            id="reservationId"
-                                            name="reservation_id"
-                                            required
-                                        >
-                                            <option value="">
-                                                Select reservation
-                                            </option>
-                                        </select>
-
-                                    </div>
-
-
-                                    <!-- Document Type -->
-
-                                    <div class="form-group">
-
-                                        <label for="documentType">
-                                            Document Type
-                                        </label>
-
-                                        <select
-                                            id="documentType"
-                                            name="document_type"
-                                            required
-                                        >
-                                            <option value="">
-                                                Select document type
-                                            </option>
-
-                                            <option value="valid_id">
-                                                Valid ID
-                                            </option>
-
-                                            <option value="proof_of_payment">
-                                                Proof of Payment
-                                            </option>
-
-                                            <option value="reservation_form">
-                                                Reservation Form
-                                            </option>
-
-                                            <option value="other_operational_document">
-                                                Other Operational Document
-                                            </option>
-                                        </select>
-
-                                    </div>
-
-                                </div>
-
-
-                                <!-- =================================
-                                     FILE UPLOAD
-                                     ================================= -->
-
-                                <div class="form-group document-file-group">
-
-                                    <label>
-                                        Document File
-                                    </label>
-
-
-                                    <label
-                                        class="document-file-upload"
-                                        id="documentFileUploadArea"
-                                        for="documentFile"
-                                    >
-
-                                        <span class="document-upload-icon">
-
-                                            <i data-lucide="file-up"></i>
-
-                                        </span>
-
-
-                                        <span class="document-upload-text">
-
-                                            <strong>
-                                                Choose a document to upload
-                                            </strong>
-
-                                            <small>
-                                                Select an image or PDF document.
-                                            </small>
-
-                                        </span>
-
-
-                                        <input
-                                            type="file"
-                                            id="documentFile"
-                                            name="document_file"
-                                            accept="image/*,.pdf,application/pdf"
-                                            required
-                                        >
-
-                                    </label>
-
-
-                                    <div
-                                        class="selected-document-file"
-                                        id="selectedDocumentFile"
-                                        hidden
-                                    >
-
-                                        <span class="selected-document-icon">
-
-                                            <i data-lucide="file-check-2"></i>
-
-                                        </span>
-
-
-                                        <div class="selected-document-file-info">
-
-                                            <strong id="selectedDocumentFileName">
-                                                —
-                                            </strong>
-
-                                            <small id="selectedDocumentFileSize">
-                                                —
-                                            </small>
-
-                                        </div>
-
-
-                                        <button
-                                            type="button"
-                                            class="icon-button remove-document-button"
-                                            id="removeDocumentFileButton"
-                                            aria-label="Remove selected document"
-                                        >
-                                            <i data-lucide="x"></i>
-                                        </button>
-
-                                    </div>
-
-                                </div>
-
-
-                                <!-- =================================
-                                     OCR INFORMATION NOTICE
-                                     ================================= -->
-
-                                <div class="ocr-quality-notice">
-
-                                    <span class="ocr-quality-icon">
-
-                                        <i data-lucide="scan-text"></i>
-
-                                    </span>
-
-
-                                    <div>
-
-                                        <strong>
-                                            Document Quality
-                                        </strong>
-
-                                        <p>
-                                            Clear and readable documents help improve OCR text extraction and document verification.
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-
-                                <!-- =================================
-                                     FORM MESSAGE
-                                     ================================= -->
-
-                                <div
-                                    class="document-form-message"
-                                    id="documentFormMessage"
-                                    role="status"
-                                    aria-live="polite"
-                                    hidden
-                                ></div>
-
-
-                                <!-- =================================
-                                     SUBMIT
-                                     ================================= -->
-
-                                <div class="document-form-actions">
-
-                                    <button
-                                        type="submit"
-                                        class="primary-button"
-                                        id="submitDocumentButton"
-                                    >
-
-                                        <i data-lucide="upload"></i>
-
-                                        <span>
-                                            Upload Document
-                                        </span>
-
-                                    </button>
-
-                                </div>
-
-                            </form>
-
-                        </div>
-
-                    </section>
-
-
-                    <!-- =========================================
-                         UPLOADED DOCUMENTS
-                         ========================================= -->
-
-                    <section class="card uploaded-documents-card">
-
-                        <div class="card-header">
-
-                            <div class="card-heading">
-
-                                <span class="card-heading-icon">
-                                    <i data-lucide="files"></i>
-                                </span>
-
-
-                                <div>
-
-                                    <h2>
-                                        Uploaded Documents
-                                    </h2>
-
-                                    <p>
-                                        View your submitted reservation-related documents.
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="card-body">
-
-                            <div
-                                class="uploaded-document-list"
-                                id="uploadedDocumentList"
-                            ></div>
-
-
-                            <!-- Empty State -->
-
-                            <div
-                                class="empty-state uploaded-documents-empty-state"
-                                id="uploadedDocumentsEmptyState"
-                                hidden
-                            >
-
-                                <i data-lucide="file-x-2"></i>
-
-                                <h3>
-                                    No Uploaded Documents
-                                </h3>
-
-                                <p>
-                                    Your uploaded documents will appear here.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                    </section>
-
-
-                    <!-- =========================================
-                         DOCUMENT DETAILS
-                         ========================================= -->
-
-                    <section
-                        class="card document-detail-card"
-                        id="documentDetailCard"
-                        hidden
+                    <button
+                        type="button"
+                        class="sidebar-toggle"
+                        id="sidebarToggle"
+                        aria-label="Toggle sidebar"
+                        aria-expanded="true"
                     >
-
-                        <div class="card-header">
-
-                            <div class="card-heading">
-
-                                <span class="card-heading-icon">
-                                    <i data-lucide="file-search"></i>
-                                </span>
-
-
-                                <div>
-
-                                    <h2>
-                                        Document Details
-                                    </h2>
-
-                                    <p>
-                                        Information related to the selected uploaded document.
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="card-body">
-
-                            <div class="document-detail-grid">
-
-
-                                <div class="document-detail-item">
-
-                                    <span>
-                                        Document Type
-                                    </span>
-
-                                    <strong id="documentDetailType">
-                                        —
-                                    </strong>
-
-                                </div>
-
-
-                                <div class="document-detail-item">
-
-                                    <span>
-                                        Reservation
-                                    </span>
-
-                                    <strong id="documentDetailReservation">
-                                        —
-                                    </strong>
-
-                                </div>
-
-
-                                <div class="document-detail-item">
-
-                                    <span>
-                                        File Name
-                                    </span>
-
-                                    <strong id="documentDetailFileName">
-                                        —
-                                    </strong>
-
-                                </div>
-
-
-                                <div class="document-detail-item">
-
-                                    <span>
-                                        Verification Status
-                                    </span>
-
-                                    <strong>
-
-                                        <span
-                                            class="status-badge"
-                                            id="documentDetailStatus"
-                                        >
-                                            —
-                                        </span>
-
-                                    </strong>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </section>
-
+                        <i data-lucide="menu"></i>
+                    </button>
                 </div>
 
-            </main>
+                <div class="topbar-right">
+                    <button
+                        type="button"
+                        class="client-profile"
+                        id="clientProfileButton"
+                        aria-label="Client profile"
+                    >
+                        <span class="profile-avatar">
+                            <i data-lucide="user"></i>
+                        </span>
 
+                        <span class="profile-info">
+                            <strong id="clientDisplayName"> Client </strong>
+
+                            <small> Client </small>
+                        </span>
+
+                        <i
+                            class="profile-chevron"
+                            data-lucide="chevron-down"
+                        ></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- PAGE LAYOUT -->
+
+            <div class="client-layout">
+                <!-- SIDEBAR -->
+
+                <aside class="client-sidebar" id="clientSidebar">
+                    <nav
+                        class="sidebar-navigation"
+                        aria-label="Client navigation"
+                    >
+                        <a href="Dashboard.html" class="sidebar-link">
+                            <i data-lucide="layout-dashboard"></i>
+
+                            <span> Dashboard </span>
+                        </a>
+
+                        <!-- Booking -->
+
+                        <div class="sidebar-section">
+                            <span class="sidebar-section-title"> BOOKING </span>
+
+                            <a href="Reservations.html" class="sidebar-link">
+                                <i data-lucide="calendar-plus"></i>
+
+                                <span> New Reservation </span>
+                            </a>
+
+                            <a href="MyReservations.html" class="sidebar-link">
+                                <i data-lucide="calendar-days"></i>
+
+                                <span> My Reservations </span>
+                            </a>
+
+                            <a href="Resorts.html" class="sidebar-link">
+                                <i data-lucide="building"></i>
+
+                                <span> Resorts </span>
+                            </a>
+                        </div>
+
+                        <!-- Payment -->
+
+                        <div class="sidebar-section">
+                            <span class="sidebar-section-title"> PAYMENT </span>
+
+                            <a href="Payments.html" class="sidebar-link">
+                                <i data-lucide="wallet-cards"></i>
+
+                                <span> Billing & Payment </span>
+                            </a>
+                        </div>
+
+                        <!-- Documents -->
+
+                        <div class="sidebar-section">
+                            <span class="sidebar-section-title">
+                                DOCUMENTS
+                            </span>
+
+                            <a
+                                href="UploadDocuments.html"
+                                class="sidebar-link active"
+                                aria-current="page"
+                            >
+                                <i data-lucide="file-up"></i>
+
+                                <span> Upload Documents </span>
+                            </a>
+                        </div>
+
+                        <!-- Status -->
+
+                        <div class="sidebar-section">
+                            <span class="sidebar-section-title"> STATUS </span>
+
+                            <a
+                                href="ReservationStatus.html"
+                                class="sidebar-link"
+                            >
+                                <i data-lucide="clock-3"></i>
+
+                                <span> Reservation Status </span>
+                            </a>
+
+                            <a href="Notifications.html" class="sidebar-link">
+                                <i data-lucide="bell"></i>
+
+                                <span> Notifications </span>
+                            </a>
+                        </div>
+
+                        <!-- Account -->
+
+                        <div class="sidebar-section">
+                            <span class="sidebar-section-title"> ACCOUNT </span>
+
+                            <a href="Profile.html" class="sidebar-link">
+                                <i data-lucide="user-round"></i>
+
+                                <span> Profile </span>
+                            </a>
+                        </div>
+                    </nav>
+                </aside>
+
+                <!-- MAIN CONTENT -->
+
+                <main class="client-main">
+                    <div class="page-container upload-documents-content">
+                        <!-- PAGE HEADER -->
+
+                        <div class="page-header">
+                            <div>
+                                <h1>Upload Documents</h1>
+
+                                <p>
+                                    Upload reservation-related documents for
+                                    document verification and OCR processing.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- UPLOAD FORM -->
+
+                        <section class="card document-upload-card">
+                            <div class="card-header">
+                                <div class="card-heading">
+                                    <span class="card-heading-icon">
+                                        <i data-lucide="cloud-upload"></i>
+                                    </span>
+
+                                    <div>
+                                        <h2>Upload Document</h2>
+
+                                        <p>
+                                            Select the reservation and document
+                                            you want to submit.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <form
+                                    id="documentUploadForm"
+                                    enctype="multipart/form-data"
+                                    novalidate
+                                >
+                                    <div class="document-form-grid">
+                                        <!-- Reservation -->
+
+                                        <div class="form-group">
+                                            <label for="reservationId">
+                                                Reservation
+                                            </label>
+
+                                            <select
+                                                id="reservationId"
+                                                name="reservation_id"
+                                                required
+                                            >
+                                                <option value="">
+                                                    Select reservation
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <!-- Document Type -->
+
+                                        <div class="form-group">
+                                            <label for="documentType">
+                                                Document Type
+                                            </label>
+
+                                            <select
+                                                id="documentType"
+                                                name="document_type"
+                                                required
+                                            >
+                                                <option value="">
+                                                    Select document type
+                                                </option>
+
+                                                <option value="valid_id">
+                                                    Valid ID
+                                                </option>
+
+                                                <option
+                                                    value="proof_of_payment"
+                                                >
+                                                    Proof of Payment
+                                                </option>
+
+                                                <option
+                                                    value="reservation_form"
+                                                >
+                                                    Reservation Form
+                                                </option>
+
+                                                <option
+                                                    value="other_operational_document"
+                                                >
+                                                    Other Operational Document
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- FILE UPLOAD -->
+
+                                    <div class="form-group document-file-group">
+                                        <label> Document File </label>
+
+                                        <label
+                                            class="document-file-upload"
+                                            id="documentFileUploadArea"
+                                            for="documentFile"
+                                        >
+                                            <span class="document-upload-icon">
+                                                <i data-lucide="file-up"></i>
+                                            </span>
+
+                                            <span class="document-upload-text">
+                                                <strong>
+                                                    Choose a document to upload
+                                                </strong>
+
+                                                <small>
+                                                    Select an image or PDF
+                                                    document.
+                                                </small>
+                                            </span>
+
+                                            <input
+                                                type="file"
+                                                id="documentFile"
+                                                name="document_file"
+                                                accept="image/*,.pdf,application/pdf"
+                                                required
+                                            />
+                                        </label>
+
+                                        <div
+                                            class="selected-document-file"
+                                            id="selectedDocumentFile"
+                                            hidden
+                                        >
+                                            <span
+                                                class="selected-document-icon"
+                                            >
+                                                <i
+                                                    data-lucide="file-check-2"
+                                                ></i>
+                                            </span>
+
+                                            <div
+                                                class="selected-document-file-info"
+                                            >
+                                                <strong
+                                                    id="selectedDocumentFileName"
+                                                >
+                                                    —
+                                                </strong>
+
+                                                <small
+                                                    id="selectedDocumentFileSize"
+                                                >
+                                                    —
+                                                </small>
+                                            </div>
+
+                                            <button
+                                                type="button"
+                                                class="icon-button remove-document-button"
+                                                id="removeDocumentFileButton"
+                                                aria-label="Remove selected document"
+                                            >
+                                                <i data-lucide="x"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- OCR INFORMATION NOTICE -->
+
+                                    <div class="ocr-quality-notice">
+                                        <span class="ocr-quality-icon">
+                                            <i data-lucide="scan-text"></i>
+                                        </span>
+
+                                        <div>
+                                            <strong> Document Quality </strong>
+
+                                            <p>
+                                                Clear and readable documents
+                                                help improve OCR text extraction
+                                                and document verification.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- FORM MESSAGE -->
+
+                                    <div
+                                        class="document-form-message"
+                                        id="documentFormMessage"
+                                        role="status"
+                                        aria-live="polite"
+                                        hidden
+                                    ></div>
+
+                                    <!-- SUBMIT -->
+
+                                    <div class="document-form-actions">
+                                        <button
+                                            type="submit"
+                                            class="primary-button"
+                                            id="submitDocumentButton"
+                                        >
+                                            <i data-lucide="upload"></i>
+
+                                            <span> Upload Document </span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+
+                        <!-- UPLOADED DOCUMENTS -->
+
+                        <section class="card uploaded-documents-card">
+                            <div class="card-header">
+                                <div class="card-heading">
+                                    <span class="card-heading-icon">
+                                        <i data-lucide="files"></i>
+                                    </span>
+
+                                    <div>
+                                        <h2>Uploaded Documents</h2>
+
+                                        <p>
+                                            View your submitted
+                                            reservation-related documents.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div
+                                    class="uploaded-document-list"
+                                    id="uploadedDocumentList"
+                                ></div>
+
+                                <!-- Empty State -->
+
+                                <div
+                                    class="empty-state uploaded-documents-empty-state"
+                                    id="uploadedDocumentsEmptyState"
+                                    hidden
+                                >
+                                    <i data-lucide="file-x-2"></i>
+
+                                    <h3>No Uploaded Documents</h3>
+
+                                    <p>
+                                        Your uploaded documents will appear
+                                        here.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- DOCUMENT DETAILS -->
+
+                        <section
+                            class="card document-detail-card"
+                            id="documentDetailCard"
+                            hidden
+                        >
+                            <div class="card-header">
+                                <div class="card-heading">
+                                    <span class="card-heading-icon">
+                                        <i data-lucide="file-search"></i>
+                                    </span>
+
+                                    <div>
+                                        <h2>Document Details</h2>
+
+                                        <p>
+                                            Information related to the selected
+                                            uploaded document.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="document-detail-grid">
+                                    <div class="document-detail-item">
+                                        <span> Document Type </span>
+
+                                        <strong id="documentDetailType">
+                                            —
+                                        </strong>
+                                    </div>
+
+                                    <div class="document-detail-item">
+                                        <span> Reservation </span>
+
+                                        <strong id="documentDetailReservation">
+                                            —
+                                        </strong>
+                                    </div>
+
+                                    <div class="document-detail-item">
+                                        <span> File Name </span>
+
+                                        <strong id="documentDetailFileName">
+                                            —
+                                        </strong>
+                                    </div>
+
+                                    <div class="document-detail-item">
+                                        <span> Verification Status </span>
+
+                                        <strong>
+                                            <span
+                                                class="status-badge"
+                                                id="documentDetailStatus"
+                                            >
+                                                —
+                                            </span>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </main>
+            </div>
         </div>
-
-    </div>
-    <script>
-        lucide.createIcons();
-    </script>
-
-</body>
-
+        <script>
+            lucide.createIcons();
+        </script>
+    </body>
 </html>

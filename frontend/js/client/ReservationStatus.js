@@ -1,32 +1,20 @@
 "use strict";
 
-/* =========================================================
-   RESORTHUB - CLIENT RESERVATION STATUS
-   File: js/client/ReservationStatus.js
+const USE_DUMMY_DATA = false;  // Set to true for frontend development without backend
 
-   FRONTEND DEVELOPMENT MODE
+const accessToken = sessionStorage.getItem("resorthub_access_token");
 
-   true:
-   - Uses dummy client/reservation data
-   - Does NOT save or update anything in MySQL
-   - Does NOT allow the client to change statuses
-
-   false:
-   - Loads data from the Express API
-   - Reservation, payment, and document statuses
-     come from the backend/database
-   ========================================================= */
-
-const USE_DUMMY_DATA = true;
+if (!accessToken) {
+    window.location.href = "../auth/Login.html";
+}
 
 
-/* =========================================================
-   API ENDPOINTS
-   ========================================================= */
+
+/*API ENDPOINTS*/
 
 const API_ENDPOINTS = {
-
     clientProfile: "/api/client/profile",
+    reservations: "/api/client/reservations",
 
     reservationById(reservationId) {
         return `/api/client/reservations/${encodeURIComponent(reservationId)}`;
@@ -142,23 +130,17 @@ const DUMMY_RESERVATIONS = [
 ];
 
 
-/* =========================================================
-   APPLICATION STATE
-   ========================================================= */
+/*APPLICATION STATE*/
 
 const reservationStatusState = {
-
     client: null,
-
     reservation: null,
-
     loading: false
 };
 
+let depositCountDownTimer = null;
 
-/* =========================================================
-   DOM ELEMENTS
-   ========================================================= */
+/*DOM ELEMENTS*/
 
 /* Shared */
 
@@ -222,6 +204,24 @@ const documentStatusBadge =
 const paymentTransactionStatus =
     document.getElementById("paymentTransactionStatus");
 
+const reservationTotalAmount =
+    document.getElementById("reservationTotalAmount");
+
+const reservationDepositAmount =
+    document.getElementById("reservationDepositAmount");
+
+const reservationAmountPaid =
+    document.getElementById("reservationAmountPaid");
+
+const reservationBalance =
+    document.getElementById("reservationBalance");
+
+const reservationDepositDeadline =
+    document.getElementById("reservationDepositDeadline");
+
+const reservationDepositCountdown =
+    document.getElementById("reservationDepositCountdown");
+
 const documentTransactionStatus =
     document.getElementById("documentTransactionStatus");
 
@@ -240,6 +240,45 @@ document.addEventListener(
     "DOMContentLoaded",
     initializeReservationStatusPage
 );
+
+async function getDefaultReservationId() {
+    const response = await fetch(API_ENDPOINTS.reservations, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+            "Accept": "application/json",
+            "Authorization": `Bearer ${accessToken}`
+        }
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message || "Unable to load reservations.");
+    }
+
+    const reservations = Array.isArray(data.reservations)
+        ? data.reservations
+        : [];
+
+    const activeStatuses = [
+        "pending",
+        "awaiting_deposit",
+        "deposit_verification",
+        "confirmed"
+    ];
+
+    const activeReservation = reservations.find(reservation => activeStatuses.includes(
+        String(reservation.reservation_status).toLowerCase()
+    ));
+
+    const selectedReservation = activeReservation || reservations[0] ||
+        null;
+
+    return selectedReservation
+        ? selectedReservation.id
+        : null;
+}
 
 
 async function initializeReservationStatusPage() {
@@ -263,9 +302,24 @@ async function initializeReservationStatusPage() {
      * ReservationStatus.html?id=105
      */
 
-    const selectedReservationId =
-        reservationId ||
-        (USE_DUMMY_DATA ? "105" : null);
+    let selectedReservationId = reservationId || (USE_DUMMY_DATA ? "105" : null);
+
+    if (!selectedReservationId && !USE_DUMMY_DATA) {
+        try {
+            selectedReservationId = await getDefaultReservationId();
+        } catch (error) {
+            console.error("Unable to select reservation:", error);
+        }
+    }
+
+    if (selectedReservationId &&
+        !reservationId &&
+        !USE_DUMMY_DATA) {
+            const reservationUrl = `ReservationStatus.html?id=${
+                encodeURIComponent(selectedReservationId)
+            }`;
+            window.history.replaceState(null, "", reservationUrl);
+    }
 
 
     if (!selectedReservationId) {
@@ -383,11 +437,7 @@ async function loadReservationFromDatabase(
         setLoadingState(false);
     }
 }
-
-
-/* =========================================================
-   LOAD CLIENT
-   ========================================================= */
+/*LOAD CLIENT*/
 
 async function loadClientFromApi() {
 
@@ -396,11 +446,10 @@ async function loadClientFromApi() {
             API_ENDPOINTS.clientProfile,
             {
                 method: "GET",
-
                 credentials: "include",
-
                 headers: {
-                    "Accept": "application/json"
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${accessToken}`
                 }
             }
         );
@@ -421,11 +470,7 @@ async function loadClientFromApi() {
     reservationStatusState.client =
         normalizeClient(data);
 }
-
-
-/* =========================================================
-   LOAD RESERVATION
-   ========================================================= */
+/*LOAD RESERVATION*/
 
 async function loadReservationFromApi(
     reservationId
@@ -438,11 +483,10 @@ async function loadReservationFromApi(
             ),
             {
                 method: "GET",
-
                 credentials: "include",
-
                 headers: {
-                    "Accept": "application/json"
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${accessToken}`
                 }
             }
         );
@@ -575,6 +619,30 @@ function normalizeReservation(data) {
             reservation.payment_status ||
             "",
 
+        total_amount:
+            Number(
+                reservation.total_amount || 0
+            ),
+
+        deposit_percentage:
+            Number(
+                reservation.deposit_percentage || 0
+            ),
+
+        deposit_amount:
+            Number(
+                reservation.deposit_amount || 0
+            ),
+
+        amount_paid:
+            Number(
+                reservation.amount_paid || 0
+            ),
+
+        deposit_due_at:
+                reservation.deposit_due_at ||
+                null,
+
         document_verification_status:
             reservation.document_verification_status ||
             reservation.document_status ||
@@ -684,6 +752,34 @@ function renderReservation() {
         reservation.payment_status
     );
 
+    setText(
+        reservationTotalAmount,
+        formatCurrency(reservation.total_amount)
+    );
+
+    setText(
+        reservationDepositAmount,
+        formatCurrency(reservation.deposit_amount)
+    );
+
+    setText(
+        reservationAmountPaid,
+        formatCurrency(reservation.amount_paid)
+    );
+
+    const remainingBalance = Math.max(
+        reservation.total_amount -
+        reservation.amount_paid, 0);
+
+    setText(
+        reservationBalance,
+        formatCurrency(remainingBalance)
+    );
+
+    setText(
+        reservationDepositDeadline,
+        formatDateTime(reservation.deposit_due_at)
+    );
 
     /* Document verification */
 
@@ -698,10 +794,8 @@ function renderReservation() {
         reservation.document_verification_status
     );
 
-
     updateRelatedPageLinks();
-
-
+    startDepositCountdown(reservation.deposit_due_at);
     initializeIcons();
 }
 
@@ -786,49 +880,130 @@ function applyStatusBadge(
         case "confirmed":
 
         case "verified":
-
             element.classList.add(
                 "status-success"
             );
-
             break;
 
+        case "awaiting_deposit":
+            element.textContent = "Awaiting Deposit";
+            element.classList.add("status-warning");
+            break;
 
         case "pending verification":
-
             element.classList.add(
                 "status-warning"
             );
-
             break;
 
 
         case "pending":
-
             element.classList.add(
                 "status-info"
             );
-
             break;
 
 
         case "rejected":
-
             element.classList.add(
                 "status-danger"
             );
-
             break;
 
 
         default:
-
             element.classList.add(
                 "status-neutral"
             );
     }
 }
 
+function startDepositCountdown(deadlineValue) {
+    if (depositCountDownTimer) {
+        clearInterval(depositCountDownTimer);
+    }
+
+    if (!deadlineValue) {
+        setText(reservationDepositCountdown, "—");
+        return;
+    }
+
+    const deadline = new Date(deadlineValue);
+
+    if (Number.isNaN(deadline.getTime())) {
+        setText(reservationDepositCountdown, "—");
+        return;
+    }
+
+    function updateCountdown() {
+        const millisecondsRemaining = deadline.getTime() - Date.now();
+
+        if (millisecondsRemaining <= 0) {
+            clearInterval(depositCountDownTimer);
+            depositCountDownTimer = null;
+
+            setText(reservationDepositCountdown, "Payment period expired");
+
+            if (viewPaymentButton) {
+                viewPaymentButton.removeAttribute("href");
+                viewPaymentButton.setAttribute("aria-disabled", "true");
+            }
+            return;
+        }
+
+        const totalSeconds = Math.floor(millisecondsRemaining / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        setText(reservationDepositCountdown, `${hours}h ${minutes}m ${seconds}s`);
+    }
+
+    updateCountdown();
+
+    if (deadline.getTime() > Date.now()) {
+        depositCountDownTimer = setInterval(updateCountdown, 1000);
+    }
+}
+
+function formatCurrency(value) {
+    const amount = Number(value);
+
+    if (!Number.isFinite(amount)) {
+        return "—";
+    }
+
+    return new Intl.NumberFormat(
+        "en-PH",
+        {
+            style: "currency",
+            currency: "PHP"
+        }
+    ).format(amount);
+}
+
+function formatDateTime(value) {
+    if (!value) {
+        return "—";
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return "—";
+    }
+
+    return new Intl.DateTimeFormat(
+        "en-PH",
+        {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit"
+        }
+    ).format(date);
+}
 
 /* =========================================================
    DATE FORMAT

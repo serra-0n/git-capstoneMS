@@ -1,1198 +1,735 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Staff Management | ResortHub</title>
 
-  <title>Staff Management | ResortHub</title>
+        <!-- GLOBAL STYLES -->
 
-  <!-- =====================================================
-       GLOBAL STYLES
-       ===================================================== -->
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css" />
+        <link
+            rel="stylesheet"
+            href="../../css/resort-adminGlobal/Sidebar.css"
+        />
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/Nav.css" />
 
-  <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css">
-  <link rel="stylesheet" href="../../css/resort-adminGlobal/Sidebar.css">
-  <link rel="stylesheet" href="../../css/resort-adminGlobal/Nav.css">
+        <!-- PAGE-SPECIFIC STYLE -->
 
-  <!-- =====================================================
-       PAGE-SPECIFIC STYLE
-       ===================================================== -->
+        <link
+            rel="stylesheet"
+            href="../../css/resort-admin/Staff-Management.css"
+        />
 
-  <link rel="stylesheet"
-        href="../../css/resort-admin/Staff-Management.css">
+        <!-- LUCIDE ICONS -->
 
-  <!-- =====================================================
-       LUCIDE ICONS
-       ===================================================== -->
+        <script src="https://unpkg.com/lucide@latest"></script>
+    </head>
 
-  <script src="https://unpkg.com/lucide@latest"></script>
+    <body>
+        <!-- APPLICATION SHELL -->
 
-</head>
+        <div class="app-shell">
+            <!-- GLOBAL SHARED SIDEBAR -->
 
+            <aside class="sidebar">
+                <!-- BRAND -->
 
-<body>
+                <a class="brand" href="Dashboard.html">
+                    <i class="brand-mark" data-lucide="building-2"> </i>
 
-  <!-- =====================================================
-       APPLICATION SHELL
-       ===================================================== -->
-
-  <div class="app-shell">
-
-
-    <!-- ===================================================
-         GLOBAL SHARED SIDEBAR
-         =================================================== -->
-
-    <aside class="sidebar">
-
-      <!-- BRAND -->
-
-      <a class="brand" href="Dashboard.html">
-
-        <i
-          class="brand-mark"
-          data-lucide="building-2">
-        </i>
-
-        <span>
-          <strong>ResortHub</strong>
-          <small>Resort Owner</small>
-        </span>
-
-      </a>
-
-
-      <!-- RESORT SWITCHER -->
-
-      <div class="resort-switcher">
-
-        <span class="resort-avatar">
-          BW
-        </span>
-
-        <span>
-          <strong>Blue Waves Resort</strong>
-          <small>Resort Owner</small>
-        </span>
-
-      </div>
-
-
-      <!-- =================================================
-           MAIN
-           ================================================= -->
-
-      <div class="nav-section">
-        MAIN
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="Dashboard.html">
-
-        <i data-lucide="layout-dashboard"></i>
-
-        Dashboard
-
-      </a>
-
-
-      <!-- =================================================
-           RESERVATIONS
-           ================================================= -->
-
-      <div class="nav-section">
-        RESERVATIONS
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="Reservations.html">
-
-        <i data-lucide="calendar-days"></i>
-
-        Reservations
-
-      </a>
-
-
-      <a
-        class="nav-link"
-        href="Guests.html">
-
-        <i data-lucide="contact-round"></i>
-
-        Guests
-
-      </a>
-
-
-      <!-- =================================================
-           ACCOMMODATION
-           ================================================= -->
-
-      <div class="nav-section">
-        ACCOMMODATION
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="Rooms.html">
-
-        <i data-lucide="bed-double"></i>
-
-        Rooms & Cottages
-
-      </a>
-
-
-      <!-- =================================================
-           FINANCE
-           ================================================= -->
-
-      <div class="nav-section">
-        FINANCE
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="BillingPayments.html">
-
-        <i data-lucide="credit-card"></i>
-
-        Billing & Payments
-
-      </a>
-
-
-      <!-- =================================================
-           OPERATIONS
-           ================================================= -->
-
-      <div class="nav-section">
-        OPERATIONS
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="OCRVerification.html">
-
-        <i data-lucide="scan-search"></i>
-
-        OCR Verification
-
-      </a>
-
-
-      <a
-        class="nav-link active"
-        href="StaffManagement.html">
-
-        <i data-lucide="users"></i>
-
-        Staff Management
-
-      </a>
-
-
-      <a
-        class="nav-link"
-        href="Reports.html">
-
-        <i data-lucide="chart-no-axes-combined"></i>
-
-        Reports
-
-      </a>
-
-
-      <!-- =================================================
-           SETTINGS
-           ================================================= -->
-
-      <div class="nav-section">
-        SETTINGS
-      </div>
-
-
-      <a
-        class="nav-link"
-        href="Settings.html">
-
-        <i data-lucide="settings"></i>
-
-        Settings
-
-      </a>
-
-
-      <!-- LOGOUT -->
-
-      <a
-        class="nav-link logout"
-        href="#">
-
-        <i data-lucide="log-out"></i>
-
-        Logout
-
-      </a>
-
-    </aside>
-
-
-    <!-- ===================================================
-         MAIN CONTENT
-         =================================================== -->
-
-    <main class="main">
-
-
-      <!-- =================================================
-           GLOBAL TOPBAR
-           ================================================= -->
-
-      <header class="topbar">
-
-
-        <!-- SIDEBAR TOGGLE -->
-
-        <button
-          class="sidebar-toggle"
-          type="button"
-          aria-label="Toggle sidebar">
-
-          <i data-lucide="menu"></i>
-
-        </button>
-
-
-        <!-- GLOBAL SEARCH -->
-
-        <input
-          class="search"
-          type="search"
-          id="globalSearch"
-          placeholder="Search...">
-
-
-        <div class="topbar-spacer"></div>
-
-
-        <!-- NOTIFICATIONS -->
-
-        <button
-          class="notification"
-          type="button"
-          aria-label="Notifications">
-
-          <i data-lucide="bell"></i>
-
-        </button>
-
-
-        <!-- RESORT SELECTOR -->
-
-        <button
-          class="top-select"
-          type="button">
-
-          <span>
-            Blue Waves Resort
-          </span>
-
-          <i data-lucide="chevron-down"></i>
-
-        </button>
-
-
-        <!-- PROFILE -->
-
-        <button
-          class="profile"
-          type="button">
-
-          <span class="avatar">
-            BW
-          </span>
-
-          <span>
-            Resort Owner
-            <small>Administrator</small>
-          </span>
-
-          <i data-lucide="chevron-down"></i>
-
-        </button>
-
-      </header>
-
-
-      <!-- =================================================
-           PAGE CONTENT
-           ================================================= -->
-
-      <div class="page-content">
-
-
-        <!-- =================================================
-             PAGE HEADER
-             ================================================= -->
-
-        <section class="page-header">
-
-
-          <div>
-
-            <div class="breadcrumb">
-
-              <span>
-                Operations
-              </span>
-
-              <i data-lucide="chevron-right"></i>
-
-              <strong>
-                Staff Management
-              </strong>
-
-            </div>
-
-
-            <h1>
-              Staff Management
-            </h1>
-
-
-            <p>
-              Manage employee accounts and control access
-              according to assigned roles.
-            </p>
-
-          </div>
-
-
-          <div class="page-actions">
-
-            <button
-              class="btn-primary"
-              type="button"
-              id="addStaffButton">
-
-              <i data-lucide="user-plus"></i>
-
-              Add Staff
-
-            </button>
-
-          </div>
-
-        </section>
-
-
-        <!-- =================================================
-             STAFF SUMMARY
-             ================================================= -->
-
-        <section class="staff-summary">
-
-
-          <!-- TOTAL STAFF -->
-
-          <div class="summary-card">
-
-            <div class="summary-icon">
-
-              <i data-lucide="users"></i>
-
-            </div>
-
-            <div>
-
-              <span>
-                Total Staff
-              </span>
-
-              <strong id="totalStaff">
-                0
-              </strong>
-
-            </div>
-
-          </div>
-
-
-          <!-- ACTIVE ACCOUNTS -->
-
-          <div class="summary-card">
-
-            <div class="summary-icon">
-
-              <i data-lucide="user-check"></i>
-
-            </div>
-
-            <div>
-
-              <span>
-                Active Accounts
-              </span>
-
-              <strong id="activeStaff">
-                0
-              </strong>
-
-            </div>
-
-          </div>
-
-
-          <!-- INACTIVE ACCOUNTS -->
-
-          <div class="summary-card">
-
-            <div class="summary-icon">
-
-              <i data-lucide="user-x"></i>
-
-            </div>
-
-            <div>
-
-              <span>
-                Inactive Accounts
-              </span>
-
-              <strong id="inactiveStaff">
-                0
-              </strong>
-
-            </div>
-
-          </div>
-
-
-          <!-- STAFF ROLES -->
-
-          <div class="summary-card">
-
-            <div class="summary-icon">
-
-              <i data-lucide="shield-check"></i>
-
-            </div>
-
-            <div>
-
-              <span>
-                Assigned Roles
-              </span>
-
-              <strong id="roleCount">
-                0
-              </strong>
-
-            </div>
-
-          </div>
-
-        </section>
-
-
-        <!-- =================================================
-             STAFF MANAGEMENT CARD
-             ================================================= -->
-
-        <section class="content-card staff-card">
-
-
-          <!-- CARD HEADER -->
-
-          <div class="card-header">
-
-
-            <div>
-
-              <h2>
-                Employee Accounts
-              </h2>
-
-              <p>
-                View and manage staff accounts and
-                assigned system roles.
-              </p>
-
-            </div>
-
-
-            <div class="staff-controls">
-
-
-              <!-- SEARCH -->
-
-              <div class="staff-search">
-
-                <i data-lucide="search"></i>
-
-                <input
-                  type="search"
-                  id="staffSearch"
-                  placeholder="Search staff...">
-
-              </div>
-
-
-              <!-- ROLE FILTER -->
-
-              <select
-                id="staffRoleFilter"
-                class="staff-filter">
-
-                <option value="all">
-                  All Roles
-                </option>
-
-                <option value="administrator">
-                  Administrator
-                </option>
-
-                <option value="front-desk">
-                  Front Desk
-                </option>
-
-                <option value="staff">
-                  Staff
-                </option>
-
-              </select>
-
-
-              <!-- STATUS FILTER -->
-
-              <select
-                id="staffStatusFilter"
-                class="staff-filter">
-
-                <option value="all">
-                  All Status
-                </option>
-
-                <option value="active">
-                  Active
-                </option>
-
-                <option value="inactive">
-                  Inactive
-                </option>
-
-              </select>
-
-
-            </div>
-
-          </div>
-
-
-          <!-- =================================================
-               STAFF TABLE
-               ================================================= -->
-
-          <div class="table-wrapper">
-
-            <table class="staff-table">
-
-
-              <!-- TABLE HEADER -->
-
-              <thead>
-
-                <tr>
-
-                  <th>
-                    Staff Member
-                  </th>
-
-                  <th>
-                    Contact
-                  </th>
-
-                  <th>
-                    Role
-                  </th>
-
-                  <th>
-                    Account Status
-                  </th>
-
-                  <th>
-                    Actions
-                  </th>
-
-                </tr>
-
-              </thead>
-
-
-              <!-- TABLE BODY -->
-
-              <tbody id="staffTableBody">
-
-
-                <!-- SAMPLE STAFF 1 -->
-
-                <tr
-                  data-name="Maria Santos"
-                  data-role="administrator"
-                  data-status="active">
-
-                  <td>
-
-                    <div class="staff-member">
-
-                      <div class="staff-avatar">
-                        MS
-                      </div>
-
-                      <div>
-
-                        <strong>
-                          Maria Santos
-                        </strong>
-
-                        <small>
-                          Staff ID: STF-001
-                        </small>
-
-                      </div>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <div class="contact-info">
-
-                      <span>
-                        maria@example.com
-                      </span>
-
-                      <small>
-                        Account holder
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <span class="role-badge administrator">
-                      Administrator
+                    <span>
+                        <strong>ResortHub</strong>
+                        <small>Resort Owner</small>
                     </span>
+                </a>
 
-                  </td>
+                <!-- RESORT SWITCHER -->
 
+                <div class="resort-switcher">
+                    <span class="resort-avatar"> BW </span>
 
-                  <td>
-
-                    <span class="status-badge active">
-
-                      <span class="status-dot"></span>
-
-                      Active
-
+                    <span>
+                        <strong>Blue Waves Resort</strong>
+                        <small>Resort Owner</small>
                     </span>
+                </div>
 
-                  </td>
+                <!-- MAIN -->
 
+                <div class="nav-section">MAIN</div>
 
-                  <td>
+                <a class="nav-link" href="Dashboard.html">
+                    <i data-lucide="layout-dashboard"></i>
+
+                    Dashboard
+                </a>
+
+                <!-- RESERVATIONS -->
+
+                <div class="nav-section">RESERVATIONS</div>
+
+                <a class="nav-link" href="Reservations.html">
+                    <i data-lucide="calendar-days"></i>
+
+                    Reservations
+                </a>
+
+                <a class="nav-link" href="Guests.html">
+                    <i data-lucide="contact-round"></i>
+
+                    Guests
+                </a>
+
+                <!-- ACCOMMODATION -->
+
+                <div class="nav-section">ACCOMMODATION</div>
+
+                <a class="nav-link" href="Rooms.html">
+                    <i data-lucide="bed-double"></i>
+
+                    Rooms & Cottages
+                </a>
+
+                <!-- FINANCE -->
+
+                <div class="nav-section">FINANCE</div>
+
+                <a class="nav-link" href="BillingPayments.html">
+                    <i data-lucide="credit-card"></i>
+
+                    Billing & Payments
+                </a>
+
+                <!-- OPERATIONS -->
+
+                <div class="nav-section">OPERATIONS</div>
+
+                <a class="nav-link" href="OCRVerification.html">
+                    <i data-lucide="scan-search"></i>
+
+                    OCR Verification
+                </a>
+
+                <a class="nav-link active" href="StaffManagement.html">
+                    <i data-lucide="users"></i>
+
+                    Staff Management
+                </a>
+
+                <a class="nav-link" href="Reports.html">
+                    <i data-lucide="chart-no-axes-combined"></i>
+
+                    Reports
+                </a>
+
+                <!-- SETTINGS -->
+
+                <div class="nav-section">SETTINGS</div>
+
+                <a class="nav-link" href="Settings.html">
+                    <i data-lucide="settings"></i>
+
+                    Settings
+                </a>
+
+                <!-- LOGOUT -->
+
+                <a class="nav-link logout" href="#">
+                    <i data-lucide="log-out"></i>
+
+                    Logout
+                </a>
+            </aside>
+
+            <!-- MAIN CONTENT -->
+
+            <main class="main">
+                <!-- GLOBAL TOPBAR -->
+
+                <header class="topbar">
+                    <!-- SIDEBAR TOGGLE -->
 
                     <button
-                      class="table-action"
-                      type="button"
-                      aria-label="Manage staff">
-
-                      <i data-lucide="ellipsis"></i>
-
+                        class="sidebar-toggle"
+                        type="button"
+                        aria-label="Toggle sidebar"
+                    >
+                        <i data-lucide="menu"></i>
                     </button>
 
-                  </td>
+                    <!-- GLOBAL SEARCH -->
 
-                </tr>
+                    <input
+                        class="search"
+                        type="search"
+                        id="globalSearch"
+                        placeholder="Search..."
+                    />
 
+                    <div class="topbar-spacer"></div>
 
-                <!-- SAMPLE STAFF 2 -->
-
-                <tr
-                  data-name="John Reyes"
-                  data-role="front-desk"
-                  data-status="active">
-
-                  <td>
-
-                    <div class="staff-member">
-
-                      <div class="staff-avatar">
-                        JR
-                      </div>
-
-                      <div>
-
-                        <strong>
-                          John Reyes
-                        </strong>
-
-                        <small>
-                          Staff ID: STF-002
-                        </small>
-
-                      </div>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <div class="contact-info">
-
-                      <span>
-                        john@example.com
-                      </span>
-
-                      <small>
-                        Account holder
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <span class="role-badge front-desk">
-                      Front Desk
-                    </span>
-
-                  </td>
-
-
-                  <td>
-
-                    <span class="status-badge active">
-
-                      <span class="status-dot"></span>
-
-                      Active
-
-                    </span>
-
-                  </td>
-
-
-                  <td>
+                    <!-- NOTIFICATIONS -->
 
                     <button
-                      class="table-action"
-                      type="button"
-                      aria-label="Manage staff">
-
-                      <i data-lucide="ellipsis"></i>
-
+                        class="notification"
+                        type="button"
+                        aria-label="Notifications"
+                    >
+                        <i data-lucide="bell"></i>
                     </button>
 
-                  </td>
+                    <!-- RESORT SELECTOR -->
 
-                </tr>
+                    <button class="top-select" type="button">
+                        <span> Blue Waves Resort </span>
 
-
-                <!-- SAMPLE STAFF 3 -->
-
-                <tr
-                  data-name="Ana Cruz"
-                  data-role="staff"
-                  data-status="active">
-
-                  <td>
-
-                    <div class="staff-member">
-
-                      <div class="staff-avatar">
-                        AC
-                      </div>
-
-                      <div>
-
-                        <strong>
-                          Ana Cruz
-                        </strong>
-
-                        <small>
-                          Staff ID: STF-003
-                        </small>
-
-                      </div>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <div class="contact-info">
-
-                      <span>
-                        ana@example.com
-                      </span>
-
-                      <small>
-                        Account holder
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <span class="role-badge staff">
-                      Staff
-                    </span>
-
-                  </td>
-
-
-                  <td>
-
-                    <span class="status-badge active">
-
-                      <span class="status-dot"></span>
-
-                      Active
-
-                    </span>
-
-                  </td>
-
-
-                  <td>
-
-                    <button
-                      class="table-action"
-                      type="button"
-                      aria-label="Manage staff">
-
-                      <i data-lucide="ellipsis"></i>
-
+                        <i data-lucide="chevron-down"></i>
                     </button>
 
-                  </td>
+                    <!-- PROFILE -->
 
-                </tr>
+                    <button class="profile" type="button">
+                        <span class="avatar"> BW </span>
 
+                        <span>
+                            Resort Owner
+                            <small>Administrator</small>
+                        </span>
 
-                <!-- SAMPLE STAFF 4 -->
-
-                <tr
-                  data-name="Mark Garcia"
-                  data-role="staff"
-                  data-status="inactive">
-
-                  <td>
-
-                    <div class="staff-member">
-
-                      <div class="staff-avatar">
-                        MG
-                      </div>
-
-                      <div>
-
-                        <strong>
-                          Mark Garcia
-                        </strong>
-
-                        <small>
-                          Staff ID: STF-004
-                        </small>
-
-                      </div>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <div class="contact-info">
-
-                      <span>
-                        mark@example.com
-                      </span>
-
-                      <small>
-                        Account holder
-                      </small>
-
-                    </div>
-
-                  </td>
-
-
-                  <td>
-
-                    <span class="role-badge staff">
-                      Staff
-                    </span>
-
-                  </td>
-
-
-                  <td>
-
-                    <span class="status-badge inactive">
-
-                      <span class="status-dot"></span>
-
-                      Inactive
-
-                    </span>
-
-                  </td>
-
-
-                  <td>
-
-                    <button
-                      class="table-action"
-                      type="button"
-                      aria-label="Manage staff">
-
-                      <i data-lucide="ellipsis"></i>
-
+                        <i data-lucide="chevron-down"></i>
                     </button>
+                </header>
 
-                  </td>
+                <!-- PAGE CONTENT -->
 
-                </tr>
+                <div class="page-content">
+                    <!-- PAGE HEADER -->
 
+                    <section class="page-header">
+                        <div>
+                            <div class="breadcrumb">
+                                <span> Operations </span>
 
-              </tbody>
+                                <i data-lucide="chevron-right"></i>
 
-            </table>
+                                <strong> Staff Management </strong>
+                            </div>
 
+                            <h1>Staff Management</h1>
 
-            <!-- =================================================
-                 EMPTY STATE
-                 ================================================= -->
+                            <p>
+                                Manage employee accounts and control access
+                                according to assigned roles.
+                            </p>
+                        </div>
 
-            <div
-              class="empty-state"
-              id="emptyStaffState"
-              hidden>
+                        <div class="page-actions">
+                            <button
+                                class="btn-primary"
+                                type="button"
+                                id="addStaffButton"
+                            >
+                                <i data-lucide="user-plus"></i>
 
-              <div class="empty-icon">
+                                Add Staff
+                            </button>
+                        </div>
+                    </section>
 
-                <i data-lucide="users-round"></i>
+                    <!-- STAFF SUMMARY -->
 
-              </div>
+                    <section class="staff-summary">
+                        <!-- TOTAL STAFF -->
 
-              <strong>
-                No staff accounts found
-              </strong>
+                        <div class="summary-card">
+                            <div class="summary-icon">
+                                <i data-lucide="users"></i>
+                            </div>
 
-              <p>
-                Try changing your search or filter.
-              </p>
+                            <div>
+                                <span> Total Staff </span>
 
-            </div>
+                                <strong id="totalStaff"> 0 </strong>
+                            </div>
+                        </div>
 
-          </div>
+                        <!-- ACTIVE ACCOUNTS -->
 
+                        <div class="summary-card">
+                            <div class="summary-icon">
+                                <i data-lucide="user-check"></i>
+                            </div>
 
-          <!-- TABLE FOOTER -->
+                            <div>
+                                <span> Active Accounts </span>
 
-          <div class="table-footer">
+                                <strong id="activeStaff"> 0 </strong>
+                            </div>
+                        </div>
 
-            <span id="staffRecordCount">
-              0 records
-            </span>
+                        <!-- INACTIVE ACCOUNTS -->
 
-          </div>
+                        <div class="summary-card">
+                            <div class="summary-icon">
+                                <i data-lucide="user-x"></i>
+                            </div>
 
-        </section>
+                            <div>
+                                <span> Inactive Accounts </span>
 
+                                <strong id="inactiveStaff"> 0 </strong>
+                            </div>
+                        </div>
 
-        <!-- =================================================
-             ROLE-BASED ACCESS
-             ================================================= -->
+                        <!-- STAFF ROLES -->
 
-        <section class="content-card access-card">
+                        <div class="summary-card">
+                            <div class="summary-icon">
+                                <i data-lucide="shield-check"></i>
+                            </div>
 
+                            <div>
+                                <span> Assigned Roles </span>
 
-          <div class="card-header">
+                                <strong id="roleCount"> 0 </strong>
+                            </div>
+                        </div>
+                    </section>
 
-            <div>
+                    <!-- STAFF MANAGEMENT CARD -->
 
-              <h2>
-                Role-Based Access
-              </h2>
+                    <section class="content-card staff-card">
+                        <!-- CARD HEADER -->
 
-              <p>
-                Assign system access according to each
-                employee's responsibilities.
-              </p>
+                        <div class="card-header">
+                            <div>
+                                <h2>Employee Accounts</h2>
+
+                                <p>
+                                    View and manage staff accounts and assigned
+                                    system roles.
+                                </p>
+                            </div>
 
-            </div>
-
-          </div>
-
-
-          <!-- =================================================
-               ACCESS INFORMATION
-               ================================================= -->
-
-          <div class="access-grid">
-
-
-            <!-- ADMINISTRATOR -->
-
-            <div class="access-item">
-
-              <div class="access-icon">
-
-                <i data-lucide="shield-check"></i>
-
-              </div>
-
-              <div>
-
-                <strong>
-                  Administrator
-                </strong>
-
-                <span>
-                  Administrative access to authorized
-                  resort management functions.
-                </span>
-
-              </div>
-
-            </div>
-
-
-            <!-- FRONT DESK -->
-
-            <div class="access-item">
-
-              <div class="access-icon">
-
-                <i data-lucide="clipboard-list"></i>
-
-              </div>
-
-              <div>
-
-                <strong>
-                  Front Desk
-                </strong>
-
-                <span>
-                  Access to system functions necessary
-                  for assigned reservation and guest
-                  operations.
-                </span>
-
-              </div>
-
-            </div>
-
-
-            <!-- STAFF -->
-
-            <div class="access-item">
-
-              <div class="access-icon">
-
-                <i data-lucide="user-round"></i>
-
-              </div>
-
-              <div>
-
-                <strong>
-                  Staff
-                </strong>
-
-                <span>
-                  Access is limited to features required
-                  for assigned tasks.
-                </span>
-
-              </div>
-
-            </div>
-
-
-          </div>
-
-        </section>
-
-
-      </div>
-
-    </main>
-
-  </div>
-
-
-  <!-- =====================================================
-       JAVASCRIPT
-       ===================================================== -->
-
-  <script src="../../js/resort-admin/Staff-Management.js"></script>
-
-
-  <!-- =====================================================
-       INITIALIZE LUCIDE ICONS
-       ===================================================== -->
-
-  <script>
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      function () {
-
-        if (
-          typeof lucide !== "undefined" &&
-          typeof lucide.createIcons === "function"
-        ) {
-
-          lucide.createIcons();
-
-        }
-
-      }
-    );
-
-  </script>
-
-
-</body>
-
+                            <div class="staff-controls">
+                                <!-- SEARCH -->
+
+                                <div class="staff-search">
+                                    <i data-lucide="search"></i>
+
+                                    <input
+                                        type="search"
+                                        id="staffSearch"
+                                        placeholder="Search staff..."
+                                    />
+                                </div>
+
+                                <!-- ROLE FILTER -->
+
+                                <select
+                                    id="staffRoleFilter"
+                                    class="staff-filter"
+                                >
+                                    <option value="all">All Roles</option>
+
+                                    <option value="administrator">
+                                        Administrator
+                                    </option>
+
+                                    <option value="front-desk">
+                                        Front Desk
+                                    </option>
+
+                                    <option value="staff">Staff</option>
+                                </select>
+
+                                <!-- STATUS FILTER -->
+
+                                <select
+                                    id="staffStatusFilter"
+                                    class="staff-filter"
+                                >
+                                    <option value="all">All Status</option>
+
+                                    <option value="active">Active</option>
+
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- STAFF TABLE -->
+
+                        <div class="table-wrapper">
+                            <table class="staff-table">
+                                <!-- TABLE HEADER -->
+
+                                <thead>
+                                    <tr>
+                                        <th>Staff Member</th>
+
+                                        <th>Contact</th>
+
+                                        <th>Role</th>
+
+                                        <th>Account Status</th>
+
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+
+                                <!-- TABLE BODY -->
+
+                                <tbody id="staffTableBody">
+                                    <!-- SAMPLE STAFF 1 -->
+
+                                    <tr
+                                        data-name="Maria Santos"
+                                        data-role="administrator"
+                                        data-status="active"
+                                    >
+                                        <td>
+                                            <div class="staff-member">
+                                                <div class="staff-avatar">
+                                                    MS
+                                                </div>
+
+                                                <div>
+                                                    <strong>
+                                                        Maria Santos
+                                                    </strong>
+
+                                                    <small>
+                                                        Staff ID: STF-001
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="contact-info">
+                                                <span> maria@example.com </span>
+
+                                                <small> Account holder </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span
+                                                class="role-badge administrator"
+                                            >
+                                                Administrator
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="status-badge active">
+                                                <span class="status-dot"></span>
+
+                                                Active
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="table-action"
+                                                type="button"
+                                                aria-label="Manage staff"
+                                            >
+                                                <i data-lucide="ellipsis"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- SAMPLE STAFF 2 -->
+
+                                    <tr
+                                        data-name="John Reyes"
+                                        data-role="front-desk"
+                                        data-status="active"
+                                    >
+                                        <td>
+                                            <div class="staff-member">
+                                                <div class="staff-avatar">
+                                                    JR
+                                                </div>
+
+                                                <div>
+                                                    <strong>
+                                                        John Reyes
+                                                    </strong>
+
+                                                    <small>
+                                                        Staff ID: STF-002
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="contact-info">
+                                                <span> john@example.com </span>
+
+                                                <small> Account holder </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span class="role-badge front-desk">
+                                                Front Desk
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="status-badge active">
+                                                <span class="status-dot"></span>
+
+                                                Active
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="table-action"
+                                                type="button"
+                                                aria-label="Manage staff"
+                                            >
+                                                <i data-lucide="ellipsis"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- SAMPLE STAFF 3 -->
+
+                                    <tr
+                                        data-name="Ana Cruz"
+                                        data-role="staff"
+                                        data-status="active"
+                                    >
+                                        <td>
+                                            <div class="staff-member">
+                                                <div class="staff-avatar">
+                                                    AC
+                                                </div>
+
+                                                <div>
+                                                    <strong> Ana Cruz </strong>
+
+                                                    <small>
+                                                        Staff ID: STF-003
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="contact-info">
+                                                <span> ana@example.com </span>
+
+                                                <small> Account holder </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span class="role-badge staff">
+                                                Staff
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="status-badge active">
+                                                <span class="status-dot"></span>
+
+                                                Active
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="table-action"
+                                                type="button"
+                                                aria-label="Manage staff"
+                                            >
+                                                <i data-lucide="ellipsis"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- SAMPLE STAFF 4 -->
+
+                                    <tr
+                                        data-name="Mark Garcia"
+                                        data-role="staff"
+                                        data-status="inactive"
+                                    >
+                                        <td>
+                                            <div class="staff-member">
+                                                <div class="staff-avatar">
+                                                    MG
+                                                </div>
+
+                                                <div>
+                                                    <strong>
+                                                        Mark Garcia
+                                                    </strong>
+
+                                                    <small>
+                                                        Staff ID: STF-004
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="contact-info">
+                                                <span> mark@example.com </span>
+
+                                                <small> Account holder </small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span class="role-badge staff">
+                                                Staff
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="status-badge inactive">
+                                                <span class="status-dot"></span>
+
+                                                Inactive
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="table-action"
+                                                type="button"
+                                                aria-label="Manage staff"
+                                            >
+                                                <i data-lucide="ellipsis"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- EMPTY STATE -->
+
+                            <div
+                                class="empty-state"
+                                id="emptyStaffState"
+                                hidden
+                            >
+                                <div class="empty-icon">
+                                    <i data-lucide="users-round"></i>
+                                </div>
+
+                                <strong> No staff accounts found </strong>
+
+                                <p>Try changing your search or filter.</p>
+                            </div>
+                        </div>
+
+                        <!-- TABLE FOOTER -->
+
+                        <div class="table-footer">
+                            <span id="staffRecordCount"> 0 records </span>
+                        </div>
+                    </section>
+
+                    <!-- ROLE-BASED ACCESS -->
+
+                    <section class="content-card access-card">
+                        <div class="card-header">
+                            <div>
+                                <h2>Role-Based Access</h2>
+
+                                <p>
+                                    Assign system access according to each
+                                    employee's responsibilities.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- ACCESS INFORMATION -->
+
+                        <div class="access-grid">
+                            <!-- ADMINISTRATOR -->
+
+                            <div class="access-item">
+                                <div class="access-icon">
+                                    <i data-lucide="shield-check"></i>
+                                </div>
+
+                                <div>
+                                    <strong> Administrator </strong>
+
+                                    <span>
+                                        Administrative access to authorized
+                                        resort management functions.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- FRONT DESK -->
+
+                            <div class="access-item">
+                                <div class="access-icon">
+                                    <i data-lucide="clipboard-list"></i>
+                                </div>
+
+                                <div>
+                                    <strong> Front Desk </strong>
+
+                                    <span>
+                                        Access to system functions necessary for
+                                        assigned reservation and guest
+                                        operations.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- STAFF -->
+
+                            <div class="access-item">
+                                <div class="access-icon">
+                                    <i data-lucide="user-round"></i>
+                                </div>
+
+                                <div>
+                                    <strong> Staff </strong>
+
+                                    <span>
+                                        Access is limited to features required
+                                        for assigned tasks.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+
+        <!-- JAVASCRIPT -->
+
+        <script src="../../js/resort-admin/Staff-Management.js"></script>
+
+        <!-- INITIALIZE LUCIDE ICONS -->
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                if (
+                    typeof lucide !== "undefined" &&
+                    typeof lucide.createIcons === "function"
+                ) {
+                    lucide.createIcons();
+                }
+            });
+        </script>
+    </body>
 </html>

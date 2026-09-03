@@ -9,81 +9,114 @@
 /* =========================================================
    SAMPLE BILLING & PAYMENT DATA
    =========================================================
-   
+
    NOTE:
    These are temporary sample records.
    Later, this data will come from the database/API.
    ========================================================= */
 
-const billingTransactions = [
-  {
-    id: 1,
-    reference: "TXN-0001",
-    guest: "Juan Dela Cruz",
-    reservation: "RES-0012",
-    totalAmount: 8500,
-    amountPaid: 8500,
-    balance: 0,
-    paymentMethod: "GCash",
-    status: "Paid",
-    transactionDate: "2026-08-20",
-    proofOfPayment: null
-  },
-
-  {
-    id: 2,
-    reference: "TXN-0002",
-    guest: "Maria Santos",
-    reservation: "RES-0015",
-    totalAmount: 12000,
-    amountPaid: 6000,
-    balance: 6000,
-    paymentMethod: "Maya",
-    status: "Partially Paid",
-    transactionDate: "2026-08-21",
-    proofOfPayment: null
-  },
-
-  {
-    id: 3,
-    reference: "TXN-0003",
-    guest: "Pedro Reyes",
-    reservation: "RES-0018",
-    totalAmount: 6500,
-    amountPaid: 6500,
-    balance: 0,
-    paymentMethod: "Bank Transfer",
-    status: "Pending Verification",
-    transactionDate: "2026-08-22",
-
-    proofOfPayment: {
-      fileName: "Payment_Proof_TXN-0003.jpg",
-      transactionReference: "GCR-847291",
-      amount: 6500,
-      method: "Bank Transfer",
-      submittedDate: "August 27, 2026"
-    }
-  },
-
-  {
-    id: 4,
-    reference: "TXN-0004",
-    guest: "Ana Garcia",
-    reservation: "RES-0020",
-    totalAmount: 10000,
-    amountPaid: 0,
-    balance: 10000,
-    paymentMethod: "GCash",
-    status: "Unpaid",
-    transactionDate: "2026-08-23",
-    proofOfPayment: null
+const API_ENDPOINTS ={
+  payments: "/api/resort-admin/payments",
+  reviewPayment(paymentId) {
+    return `/api/resort-admin/payments/${
+      encodeURIComponent(paymentId)
+    }/review`;
   }
-];
+};
 
+const accessToken = sessionStorage.getItem("resorthub_access_token");
 
-/* =========================================================
-   DOM ELEMENTS
-   ========================================================= */
+let billingTransactions = [];
+let selectPaymentId = null;
+
+function formatDatabaseValue(value) {
+  return String(value || "")
+    .replaceAll("_", " ")
+    .replace(/\b\w/g, letter => letter.toUpperCase());
+}
+
+function getTransactionStatus(payment) {
+    const verificationStatus = String(payment.verification_status || "").toLowerCase();
+
+    if (verificationStatus === "verified") {
+        return payment.payment_stage === "full"
+            ? "Paid"
+            : "Partially Paid";
+    }
+
+    if (verificationStatus === "rejected") {
+        return "Rejected";
+    }
+    return "Pending Verification";
+}
+
+function normalizePayment(payment) {
+    const totalAmount = Number(payment.total_amount) || 0;
+    const verifiedAmount = Number(payment.amount_paid) || 0;
+    const submittedAmount = Number(payment.amount) || 0;
+
+    return {
+        id: Number(payment.id),
+        reference: payment.transaction_reference || "—",
+        guest: payment.guest_name ||
+            payment.client_account_name ||
+            "Unknown Guest",
+        reservation: payment.reservation_code || "—",
+        totalAmount,
+        amountPaid: payment.verification_status === "verified"
+            ? verifiedAmount
+            : submittedAmount,
+        balance: Math.max(totalAmount - verifiedAmount, 0),
+        paymentMethod: formatDatabaseValue(payment.payment_method),
+        paymentStage:
+            formatDatabaseValue(
+                payment.payment_stage
+            ),
+        status: getTransactionStatus(payment),
+        transactionDate: payment.created_at,
+        proofOfPayment: {
+            fileName: payment.original_filename || "—",
+            filePath: payment.file_path || "",
+            transactionReference: payment.transaction_reference || "—",
+            amount: submittedAmount,
+            method: formatDatabaseValue(payment.payment_method),
+            submittedDate: payment.created_at
+        },
+        ocrStatus: payment.ocr_status,
+        extractedText: payment.extracted_text,
+        extractedData: payment.extracted_data,
+        ocrConfidence: payment.ocr_confidence,
+        verificationNotes: payment.verification_notes
+    };
+}
+
+async function loadPayments() {
+    if (!accessToken) {
+        window.location.href = "../auth/login.html";
+        return;
+    }
+
+    const response = await fetch(
+        API_ENDPOINTS.payments,
+        {
+            headers: {
+                "Authorization": `Bearer ${accessToken}`
+            }
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message || "Unable to load payments.");
+    }
+
+    billingTransactions = Array.isArray(data.payments)
+        ? data.payments.map(normalizePayment)
+        : [];
+}
+
+/*DOM ELEMENTS*/
 
 const transactionSearch =
   document.getElementById("transactionSearch");
@@ -323,7 +356,7 @@ function renderTransactions(transactions) {
 /* =========================================================
    ESCAPE HTML
    =========================================================
-   
+
    Prevents database/API values from being inserted
    directly as executable HTML later.
    ========================================================= */
@@ -585,6 +618,7 @@ function loadVerificationData(transaction) {
     return;
   }
 
+  selectPaymentId = transaction.id;
 
   if (!transaction.proofOfPayment) {
 
@@ -604,60 +638,61 @@ function loadVerificationData(transaction) {
    * Verification widget elements
    */
 
-  const documentName =
-    document.querySelector(
-      ".document-placeholder small"
-    );
+    const documentName =
+        document.querySelector(
+            ".document-placeholder small"
+        );
 
-  const referenceField =
-    document.querySelector(
-      ".ocr-field:nth-of-type(1) strong"
-    );
+    const verificationFields =
+        document.querySelectorAll(
+            ".ocr-results .ocr-field strong"
+        );
 
-  const amountField =
-    document.querySelector(
-      ".ocr-field:nth-of-type(2) strong"
-    );
-
-  const methodField =
-    document.querySelector(
-      ".ocr-field:nth-of-type(3) strong"
-    );
-
-  const dateField =
-    document.querySelector(
-      ".ocr-field:nth-of-type(4) strong"
-    );
+    const referenceField = verificationFields[0];
+    const amountField = verificationFields[1];
+    const methodField = verificationFields[2];
+    const dateField = verificationFields[3];
 
 
-  if (documentName) {
-    documentName.textContent =
-      proof.fileName;
-  }
+    if (documentName) {
+        documentName.textContent =
+        proof.fileName;
+    }
 
 
-  if (referenceField) {
-    referenceField.textContent =
-      proof.transactionReference;
-  }
+    if (referenceField) {
+        referenceField.textContent =
+        proof.transactionReference;
+    }
 
 
-  if (amountField) {
-    amountField.textContent =
-      formatCurrency(proof.amount);
-  }
+    if (amountField) {
+        amountField.textContent =
+        formatCurrency(proof.amount);
+    }
 
 
-  if (methodField) {
-    methodField.textContent =
-      proof.method;
-  }
+    if (methodField) {
+        methodField.textContent =
+        proof.method;
+    }
 
 
-  if (dateField) {
+    if (dateField) {
     dateField.textContent =
-      proof.submittedDate;
-  }
+        new Date(
+            proof.submittedDate
+        ).toLocaleString(
+            "en-PH",
+            {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "2-digit"
+            }
+        );
+    }
 
 }
 
@@ -779,179 +814,95 @@ function attachTransactionActions() {
 
 }
 
-
-/* =========================================================
-   VERIFY PAYMENT
-   ========================================================= */
-
-function verifyPayment() {
-
-  const transaction =
-    billingTransactions.find(
-      item =>
-        item.status ===
-        "Pending Verification"
-    );
-
+async function reviewPayment(decision, notes = "") {
+  const transaction = billingTransactions.find(item => item.id === selectPaymentId);
 
   if (!transaction) {
-
-    alert(
-      "There is no payment pending verification."
-    );
-
+    alert("Select a payment to review.");
     return;
-
   }
 
-
-  /*
-   * Frontend prototype:
-   *
-   * Change the local sample status.
-   *
-   * Later:
-   * This will send a request to the backend
-   * and update the database.
-   */
-
-  transaction.status = "Paid";
-
-
-  /*
-   * Keep the balance at zero because the
-   * submitted payment already covers the
-   * sample transaction amount.
-   */
-
-  transaction.balance =
-    Math.max(
-      transaction.totalAmount -
-      transaction.amountPaid,
-      0
-    );
-
-
-  updateSummary();
-
-  filterTransactions();
-
-
-  /*
-   * Update verification status.
-   */
-
-  const verificationStatus =
-    document.querySelector(
-      ".verification-status"
-    );
-
-
-  if (verificationStatus) {
-
-    verificationStatus.textContent =
-      "Verified";
-
-    verificationStatus.classList.remove(
-      "pending"
-    );
-
-    verificationStatus.classList.add(
-      "verified"
-    );
-
+  if (transaction.status !== "Pending Verification"){
+    alert("This payment has already been reviewed.")
+    return;
   }
 
+  const actionName = decision === "verified"
+    ? "verify"
+    : "reject";
 
-  alert(
-    `Payment ${transaction.reference} has been verified.`
+  const confirmed = window.confirm(
+    `Are you sure you want to ${actionName} payment ${transaction.reference}?`
   );
 
+  if (!confirmed) {
+    return;
+  }
+
+  if (verifyButton) {
+    verifyButton.disabled = true;
+  }
+
+  if (rejectButton) {
+    rejectButton.disabled = true;
+  }
+
+  try {
+    const response = await fetch(API_ENDPOINTS.reviewPayment(transaction.id),{
+      method: "PATCH",
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        decision, notes
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Unable to review payment.");
+    }
+
+    alert(data.message);
+    window.location.reload();
+  } catch (error) {
+    alert(error.message);
+
+    if (verifyButton) {
+      verifyButton.disabled = false;
+    }
+
+    if (rejectButton) {
+      rejectButton.disabled = false;
+    }
+  }
 }
 
 
-/* =========================================================
-   REJECT PAYMENT
-   ========================================================= */
+/*VERIFY PAYMENT*/
 
-function rejectPayment() {
+async function verifyPayment() {
+  await reviewPayment("verified");
+}
 
-  const transaction =
-    billingTransactions.find(
-      item =>
-        item.status ===
-        "Pending Verification"
-    );
+/*REJECT PAYMENT*/
 
+async function rejectPayment() {
+  const notes = window.prompt("Enter the reason for rejecting this payment proof:");
 
-  if (!transaction) {
-
-    alert(
-      "There is no payment pending verification."
-    );
-
+  if (notes === null) {
     return;
-
   }
 
-
-  /*
-   * Frontend prototype only.
-   *
-   * We do not permanently delete the record.
-   * The transaction remains available for
-   * future database implementation.
-   */
-
-  transaction.status = "Unpaid";
-
-
-  /*
-   * Since the submitted payment was rejected,
-   * the amount is no longer treated as paid.
-   */
-
-  transaction.amountPaid = 0;
-
-  transaction.balance =
-    transaction.totalAmount;
-
-
-  updateSummary();
-
-  filterTransactions();
-
-
-  /*
-   * Update verification widget status.
-   */
-
-  const verificationStatus =
-    document.querySelector(
-      ".verification-status"
-    );
-
-
-  if (verificationStatus) {
-
-    verificationStatus.textContent =
-      "Rejected";
-
-    verificationStatus.classList.remove(
-      "pending"
-    );
-
-    verificationStatus.classList.add(
-      "rejected"
-    );
-
+  if (!notes.trim()) {
+    alert("A rejection reason is required.");
+    return;
   }
 
-
-  alert(
-    `Payment ${transaction.reference} has been rejected.`
-  );
-
+  await reviewPayment("rejected", notes.trim());
 }
 
 
@@ -1094,30 +1045,25 @@ if (previewButton) {
 
 document.addEventListener(
   "DOMContentLoaded",
-  function () {
+  async function () {
 
-    /*
-     * Calculate the summary cards
-     * from the sample records.
-     */
-
+    try {
+        await loadPayments();
+    } catch (error) {
+        console.error("Unable to load payments:", error);
+        billingTransactions = [];
+    }
+    /*Calculate the summary cards from the sample records.*/
     updateSummary();
 
 
-    /*
-     * Render transaction records.
-     */
-
+    /*Render transaction records.*/
     renderTransactions(
       billingTransactions
     );
 
 
-    /*
-     * Load the sample pending
-     * payment into the verification widget.
-     */
-
+    /*Load the sample pending payment into the verification widget.*/
     const pendingTransaction =
       billingTransactions.find(
         transaction =>
