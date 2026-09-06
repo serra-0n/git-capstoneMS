@@ -1,335 +1,322 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservation Management | ResortHub</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Reservation Management | ResortHub</title>
 
-    <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css">
-    <link rel="stylesheet" href="../../css/resort-adminGlobal/sidebar.css">
-    <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css">
-    <link rel="stylesheet" href="../../css/resort-admin/Reservations.css">
-</head>
-<body>
-    <div class="app-shell">
-        <!-- Use the SAME sidebar from Dashboard.html -->
-        <aside class="sidebar">
-            <a class="brand" href="Dashboard.html">
-                <i class="brand-mark" data-lucide="building-2"></i>
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css" />
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/sidebar.css" />
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css" />
+        <link rel="stylesheet" href="../../css/resort-admin/Reservations.css" />
+    </head>
+    <body>
+        <div class="app-shell">
+            <!-- Use the SAME sidebar from Dashboard.html -->
+            <aside class="sidebar">
+                <a class="brand" href="Dashboard.html">
+                    <i class="brand-mark" data-lucide="building-2"></i>
 
-                <span>
-                    <strong>ResortHub</strong>
-                    <small>Resort Owner</small>
-                </span>
-            </a>
-
-            <div class="resort-switcher">
-                <span class="resort-avatar">BW</span>
-
-                <span>
-                    <strong>Blue Waves Resort</strong>
-                    <small>Resort Owner</small>
-                </span>
-            </div>
-
-            <div class="nav-section">MAIN</div>
-
-            <a class="nav-link" href="Dashboard.html">
-                <i data-lucide="layout-dashboard"></i>
-                Dashboard
-            </a>
-
-            <div class="nav-section">RESERVATIONS</div>
-
-            <a class="nav-link active" href="Reservations.html">
-                <i data-lucide="calendar-days"></i>
-                Reservations
-            </a>
-
-            <a class="nav-link" href="Guests.html">
-                <i data-lucide="contact-round"></i>
-                Guests
-            </a>
-
-            <div class="nav-section">ACCOMMODATION</div>
-
-            <a class="nav-link" href="Rooms.html">
-                <i data-lucide="bed-double"></i>
-                Rooms & Cottages
-            </a>
-
-            <div class="nav-section">FINANCE</div>
-
-            <a class="nav-link" href="BillingPayments.html">
-                <i data-lucide="credit-card"></i>
-                Billing & Payments
-            </a>
-
-            <div class="nav-section">OPERATIONS</div>
-
-            <a class="nav-link" href="OCRVerification.html">
-                <i data-lucide="scan-search"></i>
-                OCR Verification
-            </a>
-
-            <a class="nav-link" href="StaffManagement.html">
-                <i data-lucide="users"></i>
-                Staff Management
-            </a>
-
-            <a class="nav-link" href="Reports.html">
-                <i data-lucide="chart-no-axes-combined"></i>
-                Reports
-            </a>
-
-            <div class="nav-section">SETTINGS</div>
-
-            <a class="nav-link" href="Settings.html">
-                <i data-lucide="settings"></i>
-                Settings
-            </a>
-
-            <a class="nav-link logout" href="#">
-                <i data-lucide="log-out"></i>
-                Logout
-            </a>
-        </aside>
-
-        <main class="main">
-            <!-- Use the SAME top navigation from Dashboard.html -->
-            <header class="topbar">
-                <button class="sidebar-toggle">
-                    <i data-lucide="menu"></i>
-                </button>
-
-                <input
-                    class="search"
-                    type="search"
-                    placeholder="Search anything..."
-                >
-
-                <span class="topbar-spacer"></span>
-
-                <button class="notification">
-                    <i data-lucide="bell"></i>
-                </button>
-
-                <button class="top-select">
-                    <span class="avatar">BW</span>
-                    Blue Waves Resort
-                </button>
-
-                <button class="profile">
                     <span>
-                        <b>Juan Dela Cruz</b>
+                        <strong>ResortHub</strong>
                         <small>Resort Owner</small>
                     </span>
-                </button>
-            </header>
+                </a>
 
-            <section class="content">
-                <div class="page-title-row">
-                    <div>
-                        <h1>Reservation Management</h1>
-                        <p class="subtitle">Manage guest reservations.</p>
-                    </div>
+                <div class="resort-switcher">
+                    <span class="resort-avatar">BW</span>
+
+                    <span>
+                        <strong>Blue Waves Resort</strong>
+                        <small>Resort Owner</small>
+                    </span>
                 </div>
 
-                <section class="metric-grid">
-                    <article class="metric-card blue">
-                        <div class="metric-content">
-                            <span class="metric-icon">
-                                <i data-lucide="calendar-days"></i>
-                            </span>
+                <div class="nav-section">MAIN</div>
 
-                            <div>
-                                <div class="label">Total Reservations</div>
-                                <div class="number" id="totalReservationCount">0</div>
-                            </div>
-                        </div>
-                    </article>
+                <a class="nav-link" href="Dashboard.html">
+                    <i data-lucide="layout-dashboard"></i>
+                    Dashboard
+                </a>
 
-                    <article class="metric-card green">
-                        <div class="metric-content">
-                            <span class="metric-icon">
-                                <i data-lucide="badge-check"></i>
-                            </span>
+                <div class="nav-section">RESERVATIONS</div>
 
-                            <div>
-                                <div class="label">Confirmed</div>
-                                <div class="number" id="confirmedReservationCount">0</div>
-                            </div>
-                        </div>
-                    </article>
+                <a class="nav-link active" href="Reservations.html">
+                    <i data-lucide="calendar-days"></i>
+                    Reservations
+                </a>
 
-                    <article class="metric-card orange">
-                        <div class="metric-content">
-                            <span class="metric-icon">
-                                <i data-lucide="clock-3"></i>
-                            </span>
+                <a class="nav-link" href="Guests.html">
+                    <i data-lucide="contact-round"></i>
+                    Guests
+                </a>
 
-                            <div>
-                                <div class="label">Pending</div>
-                                <div class="number" id="pendingReservationCount">0</div>
-                            </div>
-                        </div>
-                    </article>
+                <div class="nav-section">ACCOMMODATION</div>
 
-                    <article class="metric-card red">
-                        <div class="metric-content">
-                            <span class="metric-icon">
-                                <i data-lucide="circle-x"></i>
-                            </span>
+                <a class="nav-link" href="Rooms.html">
+                    <i data-lucide="bed-double"></i>
+                    Rooms & Cottages
+                </a>
 
-                            <div>
-                                <div class="label">Cancelled</div>
-                                <div class="number" id="cancelledReservationCount">0</div>
-                            </div>
-                        </div>
-                    </article>
-                </section>
+                <div class="nav-section">FINANCE</div>
 
-                <section class="panel filter-panel">
-                    <input
-                        type="search"
-                        id="reservationSearch"
-                        placeholder="Search reservation...">
+                <a class="nav-link" href="BillingPayments.html">
+                    <i data-lucide="credit-card"></i>
+                    Billing & Payments
+                </a>
 
-                    <select id="reservationStatusFilter">
-                        <option value="">All Reservation Statuses</option>
-                        <option value="pending">Pending</option>
-                        <option value="awaiting_deposit">Awaiting Deposit</option>
-                        <option value="deposit_verification">Deposit Verification</option>
-                        <option value="confirmed">Confirmed</option>
-                        <option value="rejected">Rejected</option>
-                        <option value="expired">Expired</option>
-                        <option value="cancelled">Cancelled</option>
-                        <option value="completed">Completed</option>
-                    </select>
+                <div class="nav-section">OPERATIONS</div>
 
-                    <select id="paymentStatusFilter">
-                        <option value="">All Payment Statuses</option>
-                        <option value="not_required">Not Required</option>
-                        <option value="unpaid">Unpaid</option>
-                        <option value="proof_submitted">Proof Submitted</option>
-                        <option value="deposit_verified">Deposit Verified</option>
-                        <option value="fully_paid">Fully Paid</option>
-                        <option value="payment_rejected">Payment Rejected</option>
-                    </select>
+                <a class="nav-link" href="OCRVerification.html">
+                    <i data-lucide="scan-search"></i>
+                    OCR Verification
+                </a>
 
-                    <input
-                        type="date"
-                        id="reservationDateFilter">
+                <a class="nav-link" href="StaffManagement.html">
+                    <i data-lucide="users"></i>
+                    Staff Management
+                </a>
 
-                    <select id="accommodationFilter">
-                        <option value="">All Accommodations</option>
-                    </select>
+                <a class="nav-link" href="Reports.html">
+                    <i data-lucide="chart-no-axes-combined"></i>
+                    Reports
+                </a>
 
-                    <button
-                        type="button"
-                        class="button"
-                        id="clearReservationFilters">
+                <div class="nav-section">SETTINGS</div>
 
-                        Clear Filters
+                <a class="nav-link" href="Settings.html">
+                    <i data-lucide="settings"></i>
+                    Settings
+                </a>
+
+                <a class="nav-link logout" href="#">
+                    <i data-lucide="log-out"></i>
+                    Logout
+                </a>
+            </aside>
+
+            <main class="main">
+                <!-- Use the SAME top navigation from Dashboard.html -->
+                <header class="topbar">
+                    <button class="sidebar-toggle">
+                        <i data-lucide="menu"></i>
                     </button>
 
-                    <button
-                        type="button"
-                        class="button primary"
-                        id="newReservationButton">
+                    <input class="search" type="search" placeholder="Search anything..." />
 
-                        + New Reservation
+                    <span class="topbar-spacer"></span>
+
+                    <button class="notification">
+                        <i data-lucide="bell"></i>
                     </button>
-                </section>
 
-                <div class="reservation-layout">
-                    <div class="panel">
-                        <div class="panel-header">
-                            <b class="panel-title">Reservations</b>
-                        </div>
+                    <button class="top-select">
+                        <span class="avatar">BW</span>
+                        Blue Waves Resort
+                    </button>
 
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Code</th>
-                                    <th>Guest</th>
-                                    <th>Room/Cottage</th>
-                                    <th>Check-in</th>
-                                    <th>Check-out</th>
-                                    <th>Guests</th>
-                                    <th>Amount</th>
-                                    <th>Payment</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
+                    <button class="profile">
+                        <span>
+                            <b>Juan Dela Cruz</b>
+                            <small>Resort Owner</small>
+                        </span>
+                    </button>
+                </header>
 
-                            <tbody id="reservationTableBody">
-                                <tr>
-                                    <td colspan="10">Loading reservations...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="pagination">
-                            <button>&lt;</button>
-                            <button class="active">1</button>
-                            <button>2</button>
-                            <button>3</button>
-                            <button>&gt;</button>
+                <section class="content">
+                    <div class="page-title-row">
+                        <div>
+                            <h1>Reservation Management</h1>
+                            <p class="subtitle">Manage guest reservations.</p>
                         </div>
                     </div>
 
-                    <div class="side-column">
+                    <section class="metric-grid">
+                        <article class="metric-card blue">
+                            <div class="metric-content">
+                                <span class="metric-icon">
+                                    <i data-lucide="calendar-days"></i>
+                                </span>
+
+                                <div>
+                                    <div class="label">Total Reservations</div>
+                                    <div class="number" id="totalReservationCount">0</div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="metric-card green">
+                            <div class="metric-content">
+                                <span class="metric-icon">
+                                    <i data-lucide="badge-check"></i>
+                                </span>
+
+                                <div>
+                                    <div class="label">Confirmed</div>
+                                    <div class="number" id="confirmedReservationCount">0</div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="metric-card orange">
+                            <div class="metric-content">
+                                <span class="metric-icon">
+                                    <i data-lucide="clock-3"></i>
+                                </span>
+
+                                <div>
+                                    <div class="label">Pending</div>
+                                    <div class="number" id="pendingReservationCount">0</div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="metric-card red">
+                            <div class="metric-content">
+                                <span class="metric-icon">
+                                    <i data-lucide="circle-x"></i>
+                                </span>
+
+                                <div>
+                                    <div class="label">Cancelled</div>
+                                    <div class="number" id="cancelledReservationCount">0</div>
+                                </div>
+                            </div>
+                        </article>
+                    </section>
+
+                    <section class="panel filter-panel">
+                        <input
+                            type="search"
+                            id="reservationSearch"
+                            placeholder="Search reservation..."
+                        />
+
+                        <select id="reservationStatusFilter">
+                            <option value="">All Reservation Statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="awaiting_deposit">Awaiting Deposit</option>
+                            <option value="deposit_verification">Deposit Verification</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="rejected">Rejected</option>
+                            <option value="expired">Expired</option>
+                            <option value="cancelled">Cancelled</option>
+                            <option value="completed">Completed</option>
+                        </select>
+
+                        <select id="paymentStatusFilter">
+                            <option value="">All Payment Statuses</option>
+                            <option value="not_required">Not Required</option>
+                            <option value="unpaid">Unpaid</option>
+                            <option value="proof_submitted">Proof Submitted</option>
+                            <option value="deposit_verified">Deposit Verified</option>
+                            <option value="fully_paid">Fully Paid</option>
+                            <option value="payment_rejected">Payment Rejected</option>
+                        </select>
+
+                        <input type="date" id="reservationDateFilter" />
+
+                        <select id="accommodationFilter">
+                            <option value="">All Accommodations</option>
+                        </select>
+
+                        <button type="button" class="button" id="clearReservationFilters">
+                            Clear Filters
+                        </button>
+
+                        <button type="button" class="button primary" id="newReservationButton">
+                            + New Reservation
+                        </button>
+                    </section>
+
+                    <div class="reservation-layout">
                         <div class="panel">
                             <div class="panel-header">
-                                <b>Reservation Overview</b>
+                                <b class="panel-title">Reservations</b>
                             </div>
 
-                            <div class="activity-row">
-                                <span>Today's Check-ins</span>
-                                <b>18</b>
-                            </div>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Guest</th>
+                                        <th>Room/Cottage</th>
+                                        <th>Check-in</th>
+                                        <th>Check-out</th>
+                                        <th>Guests</th>
+                                        <th>Amount</th>
+                                        <th>Payment</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
 
-                            <div class="activity-row">
-                                <span>Today's Check-outs</span>
-                                <b>12</b>
-                            </div>
+                                <tbody id="reservationTableBody">
+                                    <tr>
+                                        <td colspan="10">Loading reservations...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                            <div class="activity-row">
-                                <span>In-house Guests</span>
-                                <b>46</b>
-                            </div>
-
-                            <div class="activity-row">
-                                <span>Pending Reservations</span>
-                                <b>23</b>
+                            <div class="pagination">
+                                <button>&lt;</button>
+                                <button class="active">1</button>
+                                <button>2</button>
+                                <button>3</button>
+                                <button>&gt;</button>
                             </div>
                         </div>
 
-                        <div class="panel">
-                            <div class="panel-header">
-                                <b>Quick Actions</b>
+                        <div class="side-column">
+                            <div class="panel">
+                                <div class="panel-header">
+                                    <b>Reservation Overview</b>
+                                </div>
+
+                                <div class="activity-row">
+                                    <span>Today's Check-ins</span>
+                                    <b>18</b>
+                                </div>
+
+                                <div class="activity-row">
+                                    <span>Today's Check-outs</span>
+                                    <b>12</b>
+                                </div>
+
+                                <div class="activity-row">
+                                    <span>In-house Guests</span>
+                                    <b>46</b>
+                                </div>
+
+                                <div class="activity-row">
+                                    <span>Pending Reservations</span>
+                                    <b>23</b>
+                                </div>
                             </div>
 
-                            <div class="quick-actions">
-                                <button class="quick-action">New Reservation</button>
-                                <button class="quick-action">View Guests</button>
-                                <button class="quick-action">Check Payments</button>
-                                <button class="quick-action">Print Reservation</button>
+                            <div class="panel">
+                                <div class="panel-header">
+                                    <b>Quick Actions</b>
+                                </div>
+
+                                <div class="quick-actions">
+                                    <button class="quick-action">New Reservation</button>
+                                    <button class="quick-action">View Guests</button>
+                                    <button class="quick-action">Check Payments</button>
+                                    <button class="quick-action">Print Reservation</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </main>
-    </div>
+                </section>
+            </main>
+        </div>
 
-    <script src="../../js/resort-admin/Reservation.js" defer></script>
+        <script src="../../js/resort-admin/Reservation.js" defer></script>
 
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        lucide.createIcons({attrs:{"stroke-width":1.8}});
-    </script>
-</body>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <script>
+            lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
+        </script>
+    </body>
 </html>

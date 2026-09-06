@@ -399,7 +399,7 @@
     transition: opacity 0.2s ease;
 }
 
-.review-modal-overlay{ 
+.review-modal-overlay {
     position: absolute;
     inset: 0;
     background: rgba(15, 23, 42, 0.55);
@@ -416,7 +416,7 @@
     background: #ffffff;
     padding: 28px;
     border-radius: 14px;
-    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.20);
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
 }
 
 .review-modal.show {
@@ -499,7 +499,7 @@
     border-top: 1px solid #e2e8f0;
 }
 
-.review-section:last-of-type{
+.review-section:last-of-type {
     border-bottom: none;
 }
 

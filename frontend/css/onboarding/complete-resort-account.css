@@ -99,7 +99,7 @@ a {
     font-size: 13px;
     font-weight: 500;
     border-radius: 8px;
-    transition: 
+    transition:
         background 0.2s ease,
         color 0.2s ease;
 }
@@ -130,7 +130,7 @@ a {
     color: #2563eb;
     font-size: 13px;
     font-weight: 600;
-    transition: 
+    transition:
         background 0.2s ease,
         border-color 0.2s ease,
         color 0.2s ease;
@@ -353,7 +353,7 @@ a {
 
 .form-group input:focus {
     border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .form-group select {
@@ -380,7 +380,7 @@ a {
 
 .form-group select:focus {
     border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .form-group textarea {
@@ -408,7 +408,7 @@ a {
 
 .form-group textarea:focus {
     border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .password-input-wrapper {
@@ -440,10 +440,8 @@ a {
 
 .password-input-wrapper input[type="password"]:focus {
     border-color: #2563eb;
-    box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.10);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
-
 
 .password-toggle {
     position: absolute;
@@ -509,7 +507,7 @@ a {
 .file-field input[type="file"]:focus {
     outline: none;
     border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .file-field input[type="file"]::file-selector-button {

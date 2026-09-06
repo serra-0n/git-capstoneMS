@@ -113,6 +113,32 @@ async function listForTenant(tenantId) {
     return rows;
 }
 
+async function findProofForTenant(
+    paymentId,
+    tenantId
+) {
+    const [rows] = await pool.execute(
+        `SELECT
+            p.original_filename,
+            p.file_path,
+            p.mime_type
+        FROM payments p
+        JOIN reservations r
+            ON r.id = p.reservation_id
+        WHERE p.id = ?
+            AND p.tenant_id = ?
+            AND r.tenant_id = ?
+        LIMIT 1`,
+        [
+            paymentId,
+            tenantId,
+            tenantId
+        ]
+    );
+
+    return rows[0] || null;
+}
+
 async function reviewForTenant({
     paymentId,
     tenantId,
@@ -190,8 +216,13 @@ async function reviewForTenant({
 
             await connection.execute(
                 `UPDATE reservations
-                    SET payment_status = 'unpaid'
-                  WHERE id = ?
+                    SET payment_status =
+                        CASE
+                            WHEN amount_paid > 0
+                                THEN 'partially_paid'
+                            ELSE 'unpaid'
+                        END
+                    WHERE id = ?
                     AND tenant_id = ?`,
                 [
                     payment.reservation_id,
@@ -269,4 +300,10 @@ async function reviewForTenant({
     }
 }
 
-module.exports = {findByTransactionReference, create, listForTenant, reviewForTenant};
+module.exports = {
+    findByTransactionReference,
+    create,
+    listForTenant,
+    findProofForTenant,
+    reviewForTenant
+};

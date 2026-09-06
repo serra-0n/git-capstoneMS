@@ -15,6 +15,13 @@ router.get(
     paymentController.listTenantPayments
 );
 
+router.get(
+    "/resort-admin/payments/:id/proof",
+    authenticateUser,
+    requireRole("resort_admin"),
+    paymentController.viewTenantPaymentProof
+);
+
 router.post(
     "/client/payments",
     authenticateUser,

@@ -1,181 +1,159 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In | ResortHub</title>
-    <link rel="stylesheet" href="../../css/auth/login.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-<body>
-    <header class="auth-header">
-        <a href="../../index.html" class="auth-logo">
-            <span class="logo-text">ResortHub</span>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sign In | ResortHub</title>
+        <link rel="stylesheet" href="../../css/auth/login.css" />
+        <script src="https://unpkg.com/lucide@latest"></script>
+    </head>
+    <body>
+        <header class="auth-header">
+            <a href="../../index.html" class="auth-logo">
+                <span class="logo-text">ResortHub</span>
 
-            <span class="logo-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </span>
-        </a>
-
-        <nav class="auth-navigation">
-            <a href="../onboarding/ResortSignup.html" class="header-link resort-link">
-                List your resort
-            </a>
-            
-            <a href="login.html" class="header-link active">
-                Sign in
+                <span class="logo-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
             </a>
 
-            <a href="signup.html" class="header-button">
-                Create account
-            </a>
+            <nav class="auth-navigation">
+                <a href="../onboarding/ResortSignup.html" class="header-link resort-link">
+                    List your resort
+                </a>
 
-            <button
-                type="button"
-                class="header-menu"
-                aria-label="Open menu">
+                <a href="login.html" class="header-link active"> Sign in </a>
 
-                <i data-lucide="menu"></i>
-            </button>
-        </nav>
-    </header>
+                <a href="signup.html" class="header-button"> Create account </a>
 
-    <main class="auth-main">
-        <section class="auth-card">
-            <div class="auth-card-header">
-                <h1>Sign in or create an account</h1>
-                <p>
-                    Sign in or Sign up to manage your reservations
-                    and documents.
+                <button type="button" class="header-menu" aria-label="Open menu">
+                    <i data-lucide="menu"></i>
+                </button>
+            </nav>
+        </header>
+
+        <main class="auth-main">
+            <section class="auth-card">
+                <div class="auth-card-header">
+                    <h1>Sign in or create an account</h1>
+                    <p>Sign in or Sign up to manage your reservations and documents.</p>
+                </div>
+
+                <div class="social-login">
+                    <button type="button" class="social-button google-button">
+                        <span class="social-icon">G</span>
+                        <span>Sign in with Google</span>
+                    </button>
+                </div>
+
+                <div class="auth-divider">
+                    <span></span>
+                    <p>or</p>
+                    <span></span>
+                </div>
+
+                <form class="login-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="login@email.com"
+                            autocomplete="email"
+                            required
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="password-label-row">
+                            <label for="password">Password</label>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+
+                        <div class="password-input-wrapper">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            />
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="passwordToggle"
+                                aria-label="Show password"
+                            >
+                                <i data-lucide="eye" id="passwordIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="remember-row">
+                        <label class="remember-label">
+                            <input type="checkbox" id="rememberMe" name="rememberMe" />
+
+                            <span>Remember me</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="continue-button" id="continueButton">
+                        Sign in
+                    </button>
+                </form>
+
+                <div class="signup-prompt">
+                    <span>Don't have an account?</span>
+                    <a href="signup.html">Create account</a>
+                </div>
+
+                <p class="terms-text">
+                    By using in, I agree to ResortHub's
+
+                    <a href="#">Terms of Use</a>
+
+                    and
+
+                    <a href="#">Privacy Policy</a>
                 </p>
-            </div>
+            </section>
+        </main>
 
-            <div class="social-login">
-                <button
-                    type="button"
-                    class="social-button google-button">
-
-                    <span class="social-icon">G</span>
-                    <span>Sign in with Google</span>
-                </button>
-            </div>
-
-            <div class="auth-divider">
-                <span></span>
-                <p>or</p>
-                <span></span>
-            </div>
-
-            <form
-                class="login-form"
-                id="loginForm">
-            
-                <div class="form-group">
-                    <label for="email">Email</label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="login@email.com"
-                        autocomplete="email"
-                        required>
+        <footer class="auth-footer">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Help</h3>
+                    <a href="#">Help center</a>
+                    <a href="#">FAQs</a>
+                    <a href="#">Privacy policy</a>
+                    <a href="#">Terms of use</a>
                 </div>
 
-                <div class="form-group">
-                    <div class="password-label-row">
-                        <label for="password">Password</label>
-                        <a href="#"
-                            class="forgot-password">Forgot password?</a>
-                    </div>
-
-                    <div class="password-input-wrapper">
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            placeholder="Enter your password"
-                            autocomplete="current-password"
-                            required>
-
-                        <button
-                            type="button"
-                            class="password-toggle"
-                            id="passwordToggle"
-                            aria-label="Show password">
-
-                            <i data-lucide="eye" id="passwordIcon"></i>
-                        </button>
-                    </div>
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <a href="#">About us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Press</a>
+                    <a href="#">Blog</a>
                 </div>
 
-                <div class="remember-row">
-                    <label class="remember-label">
-                        <input
-                            type="checkbox"
-                            id="rememberMe"
-                            name="rememberMe">
-
-                        <span>Remember me</span>
-                    </label>
+                <div class="footer-column">
+                    <h3>Destinations</h3>
+                    <a href="#">Public Resorts</a>
+                    <a href="#">Private Resorts</a>
                 </div>
-
-                <button
-                    type="submit"
-                    class="continue-button"
-                    id="continueButton">
-                    Sign in
-                </button>
-            </form>
-
-            <div class="signup-prompt">
-                <span>Don't have an account?</span>
-                <a href="signup.html">Create account</a>
             </div>
+        </footer>
 
-            <p class="terms-text">
-                By using in, I agree to ResortHub's
-
-                <a href="#">Terms of Use</a>
-
-                and
-
-                <a href="#">Privacy Policy</a>
-            </p>
-        </section>
-    </main>
-
-    <footer class="auth-footer">
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>Help</h3>
-                <a href="#">Help center</a>
-                <a href="#">FAQs</a>
-                <a href="#">Privacy policy</a>
-                <a href="#">Terms of use</a>
-            </div>
-
-            <div class="footer-column">
-                <h3>Company</h3>
-                <a href="#">About us</a>
-                <a href="#">Careers</a>
-                <a href="#">Press</a>
-                <a href="#">Blog</a>
-            </div>
-
-            <div class="footer-column">
-                <h3>Destinations</h3>
-                <a href="#">Public Resorts</a>
-                <a href="#">Private Resorts</a>
-            </div>
-        </div>
-    </footer>
-
-    <script src="../../js/auth/login.js"></script>
-    <script>
-        lucide.createIcons();
-    </script>
-</body>
+        <script src="../../js/auth/login.js"></script>
+        <script>
+            lucide.createIcons();
+        </script>
+    </body>
 </html>

@@ -1,4 +1,4 @@
-function openOnboardingModal(){
+function openOnboardingModal() {
     const modal = document.getElementById("onboardingModal");
 
     if (modal) {
@@ -7,7 +7,7 @@ function openOnboardingModal(){
     }
 }
 
-function closeOnboardingModal(){
+function closeOnboardingModal() {
     const modal = document.getElementById("onboardingModal");
 
     if (modal) {
@@ -15,7 +15,7 @@ function closeOnboardingModal(){
     }
 }
 
-function approveRequest(){
+function approveRequest() {
     alert("Billiard Resort has been approved.");
     closeOnboardingModal();
 }
@@ -26,39 +26,32 @@ function rejectRequest() {
 }
 
 /* search*/
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("resortSearch");
-    
-    if (!searchInput){
+
+    if (!searchInput) {
         return;
     }
 
-    searchInput.addEventListener("input", function() {
+    searchInput.addEventListener("input", function () {
         const searchValue = this.value.toLowerCase().trim();
-        const resortRows = document.querySelectorAll(
-            ".all-resorts-table .table-row"
-        );
+        const resortRows = document.querySelectorAll(".all-resorts-table .table-row");
 
         resortRows.forEach(function (row) {
-            const resortName = row
-                .querySelector("span")
-                .textContent
-                .toLowerCase();
+            const resortName = row.querySelector("span").textContent.toLowerCase();
 
-            if (resortName.includes(searchValue)){
+            if (resortName.includes(searchValue)) {
                 row.style.display = "grid";
             } else {
                 row.style.display = "none";
             }
         });
     });
-
 });
 
 // details resort modal
 
-function openResortDetails(resortName, adminName, date, status){
-    
+function openResortDetails(resortName, adminName, date, status) {
     document.getElementById("detailsResortName").textContent = resortName;
     document.getElementById("detailsAdminName").textContent = adminName;
     document.getElementById("detailsDate").textContent = date;

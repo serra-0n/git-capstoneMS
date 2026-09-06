@@ -1,27 +1,15 @@
-/* =========================================================
-   RESORTHUB - BILLING & PAYMENTS
-   File: billingPayments.js
+/* RESORTHUB - BILLING & PAYMENTS File: billingPayments.js Frontend prototype / database-ready structure */
 
-   Frontend prototype / database-ready structure
-   ========================================================= */
+/* SAMPLE BILLING & PAYMENT DATA NOTE: These are temporary sample records. Later, this data will come from the database/API. */
 
-
-/* =========================================================
-   SAMPLE BILLING & PAYMENT DATA
-   =========================================================
-
-   NOTE:
-   These are temporary sample records.
-   Later, this data will come from the database/API.
-   ========================================================= */
-
-const API_ENDPOINTS ={
-  payments: "/api/resort-admin/payments",
-  reviewPayment(paymentId) {
-    return `/api/resort-admin/payments/${
-      encodeURIComponent(paymentId)
-    }/review`;
-  }
+const API_ENDPOINTS = {
+    payments: "/api/resort-admin/payments",
+    paymentProof(paymentId) {
+        return `/api/resort-admin/payments/${encodeURIComponent(paymentId)}/proof`;
+    },
+    reviewPayment(paymentId) {
+        return `/api/resort-admin/payments/${encodeURIComponent(paymentId)}/review`;
+    },
 };
 
 const accessToken = sessionStorage.getItem("resorthub_access_token");
@@ -30,23 +18,24 @@ let billingTransactions = [];
 let selectPaymentId = null;
 
 function formatDatabaseValue(value) {
-  return String(value || "")
-    .replaceAll("_", " ")
-    .replace(/\b\w/g, letter => letter.toUpperCase());
+    return String(value || "")
+        .replaceAll("_", " ")
+        .replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
 function getTransactionStatus(payment) {
     const verificationStatus = String(payment.verification_status || "").toLowerCase();
 
+    const paymentStage = String(payment.payment_stage || "").toLowerCase();
+
     if (verificationStatus === "verified") {
-        return payment.payment_stage === "full"
-            ? "Paid"
-            : "Partially Paid";
+        return ["full", "balance"].includes(paymentStage) ? "Paid" : "Partially Paid";
     }
 
     if (verificationStatus === "rejected") {
         return "Rejected";
     }
+
     return "Pending Verification";
 }
 
@@ -58,20 +47,13 @@ function normalizePayment(payment) {
     return {
         id: Number(payment.id),
         reference: payment.transaction_reference || "—",
-        guest: payment.guest_name ||
-            payment.client_account_name ||
-            "Unknown Guest",
+        guest: payment.guest_name || payment.client_account_name || "Unknown Guest",
         reservation: payment.reservation_code || "—",
         totalAmount,
-        amountPaid: payment.verification_status === "verified"
-            ? verifiedAmount
-            : submittedAmount,
+        amountPaid: payment.verification_status === "verified" ? verifiedAmount : submittedAmount,
         balance: Math.max(totalAmount - verifiedAmount, 0),
         paymentMethod: formatDatabaseValue(payment.payment_method),
-        paymentStage:
-            formatDatabaseValue(
-                payment.payment_stage
-            ),
+        paymentStage: formatDatabaseValue(payment.payment_stage),
         status: getTransactionStatus(payment),
         transactionDate: payment.created_at,
         proofOfPayment: {
@@ -80,13 +62,13 @@ function normalizePayment(payment) {
             transactionReference: payment.transaction_reference || "—",
             amount: submittedAmount,
             method: formatDatabaseValue(payment.payment_method),
-            submittedDate: payment.created_at
+            submittedDate: payment.created_at,
         },
         ocrStatus: payment.ocr_status,
         extractedText: payment.extracted_text,
         extractedData: payment.extracted_data,
         ocrConfidence: payment.ocr_confidence,
-        verificationNotes: payment.verification_notes
+        verificationNotes: payment.verification_notes,
     };
 }
 
@@ -96,14 +78,11 @@ async function loadPayments() {
         return;
     }
 
-    const response = await fetch(
-        API_ENDPOINTS.payments,
-        {
-            headers: {
-                "Authorization": `Bearer ${accessToken}`
-            }
-        }
-    );
+    const response = await fetch(API_ENDPOINTS.payments, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
 
     const data = await response.json();
 
@@ -111,140 +90,99 @@ async function loadPayments() {
         throw new Error(data.message || "Unable to load payments.");
     }
 
-    billingTransactions = Array.isArray(data.payments)
-        ? data.payments.map(normalizePayment)
-        : [];
+    billingTransactions = Array.isArray(data.payments) ? data.payments.map(normalizePayment) : [];
 }
 
 /*DOM ELEMENTS*/
 
-const transactionSearch =
-  document.getElementById("transactionSearch");
+const transactionSearch = document.getElementById("transactionSearch");
 
-const paymentStatusFilter =
-  document.getElementById("paymentStatusFilter");
+const paymentStatusFilter = document.getElementById("paymentStatusFilter");
 
-const paymentMethodFilter =
-  document.getElementById("paymentMethodFilter");
+const paymentMethodFilter = document.getElementById("paymentMethodFilter");
 
-const transactionTableBody =
-  document.querySelector(".transaction-table tbody");
+const transactionTableBody = document.querySelector(".transaction-table tbody");
 
-const clearFilterButton =
-  document.querySelector(".clear-filter");
+const clearFilterButton = document.querySelector(".clear-filter");
 
-const statCards =
-  document.querySelectorAll(".stat-card");
+const statCards = document.querySelectorAll(".stat-card");
 
-const verifyPaymentButtons =
-  document.querySelectorAll(".verify-payment");
+const verifyPaymentButtons = document.querySelectorAll(".verify-payment");
 
-const verifyButton =
-  document.querySelector(".btn-verify");
+const verifyButton = document.querySelector(".btn-verify");
 
-const rejectButton =
-  document.querySelector(".btn-reject");
+const rejectButton = document.querySelector(".btn-reject");
 
-const previewButton =
-  document.querySelector(".preview-button");
+const previewButton = document.querySelector(".preview-button");
 
-
-/* =========================================================
-   FORMAT CURRENCY
-   ========================================================= */
+/* FORMAT CURRENCY */
 
 function formatCurrency(amount) {
-
-  return new Intl.NumberFormat("en-PH", {
-    style: "currency",
-    currency: "PHP",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(amount);
-
+    return new Intl.NumberFormat("en-PH", {
+        style: "currency",
+        currency: "PHP",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    }).format(amount);
 }
 
-
-/* =========================================================
-   GET STATUS CLASS
-   ========================================================= */
+/* GET STATUS CLASS */
 
 function getStatusClass(status) {
+    switch (status) {
+        case "Paid":
+            return "paid-badge";
 
-  switch (status) {
+        case "Pending Verification":
+            return "pending-badge";
 
-    case "Paid":
-      return "paid-badge";
+        case "Partially Paid":
+            return "partial-badge";
 
-    case "Pending Verification":
-      return "pending-badge";
+        case "Unpaid":
+            return "unpaid-badge";
 
-    case "Partially Paid":
-      return "partial-badge";
-
-    case "Unpaid":
-      return "unpaid-badge";
-
-    default:
-      return "";
-
-  }
-
+        default:
+            return "";
+    }
 }
 
-
-/* =========================================================
-   GET STATUS ICON
-   ========================================================= */
+/* GET STATUS ICON */
 
 function getStatusIcon(status) {
+    switch (status) {
+        case "Paid":
+            return "circle-check";
 
-  switch (status) {
+        case "Pending Verification":
+            return "clock-3";
 
-    case "Paid":
-      return "circle-check";
+        case "Partially Paid":
+            return "circle-half";
 
-    case "Pending Verification":
-      return "clock-3";
+        case "Unpaid":
+            return "circle-x";
 
-    case "Partially Paid":
-      return "circle-half";
-
-    case "Unpaid":
-      return "circle-x";
-
-    default:
-      return "circle";
-
-  }
-
+        default:
+            return "circle";
+    }
 }
 
-
-/* =========================================================
-   RENDER TRANSACTIONS
-   ========================================================= */
+/* RENDER TRANSACTIONS */
 
 function renderTransactions(transactions) {
+    if (!transactionTableBody) {
+        return;
+    }
 
-  if (!transactionTableBody) {
-    return;
-  }
+    transactionTableBody.innerHTML = "";
 
+    /* No Results */
 
-  transactionTableBody.innerHTML = "";
+    if (transactions.length === 0) {
+        const emptyRow = document.createElement("tr");
 
-
-  /* -----------------------------------------------
-     No Results
-     ----------------------------------------------- */
-
-  if (transactions.length === 0) {
-
-    const emptyRow =
-      document.createElement("tr");
-
-    emptyRow.innerHTML = `
+        emptyRow.innerHTML = `
       <td colspan="9" class="empty-state">
         <div class="empty-state-content">
           <i data-lucide="receipt-text"></i>
@@ -254,25 +192,19 @@ function renderTransactions(transactions) {
       </td>
     `;
 
-    transactionTableBody.appendChild(emptyRow);
+        transactionTableBody.appendChild(emptyRow);
 
-    refreshIcons();
+        refreshIcons();
 
-    return;
-  }
+        return;
+    }
 
+    /* Transaction Rows */
 
-  /* -----------------------------------------------
-     Transaction Rows
-     ----------------------------------------------- */
+    transactions.forEach((transaction) => {
+        const row = document.createElement("tr");
 
-  transactions.forEach(transaction => {
-
-    const row =
-      document.createElement("tr");
-
-
-    row.innerHTML = `
+        row.innerHTML = `
       <td>
         <strong>${escapeHTML(transaction.reference)}</strong>
       </td>
@@ -311,22 +243,16 @@ function renderTransactions(transactions) {
 
         <button
           class="table-action ${
-            transaction.status === "Pending Verification"
-              ? "verify-payment"
-              : ""
+              transaction.status === "Pending Verification" ? "verify-payment" : ""
           }"
           type="button"
           title="${
-            transaction.status === "Pending Verification"
-              ? "Verify payment"
-              : "View transaction"
+              transaction.status === "Pending Verification" ? "Verify payment" : "View transaction"
           }"
           data-transaction-id="${transaction.id}">
 
           <i data-lucide="${
-            transaction.status === "Pending Verification"
-              ? "scan-search"
-              : "eye"
+              transaction.status === "Pending Verification" ? "scan-search" : "eye"
           }"></i>
 
         </button>
@@ -334,719 +260,481 @@ function renderTransactions(transactions) {
       </td>
     `;
 
-
-    transactionTableBody.appendChild(row);
-
-  });
-
-
-  refreshIcons();
-
-
-  /*
-   * Reconnect action buttons after
-   * dynamically rendering the table.
-   */
-
-  attachTransactionActions();
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-   =========================================================
-
-   Prevents database/API values from being inserted
-   directly as executable HTML later.
-   ========================================================= */
-
-function escapeHTML(value) {
-
-  if (value === null || value === undefined) {
-    return "";
-  }
-
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
-
-
-/* =========================================================
-   FILTER TRANSACTIONS
-   ========================================================= */
-
-function filterTransactions() {
-
-  const searchValue =
-    transactionSearch
-      ? transactionSearch.value
-          .trim()
-          .toLowerCase()
-      : "";
-
-
-  const selectedStatus =
-    paymentStatusFilter
-      ? paymentStatusFilter.value
-      : "All Status";
-
-
-  const selectedMethod =
-    paymentMethodFilter
-      ? paymentMethodFilter.value
-      : "All Methods";
-
-
-  const filtered =
-    billingTransactions.filter(transaction => {
-
-
-      /* ---------------------------------------------
-         Search
-         --------------------------------------------- */
-
-      const matchesSearch =
-        searchValue === "" ||
-
-        transaction.reference
-          .toLowerCase()
-          .includes(searchValue) ||
-
-        transaction.guest
-          .toLowerCase()
-          .includes(searchValue) ||
-
-        transaction.reservation
-          .toLowerCase()
-          .includes(searchValue);
-
-
-      /* ---------------------------------------------
-         Status
-         --------------------------------------------- */
-
-      const matchesStatus =
-        selectedStatus === "All Status" ||
-
-        transaction.status === selectedStatus;
-
-
-      /* ---------------------------------------------
-         Payment Method
-         --------------------------------------------- */
-
-      const matchesMethod =
-        selectedMethod === "All Methods" ||
-
-        transaction.paymentMethod === selectedMethod;
-
-
-      return (
-        matchesSearch &&
-        matchesStatus &&
-        matchesMethod
-      );
-
+        transactionTableBody.appendChild(row);
     });
 
-
-  renderTransactions(filtered);
-
-}
-
-
-/* =========================================================
-   UPDATE SUMMARY CARDS
-   ========================================================= */
-
-function updateSummary() {
-
-  const totalTransactions =
-    billingTransactions.length;
-
-
-  const paidTransactions =
-    billingTransactions.filter(
-      transaction =>
-        transaction.status === "Paid"
-    ).length;
-
-
-  const pendingTransactions =
-    billingTransactions.filter(
-      transaction =>
-        transaction.status === "Pending Verification"
-    ).length;
-
-
-  const outstandingBalance =
-    billingTransactions.reduce(
-      (total, transaction) =>
-        total + transaction.balance,
-      0
-    );
-
-
-  /*
-   * The four summary cards are in this order:
-   *
-   * 1. Total Transactions
-   * 2. Paid
-   * 3. Pending Verification
-   * 4. Outstanding Balance
-   */
-
-  if (statCards.length >= 4) {
-
-    statCards[0]
-      .querySelector("strong")
-      .textContent =
-      totalTransactions;
-
-
-    statCards[1]
-      .querySelector("strong")
-      .textContent =
-      paidTransactions;
-
-
-    statCards[2]
-      .querySelector("strong")
-      .textContent =
-      pendingTransactions;
-
-
-    statCards[3]
-      .querySelector("strong")
-      .textContent =
-      formatCurrency(outstandingBalance);
-
+    refreshIcons();
 
     /*
-     * Since these values are now calculated,
-     * replace "Sample data" with a simple
-     * data indicator.
+     * Reconnect action buttons after
+     * dynamically rendering the table.
      */
 
-    statCards.forEach(card => {
+    attachTransactionActions();
+}
 
-      const small =
-        card.querySelector("small");
+/* ESCAPE HTML Prevents database/API values from being inserted directly as executable HTML later. */
 
-      if (small) {
-        small.textContent =
-          "Current records";
-      }
+function escapeHTML(value) {
+    if (value === null || value === undefined) {
+        return "";
+    }
 
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+/* FILTER TRANSACTIONS */
+
+function filterTransactions() {
+    const searchValue = transactionSearch ? transactionSearch.value.trim().toLowerCase() : "";
+
+    const selectedStatus = paymentStatusFilter ? paymentStatusFilter.value : "All Status";
+
+    const selectedMethod = paymentMethodFilter ? paymentMethodFilter.value : "All Methods";
+
+    const filtered = billingTransactions.filter((transaction) => {
+        /* Search */
+
+        const matchesSearch =
+            searchValue === "" ||
+            transaction.reference.toLowerCase().includes(searchValue) ||
+            transaction.guest.toLowerCase().includes(searchValue) ||
+            transaction.reservation.toLowerCase().includes(searchValue);
+
+        /* Status */
+
+        const matchesStatus =
+            selectedStatus === "All Status" || transaction.status === selectedStatus;
+
+        /* Payment Method */
+
+        const matchesMethod =
+            selectedMethod === "All Methods" || transaction.paymentMethod === selectedMethod;
+
+        return matchesSearch && matchesStatus && matchesMethod;
     });
 
-  }
-
+    renderTransactions(filtered);
 }
 
+/* UPDATE SUMMARY CARDS */
 
-/* =========================================================
-   CLEAR FILTERS
-   ========================================================= */
+function updateSummary() {
+    const totalTransactions = billingTransactions.length;
+
+    const paidTransactions = billingTransactions.filter(
+        (transaction) => transaction.status === "Paid",
+    ).length;
+
+    const pendingTransactions = billingTransactions.filter(
+        (transaction) => transaction.status === "Pending Verification",
+    ).length;
+
+    const outstandingBalance = billingTransactions.reduce(
+        (total, transaction) => total + transaction.balance,
+        0,
+    );
+
+    /*
+     * The four summary cards are in this order:
+     *
+     * 1. Total Transactions
+     * 2. Paid
+     * 3. Pending Verification
+     * 4. Outstanding Balance
+     */
+
+    if (statCards.length >= 4) {
+        statCards[0].querySelector("strong").textContent = totalTransactions;
+
+        statCards[1].querySelector("strong").textContent = paidTransactions;
+
+        statCards[2].querySelector("strong").textContent = pendingTransactions;
+
+        statCards[3].querySelector("strong").textContent = formatCurrency(outstandingBalance);
+
+        /*
+         * Since these values are now calculated,
+         * replace "Sample data" with a simple
+         * data indicator.
+         */
+
+        statCards.forEach((card) => {
+            const small = card.querySelector("small");
+
+            if (small) {
+                small.textContent = "Current records";
+            }
+        });
+    }
+}
+
+/* CLEAR FILTERS */
 
 function clearFilters() {
+    if (transactionSearch) {
+        transactionSearch.value = "";
+    }
 
-  if (transactionSearch) {
-    transactionSearch.value = "";
-  }
+    if (paymentStatusFilter) {
+        paymentStatusFilter.value = "All Status";
+    }
 
-  if (paymentStatusFilter) {
-    paymentStatusFilter.value = "All Status";
-  }
+    if (paymentMethodFilter) {
+        paymentMethodFilter.value = "All Methods";
+    }
 
-  if (paymentMethodFilter) {
-    paymentMethodFilter.value = "All Methods";
-  }
-
-  filterTransactions();
-
+    filterTransactions();
 }
 
-
-/* =========================================================
-   VIEW TRANSACTION
-   ========================================================= */
+/* VIEW TRANSACTION */
 
 function viewTransaction(transactionId) {
+    const transaction = billingTransactions.find((item) => item.id === transactionId);
 
-  const transaction =
-    billingTransactions.find(
-      item =>
-        item.id === transactionId
-    );
+    if (!transaction) {
+        return;
+    }
 
+    loadVerificationData(transaction);
 
-  if (!transaction) {
-    return;
-  }
+    const verificationCard = document.querySelector(".verification-card");
 
-
-  /*
-   * Frontend prototype only.
-   *
-   * Later this can open a transaction
-   * detail modal or retrieve the record
-   * from the backend.
-   */
-
-  console.log(
-    "Viewing transaction:",
-    transaction
-  );
-
+    if (verificationCard) {
+        verificationCard.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    }
 }
 
-
-/* =========================================================
-   LOAD VERIFICATION DATA
-   ========================================================= */
+/* LOAD VERIFICATION DATA */
 
 function loadVerificationData(transaction) {
+    if (!transaction) {
+        return;
+    }
 
-  if (!transaction) {
-    return;
-  }
+    selectPaymentId = transaction.id;
 
-  selectPaymentId = transaction.id;
+    if (!transaction.proofOfPayment) {
+        console.log("No proof of payment submitted.");
 
-  if (!transaction.proofOfPayment) {
+        return;
+    }
 
-    console.log(
-      "No proof of payment submitted."
-    );
+    const proof = transaction.proofOfPayment;
 
-    return;
-  }
+    const verificationStatus = document.querySelector(".verification-status");
 
+    const pendingVerification = transaction.status === "Pending Verification";
 
-  const proof =
-    transaction.proofOfPayment;
+    const verificationActions = document.querySelector(".ocr-actions");
 
+    if (verificationStatus) {
+        verificationStatus.textContent = transaction.status;
+    }
 
-  /*
-   * Verification widget elements
-   */
+    if (verificationActions) {
+        verificationActions.hidden = !pendingVerification;
 
-    const documentName =
-        document.querySelector(
-            ".document-placeholder small"
-        );
+        verificationActions.style.display = pendingVerification ? "" : "none";
+    }
 
-    const verificationFields =
-        document.querySelectorAll(
-            ".ocr-results .ocr-field strong"
-        );
+    if (verifyButton) {
+        verifyButton.disabled = !pendingVerification;
+    }
+
+    if (rejectButton) {
+        rejectButton.disabled = !pendingVerification;
+    }
+
+    /*
+     * Verification widget elements
+     */
+
+    const documentName = document.querySelector(".document-placeholder small");
+
+    const verificationFields = document.querySelectorAll(".ocr-results .ocr-field strong");
 
     const referenceField = verificationFields[0];
     const amountField = verificationFields[1];
     const methodField = verificationFields[2];
     const dateField = verificationFields[3];
 
-
     if (documentName) {
-        documentName.textContent =
-        proof.fileName;
+        documentName.textContent = proof.fileName;
     }
-
 
     if (referenceField) {
-        referenceField.textContent =
-        proof.transactionReference;
+        referenceField.textContent = proof.transactionReference;
     }
-
 
     if (amountField) {
-        amountField.textContent =
-        formatCurrency(proof.amount);
+        amountField.textContent = formatCurrency(proof.amount);
     }
-
 
     if (methodField) {
-        methodField.textContent =
-        proof.method;
+        methodField.textContent = proof.method;
     }
-
 
     if (dateField) {
-    dateField.textContent =
-        new Date(
-            proof.submittedDate
-        ).toLocaleString(
-            "en-PH",
-            {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "numeric",
-                minute: "2-digit"
-            }
-        );
+        dateField.textContent = new Date(proof.submittedDate).toLocaleString("en-PH", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+        });
     }
-
 }
 
-
-/* =========================================================
-   OPEN VERIFICATION
-   ========================================================= */
+/* OPEN VERIFICATION */
 
 function openVerification(transactionId) {
+    const transaction = billingTransactions.find((item) => item.id === transactionId);
 
-  const transaction =
-    billingTransactions.find(
-      item =>
-        item.id === transactionId
-    );
+    if (!transaction) {
+        return;
+    }
 
+    if (transaction.status !== "Pending Verification") {
+        console.log("This transaction does not require verification.");
 
-  if (!transaction) {
-    return;
-  }
+        return;
+    }
 
+    loadVerificationData(transaction);
 
-  if (
-    transaction.status !==
-    "Pending Verification"
-  ) {
+    /*
+     * Scroll to verification widget.
+     */
 
-    console.log(
-      "This transaction does not require verification."
-    );
+    const verificationCard = document.querySelector(".verification-card");
 
-    return;
-
-  }
-
-
-  loadVerificationData(transaction);
-
-
-  /*
-   * Scroll to verification widget.
-   */
-
-  const verificationCard =
-    document.querySelector(
-      ".verification-card"
-    );
-
-
-  if (verificationCard) {
-
-    verificationCard.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-
-  }
-
+    if (verificationCard) {
+        verificationCard.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    }
 }
 
-
-/* =========================================================
-   ATTACH TRANSACTION ACTIONS
-   ========================================================= */
+/* ATTACH TRANSACTION ACTIONS */
 
 function attachTransactionActions() {
+    const actionButtons = document.querySelectorAll(".transaction-table .table-action");
 
-  const actionButtons =
-    document.querySelectorAll(
-      ".transaction-table .table-action"
-    );
+    actionButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+            const transactionId = Number(this.dataset.transactionId);
 
+            const transaction = billingTransactions.find((item) => item.id === transactionId);
 
-  actionButtons.forEach(button => {
+            if (!transaction) {
+                return;
+            }
 
-    button.addEventListener(
-      "click",
-      function () {
-
-        const transactionId =
-          Number(
-            this.dataset.transactionId
-          );
-
-
-        const transaction =
-          billingTransactions.find(
-            item =>
-              item.id === transactionId
-          );
-
-
-        if (!transaction) {
-          return;
-        }
-
-
-        if (
-          transaction.status ===
-          "Pending Verification"
-        ) {
-
-          openVerification(
-            transactionId
-          );
-
-        } else {
-
-          viewTransaction(
-            transactionId
-          );
-
-        }
-
-      }
-    );
-
-  });
-
+            if (transaction.status === "Pending Verification") {
+                openVerification(transactionId);
+            } else {
+                viewTransaction(transactionId);
+            }
+        });
+    });
 }
 
 async function reviewPayment(decision, notes = "") {
-  const transaction = billingTransactions.find(item => item.id === selectPaymentId);
+    const transaction = billingTransactions.find((item) => item.id === selectPaymentId);
 
-  if (!transaction) {
-    alert("Select a payment to review.");
-    return;
-  }
-
-  if (transaction.status !== "Pending Verification"){
-    alert("This payment has already been reviewed.")
-    return;
-  }
-
-  const actionName = decision === "verified"
-    ? "verify"
-    : "reject";
-
-  const confirmed = window.confirm(
-    `Are you sure you want to ${actionName} payment ${transaction.reference}?`
-  );
-
-  if (!confirmed) {
-    return;
-  }
-
-  if (verifyButton) {
-    verifyButton.disabled = true;
-  }
-
-  if (rejectButton) {
-    rejectButton.disabled = true;
-  }
-
-  try {
-    const response = await fetch(API_ENDPOINTS.reviewPayment(transaction.id),{
-      method: "PATCH",
-      headers: {
-        "Authorization": `Bearer ${accessToken}`,
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        decision, notes
-      })
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || "Unable to review payment.");
+    if (!transaction) {
+        alert("Select a payment to review.");
+        return;
     }
 
-    alert(data.message);
-    window.location.reload();
-  } catch (error) {
-    alert(error.message);
+    if (transaction.status !== "Pending Verification") {
+        alert("This payment has already been reviewed.");
+        return;
+    }
+
+    const actionName = decision === "verified" ? "verify" : "reject";
+
+    const confirmed = window.confirm(
+        `Are you sure you want to ${actionName} payment ${transaction.reference}?`,
+    );
+
+    if (!confirmed) {
+        return;
+    }
 
     if (verifyButton) {
-      verifyButton.disabled = false;
+        verifyButton.disabled = true;
     }
 
     if (rejectButton) {
-      rejectButton.disabled = false;
+        rejectButton.disabled = true;
     }
-  }
-}
 
+    try {
+        const response = await fetch(API_ENDPOINTS.reviewPayment(transaction.id), {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+
+            body: JSON.stringify({
+                decision,
+                notes,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Unable to review payment.");
+        }
+
+        alert(data.message);
+        window.location.reload();
+    } catch (error) {
+        alert(error.message);
+
+        if (verifyButton) {
+            verifyButton.disabled = false;
+        }
+
+        if (rejectButton) {
+            rejectButton.disabled = false;
+        }
+    }
+}
 
 /*VERIFY PAYMENT*/
 
 async function verifyPayment() {
-  await reviewPayment("verified");
+    await reviewPayment("verified");
 }
 
 /*REJECT PAYMENT*/
 
 async function rejectPayment() {
-  const notes = window.prompt("Enter the reason for rejecting this payment proof:");
+    const notes = window.prompt("Enter the reason for rejecting this payment proof:");
 
-  if (notes === null) {
-    return;
-  }
+    if (notes === null) {
+        return;
+    }
 
-  if (!notes.trim()) {
-    alert("A rejection reason is required.");
-    return;
-  }
+    if (!notes.trim()) {
+        alert("A rejection reason is required.");
+        return;
+    }
 
-  await reviewPayment("rejected", notes.trim());
+    await reviewPayment("rejected", notes.trim());
 }
 
+/* VIEW DOCUMENT */
 
-/* =========================================================
-   VIEW DOCUMENT
-   ========================================================= */
+async function viewDocument() {
+    const transaction = billingTransactions.find((item) => item.id === selectPaymentId);
 
-function viewDocument() {
+    if (!transaction) {
+        alert("Select a payment first.");
+        return;
+    }
 
-  /*
-   * The actual uploaded document will
-   * come from the backend/database later.
-   *
-   * For now, this is only a frontend
-   * placeholder.
-   */
+    const previewWindow = window.open("", "_blank");
 
-  console.log(
-    "Opening submitted proof of payment..."
-  );
+    try {
+        const response = await fetch(API_ENDPOINTS.paymentProof(transaction.id), {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
 
+        if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.message || "Unable to load the payment proof.");
+        }
 
-  alert(
-    "Document preview will display the submitted proof of payment here."
-  );
+        const proofBlob = await response.blob();
+        const proofUrl = URL.createObjectURL(proofBlob);
 
+        if (previewWindow) {
+            previewWindow.location.href = proofUrl;
+        } else {
+            URL.revokeObjectURL(proofUrl);
+            alert("Allow pop-ups to view the payment proof.");
+        }
+    } catch (error) {
+        if (previewWindow) {
+            previewWindow.close();
+        }
+
+        alert(error.message);
+    }
 }
 
-
-/* =========================================================
-   REFRESH LUCIDE ICONS
-   ========================================================= */
+/* REFRESH LUCIDE ICONS */
 
 function refreshIcons() {
-
-  if (
-    typeof lucide !== "undefined" &&
-    typeof lucide.createIcons === "function"
-  ) {
-
-    lucide.createIcons();
-
-  }
-
+    if (typeof lucide !== "undefined" && typeof lucide.createIcons === "function") {
+        lucide.createIcons();
+    }
 }
 
-
-/* =========================================================
-   EVENT LISTENERS
-   ========================================================= */
-
+/* EVENT LISTENERS */
 
 /* Search */
 
 if (transactionSearch) {
-
-  transactionSearch.addEventListener(
-    "input",
-    filterTransactions
-  );
-
+    transactionSearch.addEventListener("input", filterTransactions);
 }
-
 
 /* Status Filter */
 
 if (paymentStatusFilter) {
-
-  paymentStatusFilter.addEventListener(
-    "change",
-    filterTransactions
-  );
-
+    paymentStatusFilter.addEventListener("change", filterTransactions);
 }
-
 
 /* Payment Method Filter */
 
 if (paymentMethodFilter) {
-
-  paymentMethodFilter.addEventListener(
-    "change",
-    filterTransactions
-  );
-
+    paymentMethodFilter.addEventListener("change", filterTransactions);
 }
-
 
 /* Clear Filters */
 
 if (clearFilterButton) {
-
-  clearFilterButton.addEventListener(
-    "click",
-    clearFilters
-  );
-
+    clearFilterButton.addEventListener("click", clearFilters);
 }
-
 
 /* Verify Payment */
 
 if (verifyButton) {
-
-  verifyButton.addEventListener(
-    "click",
-    verifyPayment
-  );
-
+    verifyButton.addEventListener("click", verifyPayment);
 }
-
 
 /* Reject Payment */
 
 if (rejectButton) {
-
-  rejectButton.addEventListener(
-    "click",
-    rejectPayment
-  );
-
+    rejectButton.addEventListener("click", rejectPayment);
 }
-
 
 /* View Document */
 
 if (previewButton) {
-
-  previewButton.addEventListener(
-    "click",
-    viewDocument
-  );
-
+    previewButton.addEventListener("click", viewDocument);
 }
 
+/* INITIALIZE PAGE */
 
-/* =========================================================
-   INITIALIZE PAGE
-   ========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  async function () {
-
+document.addEventListener("DOMContentLoaded", async function () {
     try {
         await loadPayments();
     } catch (error) {
@@ -1056,36 +744,23 @@ document.addEventListener(
     /*Calculate the summary cards from the sample records.*/
     updateSummary();
 
-
     /*Render transaction records.*/
-    renderTransactions(
-      billingTransactions
-    );
-
+    renderTransactions(billingTransactions);
 
     /*Load the sample pending payment into the verification widget.*/
-    const pendingTransaction =
-      billingTransactions.find(
-        transaction =>
-          transaction.status ===
-          "Pending Verification"
-      );
+    const pendingTransaction = billingTransactions.find(
+        (transaction) => transaction.status === "Pending Verification",
+    );
 
+    const initialTransaction = pendingTransaction || billingTransactions[0];
 
-    if (pendingTransaction) {
-
-      loadVerificationData(
-        pendingTransaction
-      );
-
+    if (initialTransaction) {
+        loadVerificationData(initialTransaction);
     }
-
 
     /*
      * Initialize Lucide icons.
      */
 
     refreshIcons();
-
-  }
-);
+});

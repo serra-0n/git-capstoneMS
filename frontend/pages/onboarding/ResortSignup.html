@@ -1,124 +1,139 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>List Your Resort | ResortHub</title>
-	
-	<link rel="stylesheet" href="../../css/onboarding/resort-signup.css">
-</head>
-<body>
-	<header class="auth-header">
-		<a href="../../index.html" class="auth-logo">
-			<span class="logo-text">ResortHub</span>
-			<span class="logo-dots"><span></span><span></span><span></span></span>
-		</a>
-		<nav class="auth-navigation">
-			<a href="ResortSignup.html" class="header-link resort-link active">List your resort</a>
-			<a href="../auth/login.html" class="header-link">Sign in</a>
-			<a href="../auth/signup.html" class="header-button">Create account</a>
-		</nav>
-	</header>
-	<main class="auth-main onboarding-shell">
-		<section class="auth-card onboarding-card">
-			<div class="auth-card-header">
-				<h1>List your resort</h1>
-				<p>Submit your resort details and license for system administrator review.</p>
-			</div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>List Your Resort | ResortHub</title>
 
-			<form class="signup-form" id="resortSignupForm" enctype="multipart/form-data">
-				<div class="form-row">
-					<label class="form-group">
-						<span class="form-label">Resort name</span>
-						<input type="text" name="resortName" required maxlength="150">
-					</label>
-					<label class="form-group">
-						<span class="form-label">Resort type</span>
-						<select class="resort-type-select" name="resortType" required>
-							<option value="">Select type</option>
-							<option value="Private Resort">Private Resort</option>
-							<option value="Public Resort">Public Resort</option>
-						</select>
-					</label>
-				</div>
+        <link rel="stylesheet" href="../../css/onboarding/resort-signup.css" />
+    </head>
+    <body>
+        <header class="auth-header">
+            <a href="../../index.html" class="auth-logo">
+                <span class="logo-text">ResortHub</span>
+                <span class="logo-dots"><span></span><span></span><span></span></span>
+            </a>
+            <nav class="auth-navigation">
+                <a href="ResortSignup.html" class="header-link resort-link active"
+                    >List your resort</a
+                >
+                <a href="../auth/login.html" class="header-link">Sign in</a>
+                <a href="../auth/signup.html" class="header-button">Create account</a>
+            </nav>
+        </header>
+        <main class="auth-main onboarding-shell">
+            <section class="auth-card onboarding-card">
+                <div class="auth-card-header">
+                    <h1>List your resort</h1>
+                    <p>Submit your resort details and license for system administrator review.</p>
+                </div>
 
-				<div class="form-row">
-					<label class="form-group">
-						<span class="form-label">Registered business name</span>
-						<input
-							type="text"
-							name="businessName"
-							required
-							maxlength="150"
-							placeholder="Name shown on the registration document"
-						>
-					</label>
-					<label class="form-group">
-						<span class="form-label">DTI / Business registration number</span>
-						<input
-							type="text"
-							name="businessRegistrationNumber"
-							required
-							maxlength="100"
-							placeholder="Enter the registered number"
-						>
-					</label>
-				</div>
+                <form class="signup-form" id="resortSignupForm" enctype="multipart/form-data">
+                    <div class="form-row">
+                        <label class="form-group">
+                            <span class="form-label">Resort name</span>
+                            <input type="text" name="resortName" required maxlength="150" />
+                        </label>
+                        <label class="form-group">
+                            <span class="form-label">Resort type</span>
+                            <select class="resort-type-select" name="resortType" required>
+                                <option value="">Select type</option>
+                                <option value="Private Resort">Private Resort</option>
+                                <option value="Public Resort">Public Resort</option>
+                            </select>
+                        </label>
+                    </div>
 
-				<label class="form-group">
-					<span class="form-label">Location</span>
-					<input type="text" name="location" required maxlength="255" placeholder="City, province">
-				</label>
+                    <div class="form-row">
+                        <label class="form-group">
+                            <span class="form-label">Registered business name</span>
+                            <input
+                                type="text"
+                                name="businessName"
+                                required
+                                maxlength="150"
+                                placeholder="Name shown on the registration document"
+                            />
+                        </label>
+                        <label class="form-group">
+                            <span class="form-label">DTI / Business registration number</span>
+                            <input
+                                type="text"
+                                name="businessRegistrationNumber"
+                                required
+                                maxlength="100"
+                                placeholder="Enter the registered number"
+                            />
+                        </label>
+                    </div>
 
-				<div class="form-row">
-					<label class="form-group">
-						<span class="form-label">Owner name</span>
-						<input type="text" name="ownerName" required maxlength="150">
-					</label>
-					<label class="form-group">
-						<span class="form-label">Owner email</span>
-						<input type="email" name="ownerEmail" required maxlength="150">
-					</label>
-				</div>
+                    <label class="form-group">
+                        <span class="form-label">Location</span>
+                        <input
+                            type="text"
+                            name="location"
+                            required
+                            maxlength="255"
+                            placeholder="City, province"
+                        />
+                    </label>
 
-				<label class="file-field">
-					<span class="form-label">Resort license image</span>
-					<input type="file" name="license" accept="image/jpeg,image/png,image/webp" required>
-					<small>JPG, PNG, or WEBP. Maximum 5 MB.</small>
-				</label>
+                    <div class="form-row">
+                        <label class="form-group">
+                            <span class="form-label">Owner name</span>
+                            <input type="text" name="ownerName" required maxlength="150" />
+                        </label>
+                        <label class="form-group">
+                            <span class="form-label">Owner email</span>
+                            <input type="email" name="ownerEmail" required maxlength="150" />
+                        </label>
+                    </div>
 
-				<button class="continue-button" type="submit" id="submitButton">Submit application</button>
-				<p id="formMessage" class="message" role="status"></p>
-			</form>
+                    <label class="file-field">
+                        <span class="form-label">Resort license image</span>
+                        <input
+                            type="file"
+                            name="license"
+                            accept="image/jpeg,image/png,image/webp"
+                            required
+                        />
+                        <small>JPG, PNG, or WEBP. Maximum 5 MB.</small>
+                    </label>
 
-			<a class="back-link" href="../auth/login.html">Already have an account? Sign in</a>
-		</section>
-	</main>
+                    <button class="continue-button" type="submit" id="submitButton">
+                        Submit application
+                    </button>
+                    <p id="formMessage" class="message" role="status"></p>
+                </form>
 
-	<footer class="auth-footer">
-		<div class="footer-content">
-			<div class="footer-column">
-				<h3>Help</h3>
-				<a href="#">Help center</a>
-				<a href="#">FAQs</a>
-				<a href="#">Privacy policy</a>
-				<a href="#">Terms of use</a>
-			</div>
-			<div class="footer-column">
-				<h3>Company</h3>
-				<a href="#">About us</a>
-				<a href="#">Careers</a>
-				<a href="#">Press</a>
-				<a href="#">Blog</a>
-			</div>
-			<div class="footer-column">
-				<h3>Destinations</h3>
-				<a href="#">Public Resorts</a>
-				<a href="#">Private Resorts</a>
-			</div>
-		</div>
-	</footer>
+                <a class="back-link" href="../auth/login.html">Already have an account? Sign in</a>
+            </section>
+        </main>
 
-	<script src="../../js/onboarding/resort-signup.js"></script>
-</body>
+        <footer class="auth-footer">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Help</h3>
+                    <a href="#">Help center</a>
+                    <a href="#">FAQs</a>
+                    <a href="#">Privacy policy</a>
+                    <a href="#">Terms of use</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <a href="#">About us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Press</a>
+                    <a href="#">Blog</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Destinations</h3>
+                    <a href="#">Public Resorts</a>
+                    <a href="#">Private Resorts</a>
+                </div>
+            </div>
+        </footer>
+
+        <script src="../../js/onboarding/resort-signup.js"></script>
+    </body>
 </html>

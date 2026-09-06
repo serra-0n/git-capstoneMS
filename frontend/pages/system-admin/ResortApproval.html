@@ -1,470 +1,454 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resort Approvals | Resort Management Syatem</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Resort Approvals | Resort Management Syatem</title>
 
-    <link rel="stylesheet" href="../../css/systemadminGlobal/style.css">
-    <link rel="stylesheet" href="../../css/systemadminGlobal/sidebar.css">
-    <link rel="stylesheet" href="../../css/systemadminGlobal/nav.css">
-    <link rel="stylesheet" href="../../css/system-admin/resort-approvals.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-<body>
-    <aside class="sidebar">
-        <div class="sidebar-brand">
-            <img src="../../image/logo.png">
-            <div class="sidebar-brand-text">
-                <h2>ResortHub</h2>
-                <span>System Administrator</span>
-            </div>
-        </div>
-
-        <nav class="sidebar-nav">
-            <div class="nav-section">
-                <span class="nav-section-title">MAIN</span>
-                <a href="Dashboard.html" class="nav-item">
-                    <i data-lucide="layout-dashboard"></i>
-                    <span>Dashboard</span>
-                </a>
-            </div>
-
-            <div class="nav-section">
-                <span class="nav-section-title">TENANT MANAGEMENT</span>
-                <a href="ResortApproval.html" class="nav-item active">
-                    <i data-lucide="building-2"></i>
-                    <span>Resort Approvals</span>
-                </a>
-                
-                <a href="TenantMonitoring.html" class="nav-item">
-                    <i data-lucide="monitor"></i>
-                    <span>Tenant Monitoring</span>
-                </a>
-            </div>
-
-            <div class="nav-section">
-                <span class="nav-section-title">USER MANAGEMENT</span>
-                <a href="PlatformUsers.html" class="nav-item">
-                    <i data-lucide="users"></i>
-                    <span>Platform Users</span>
-                </a>
-            </div>
-
-            <div class="nav-section">
-                <span class="nav-section-title">MONITORING</span>
-                <a href="ActivityLogs.html" class="nav-item">
-                    <i data-lucide="activity"></i>
-                    <span>Activity Logs</span>
-                </a>
-            </div>
-
-            <div class="nav-section">
-                <span class="nav-section-title">REPORTS</span>
-                <a href="SystemReports.html" class="nav-item">
-                    <i data-lucide="file-bar-chart"></i>
-                    <span>System Reports</span>
-                </a>
-            </div>
-        </nav>
-        <div class="sidebar-user">
-            <img src="../../image/profile.png" alt="System Administrator">
-
-            <div class="sidebar-user-info">
-                <strong>System Admin</strong>
-                <span>Administrator</span>
-            </div>
-        </div>
-
-        <a href="../../index.html" class="sidebar-logout">
-            <i data-lucide="log-out"></i>
-            <span>Logout</span>
-        </a>
-    </aside>
-
-    <main class="main-content">
-        <header class="topbar">
-            <div class="topbar-left">
-                <button
-                    type="button"
-                    class="menu-button"
-                    aria-label="Open menu">
-                <i data-lucide="menu"></i>
-                </button>
-
-                <div class="topbar-search">
-                    <i data-lucide="search"></i>
-                    <input
-                        type="search"
-                        placeholder="Search..."
-                        aria-label="Search">
+        <link rel="stylesheet" href="../../css/systemadminGlobal/style.css" />
+        <link rel="stylesheet" href="../../css/systemadminGlobal/sidebar.css" />
+        <link rel="stylesheet" href="../../css/systemadminGlobal/nav.css" />
+        <link rel="stylesheet" href="../../css/system-admin/resort-approvals.css" />
+        <script src="https://unpkg.com/lucide@latest"></script>
+    </head>
+    <body>
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <img src="../../image/logo.png" />
+                <div class="sidebar-brand-text">
+                    <h2>ResortHub</h2>
+                    <span>System Administrator</span>
                 </div>
             </div>
 
-            <div class="topbar-right">
-                <button
-                    type="button"
-                    class="notification-button"
-                    aria-label="Notifications">
-                <i data-lucide="bell"></i>
-                <span class="notification-dot"></span>
-                </button>
-
-                <div class="topbar-profile">
-                    <img src="../../image/profile.png" alt="System Administrator">
-
-                    <div>
-                        <strong>System Admin</strong>
-                        <span>Administrator</span>
-                    </div>
-
-                    <i data-lucide="chevron-down"></i>
-                </div>
-            </div>
-        </header>
-
-        <section class="page-header">
-            <div>
-                <span class="breadcrumb">Tenant Management / Resort Approvals</span>
-
-                <h1>Resort Approvals</h1>
-                <p>
-                    Review and manage resort registration
-                    applications submitted to the platform.
-                </p>
-            </div>
-        </section>
-
-        <section class="approval-summary">
-            <article class="summary-card">
-                <div class="summary-icon pending">
-                    <i data-lucide="clock-3"></i>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <span class="nav-section-title">MAIN</span>
+                    <a href="Dashboard.html" class="nav-item">
+                        <i data-lucide="layout-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
                 </div>
 
-                <div>
-                    <span>Pending Review</span>
-                    <strong id="pendingCount">0</strong>
-                </div>
-            </article>
+                <div class="nav-section">
+                    <span class="nav-section-title">TENANT MANAGEMENT</span>
+                    <a href="ResortApproval.html" class="nav-item active">
+                        <i data-lucide="building-2"></i>
+                        <span>Resort Approvals</span>
+                    </a>
 
-            <article class="summary-card">
-                <div class="summary-icon approved">
-                    <i data-lucide="circle-check"></i>
-                </div>
-
-                <div>
-                    <span>Approved</span>
-                    <strong id="approvedCount">0</strong>
-                </div>
-            </article>
-
-            <article class="summary-card">
-                <div class="summary-icon rejected">
-                    <i data-lucide="circle-x"></i>
+                    <a href="TenantMonitoring.html" class="nav-item">
+                        <i data-lucide="monitor"></i>
+                        <span>Tenant Monitoring</span>
+                    </a>
                 </div>
 
-                <div>
-                    <span>Rejected</span>
-                    <strong id="rejectedCount">0</strong>
-                </div>
-            </article>
-
-            <article class="summary-card">
-                <div class="summary-icon total">
-                    <i data-lucide="building-2"></i>
+                <div class="nav-section">
+                    <span class="nav-section-title">USER MANAGEMENT</span>
+                    <a href="PlatformUsers.html" class="nav-item">
+                        <i data-lucide="users"></i>
+                        <span>Platform Users</span>
+                    </a>
                 </div>
 
-                <div>
-                    <span>Total Applications</span>
-                    <strong id="totalCount">0</strong>
+                <div class="nav-section">
+                    <span class="nav-section-title">MONITORING</span>
+                    <a href="ActivityLogs.html" class="nav-item">
+                        <i data-lucide="activity"></i>
+                        <span>Activity Logs</span>
+                    </a>
                 </div>
-            </article>
-        </section>
 
-        <section class="approval-card">
-            <div class="approval-card-header">
-                <div>
-                    <h2>Resort Registration Applications</h2>
+                <div class="nav-section">
+                    <span class="nav-section-title">REPORTS</span>
+                    <a href="SystemReports.html" class="nav-item">
+                        <i data-lucide="file-bar-chart"></i>
+                        <span>System Reports</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="sidebar-user">
+                <img src="../../image/profile.png" alt="System Administrator" />
 
-                    <p>
-                        Review submitted resort applications
-                        before approval.
-                    </p>
+                <div class="sidebar-user-info">
+                    <strong>System Admin</strong>
+                    <span>Administrator</span>
                 </div>
             </div>
 
-            <div class="filter-area">
-                <div class="approval-search">
-                    <i data-lucide="search"></i>
+            <a href="../../index.html" class="sidebar-logout">
+                <i data-lucide="log-out"></i>
+                <span>Logout</span>
+            </a>
+        </aside>
 
-                    <input
-                        type="search"
-                        placeholder="Search resort name..."
-                        aria-label="Search resort name">
-                </div>
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-button" aria-label="Open menu">
+                        <i data-lucide="menu"></i>
+                    </button>
 
-                <button type="button" class="filter-button">
-                    <i data-lucide="sliders-horizontal"></i>
-                    Filter
-                </button>
-            </div>
-
-            <div class="approval-tabs">
-                <button type="button" class="approval-tab active" data-status="pending">
-                    Pending (<span class="tab-count">0</span>)
-                </button>
-
-                <button type="button" class="approval-tab" data-status="approved">
-                    Approved (<span class="tab-count">0</span>)
-                </button>
-
-                <button type="button" class="approval-tab" data-status="rejected">
-                    Rejected (<span class="tab-count">0</span>)
-                </button>
-            </div>
-
-            <div class="application-list" id="applicationList">
-                <p class="message">Loading resort applications...</p>
-            </div>
-        </section>
-
-        <div class="review-modal" id="reviewModal">
-            <div class="review-modal-overlay"></div>
-             <div class="review-modal-content">
-                <div>
-                    <span class="modal-label">Resort Registration</span>
-                    <h2>Review Application</h2>
-                    <p>
-                        Review the submitted resort information
-                        before making a decision
-                    </p>
-                </div>
-
-                <button 
-                    type="button"
-                    class="modal-close"
-                    id="closeReviewModal"
-                    aria-label="Close review modal">
-                    <i data-lucide="x"></i>
-                </button>
-
-            <section class="review-section">
-                <div class="review-section-header">
-                    <i data-lucide="building-2"></i>
-
-                    <div>
-                        <h3>Resort Information</h3>
-                        <p>Basic resort registration details.</p>
+                    <div class="topbar-search">
+                        <i data-lucide="search"></i>
+                        <input type="search" placeholder="Search..." aria-label="Search" />
                     </div>
                 </div>
 
-                <div class="review-grid">
-                    <div class="review-field">
-                        <span>Resort Name</span>
-                        <strong id="reviewResortName">—</strong>
-                    </div>
+                <div class="topbar-right">
+                    <button type="button" class="notification-button" aria-label="Notifications">
+                        <i data-lucide="bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
 
-                    <div class="review-field">
-                        <span>Location</span>
-                        <strong id="reviewLocation">—</strong>
-                    </div>
-
-                    <div class="review-field">
-                        <span>Resort Type</span>
-                        <strong id="reviewResortType">—</strong>
-                    </div>
-                </div>
-            </section>
-<!-- Owner Information -->
-            <section class="review-section">
-                <div class="review-section-header">
-                    <i data-lucide="user"></i>
-                    <div>
-                        <h3>Owner / Contact Details</h3>
-                        <p>Registered resort owner information.</p>
-                    </div>
-                </div>
-
-                <div class="review-grid">
-                    <div class="review-field">
-                        <span>Owner Name</span>
-                        <strong id="reviewOwnerName">—</strong>
-                    </div>
-
-                    <div class="review-field">
-                        <span>Email</span>
-                        <strong id="reviewOwnerEmail">—</strong>
-                    </div>
-                </div>
-            </section>
-            <!-- Business Information -->
-
-            <section class="review-section">
-                <div class="review-section-header">
-                    <i data-lucide="briefcase-business"></i>
-
-                    <div>
-                        <h3>Business Information</h3>
-                        <p>Submitted business registration details.</p>
-                    </div>
-                </div>
-
-                <div class="review-grid">
-                    <div class="review-field">
-                        <span>Business Name</span>
-                        <strong id="reviewBusinessName">—</strong>
-                    </div>
-
-                    <div class="review-field">
-                        <span>DTI / Business No.</span>
-                        <strong id="reviewBusinessRegistrationNumber">—</strong>
-                    </div>
-
-                    <div class="review-field">
-                        <span>Business Address</span>
-                        <strong id="reviewBusinessAddress">—</strong>
-                    </div>
-
-                    <div class="review-field">
-                        <span>Application Submitted</span>
-                        <strong id="reviewSubmittedDate">—</strong>
-                    </div>
-                </div>
-            </section>
-<!-- Submitted Documents -->
-            <section class="review-section">
-                <div class="review-section-header">
-                    <i data-lucide="file-check-2"></i>
-
-                    <div>
-                        <h3>Submitted Documents</h3>
-                        <p>Documents uploaded by the resort applicant.</p>
-                    </div>
-                </div>
-
-                <div class="document-list">
-                    <div class="document-item" id="licenseDocumentItem">
-                        <i data-lucide="file-text"></i>
+                    <div class="topbar-profile">
+                        <img src="../../image/profile.png" alt="System Administrator" />
 
                         <div>
-                            <strong id="reviewLicenseName">Resort License</strong>
-                            <span id="reviewLicenseStatus">No uploaded license</span>
+                            <strong>System Admin</strong>
+                            <span>Administrator</span>
                         </div>
 
-                        <button type="button" id="viewLicenseButton">View</button>
+                        <i data-lucide="chevron-down"></i>
                     </div>
+                </div>
+            </header>
+
+            <section class="page-header">
+                <div>
+                    <span class="breadcrumb">Tenant Management / Resort Approvals</span>
+
+                    <h1>Resort Approvals</h1>
+                    <p>
+                        Review and manage resort registration applications submitted to the
+                        platform.
+                    </p>
                 </div>
             </section>
- <!-- OCR Decision Support -->
-            <section class="review-section">
-                <div class="review-section-header">
-                    <i data-lucide="scan-text"></i>
-                    
+
+            <section class="approval-summary">
+                <article class="summary-card">
+                    <div class="summary-icon pending">
+                        <i data-lucide="clock-3"></i>
+                    </div>
+
                     <div>
-                        <h3>OCR-Assisted Analysis</h3>
-                        <p>Automated consistency checks for decision support only. Final approval remains with the system administrator.</p>
+                        <span>Pending Review</span>
+                        <strong id="pendingCount">0</strong>
                     </div>
-                </div>
+                </article>
 
-                <div class="ocr-summary" id="ocrSummary" data-recommendation="unavailable">
+                <article class="summary-card">
+                    <div class="summary-icon approved">
+                        <i data-lucide="circle-check"></i>
+                    </div>
+
                     <div>
-                        <span>OCR Recommendation</span>
-                        <strong id="ocrRecommendation">Not analyzed</strong>
+                        <span>Approved</span>
+                        <strong id="approvedCount">0</strong>
                     </div>
+                </article>
+
+                <article class="summary-card">
+                    <div class="summary-icon rejected">
+                        <i data-lucide="circle-x"></i>
+                    </div>
+
                     <div>
-                        <span>Consistency Score</span>
-                        <strong id="ocrConsistencyScore">—</strong>
+                        <span>Rejected</span>
+                        <strong id="rejectedCount">0</strong>
                     </div>
+                </article>
+
+                <article class="summary-card">
+                    <div class="summary-icon total">
+                        <i data-lucide="building-2"></i>
+                    </div>
+
                     <div>
-                        <span>OCR Confidence</span>
-                        <strong id="ocrConfidence">—</strong>
+                        <span>Total Applications</span>
+                        <strong id="totalCount">0</strong>
                     </div>
-                </div>
-
-                <div class="validation-list ocr-comparisons">
-                    <div class="validation-item" id="registrationMatchItem">
-                        <i data-lucide="hash"></i>
-                        <span>DTI / Registration Number</span>
-                        <strong id="registrationMatchResult">Not checked</strong>
-                    </div>
-                    <div class="validation-item" id="businessNameMatchItem">
-                        <i data-lucide="building"></i>
-                        <span>Registered Business Name</span>
-                        <strong id="businessNameMatchResult">Not checked</strong>
-                    </div>
-                    <div class="validation-item" id="keywordMatchItem">
-                        <i data-lucide="text-search"></i>
-                        <span>Expected Document Keywords</span>
-                        <strong id="keywordMatchResult">Not checked</strong>
-                    </div>
-                </div>
-
-                <div class="ocr-detected-grid">
-                    <div class="review-field">
-                        <span>Submitted Registration Number</span>
-                        <strong id="ocrSubmittedNumber">—</strong>
-                    </div>
-                    <div class="review-field">
-                        <span>OCR-Detected Registration Number</span>
-                        <strong id="ocrDetectedNumber">—</strong>
-                    </div>
-                </div>
-
-                <details class="ocr-text-panel">
-                    <summary>View extracted OCR text</summary>
-                    <pre id="ocrExtractedText">No OCR text is available.</pre>
-                </details>
-
-                <button type="button" class="ocr-rerun-button" id="rerunOcrButton">
-                    <i data-lucide="refresh-cw"></i>
-                    Run OCR Again
-                </button>
+                </article>
             </section>
 
-            <section class="review-section">
-                <div class="review-section-header">
-                    <i data-lucide="message-square-text"></i>
-
+            <section class="approval-card">
+                <div class="approval-card-header">
                     <div>
-                        <h3>Review Notes</h3>
-                        <p>Add notes before approving or rejecting.</p>
+                        <h2>Resort Registration Applications</h2>
+
+                        <p>Review submitted resort applications before approval.</p>
                     </div>
                 </div>
 
-                <textarea 
-                    id="reviewNotes" 
-                    class="review-notes" 
-                    placeholder="Add remarks or notes about this application...">
-                </textarea>
+                <div class="filter-area">
+                    <div class="approval-search">
+                        <i data-lucide="search"></i>
+
+                        <input
+                            type="search"
+                            placeholder="Search resort name..."
+                            aria-label="Search resort name"
+                        />
+                    </div>
+
+                    <button type="button" class="filter-button">
+                        <i data-lucide="sliders-horizontal"></i>
+                        Filter
+                    </button>
+                </div>
+
+                <div class="approval-tabs">
+                    <button type="button" class="approval-tab active" data-status="pending">
+                        Pending (<span class="tab-count">0</span>)
+                    </button>
+
+                    <button type="button" class="approval-tab" data-status="approved">
+                        Approved (<span class="tab-count">0</span>)
+                    </button>
+
+                    <button type="button" class="approval-tab" data-status="rejected">
+                        Rejected (<span class="tab-count">0</span>)
+                    </button>
+                </div>
+
+                <div class="application-list" id="applicationList">
+                    <p class="message">Loading resort applications...</p>
+                </div>
             </section>
 
-            <div class="review-modal-actions">
-                <button
-                    type="button"
-                    class="reject-button"
-                    id="rejectApplication">
+            <div class="review-modal" id="reviewModal">
+                <div class="review-modal-overlay"></div>
+                <div class="review-modal-content">
+                    <div>
+                        <span class="modal-label">Resort Registration</span>
+                        <h2>Review Application</h2>
+                        <p>Review the submitted resort information before making a decision</p>
+                    </div>
 
-                    <i data-lucide="x"></i>
+                    <button
+                        type="button"
+                        class="modal-close"
+                        id="closeReviewModal"
+                        aria-label="Close review modal"
+                    >
+                        <i data-lucide="x"></i>
+                    </button>
 
-                    Reject Application
-                </button>
+                    <section class="review-section">
+                        <div class="review-section-header">
+                            <i data-lucide="building-2"></i>
 
-                <button 
-                    type="button"
-                    class="approve-button"
-                    id="approveApplication">
+                            <div>
+                                <h3>Resort Information</h3>
+                                <p>Basic resort registration details.</p>
+                            </div>
+                        </div>
 
-                    <i data-lucide="check"></i>
+                        <div class="review-grid">
+                            <div class="review-field">
+                                <span>Resort Name</span>
+                                <strong id="reviewResortName">—</strong>
+                            </div>
 
-                    Approve Application
-                </button>
+                            <div class="review-field">
+                                <span>Location</span>
+                                <strong id="reviewLocation">—</strong>
+                            </div>
+
+                            <div class="review-field">
+                                <span>Resort Type</span>
+                                <strong id="reviewResortType">—</strong>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Owner Information -->
+                    <section class="review-section">
+                        <div class="review-section-header">
+                            <i data-lucide="user"></i>
+                            <div>
+                                <h3>Owner / Contact Details</h3>
+                                <p>Registered resort owner information.</p>
+                            </div>
+                        </div>
+
+                        <div class="review-grid">
+                            <div class="review-field">
+                                <span>Owner Name</span>
+                                <strong id="reviewOwnerName">—</strong>
+                            </div>
+
+                            <div class="review-field">
+                                <span>Email</span>
+                                <strong id="reviewOwnerEmail">—</strong>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Business Information -->
+
+                    <section class="review-section">
+                        <div class="review-section-header">
+                            <i data-lucide="briefcase-business"></i>
+
+                            <div>
+                                <h3>Business Information</h3>
+                                <p>Submitted business registration details.</p>
+                            </div>
+                        </div>
+
+                        <div class="review-grid">
+                            <div class="review-field">
+                                <span>Business Name</span>
+                                <strong id="reviewBusinessName">—</strong>
+                            </div>
+
+                            <div class="review-field">
+                                <span>DTI / Business No.</span>
+                                <strong id="reviewBusinessRegistrationNumber">—</strong>
+                            </div>
+
+                            <div class="review-field">
+                                <span>Business Address</span>
+                                <strong id="reviewBusinessAddress">—</strong>
+                            </div>
+
+                            <div class="review-field">
+                                <span>Application Submitted</span>
+                                <strong id="reviewSubmittedDate">—</strong>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Submitted Documents -->
+                    <section class="review-section">
+                        <div class="review-section-header">
+                            <i data-lucide="file-check-2"></i>
+
+                            <div>
+                                <h3>Submitted Documents</h3>
+                                <p>Documents uploaded by the resort applicant.</p>
+                            </div>
+                        </div>
+
+                        <div class="document-list">
+                            <div class="document-item" id="licenseDocumentItem">
+                                <i data-lucide="file-text"></i>
+
+                                <div>
+                                    <strong id="reviewLicenseName">Resort License</strong>
+                                    <span id="reviewLicenseStatus">No uploaded license</span>
+                                </div>
+
+                                <button type="button" id="viewLicenseButton">View</button>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- OCR Decision Support -->
+                    <section class="review-section">
+                        <div class="review-section-header">
+                            <i data-lucide="scan-text"></i>
+
+                            <div>
+                                <h3>OCR-Assisted Analysis</h3>
+                                <p>
+                                    Automated consistency checks for decision support only. Final
+                                    approval remains with the system administrator.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="ocr-summary" id="ocrSummary" data-recommendation="unavailable">
+                            <div>
+                                <span>OCR Recommendation</span>
+                                <strong id="ocrRecommendation">Not analyzed</strong>
+                            </div>
+                            <div>
+                                <span>Consistency Score</span>
+                                <strong id="ocrConsistencyScore">—</strong>
+                            </div>
+                            <div>
+                                <span>OCR Confidence</span>
+                                <strong id="ocrConfidence">—</strong>
+                            </div>
+                        </div>
+
+                        <div class="validation-list ocr-comparisons">
+                            <div class="validation-item" id="registrationMatchItem">
+                                <i data-lucide="hash"></i>
+                                <span>DTI / Registration Number</span>
+                                <strong id="registrationMatchResult">Not checked</strong>
+                            </div>
+                            <div class="validation-item" id="businessNameMatchItem">
+                                <i data-lucide="building"></i>
+                                <span>Registered Business Name</span>
+                                <strong id="businessNameMatchResult">Not checked</strong>
+                            </div>
+                            <div class="validation-item" id="keywordMatchItem">
+                                <i data-lucide="text-search"></i>
+                                <span>Expected Document Keywords</span>
+                                <strong id="keywordMatchResult">Not checked</strong>
+                            </div>
+                        </div>
+
+                        <div class="ocr-detected-grid">
+                            <div class="review-field">
+                                <span>Submitted Registration Number</span>
+                                <strong id="ocrSubmittedNumber">—</strong>
+                            </div>
+                            <div class="review-field">
+                                <span>OCR-Detected Registration Number</span>
+                                <strong id="ocrDetectedNumber">—</strong>
+                            </div>
+                        </div>
+
+                        <details class="ocr-text-panel">
+                            <summary>View extracted OCR text</summary>
+                            <pre id="ocrExtractedText">No OCR text is available.</pre>
+                        </details>
+
+                        <button type="button" class="ocr-rerun-button" id="rerunOcrButton">
+                            <i data-lucide="refresh-cw"></i>
+                            Run OCR Again
+                        </button>
+                    </section>
+
+                    <section class="review-section">
+                        <div class="review-section-header">
+                            <i data-lucide="message-square-text"></i>
+
+                            <div>
+                                <h3>Review Notes</h3>
+                                <p>Add notes before approving or rejecting.</p>
+                            </div>
+                        </div>
+
+                        <textarea
+                            id="reviewNotes"
+                            class="review-notes"
+                            placeholder="Add remarks or notes about this application..."
+                        >
+                        </textarea>
+                    </section>
+
+                    <div class="review-modal-actions">
+                        <button type="button" class="reject-button" id="rejectApplication">
+                            <i data-lucide="x"></i>
+
+                            Reject Application
+                        </button>
+
+                        <button type="button" class="approve-button" id="approveApplication">
+                            <i data-lucide="check"></i>
+
+                            Approve Application
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <script src="../../js/system-admin/ResortApproval.js"></script>
-    <script>
-        lucide.createIcons();
-    </script>
-</body>
+        <script src="../../js/system-admin/ResortApproval.js"></script>
+        <script>
+            lucide.createIcons();
+        </script>
+    </body>
 </html>

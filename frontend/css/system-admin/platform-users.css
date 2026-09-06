@@ -157,7 +157,9 @@
     color: #1f2937;
     font-size: 13px;
     outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .platform-user-search input::placeholder {
@@ -237,9 +239,7 @@
     border-bottom: none;
 }
 
-/* =========================================================
-   USER INFORMATION
-   ========================================================= */
+/* USER INFORMATION */
 .platform-user-info {
     display: flex;
     align-items: center;
@@ -388,7 +388,7 @@
     }
 
     .add-user-button {
-        width: 100%
+        width: 100%;
     }
 
     .platform-user-toolbar {

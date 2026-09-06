@@ -63,27 +63,22 @@
     height: 20px;
 }
 
-
-.activity-overview-card:nth-child(1)
-.activity-overview-icon {
+.activity-overview-card:nth-child(1) .activity-overview-icon {
     background: #eef2ff;
     color: #4f36e5;
 }
 
-.activity-overview-card:nth-child(2)
-.activity-overview-icon {
+.activity-overview-card:nth-child(2) .activity-overview-icon {
     background: #ecfdf5;
     color: #059669;
 }
 
-.activity-overview-card:nth-child(3)
-.activity-overview-icon {
+.activity-overview-card:nth-child(3) .activity-overview-icon {
     background: #fff7ed;
     color: #ea580c;
 }
 
-.activity-overview-card:nth-child(4)
-.activity-overview-icon {
+.activity-overview-card:nth-child(4) .activity-overview-icon {
     background: #fef2f2;
     color: #dc2626;
 }
@@ -109,8 +104,7 @@
     border: 1px solid #e5e7eb;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .recent-activity-header {
@@ -249,8 +243,7 @@
     color: #4b5563;
 }
 
-.activity-timeline-item:not(:last-child)
-.activity-timeline-icon::after {
+.activity-timeline-item:not(:last-child) .activity-timeline-icon::after {
     content: "";
     position: absolute;
     width: 1px;
@@ -326,8 +319,7 @@
     border: 1px solid #e5e7eb;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .activity-log-header {
@@ -731,7 +723,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: 
+    transition:
         background 0.2s ease,
         color 0.2s ease,
         border-color 0.2s ease;
@@ -749,7 +741,7 @@
 }
 
 .activity-detail-section {
-    position : relative;
+    position: relative;
     width: 100%;
     max-width: 680px;
     margin: 0 auto;
@@ -816,7 +808,7 @@
     display: block;
     color: #374151;
     font-size: 13px;
-    line-height: 1.4; 
+    line-height: 1.4;
     word-break: break-word;
 }
 
@@ -866,7 +858,6 @@
 }
 
 @media (max-width: 1100px) {
-
     .activity-overview {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -883,9 +874,7 @@
     }
 }
 
-
 @media (max-width: 700px) {
-
     .page-header {
         padding: 0 18px;
     }
@@ -921,8 +910,7 @@
         height: 34px;
     }
 
-    .activity-timeline-item:not(:last-child)
-    .activity-timeline-icon::after {
+    .activity-timeline-item:not(:last-child) .activity-timeline-icon::after {
         top: 34px;
         bottom: -41px;
     }

@@ -8,9 +8,8 @@ const googleButton = document.querySelector(".google-button");
 const forgotPassword = document.querySelector(".forgot-password");
 const passwordIcon = document.getElementById("passwordIcon");
 
-
 if (passwordToggle && passwordInput && passwordIcon) {
-    passwordToggle.addEventListener("click", function() {
+    passwordToggle.addEventListener("click", function () {
         const isPassword = passwordInput.type === "password";
 
         if (isPassword) {
@@ -82,54 +81,43 @@ if (loginForm) {
             const response = await fetch("/api/auth/login", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                     email,
-                    password
-                })
+                    password,
+                }),
             });
 
             const result = await response.json();
 
             if (!response.ok) {
-                throw new Error(
-                    result.message || "Login failed."
-                );
+                throw new Error(result.message || "Login failed.");
             }
 
-            sessionStorage.setItem(
-                "resorthub_access_token",
-                result.token
-            );
+            sessionStorage.setItem("resorthub_access_token", result.token);
 
             switch (result.user.role) {
                 case "system_admin":
-                    window.location.href =
-                        "../system-admin/Dashboard.html";
+                    window.location.href = "../system-admin/Dashboard.html";
                     break;
 
                 case "resort_admin":
-                    window.location.href =
-                        "../resort-admin/Dashboard.html";
+                    window.location.href = "../resort-admin/Dashboard.html";
                     break;
 
                 case "client":
-                    window.location.href =
-                        "../client/Dashboard.html";
+                    window.location.href = "../client/Dashboard.html";
                     break;
 
                 default:
-                    throw new Error(
-                        "The account role is invalid."
-                    );
+                    throw new Error("The account role is invalid.");
             }
-
-            } catch (error) {
-                alert(error.message);
-                continueButton.disabled = false;
-                continueButton.textContent = "Continue";
-            }
+        } catch (error) {
+            alert(error.message);
+            continueButton.disabled = false;
+            continueButton.textContent = "Continue";
+        }
     });
 }
 

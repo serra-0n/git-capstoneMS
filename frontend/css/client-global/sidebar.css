@@ -1,12 +1,6 @@
-/* =========================================================
-   RESORTHUB - SHARED CLIENT SIDEBAR
-   File: css/sidebar.css
-   ========================================================= */
+/* RESORTHUB - SHARED CLIENT SIDEBAR File: css/sidebar.css */
 
-
-/* =========================================================
-   SIDEBAR
-   ========================================================= */
+/* SIDEBAR */
 
 .client-sidebar {
     position: fixed;
@@ -30,10 +24,7 @@
         transform var(--transition);
 }
 
-
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
+/* SCROLLBAR */
 
 .client-sidebar::-webkit-scrollbar {
     width: 5px;
@@ -49,10 +40,7 @@
     background: #d8dee8;
 }
 
-
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
+/* NAVIGATION */
 
 .sidebar-navigation {
     display: flex;
@@ -61,10 +49,7 @@
     padding: 16px 10px 24px;
 }
 
-
-/* =========================================================
-   SIDEBAR SECTION
-   ========================================================= */
+/* SIDEBAR SECTION */
 
 .sidebar-section {
     display: flex;
@@ -90,10 +75,7 @@
     white-space: nowrap;
 }
 
-
-/* =========================================================
-   SIDEBAR LINK
-   ========================================================= */
+/* SIDEBAR LINK */
 
 .sidebar-link {
     position: relative;
@@ -132,10 +114,7 @@
     flex-shrink: 0;
 }
 
-
-/* =========================================================
-   ACTIVE LINK
-   ========================================================= */
+/* ACTIVE LINK */
 
 .sidebar-link.active {
     background: var(--primary-light);
@@ -148,108 +127,74 @@
     color: var(--primary);
 }
 
+/* COLLAPSED SIDEBAR */
 
-/* =========================================================
-   COLLAPSED SIDEBAR
-   ========================================================= */
-
-.client-app.sidebar-collapsed
-.client-sidebar {
+.client-app.sidebar-collapsed .client-sidebar {
     width: var(--sidebar-collapsed-width);
 }
 
-.client-app.sidebar-collapsed
-.sidebar-navigation {
+.client-app.sidebar-collapsed .sidebar-navigation {
     padding-left: 8px;
     padding-right: 8px;
 }
 
-.client-app.sidebar-collapsed
-.sidebar-link {
+.client-app.sidebar-collapsed .sidebar-link {
     justify-content: center;
 
     padding-left: 0;
     padding-right: 0;
 }
 
-.client-app.sidebar-collapsed
-.sidebar-link span,
-.client-app.sidebar-collapsed
-.sidebar-section-title {
+.client-app.sidebar-collapsed .sidebar-link span,
+.client-app.sidebar-collapsed .sidebar-section-title {
     display: none;
 }
 
-.client-app.sidebar-collapsed
-.sidebar-link svg {
+.client-app.sidebar-collapsed .sidebar-link svg {
     width: 19px;
     height: 19px;
 }
 
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
+/* MOBILE */
 
 @media (max-width: 760px) {
-
     .client-sidebar {
-        width: min(
-            var(--sidebar-width),
-            82vw
-        );
+        width: min(var(--sidebar-width), 82vw);
 
         transform: translateX(-100%);
 
-        box-shadow:
-            10px 0 30px rgba(30, 45, 70, 0.08);
+        box-shadow: 10px 0 30px rgba(30, 45, 70, 0.08);
     }
-
 
     /* Open mobile sidebar */
 
-    .client-app.sidebar-mobile-open
-    .client-sidebar {
+    .client-app.sidebar-mobile-open .client-sidebar {
         transform: translateX(0);
     }
 
-
     /* Reset desktop collapsed width */
 
-    .client-app.sidebar-collapsed
-    .client-sidebar {
-        width: min(
-            var(--sidebar-width),
-            82vw
-        );
+    .client-app.sidebar-collapsed .client-sidebar {
+        width: min(var(--sidebar-width), 82vw);
     }
 
-
-    .client-app.sidebar-collapsed
-    .sidebar-navigation {
+    .client-app.sidebar-collapsed .sidebar-navigation {
         padding: 16px 10px 24px;
     }
 
-
-    .client-app.sidebar-collapsed
-    .sidebar-link {
+    .client-app.sidebar-collapsed .sidebar-link {
         justify-content: flex-start;
 
         padding: 9px 11px;
     }
 
-
-    .client-app.sidebar-collapsed
-    .sidebar-link span,
-    .client-app.sidebar-collapsed
-    .sidebar-section-title {
+    .client-app.sidebar-collapsed .sidebar-link span,
+    .client-app.sidebar-collapsed .sidebar-section-title {
         display: block;
     }
 
-
-    .client-app.sidebar-collapsed
-    .sidebar-link svg {
+    .client-app.sidebar-collapsed .sidebar-link svg {
         width: 17px;
         height: 17px;
     }
-
 }

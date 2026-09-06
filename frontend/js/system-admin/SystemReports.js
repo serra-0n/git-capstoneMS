@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const reportItems = document.querySelectorAll(".report-item");
     const reportList = document.querySelector(".report-list");
 
-
     const reportData = {
         tenant: {
             title: "Tenant Management Report",
@@ -32,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
             total: "12",
             active: "9",
             suspended: "2",
-            pending: "1"
+            pending: "1",
         },
 
         user: {
@@ -43,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
             total: "248",
             active: "220",
             suspended: "18",
-            pending: "10"
+            pending: "10",
         },
 
         activity: {
@@ -54,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
             total: "1,248",
             active: "1,100",
             suspended: "0",
-            pending: "148"
+            pending: "148",
         },
 
         system: {
@@ -65,12 +64,11 @@ document.addEventListener("DOMContentLoaded", function () {
             total: "12",
             active: "9",
             suspended: "2",
-            pending: "1"
-        }
+            pending: "1",
+        },
     };
 
     let currentReportType = "tenant";
-
 
     function openReportModal(reportType) {
         const report = reportData[reportType];
@@ -86,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
         modalReportType.textContent = report.type;
         modalReportDate.textContent = report.date;
 
-        
         const summaryItems = document.querySelectorAll(".report-summary-item strong");
 
         if (summaryItems.length >= 4) {
@@ -109,11 +106,11 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.style.overflow = "";
     }
 
-    function attachViewButtons () {
+    function attachViewButtons() {
         const viewButtons = document.querySelectorAll(".report-view-button");
 
         viewButtons.forEach(function (button) {
-            button.addEventListener("click", function() {
+            button.addEventListener("click", function () {
                 const reportType = button.dataset.report;
                 openReportModal(reportType);
             });
@@ -134,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
         reportModalOverlay.addEventListener("click", closeModal);
     }
 
-    document.addEventListener("keydown", function(event) {
+    document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {
             if (reportModal.classList.contains("show")) {
                 closeModal();
@@ -143,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     if (generateReportButton) {
-        generateReportButton.addEventListener("click", function() {
+        generateReportButton.addEventListener("click", function () {
             const selectedType = reportTypeSelect.value;
             const dateFrom = reportDateFrom.value;
             const dateTo = reportDateTo.value;
@@ -172,15 +169,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            const generatedDate = new Date() 
-                .toLocaleDateString(
-                    "en-US",
-                {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric"
-                }
-            );
+            const generatedDate = new Date().toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+            });
 
             const newReport = document.createElement("article");
             newReport.className = "report-item";
@@ -222,13 +215,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const newViewButton = newReport.querySelector(".report-view-button");
 
-            newViewButton.addEventListener("click", function() {
+            newViewButton.addEventListener("click", function () {
                 openReportModal(selectedType);
             });
 
             const newDownloadButton = newReport.querySelector(".report-download-button");
 
-            newDownloadButton.addEventListener("click", function() {
+            newDownloadButton.addEventListener("click", function () {
                 downloadReport(selectedType);
             });
 
@@ -242,11 +235,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function getReportIcon(reportType) {
         switch (reportType) {
-            case "tenant": return "building-2";
-            case "user": return "users";
-            case "activity": return "activity";
-            case "system": return "file-bar-chart";
-            default: return "file-text";
+            case "tenant":
+                return "building-2";
+            case "user":
+                return "users";
+            case "activity":
+                return "activity";
+            case "system":
+                return "file-bar-chart";
+            default:
+                return "file-text";
         }
     }
 
@@ -276,23 +274,16 @@ document.addEventListener("DOMContentLoaded", function () {
             Description: ${report.description}
         `;
 
-        const blob = new Blob(
-            [reportContent], 
-            {
-                type: "text/plain"
-            }
-        )
+        const blob = new Blob([reportContent], {
+            type: "text/plain",
+        });
 
         const url = URL.createObjectURL(blob);
 
         const link = document.createElement("a");
         link.href = url;
-        link.download =
-            report.title
-                .replace(/\s+/g, "_")
-                .toLowerCase() +
-            ".txt";
-        
+        link.download = report.title.replace(/\s+/g, "_").toLowerCase() + ".txt";
+
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -310,7 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     if (modalReportDownload) {
-        modalReportDownload.addEventListener("click", function() {
+        modalReportDownload.addEventListener("click", function () {
             downloadReport(currentReportType);
         });
     }

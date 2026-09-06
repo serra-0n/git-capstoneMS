@@ -30,11 +30,7 @@
 
             <header class="client-topbar">
                 <div class="topbar-left">
-                    <a
-                        href="Dashboard.html"
-                        class="client-brand"
-                        aria-label="ResortHub Dashboard"
-                    >
+                    <a href="Dashboard.html" class="client-brand" aria-label="ResortHub Dashboard">
                         <i data-lucide="building-2"></i>
 
                         <span>ResortHub</span>
@@ -68,10 +64,7 @@
                             <small> Client </small>
                         </span>
 
-                        <i
-                            class="profile-chevron"
-                            data-lucide="chevron-down"
-                        ></i>
+                        <i class="profile-chevron" data-lucide="chevron-down"></i>
                     </button>
                 </div>
             </header>
@@ -82,10 +75,7 @@
                 <!-- SIDEBAR -->
 
                 <aside class="client-sidebar" id="clientSidebar">
-                    <nav
-                        class="sidebar-navigation"
-                        aria-label="Client navigation"
-                    >
+                    <nav class="sidebar-navigation" aria-label="Client navigation">
                         <!-- Dashboard -->
 
                         <a href="Dashboard.html" class="sidebar-link">
@@ -111,11 +101,7 @@
                                 <span> My Reservations </span>
                             </a>
 
-                            <a
-                                href="Resorts.html"
-                                class="sidebar-link active"
-                                aria-current="page"
-                            >
+                            <a href="Resorts.html" class="sidebar-link active" aria-current="page">
                                 <i data-lucide="building"></i>
 
                                 <span> Resorts </span>
@@ -137,9 +123,7 @@
                         <!-- Documents -->
 
                         <div class="sidebar-section">
-                            <span class="sidebar-section-title">
-                                DOCUMENTS
-                            </span>
+                            <span class="sidebar-section-title"> DOCUMENTS </span>
 
                             <a href="UploadDocuments.html" class="sidebar-link">
                                 <i data-lucide="file-up"></i>
@@ -153,10 +137,7 @@
                         <div class="sidebar-section">
                             <span class="sidebar-section-title"> STATUS </span>
 
-                            <a
-                                href="ReservationStatus.html"
-                                class="sidebar-link"
-                            >
+                            <a href="ReservationStatus.html" class="sidebar-link">
                                 <i data-lucide="clock-3"></i>
 
                                 <span> Reservation Status </span>
@@ -193,17 +174,11 @@
                             <div>
                                 <h1>Resorts</h1>
 
-                                <p>
-                                    Browse resorts and view their available
-                                    rooms and cottages.
-                                </p>
+                                <p>Browse resorts and view their available rooms and cottages.</p>
                             </div>
 
                             <div class="page-header-actions">
-                                <a
-                                    href="Reservations.html"
-                                    class="primary-button"
-                                >
+                                <a href="Reservations.html" class="primary-button">
                                     <i data-lucide="calendar-plus"></i>
 
                                     <span> New Reservation </span>
@@ -218,10 +193,7 @@
                                 <div>
                                     <h2>Available Resorts</h2>
 
-                                    <p>
-                                        Select a resort to view accommodation
-                                        information.
-                                    </p>
+                                    <p>Select a resort to view accommodation information.</p>
                                 </div>
                             </div>
 
@@ -231,48 +203,31 @@
 
                             <!-- Empty state -->
 
-                            <div
-                                class="card resorts-empty-state"
-                                id="resortsEmptyState"
-                                hidden
-                            >
+                            <div class="card resorts-empty-state" id="resortsEmptyState" hidden>
                                 <div class="empty-state">
                                     <i data-lucide="building"></i>
 
                                     <h2>No Resorts Available</h2>
 
-                                    <p>
-                                        No resort information is available at
-                                        this time.
-                                    </p>
+                                    <p>No resort information is available at this time.</p>
                                 </div>
                             </div>
                         </section>
 
                         <!-- SELECTED RESORT -->
 
-                        <section
-                            class="selected-resort-section"
-                            id="selectedResortSection"
-                            hidden
-                        >
+                        <section class="selected-resort-section" id="selectedResortSection" hidden>
                             <div class="section-heading">
                                 <div>
                                     <h2 id="selectedResortName">Resort</h2>
 
-                                    <p>
-                                        Rooms and cottages available for the
-                                        selected resort.
-                                    </p>
+                                    <p>Rooms and cottages available for the selected resort.</p>
                                 </div>
                             </div>
 
                             <!-- ACCOMMODATION LIST -->
 
-                            <div
-                                class="accommodation-grid"
-                                id="accommodationList"
-                            ></div>
+                            <div class="accommodation-grid" id="accommodationList"></div>
 
                             <!-- No accommodations -->
 
@@ -287,8 +242,8 @@
                                     <h2>No Accommodations Available</h2>
 
                                     <p>
-                                        No room or cottage information is
-                                        currently available for this resort.
+                                        No room or cottage information is currently available for
+                                        this resort.
                                     </p>
                                 </div>
                             </div>
@@ -308,21 +263,16 @@
                                     </span>
 
                                     <div>
-                                        <h2 id="accommodationDetailName">
-                                            Accommodation
-                                        </h2>
+                                        <h2 id="accommodationDetailName">Accommodation</h2>
 
                                         <p>
-                                            Accommodation information for the
-                                            selected room or cottage.
+                                            Accommodation information for the selected room or
+                                            cottage.
                                         </p>
                                     </div>
                                 </div>
 
-                                <span
-                                    class="status-badge"
-                                    id="accommodationDetailAvailability"
-                                >
+                                <span class="status-badge" id="accommodationDetailAvailability">
                                     —
                                 </span>
                             </div>
@@ -334,9 +284,7 @@
                                     <div class="accommodation-detail-item">
                                         <span> Type </span>
 
-                                        <strong id="accommodationDetailType">
-                                            —
-                                        </strong>
+                                        <strong id="accommodationDetailType"> — </strong>
                                     </div>
 
                                     <!-- Capacity -->
@@ -344,11 +292,7 @@
                                     <div class="accommodation-detail-item">
                                         <span> Capacity </span>
 
-                                        <strong
-                                            id="accommodationDetailCapacity"
-                                        >
-                                            —
-                                        </strong>
+                                        <strong id="accommodationDetailCapacity"> — </strong>
                                     </div>
 
                                     <!-- Price -->
@@ -356,9 +300,7 @@
                                     <div class="accommodation-detail-item">
                                         <span> Price </span>
 
-                                        <strong id="accommodationDetailPrice">
-                                            —
-                                        </strong>
+                                        <strong id="accommodationDetailPrice"> — </strong>
                                     </div>
 
                                     <!-- Availability -->
@@ -366,9 +308,7 @@
                                     <div class="accommodation-detail-item">
                                         <span> Availability </span>
 
-                                        <strong id="accommodationDetailStatus">
-                                            —
-                                        </strong>
+                                        <strong id="accommodationDetailStatus"> — </strong>
                                     </div>
 
                                     <!-- Amenities -->
@@ -378,11 +318,7 @@
                                     >
                                         <span> Amenities </span>
 
-                                        <strong
-                                            id="accommodationDetailAmenities"
-                                        >
-                                            —
-                                        </strong>
+                                        <strong id="accommodationDetailAmenities"> — </strong>
                                     </div>
                                 </div>
 

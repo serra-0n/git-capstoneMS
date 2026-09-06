@@ -20,13 +20,90 @@ async function listResorts(request, response) {
 
 async function listAccommodations(request, response) {
     if (!validId(request.params.id)) {
-        return response.status(400).json({ message: "A valid resort is required." });
+        return response.status(400).json({
+            message: "A valid resort is required."
+        });
     }
+
+    const checkIn = String(request.query.check_in || "")
+        .trim();
+
+    const checkOut = String(request.query.check_out || "")
+        .trim();
+
+    const hasCheckIn = Boolean(checkIn);
+    const hasCheckOut = Boolean(checkOut);
+
+    if (hasCheckIn !== hasCheckOut) {
+        return response.status(400).json({
+            message: "Both check-in and check-out dates are required."
+        });
+    }
+
+    if (hasCheckIn && (
+        !validDate(checkIn) ||
+        !validDate(checkOut) ||
+        checkOut <= checkIn
+    )) {
+        return response.status(400).json({
+            message: "A valid reservation schedule is required."
+        });
+    }
+
     try {
-        response.json({ accommodations: await Reservation.listAccommodations(Number(request.params.id)) });
+        const accommodations = await Reservation.listAccommodations(
+            Number(request.params.id),
+            {
+                checkIn: hasCheckIn
+                    ? checkIn
+                    : null,
+
+                checkOut: hasCheckOut
+                    ? checkOut
+                    : null
+            }
+        );
+
+        return response.json({accommodations});
     } catch (error) {
         console.error("Accommodation list failed:", error);
-        response.status(500).json({ message: "Unable to load accommodations." });
+        return response.status(500).json({
+            message: "Unable to load accommodations."
+        });
+    }
+}
+
+async function listUnavailableDates(
+    request,
+    response
+) {
+    if (!validId(request.params.id)) {
+        return response.status(400).json({
+            message:
+                "A valid accommodation is required."
+        });
+    }
+
+    try {
+        const unavailableRanges =
+            await Reservation.listUnavailableDateRanges(
+                Number(request.params.id)
+            );
+
+        return response.json({
+            unavailable_ranges:
+                unavailableRanges
+        });
+    } catch (error) {
+        console.error(
+            "Unavailable date list failed:",
+            error
+        );
+
+        return response.status(500).json({
+            message:
+                "Unable to load unavailable dates."
+        });
     }
 }
 
@@ -151,6 +228,7 @@ async function updateReservationStatus(request, response) {
 module.exports = {
     listResorts,
     listAccommodations,
+    listUnavailableDates,
     clientProfile,
     createReservation,
     listClientReservations,

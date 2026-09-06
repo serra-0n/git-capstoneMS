@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 * {
     margin: 0;
@@ -7,7 +7,7 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     background: #f5f7fa;
     color: #111827;
 }
@@ -191,9 +191,7 @@ body {
     color: var(--text-light);
 }
 
-/* =========================================
-   PAGE HEADER
-========================================= */
+/* PAGE HEADER */
 
 .page-header {
     padding: 24px 28px 16px;
@@ -222,9 +220,7 @@ body {
     color: var(--text-light);
 }
 
-/* =========================================
-   GLOBAL BUTTONS
-========================================= */
+/* GLOBAL BUTTONS */
 
 .btn-primary {
     height: 38px;

@@ -8,10 +8,7 @@ if (!accessToken) {
     window.location.href = "../auth/login.html";
 }
 
-
-/* =========================================================
-   API ENDPOINTS
-   ========================================================= */
+/* API ENDPOINTS */
 
 const API_ENDPOINTS = {
     clientProfile: "/api/client/profile",
@@ -20,36 +17,20 @@ const API_ENDPOINTS = {
         return `/api/client/reservations/${encodeURIComponent(reservationId)}`;
     },
 
-    submitPayment: "/api/client/payments"
+    submitPayment: "/api/client/payments",
 };
 
-
-/* =========================================================
-   DUMMY CLIENT
-   Presentation data only.
-   ========================================================= */
+/* DUMMY CLIENT Presentation data only. */
 
 const DUMMY_CLIENT = {
-
     id: 1,
 
-    name: "Juan Dela Cruz"
-
+    name: "Juan Dela Cruz",
 };
 
-
-/* =========================================================
-   DUMMY BILLING DATA
-
-   These values are only for frontend presentation/testing.
-   They are NOT thesis/database facts.
-
-   The actual billing amount and payment status must later
-   come from the backend / MySQL database.
-   ========================================================= */
+/* DUMMY BILLING DATA These values are only for frontend presentation/testing. They are NOT thesis/database facts. The actual billing amount and payment status must later come from the backend / MySQL database. */
 
 const DUMMY_BILLINGS = [
-
     {
         billing_id: 501,
 
@@ -63,9 +44,9 @@ const DUMMY_BILLINGS = [
 
         accommodation_name: "Family Room",
 
-        billing_amount: 7000.00,
+        billing_amount: 7000.0,
 
-        payment_status: "Pending"
+        payment_status: "Pending",
     },
 
     {
@@ -81,9 +62,9 @@ const DUMMY_BILLINGS = [
 
         accommodation_name: "Standard Room",
 
-        billing_amount: 4400.00,
+        billing_amount: 4400.0,
 
-        payment_status: "Pending Verification"
+        payment_status: "Pending Verification",
     },
 
     {
@@ -99,17 +80,13 @@ const DUMMY_BILLINGS = [
 
         accommodation_name: "Deluxe Room",
 
-        billing_amount: 8400.00,
+        billing_amount: 8400.0,
 
-        payment_status: "Verified"
-    }
-
+        payment_status: "Verified",
+    },
 ];
 
-
-/* =========================================================
-   APPLICATION STATE
-   ========================================================= */
+/* APPLICATION STATE */
 
 const paymentState = {
     client: null,
@@ -117,134 +94,106 @@ const paymentState = {
     selectedBilling: null,
     selectedPaymentOption: "deposit",
     selectedFile: null,
-    submitting: false
+    submitting: false,
 };
 
-
-/* =========================================================
-   DOM ELEMENTS
-   ========================================================= */
+/* DOM ELEMENTS */
 
 /* Shared layout */
 
-const clientApp =
-    document.getElementById("clientApp");
+const clientApp = document.getElementById("clientApp");
 
-const sidebarToggle =
-    document.getElementById("sidebarToggle");
+const sidebarToggle = document.getElementById("sidebarToggle");
 
-const clientProfileButton =
-    document.getElementById("clientProfileButton");
+const clientProfileButton = document.getElementById("clientProfileButton");
 
-const clientDisplayName =
-    document.getElementById("clientDisplayName");
-
+const clientDisplayName = document.getElementById("clientDisplayName");
 
 /* Page content */
 
-const paymentEmptyState =
-    document.getElementById("paymentEmptyState");
+const paymentEmptyState = document.getElementById("paymentEmptyState");
 
-const paymentContent =
-    document.getElementById("paymentContent");
-
+const paymentContent = document.getElementById("paymentContent");
 
 /* Billing information */
 
-const paymentStatusBadge =
-    document.getElementById("paymentStatusBadge");
+const paymentStatusBadge = document.getElementById("paymentStatusBadge");
 
-const billingReservationReference =
-    document.getElementById("billingReservationReference");
+const billingReservationReference = document.getElementById("billingReservationReference");
 
-const billingResortName =
-    document.getElementById("billingResortName");
+const billingResortName = document.getElementById("billingResortName");
 
-const billingAccommodationName =
-    document.getElementById("billingAccommodationName");
+const billingAccommodationName = document.getElementById("billingAccommodationName");
 
-const billingAmount =
-    document.getElementById("billingAmount");
+const billingAmount = document.getElementById("billingAmount");
 
-const billingPaymentStatus =
-    document.getElementById("billingPaymentStatus");
+const billingAmountPaid = document.getElementById("billingAmountPaid");
 
+const billingRemainingBalance = document.getElementById("billingRemainingBalance");
+
+const billingPaymentStatus = document.getElementById("billingPaymentStatus");
 
 /* Payment form */
 
-const paymentForm =
-    document.getElementById("paymentForm");
+const paymentForm = document.getElementById("paymentForm");
 
-const paymentOptionInputs =
-    document.querySelectorAll('input[name="payment_option"]');
+const paymentSubmissionTitle = document.getElementById("paymentSubmissionTitle");
 
-const fullPaymentAmount =
-    document.getElementById("fullPaymentAmount");
+const paymentSubmissionDescription = document.getElementById("paymentSubmissionDescription");
 
-const depositPaymentAmount =
-    document.getElementById("depositPaymentAmount");
+const paymentCompleteMessage = document.getElementById("paymentCompleteMessage");
 
-const payLaterButton =
-    document.getElementById("payLaterButton");
+const paymentOptionInputs = document.querySelectorAll('input[name="payment_option"]');
 
-const paymentReservationId =
-    document.getElementById("paymentReservationId");
+const fullPaymentOption = document.getElementById("fullPaymentOption");
 
-const paymentBillingId =
-    document.getElementById("paymentBillingId");
+const depositPaymentOption = document.getElementById("depositPaymentOption");
 
-const paymentMethod =
-    document.getElementById("paymentMethod");
+const balancePaymentOption = document.getElementById("balancePaymentOption");
 
-const gcashPaymentDetails =
-    document.getElementById("gcashPaymentDetails");
+const balancePaymentAmount = document.getElementById("balancePaymentAmount");
 
-const gcashAccountName =
-    document.getElementById("gcashAccountName");
+const fullPaymentAmount = document.getElementById("fullPaymentAmount");
 
-const gcashNumber =
-    document.getElementById("gcashNumber");
+const depositPaymentAmount = document.getElementById("depositPaymentAmount");
 
-const gcashQrContainer =
-    document.getElementById("gcashQrContainer");
+const payLaterButton = document.getElementById("payLaterButton");
 
-const gcashQrImage =
-    document.getElementById("gcashQrImage");
+const paymentReservationId = document.getElementById("paymentReservationId");
 
-const gcashUnavailableMessage =
-    document.getElementById("gcashUnavailableMessage");
+const paymentBillingId = document.getElementById("paymentBillingId");
 
-const transactionReference =
-    document.getElementById("transactionReference");
+const paymentMethod = document.getElementById("paymentMethod");
 
-const proofOfPayment =
-    document.getElementById("proofOfPayment");
+const gcashPaymentDetails = document.getElementById("gcashPaymentDetails");
 
-const proofOfPaymentFileName =
-    document.getElementById("proofOfPaymentFileName");
+const gcashAccountName = document.getElementById("gcashAccountName");
 
-const paymentFormMessage =
-    document.getElementById("paymentFormMessage");
+const gcashNumber = document.getElementById("gcashNumber");
 
-const submitPaymentButton =
-    document.getElementById("submitPaymentButton");
+const gcashQrContainer = document.getElementById("gcashQrContainer");
 
+const gcashQrImage = document.getElementById("gcashQrImage");
+
+const gcashUnavailableMessage = document.getElementById("gcashUnavailableMessage");
+
+const transactionReference = document.getElementById("transactionReference");
+
+const proofOfPayment = document.getElementById("proofOfPayment");
+
+const proofOfPaymentFileName = document.getElementById("proofOfPaymentFileName");
+
+const paymentFormMessage = document.getElementById("paymentFormMessage");
+
+const submitPaymentButton = document.getElementById("submitPaymentButton");
 
 /* Current status */
 
-const currentPaymentStatus =
-    document.getElementById("currentPaymentStatus");
+const currentPaymentStatus = document.getElementById("currentPaymentStatus");
 
+/* INITIALIZATION */
 
-/* =========================================================
-   INITIALIZATION
-   ========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    initializePaymentsPage
-);
-
+document.addEventListener("DOMContentLoaded", initializePaymentsPage);
 
 async function initializePaymentsPage() {
     initializeIcons();
@@ -254,195 +203,117 @@ async function initializePaymentsPage() {
     initializePaymentOptions();
     initializeFileInput();
 
-
     if (USE_DUMMY_DATA) {
-
         loadDummyData();
 
         return;
     }
 
-
     await loadPaymentDataFromDatabase();
 }
 
-
-/* =========================================================
-   DUMMY DATA MODE
-   ========================================================= */
+/* DUMMY DATA MODE */
 
 function loadDummyData() {
-
     paymentState.client = {
-        ...DUMMY_CLIENT
+        ...DUMMY_CLIENT,
     };
 
+    paymentState.billings = DUMMY_BILLINGS.map((billing) => ({
+        ...billing,
+    }));
 
-    paymentState.billings =
-        DUMMY_BILLINGS.map(
-            billing => ({
-                ...billing
-            })
-        );
-
-
-    const requestedReservationId =
-        getReservationIdFromUrl();
-
+    const requestedReservationId = getReservationIdFromUrl();
 
     if (requestedReservationId) {
-
         paymentState.selectedBilling =
             paymentState.billings.find(
-                billing =>
-                    String(billing.reservation_id) ===
-                    String(requestedReservationId)
+                (billing) => String(billing.reservation_id) === String(requestedReservationId),
             ) || null;
-
     } else {
-
         /*
          * For frontend preview only.
          * The first dummy billing record is displayed.
          */
 
-        paymentState.selectedBilling =
-            paymentState.billings[0] ||
-            null;
+        paymentState.selectedBilling = paymentState.billings[0] || null;
     }
-
 
     renderClient();
 
     renderPaymentPage();
 }
 
-
-/* =========================================================
-   DATABASE / API MODE
-   ========================================================= */
+/* DATABASE / API MODE */
 
 async function loadPaymentDataFromDatabase() {
-
     try {
-
-        const requestedReservationId =
-            getReservationIdFromUrl();
-
+        const requestedReservationId = getReservationIdFromUrl();
 
         await loadClientFromApi();
 
-
         if (requestedReservationId) {
-
-            await loadBillingByReservationFromApi(
-                requestedReservationId
-            );
-
+            await loadBillingByReservationFromApi(requestedReservationId);
         } else {
-
             await loadBillingsFromApi();
         }
-
 
         renderClient();
 
         renderPaymentPage();
-
-
     } catch (error) {
+        console.error("Unable to load billing information:", error);
 
-        console.error(
-            "Unable to load billing information:",
-            error
-        );
-
-
-        paymentState.selectedBilling =
-            null;
-
+        paymentState.selectedBilling = null;
 
         renderPaymentPage();
     }
 }
 
-
-/* =========================================================
-   LOAD CLIENT
-   ========================================================= */
+/* LOAD CLIENT */
 
 async function loadClientFromApi() {
+    const response = await fetch(API_ENDPOINTS.clientProfile, {
+        method: "GET",
 
-    const response =
-        await fetch(
-            API_ENDPOINTS.clientProfile,
-            {
-                method: "GET",
+        credentials: "include",
 
-                credentials: "include",
-
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${accessToken}`
-                }
-            }
-        );
-
+        headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
 
     if (!response.ok) {
-
-        throw new Error(
-            "Unable to load client profile."
-        );
+        throw new Error("Unable to load client profile.");
     }
 
+    const data = await response.json();
 
-    const data =
-        await response.json();
-
-
-    paymentState.client =
-        normalizeClient(data);
+    paymentState.client = normalizeClient(data);
 }
 
-
-/* =========================================================
-   LOAD ALL CLIENT BILLINGS
-   ========================================================= */
+/* LOAD ALL CLIENT BILLINGS */
 
 async function loadBillingsFromApi() {
+    const response = await fetch(API_ENDPOINTS.billings, {
+        method: "GET",
 
-    const response =
-        await fetch(
-            API_ENDPOINTS.billings,
-            {
-                method: "GET",
+        credentials: "include",
 
-                credentials: "include",
-
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${accessToken}`
-                }
-            }
-        );
-
+        headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
 
     if (!response.ok) {
-
-        throw new Error(
-            "Unable to load billing records."
-        );
+        throw new Error("Unable to load billing records.");
     }
 
+    const data = await response.json();
 
-    const data =
-        await response.json();
-
-
-    paymentState.billings =
-        normalizeBillings(data);
-
+    paymentState.billings = normalizeBillings(data);
 
     /*
      * If the page is opened without a reservation ID,
@@ -452,155 +323,81 @@ async function loadBillingsFromApi() {
      * billing record appears first.
      */
 
-    paymentState.selectedBilling =
-        paymentState.billings[0] ||
-        null;
+    paymentState.selectedBilling = paymentState.billings[0] || null;
 }
 
-
-/* =========================================================
-   LOAD BILLING BY RESERVATION
-   ========================================================= */
+/* LOAD BILLING BY RESERVATION */
 
 async function loadBillingByReservationFromApi(reservationId) {
-    const response =
-        await fetch(
-            API_ENDPOINTS.billingByReservation(
-                reservationId
-            ),
-            {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${accessToken}`
-                }
-            }
-        );
-
+    const response = await fetch(API_ENDPOINTS.billingByReservation(reservationId), {
+        method: "GET",
+        credentials: "include",
+        headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
 
     if (response.status === 404) {
-
-        paymentState.selectedBilling =
-            null;
+        paymentState.selectedBilling = null;
 
         return;
     }
 
-
     if (!response.ok) {
-
-        throw new Error(
-            "Unable to load reservation billing."
-        );
+        throw new Error("Unable to load reservation billing.");
     }
 
+    const data = await response.json();
 
-    const data =
-        await response.json();
+    const billing = normalizeBilling(data?.reservation || data?.billing || data);
 
-
-    const billing =
-        normalizeBilling(
-            data?.reservation ||
-            data?.billing ||
-            data
-        );
-
-
-    paymentState.selectedBilling =
-        billing;
+    paymentState.selectedBilling = billing;
 }
 
-
-/* =========================================================
-   NORMALIZE CLIENT
-   ========================================================= */
+/* NORMALIZE CLIENT */
 
 function normalizeClient(data) {
+    const client = data?.client || data;
 
-    const client =
-        data?.client ||
-        data;
-
-
-    if (
-        !client ||
-        typeof client !== "object"
-    ) {
-
+    if (!client || typeof client !== "object") {
         return null;
     }
 
-
     return {
+        id: client.id ?? client.client_id ?? null,
 
-        id:
-            client.id ??
-            client.client_id ??
-            null,
-
-        name:
-            client.name ||
-            client.full_name ||
-            ""
+        name: client.name || client.full_name || "",
     };
 }
 
-
-/* =========================================================
-   NORMALIZE BILLINGS
-   ========================================================= */
+/* NORMALIZE BILLINGS */
 
 function normalizeBillings(data) {
-
-    const records =
-        Array.isArray(data)
-            ? data
-            : data?.billings || data?.reservation;
-
+    const records = Array.isArray(data)
+        ? data
+        : data?.billings || data?.reservations || data?.reservation || [];
 
     if (!Array.isArray(records)) {
-
         return [];
     }
 
-
-    return records
-        .map(normalizeBilling)
-        .filter(Boolean);
+    return records.map(normalizeBilling).filter(Boolean);
 }
 
-
-/* =========================================================
-   NORMALIZE SINGLE BILLING
-   ========================================================= */
+/* NORMALIZE SINGLE BILLING */
 
 function normalizeBilling(billing) {
-
-    if (
-        !billing ||
-        typeof billing !== "object"
-    ) {
-
+    if (!billing || typeof billing !== "object") {
         return null;
     }
 
-
     return {
+        billing_id: billing.billing_id ?? null,
 
-        billing_id:
-            billing.billing_id ??
-            null,
+        reservation_id: billing.reservation_id ?? billing.id ?? null,
 
-        reservation_id:
-            billing.reservation_id ??
-            billing.id ??
-            null,
-
-        client_id:
-            billing.client_id ??
-            null,
+        client_id: billing.client_id ?? null,
 
         reservation_reference:
             billing.reservation_reference ||
@@ -608,106 +405,60 @@ function normalizeBilling(billing) {
             billing.reservation_code ||
             "",
 
-        resort_name:
-            billing.resort_name ||
-            "",
+        resort_name: billing.resort_name || "",
 
-        accommodation_name:
-            billing.accommodation_name ||
-            "",
+        accommodation_name: billing.accommodation_name || "",
 
-        total_amount:
-            parseNumericValue(
-                billing.total_amount ?? 0
-            ),
+        total_amount: parseNumericValue(billing.total_amount ?? 0),
 
-        deposit_amount:
-            parseNumericValue(
-                billing.deposit_amount ?? 0
-            ),
+        deposit_amount: parseNumericValue(billing.deposit_amount ?? 0),
 
-        gcash_account_name:
-            billing.gcash_account_name ||
-            "",
+        amount_paid: parseNumericValue(billing.amount_paid ?? 0),
 
-        gcash_number:
-            billing.gcash_number ||
-            "",
+        gcash_account_name: billing.gcash_account_name || "",
 
-        gcash_qr_path:
-            billing.gcash_qr_path ||
-            "",
+        gcash_number: billing.gcash_number || "",
 
-        billing_amount:
-            parseNumericValue(
-                billing.deposit_amount ??
-                billing.billing_amount ??
-                billing.amount ??
-                0
-            ),
+        gcash_qr_path: billing.gcash_qr_path || "",
 
-        payment_status:
-            billing.payment_status ||
-            "Unpaid",
+        billing_amount: parseNumericValue(
+            billing.deposit_amount ?? billing.billing_amount ?? billing.amount ?? 0,
+        ),
 
-        reservation_status:
-            billing.reservation_status ||
-            billing.status ||
-            "",
+        payment_status: billing.payment_status || "Unpaid",
 
-        deposit_due_at:
-            billing.deposit_due_at ||
-            null
+        reservation_status: billing.reservation_status || billing.status || "",
+
+        deposit_due_at: billing.deposit_due_at || null,
     };
 }
 
-
-/* =========================================================
-   PARSE NUMBER
-   ========================================================= */
+/* PARSE NUMBER */
 
 function parseNumericValue(value) {
-
-    const numericValue =
-        Number(value);
-
+    const numericValue = Number(value);
 
     if (!Number.isFinite(numericValue)) {
-
         return 0;
     }
-
 
     return numericValue;
 }
 
-
-/* =========================================================
-   RENDER CLIENT
-   ========================================================= */
+/* RENDER CLIENT */
 
 function renderClient() {
-
     if (!clientDisplayName) {
-
         return;
     }
 
-
-    clientDisplayName.textContent =
-        paymentState.client?.name ||
-        "Client";
+    clientDisplayName.textContent = paymentState.client?.name || "Client";
 }
 
-
-/* =========================================================
-   RENDER PAYMENT PAGE
-   ========================================================= */
+/* RENDER PAYMENT PAGE */
 
 function renderPaymentPage() {
-
-    const billing =
-        paymentState.selectedBilling;
+    const billing = paymentState.selectedBilling;
 
     if (!billing) {
         showPaymentEmptyState();
@@ -716,155 +467,149 @@ function renderPaymentPage() {
 
     hidePaymentEmptyState();
 
-    setText(
-        fullPaymentAmount,
-        formatCurrency(billing.total_amount)
-    );
+    setText(fullPaymentAmount, formatCurrency(billing.total_amount));
+
+    setText(depositPaymentAmount, formatCurrency(billing.deposit_amount));
 
     setText(
-        depositPaymentAmount,
-        formatCurrency(
-            billing.deposit_amount
-        )
+        balancePaymentAmount,
+        formatCurrency(Math.max(billing.total_amount - billing.amount_paid, 0)),
     );
+
+    configurePaymentOptions(billing);
 
     updateSelectedPaymentAmount();
 
-    setText(
-        billingReservationReference,
-        billing.reservation_reference
-    );
+    setText(billingReservationReference, billing.reservation_reference);
+
+    setText(billingResortName, billing.resort_name);
+
+    setText(billingAccommodationName, billing.accommodation_name);
+
+    setText(billingAmount, formatCurrency(billing.total_amount));
+
+    setText(billingAmountPaid, formatCurrency(billing.amount_paid));
 
     setText(
-        billingResortName,
-        billing.resort_name
+        billingRemainingBalance,
+        formatCurrency(Math.max(billing.total_amount - billing.amount_paid, 0)),
     );
 
-    setText(
-        billingAccommodationName,
-        billing.accommodation_name
-    );
+    setText(billingPaymentStatus, billing.payment_status);
 
-    setText(
-        billingAmount,
-        formatCurrency(
-            billing.billing_amount
-        )
-    );
+    setText(currentPaymentStatus, billing.payment_status);
 
-    setText(
-        billingPaymentStatus,
-        billing.payment_status
-    );
+    renderPaymentStatusBadge(billing.payment_status);
 
-    setText(
-        currentPaymentStatus,
-        billing.payment_status
-    );
+    fillPaymentFormIdentifiers(billing);
 
-    renderPaymentStatusBadge(
-        billing.payment_status
-    );
-
-    fillPaymentFormIdentifiers(
-        billing
-    );
-
-    updatePaymentFormState(
-        billing
-    );
+    updatePaymentFormState(billing);
 
     initializeIcons();
 }
 /*FORM IDENTIFIERS*/
 
-function fillPaymentFormIdentifiers(
-    billing
-) {
-
+function fillPaymentFormIdentifiers(billing) {
     if (paymentReservationId) {
-        paymentReservationId.value =
-            billing.reservation_id ?? "";
+        paymentReservationId.value = billing.reservation_id ?? "";
     }
 
     if (paymentBillingId) {
-        paymentBillingId.value =
-            billing.billing_id ?? "";
+        paymentBillingId.value = billing.billing_id ?? "";
     }
 }
 /*PAYMENT STATUS BADGE*/
 
-function renderPaymentStatusBadge(
-    status
-) {
-
+function renderPaymentStatusBadge(status) {
     if (!paymentStatusBadge) {
-
         return;
     }
 
-    paymentStatusBadge.textContent =
-        status || "—";
+    paymentStatusBadge.textContent = status || "—";
 
     paymentStatusBadge.classList.remove(
         "status-success",
         "status-warning",
         "status-danger",
         "status-info",
-        "status-neutral"
+        "status-neutral",
     );
 
-    paymentStatusBadge.classList.add(
-        getStatusClass(status)
-    );
+    paymentStatusBadge.classList.add(getStatusClass(status));
 }
 
-
-/* =========================================================
-   STATUS PRESENTATION
-
-   These mappings are for frontend display only.
-   The actual valid status values should eventually be
-   controlled by the backend/database.
-   ========================================================= */
+/* STATUS PRESENTATION These mappings are for frontend display only. The actual valid status values should eventually be controlled by the backend/database. */
 
 function getStatusClass(status) {
-
-    const normalizedStatus =
-        String(status || "")
-            .trim()
-            .toLowerCase();
-
+    const normalizedStatus = String(status || "")
+        .trim()
+        .toLowerCase();
 
     switch (normalizedStatus) {
-
         case "verified":
             return "status-success";
-
 
         case "pending verification":
             return "status-warning";
 
-
         case "pending":
             return "status-info";
 
-
         case "rejected":
             return "status-danger";
-
 
         default:
             return "status-neutral";
     }
 }
 
-function initializePaymentOptions() {
-    paymentOptionInputs.forEach(
-        input => {
-            input.addEventListener("change", handlePaymentOptionChange);
-        }
+function configurePaymentOptions(billing) {
+    if (!billing) {
+        return;
+    }
+
+    const reservationStatus = String(billing.reservation_status || "").toLowerCase();
+
+    const paymentStatus = String(billing.payment_status || "").toLowerCase();
+
+    const balanceMode =
+        reservationStatus === "confirmed" &&
+        (paymentStatus === "partially_paid" ||
+            (paymentStatus === "pending" && billing.amount_paid > 0));
+
+    if (fullPaymentOption) {
+        fullPaymentOption.hidden = balanceMode;
+    }
+
+    if (depositPaymentOption) {
+        depositPaymentOption.hidden = balanceMode;
+    }
+
+    if (payLaterButton) {
+        payLaterButton.hidden = balanceMode;
+    }
+
+    if (balancePaymentOption) {
+        balancePaymentOption.hidden = !balanceMode;
+    }
+
+    const selectedInput = document.querySelector(
+        balanceMode
+            ? 'input[name="payment_option"][value="balance"]'
+            : 'input[name="payment_option"][value="deposit"]',
     );
+
+    if (selectedInput) {
+        selectedInput.checked = true;
+    }
+
+    paymentState.selectedPaymentOption = balanceMode ? "balance" : "deposit";
+}
+
+function initializePaymentOptions() {
+    paymentOptionInputs.forEach((input) => {
+        input.addEventListener("change", handlePaymentOptionChange);
+    });
 
     if (payLaterButton) {
         payLaterButton.addEventListener("click", handlePayLater);
@@ -888,27 +633,27 @@ function updateSelectedPaymentAmount() {
         return;
     }
 
-    const selectedAmount = paymentState.selectedPaymentOption === "full"
-        ? billing.total_amount
-        : billing.deposit_amount;
+    let selectedAmount = billing.deposit_amount;
+
+    if (paymentState.selectedPaymentOption === "full") {
+        selectedAmount = billing.total_amount;
+    }
+
+    if (paymentState.selectedPaymentOption === "balance") {
+        selectedAmount = Math.max(billing.total_amount - billing.amount_paid, 0);
+    }
 
     billing.billing_amount = selectedAmount;
-
-    setText(billingAmount, formatCurrency(selectedAmount));
 }
 
 function handlePayLater() {
-    const reservationId = paymentState.selectedBilling
-        ?.reservation_id;
+    const reservationId = paymentState.selectedBilling?.reservation_id;
 
-    if(!reservationId) {
+    if (!reservationId) {
         return;
     }
 
-    window.location.href =
-        `ReservationStatus.html?id=${
-            encodeURIComponent(reservationId)
-        }`;
+    window.location.href = `ReservationStatus.html?id=${encodeURIComponent(reservationId)}`;
 }
 
 function renderGcashPaymentDetails() {
@@ -953,10 +698,7 @@ function initializePaymentForm() {
         return;
     }
 
-    paymentForm.addEventListener(
-        "submit",
-        handlePaymentSubmission
-    );
+    paymentForm.addEventListener("submit", handlePaymentSubmission);
 }
 /*FILE INPUT*/
 
@@ -965,28 +707,19 @@ function initializeFileInput() {
         return;
     }
 
-    proofOfPayment.addEventListener(
-        "change",
-        handleProofOfPaymentChange
-    );
+    proofOfPayment.addEventListener("change", handleProofOfPaymentChange);
 }
 
 function handleProofOfPaymentChange() {
-    const file =
-        proofOfPayment.files?.[0] ||
-        null;
+    const file = proofOfPayment.files?.[0] || null;
 
-    paymentState.selectedFile =
-        file;
+    paymentState.selectedFile = file;
 
     if (!proofOfPaymentFileName) {
         return;
     }
 
-    proofOfPaymentFileName.textContent =
-        file
-            ? file.name
-            : "No file selected";
+    proofOfPaymentFileName.textContent = file ? file.name : "No file selected";
 }
 /*SUBMIT PAYMENT*/
 
@@ -999,245 +732,131 @@ async function handlePaymentSubmission(event) {
 
     clearPaymentMessage();
 
-    const billing =
-        paymentState.selectedBilling;
+    const billing = paymentState.selectedBilling;
 
     if (!billing) {
-        showPaymentMessage(
-            "Billing information is unavailable.",
-            "error"
-        );
+        showPaymentMessage("Billing information is unavailable.", "error");
         return;
     }
 
     const validationMessage = validatePaymentForm();
 
     if (validationMessage) {
-        showPaymentMessage(
-            validationMessage,
-            "error"
-        );
+        showPaymentMessage(validationMessage, "error");
         return;
     }
 
     const formData = createPaymentFormData();
 
     if (USE_DUMMY_DATA) {
-        submitDummyPayment(
-            formData
-        );
+        submitDummyPayment(formData);
         return;
     }
 
-    await submitPaymentToApi(
-        formData
-    );
+    await submitPaymentToApi(formData);
 }
 /*VALIDATION*/
 
 function validatePaymentForm() {
-    if (
-        !paymentMethod ||
-        !paymentMethod.value
-    ) {
+    if (!paymentMethod || !paymentMethod.value) {
         return "Please select a payment method.";
     }
 
-    if (paymentMethod.value === "gcash" &&
-        (
-            !paymentState.selectedBilling
-                ?.gcash_account_name ||
-            !paymentState.selectedBilling
-                ?.gcash_number
-        )) {
+    if (
+        paymentMethod.value === "gcash" &&
+        (!paymentState.selectedBilling?.gcash_account_name ||
+            !paymentState.selectedBilling?.gcash_number)
+    ) {
         return "The resort has not configured its GCash payment information.";
     }
 
-    if (
-        !transactionReference ||
-        !transactionReference.value.trim()
-    ) {
-
+    if (!transactionReference || !transactionReference.value.trim()) {
         return "Please enter the transaction reference number.";
     }
 
-    if (
-        !paymentState.selectedFile
-    ) {
-
+    if (!paymentState.selectedFile) {
         return "Please upload proof of payment.";
     }
     return "";
 }
 
-
-/* =========================================================
-   CREATE FORM DATA
-
-   This is ready for Express + Multer or another compatible
-   multipart/form-data upload middleware.
-   ========================================================= */
+/* CREATE FORM DATA This is ready for Express + Multer or another compatible multipart/form-data upload middleware. */
 
 function createPaymentFormData() {
+    const formData = new FormData();
 
-    const formData =
-        new FormData();
+    formData.append("reservation_id", paymentReservationId?.value || "");
 
+    formData.append("payment_option", paymentState.selectedPaymentOption);
 
-    formData.append(
-        "reservation_id",
-        paymentReservationId?.value || ""
-    );
+    formData.append("billing_id", paymentBillingId?.value || "");
 
-    formData.append(
-        "payment_option",
-        paymentState.selectedPaymentOption
-    );
+    formData.append("payment_method", paymentMethod?.value || "");
 
-
-    formData.append(
-        "billing_id",
-        paymentBillingId?.value || ""
-    );
-
-
-    formData.append(
-        "payment_method",
-        paymentMethod?.value || ""
-    );
-
-
-    formData.append(
-        "transaction_reference",
-        transactionReference?.value.trim() || ""
-    );
-
+    formData.append("transaction_reference", transactionReference?.value.trim() || "");
 
     if (paymentState.selectedFile) {
-
-        formData.append(
-            "proof_of_payment",
-            paymentState.selectedFile
-        );
+        formData.append("proof_of_payment", paymentState.selectedFile);
     }
-
 
     return formData;
 }
 
+/* DUMMY PAYMENT SUBMISSION This simulates only the frontend interaction. It does NOT: - process money - verify payment - store uploaded files - write to MySQL */
 
-/* =========================================================
-   DUMMY PAYMENT SUBMISSION
-
-   This simulates only the frontend interaction.
-
-   It does NOT:
-   - process money
-   - verify payment
-   - store uploaded files
-   - write to MySQL
-   ========================================================= */
-
-function submitDummyPayment(
-    formData
-) {
-
+function submitDummyPayment(formData) {
     setSubmittingState(true);
 
+    console.log("Dummy payment submission:");
 
-    console.log(
-        "Dummy payment submission:"
-    );
-
-
-    for (
-        const [key, value]
-        of formData.entries()
-    ) {
-
+    for (const [key, value] of formData.entries()) {
         if (value instanceof File) {
-
-            console.log(
-                key,
-                value.name
-            );
-
+            console.log(key, value.name);
         } else {
-
-            console.log(
-                key,
-                value
-            );
+            console.log(key, value);
         }
     }
 
+    window.setTimeout(() => {
+        /*
+         * Submitted payment becomes pending verification
+         * only for the current frontend session.
+         *
+         * This does NOT represent actual payment
+         * verification.
+         */
 
-    window.setTimeout(
-        () => {
+        if (paymentState.selectedBilling) {
+            paymentState.selectedBilling.payment_status = "Pending Verification";
+        }
 
-            /*
-             * Submitted payment becomes pending verification
-             * only for the current frontend session.
-             *
-             * This does NOT represent actual payment
-             * verification.
-             */
+        renderPaymentPage();
 
-            if (
-                paymentState.selectedBilling
-            ) {
+        resetPaymentSubmissionFields();
 
-                paymentState.selectedBilling.payment_status =
-                    "Pending Verification";
-            }
+        showPaymentMessage(
+            "Payment information submitted for frontend preview. Verification has not been performed.",
+            "success",
+        );
 
-
-            renderPaymentPage();
-
-
-            resetPaymentSubmissionFields();
-
-
-            showPaymentMessage(
-                "Payment information submitted for frontend preview. Verification has not been performed.",
-                "success"
-            );
-
-
-            setSubmittingState(false);
-
-        },
-        800
-    );
+        setSubmittingState(false);
+    }, 800);
 }
 
+/* REAL API PAYMENT SUBMISSION */
 
-/* =========================================================
-   REAL API PAYMENT SUBMISSION
-   ========================================================= */
-
-async function submitPaymentToApi(
-    formData
-) {
-
+async function submitPaymentToApi(formData) {
     setSubmittingState(true);
 
-
     try {
-
-        const response =
-            await fetch(
-                API_ENDPOINTS.submitPayment,
-                {
-                    method: "POST",
-                    credentials: "include",
-                    headers: {
-                        "Authorization": `Bearer ${accessToken}`
-                    },
-                    body: formData
-                }
-            );
-
+        const response = await fetch(API_ENDPOINTS.submitPayment, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            body: formData,
+        });
 
         /*
          * Do NOT manually set Content-Type when using
@@ -1246,142 +865,79 @@ async function submitPaymentToApi(
          */
 
         if (!response.ok) {
-
-            let message =
-                "Unable to submit payment information.";
-
+            let message = "Unable to submit payment information.";
 
             try {
-
-                const errorData =
-                    await response.json();
-
+                const errorData = await response.json();
 
                 if (errorData?.message) {
-
-                    message =
-                        errorData.message;
+                    message = errorData.message;
                 }
-
             } catch (error) {
-
                 /*
                  * Keep default error message when
                  * response is not JSON.
                  */
             }
 
-
             throw new Error(message);
         }
 
-
-        const data =
-            await response.json();
-
+        const data = await response.json();
 
         /*
          * Backend-returned payment/billing record becomes
          * the source of truth.
          */
 
-        const updatedBilling =
-            normalizeBilling(
-                data?.billing ||
-                data?.payment ||
-                data
-            );
-
+        const updatedBilling = normalizeBilling(data?.billing || data?.payment || data);
 
         if (updatedBilling) {
-
             paymentState.selectedBilling = {
-
                 ...paymentState.selectedBilling,
 
-                ...updatedBilling
-
+                ...updatedBilling,
             };
-
-        } else if (
-            data?.payment_status
-        ) {
-
-            paymentState.selectedBilling.payment_status =
-                data.payment_status;
+        } else if (data?.payment_status) {
+            paymentState.selectedBilling.payment_status = data.payment_status;
         }
-
 
         renderPaymentPage();
 
-
         resetPaymentSubmissionFields();
 
-
         showPaymentMessage(
-            data?.message ||
-            "Payment information submitted successfully.",
-            "success"
+            data?.message || "Payment information submitted successfully.",
+            "success",
         );
-
-
     } catch (error) {
+        console.error("Payment submission error:", error);
 
-        console.error(
-            "Payment submission error:",
-            error
-        );
-
-
-        showPaymentMessage(
-            error.message ||
-            "Unable to submit payment information.",
-            "error"
-        );
-
-
+        showPaymentMessage(error.message || "Unable to submit payment information.", "error");
     } finally {
-
         setSubmittingState(false);
     }
 }
 
-
-/* =========================================================
-   RESET SUBMISSION FIELDS
-   ========================================================= */
+/* RESET SUBMISSION FIELDS */
 
 function resetPaymentSubmissionFields() {
-
     if (paymentMethod) {
-
-        paymentMethod.value =
-            "";
+        paymentMethod.value = "";
     }
-
 
     if (transactionReference) {
-
-        transactionReference.value =
-            "";
+        transactionReference.value = "";
     }
-
 
     if (proofOfPayment) {
-
-        proofOfPayment.value =
-            "";
+        proofOfPayment.value = "";
     }
 
-
-    paymentState.selectedFile =
-        null;
-
+    paymentState.selectedFile = null;
 
     if (proofOfPaymentFileName) {
-
-        proofOfPaymentFileName.textContent =
-            "No file selected";
+        proofOfPaymentFileName.textContent = "No file selected";
     }
 }
 
@@ -1394,8 +950,7 @@ function updatePaymentFormState(billing) {
         .trim()
         .toLowerCase();
 
-    const deadline = billing?.deposit_due_at ? new Date(billing.deposit_due_at)
-        : null;
+    const deadline = billing?.deposit_due_at ? new Date(billing.deposit_due_at) : null;
 
     const validDeadline = deadline && !Number.isNaN(deadline.getTime());
 
@@ -1403,33 +958,51 @@ function updatePaymentFormState(billing) {
 
     const awaitingDeposit = reservationStatus === "awaiting_deposit";
 
-    const paymentSubmitted = [
-        "pending",
-        "pending verification",
-        "paid",
-        "verified"
-    ].includes(paymentStatus);
+    const confirmedReservation = reservationStatus === "confirmed";
 
-    const paymentAllowed =
-        awaitingDeposit &&
-        !expired &&
-        !paymentSubmitted;
+    const remainingBalance = Math.max(
+        Number(billing?.total_amount || 0) - Number(billing?.amount_paid || 0),
+        0,
+    );
 
-    const controls = [
-        ...paymentOptionInputs,
-        paymentMethod,
-        transactionReference,
-        proofOfPayment
-    ];
+    const paymentSubmitted = ["pending", "pending verification"].includes(paymentStatus);
 
-    controls.forEach(control => {
+    const fullyPaid = ["paid", "verified"].includes(paymentStatus);
+
+    if (paymentForm) {
+        paymentForm.hidden = fullyPaid;
+    }
+
+    if (paymentCompleteMessage) {
+        paymentCompleteMessage.hidden = !fullyPaid;
+    }
+
+    setText(paymentSubmissionTitle, fullyPaid ? "Payment Complete" : "Payment Submission");
+
+    setText(
+        paymentSubmissionDescription,
+        fullyPaid
+            ? "Your reservation has been fully paid."
+            : "Submit payment information for manual verification.",
+    );
+
+    const initialPaymentAllowed = awaitingDeposit && !expired && paymentStatus === "unpaid";
+
+    const balancePaymentAllowed =
+        confirmedReservation && paymentStatus === "partially_paid" && remainingBalance > 0;
+
+    const paymentAllowed = initialPaymentAllowed || balancePaymentAllowed;
+
+    const controls = [...paymentOptionInputs, paymentMethod, transactionReference, proofOfPayment];
+
+    controls.forEach((control) => {
         if (control) {
             control.disabled = !paymentAllowed;
         }
     });
 
     if (payLaterButton) {
-        payLaterButton.disabled = !paymentAllowed;
+        payLaterButton.disabled = !initialPaymentAllowed;
     }
 
     if (!submitPaymentButton) {
@@ -1444,356 +1017,203 @@ function updatePaymentFormState(billing) {
         return;
     }
 
-    if (paymentStatus === "paid" || paymentStatus === "verified") {
+    if (fullyPaid) {
         buttonText.textContent = "Payment Verified";
+
         return;
     }
 
     if (paymentSubmitted) {
         buttonText.textContent = "Pending Verification";
+
         return;
     }
 
-    if (expired) {
+    if (balancePaymentAllowed) {
+        buttonText.textContent = "Submit Balance Payment";
+
+        return;
+    }
+
+    if (awaitingDeposit && expired) {
         buttonText.textContent = "Payment Period Expired";
+
         return;
     }
 
-    if (!awaitingDeposit) {
+    if (!paymentAllowed) {
         buttonText.textContent = "Payment Not Available";
+
         return;
     }
 
-    buttonText.textContent = paymentState.selectedPaymentOption === "full"
-        ? "Submit Full Payment"
-        : "Submit Deposit";
+    buttonText.textContent =
+        paymentState.selectedPaymentOption === "full" ? "Submit Full Payment" : "Submit Deposit";
 }
 
+/* SUBMITTING STATE */
 
-/* =========================================================
-   SUBMITTING STATE
-   ========================================================= */
-
-function setSubmittingState(
-    submitting
-) {
-    paymentState.submitting =
-        submitting;
+function setSubmittingState(submitting) {
+    paymentState.submitting = submitting;
 
     if (!submitPaymentButton) {
         return;
     }
 
     if (!submitting) {
-        updatePaymentFormState(
-            paymentState.selectedBilling
-        );
+        updatePaymentFormState(paymentState.selectedBilling);
 
         return;
     }
 
-    submitPaymentButton.disabled =
-        true;
+    submitPaymentButton.disabled = true;
 
-    const buttonText =
-        submitPaymentButton.querySelector(
-            "span"
-        );
+    const buttonText = submitPaymentButton.querySelector("span");
 
     if (buttonText) {
-        buttonText.textContent =
-            "Submitting...";
+        buttonText.textContent = "Submitting...";
     }
 }
 
+/* FORM MESSAGE */
 
-/* =========================================================
-   FORM MESSAGE
-   ========================================================= */
-
-function showPaymentMessage(
-    message,
-    type = "info"
-) {
-
+function showPaymentMessage(message, type = "info") {
     if (!paymentFormMessage) {
-
         return;
     }
 
+    paymentFormMessage.textContent = message;
 
-    paymentFormMessage.textContent =
-        message;
+    paymentFormMessage.classList.remove("success", "error", "info");
 
+    paymentFormMessage.classList.add(type);
 
-    paymentFormMessage.classList.remove(
-        "success",
-        "error",
-        "info"
-    );
-
-
-    paymentFormMessage.classList.add(
-        type
-    );
-
-
-    paymentFormMessage.hidden =
-        false;
+    paymentFormMessage.hidden = false;
 }
-
 
 function clearPaymentMessage() {
-
     if (!paymentFormMessage) {
-
         return;
     }
 
+    paymentFormMessage.textContent = "";
 
-    paymentFormMessage.textContent =
-        "";
+    paymentFormMessage.classList.remove("success", "error", "info");
 
-
-    paymentFormMessage.classList.remove(
-        "success",
-        "error",
-        "info"
-    );
-
-
-    paymentFormMessage.hidden =
-        true;
+    paymentFormMessage.hidden = true;
 }
 
-
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
+/* EMPTY STATE */
 
 function showPaymentEmptyState() {
-
     if (paymentContent) {
-
-        paymentContent.hidden =
-            true;
+        paymentContent.hidden = true;
     }
-
 
     if (paymentEmptyState) {
-
-        paymentEmptyState.hidden =
-            false;
+        paymentEmptyState.hidden = false;
     }
-
 
     initializeIcons();
 }
 
-
 function hidePaymentEmptyState() {
-
     if (paymentContent) {
-
-        paymentContent.hidden =
-            false;
+        paymentContent.hidden = false;
     }
 
-
     if (paymentEmptyState) {
-
-        paymentEmptyState.hidden =
-            true;
+        paymentEmptyState.hidden = true;
     }
 }
 
+/* CURRENCY */
 
-/* =========================================================
-   CURRENCY
-   ========================================================= */
-
-function formatCurrency(
-    value
-) {
-
-    const amount =
-        Number(value);
-
+function formatCurrency(value) {
+    const amount = Number(value);
 
     if (!Number.isFinite(amount)) {
-
         return "—";
     }
 
-
-    return new Intl.NumberFormat(
-        "en-PH",
-        {
-            style: "currency",
-            currency: "PHP"
-        }
-    ).format(amount);
+    return new Intl.NumberFormat("en-PH", {
+        style: "currency",
+        currency: "PHP",
+    }).format(amount);
 }
 
-
-/* =========================================================
-   URL RESERVATION ID
-
-   Example:
-
-   Payments.html?reservation=105
-   ========================================================= */
+/* URL RESERVATION ID Example: Payments.html?reservation=105 */
 
 function getReservationIdFromUrl() {
+    const parameters = new URLSearchParams(window.location.search);
 
-    const parameters =
-        new URLSearchParams(
-            window.location.search
-        );
-
-
-    const reservationId =
-        parameters.get(
-            "reservation"
-        );
-
+    const reservationId = parameters.get("reservation");
 
     if (!reservationId) {
-
         return null;
     }
-
 
     return reservationId;
 }
 
+/* SET TEXT */
 
-/* =========================================================
-   SET TEXT
-   ========================================================= */
-
-function setText(
-    element,
-    value
-) {
-
+function setText(element, value) {
     if (!element) {
+        return;
+    }
+
+    if (value === null || value === undefined || value === "") {
+        element.textContent = "—";
 
         return;
     }
 
-
-    if (
-        value === null ||
-        value === undefined ||
-        value === ""
-    ) {
-
-        element.textContent =
-            "—";
-
-        return;
-    }
-
-
-    element.textContent =
-        String(value);
+    element.textContent = String(value);
 }
 
-
-/* =========================================================
-   SIDEBAR
-   ========================================================= */
+/* SIDEBAR */
 
 function initializeSidebar() {
-
-    if (
-        !sidebarToggle ||
-        !clientApp
-    ) {
-
+    if (!sidebarToggle || !clientApp) {
         return;
     }
 
-
-    sidebarToggle.addEventListener(
-        "click",
-        handleSidebarToggle
-    );
+    sidebarToggle.addEventListener("click", handleSidebarToggle);
 }
-
 
 function handleSidebarToggle() {
-
-    const isMobile =
-        window.matchMedia(
-            "(max-width: 760px)"
-        ).matches;
-
+    const isMobile = window.matchMedia("(max-width: 760px)").matches;
 
     if (isMobile) {
-
-        clientApp.classList.toggle(
-            "sidebar-mobile-open"
-        );
+        clientApp.classList.toggle("sidebar-mobile-open");
 
         return;
     }
 
+    clientApp.classList.toggle("sidebar-collapsed");
 
-    clientApp.classList.toggle(
-        "sidebar-collapsed"
-    );
+    const collapsed = clientApp.classList.contains("sidebar-collapsed");
 
-
-    const collapsed =
-        clientApp.classList.contains(
-            "sidebar-collapsed"
-        );
-
-
-    sidebarToggle.setAttribute(
-        "aria-expanded",
-        String(!collapsed)
-    );
+    sidebarToggle.setAttribute("aria-expanded", String(!collapsed));
 }
 
-
-/* =========================================================
-   PROFILE BUTTON
-   ========================================================= */
+/* PROFILE BUTTON */
 
 function initializeProfileButton() {
-
     if (!clientProfileButton) {
-
         return;
     }
 
-
-    clientProfileButton.addEventListener(
-        "click",
-        () => {
-
-            window.location.href =
-                "Profile.html";
-        }
-    );
+    clientProfileButton.addEventListener("click", () => {
+        window.location.href = "Profile.html";
+    });
 }
 
-
-/* =========================================================
-   LUCIDE ICONS
-   ========================================================= */
+/* LUCIDE ICONS */
 
 function initializeIcons() {
-
-    if (
-        typeof lucide !== "undefined" &&
-        typeof lucide.createIcons ===
-            "function"
-    ) {
-
+    if (typeof lucide !== "undefined" && typeof lucide.createIcons === "function") {
         lucide.createIcons();
     }
 }

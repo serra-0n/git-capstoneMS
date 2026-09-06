@@ -1,37 +1,24 @@
-/* =========================================================
-   RESORTHUB - CLIENT DASHBOARD
-   File: css/client/dashboard.css
-   ========================================================= */
+/* RESORTHUB - CLIENT DASHBOARD File: css/client/dashboard.css */
 
-
-/* =========================================================
-   PAGE HEADER
-   ========================================================= */
+/* PAGE HEADER */
 
 .dashboard-page-header {
     margin-bottom: 20px;
 }
 
-
-/* =========================================================
-   SUMMARY GRID
-   ========================================================= */
+/* SUMMARY GRID */
 
 .dashboard-summary-grid {
     display: grid;
 
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 
     gap: 16px;
 
     margin-bottom: 20px;
 }
 
-
-/* =========================================================
-   SUMMARY CARD
-   ========================================================= */
+/* SUMMARY CARD */
 
 .dashboard-summary-card {
     display: flex;
@@ -50,17 +37,13 @@
         border-color 0.2s ease;
 }
 
-
 .dashboard-summary-card:hover {
     transform: translateY(-2px);
 
     box-shadow: var(--shadow-medium);
 }
 
-
-/* =========================================================
-   SUMMARY ICON
-   ========================================================= */
+/* SUMMARY ICON */
 
 .dashboard-summary-icon {
     display: flex;
@@ -85,7 +68,6 @@
         transform 0.2s ease;
 }
 
-
 .dashboard-summary-icon svg {
     display: block;
 
@@ -94,13 +76,10 @@
 
     stroke: currentColor;
 
-    transition:
-        transform 0.2s ease;
+    transition: transform 0.2s ease;
 }
 
-
-.dashboard-summary-card:hover
-.dashboard-summary-icon {
+.dashboard-summary-card:hover .dashboard-summary-icon {
     background: var(--primary);
 
     color: #ffffff;
@@ -108,16 +87,11 @@
     transform: translateY(-2px);
 }
 
-
-.dashboard-summary-card:hover
-.dashboard-summary-icon svg {
+.dashboard-summary-card:hover .dashboard-summary-icon svg {
     transform: scale(1.08);
 }
 
-
-/* =========================================================
-   SUMMARY CONTENT
-   ========================================================= */
+/* SUMMARY CONTENT */
 
 .dashboard-summary-content {
     display: flex;
@@ -126,7 +100,6 @@
 
     min-width: 0;
 }
-
 
 .dashboard-summary-label {
     margin-bottom: 5px;
@@ -137,7 +110,6 @@
     color: var(--text-secondary);
 }
 
-
 .dashboard-summary-value {
     font-size: 25px;
     font-weight: 700;
@@ -145,7 +117,6 @@
 
     color: var(--text-primary);
 }
-
 
 .dashboard-summary-text {
     font-size: 15px;
@@ -155,10 +126,7 @@
     overflow-wrap: anywhere;
 }
 
-
-/* =========================================================
-   CONTENT GRID
-   ========================================================= */
+/* CONTENT GRID */
 
 .dashboard-content-grid {
     display: grid;
@@ -172,22 +140,17 @@
     gap: 20px;
 }
 
-
-/* =========================================================
-   CARD HEADERS
-   ========================================================= */
+/* CARD HEADERS */
 
 .current-reservation-card .card-header,
 .quick-access-card .card-header {
     padding: 18px 20px;
 }
 
-
 .current-reservation-card .card-body,
 .quick-access-card .card-body {
     padding: 20px;
 }
-
 
 .current-reservation-card .card-heading h2,
 .quick-access-card .card-heading h2 {
@@ -198,7 +161,6 @@
 
     color: var(--text-primary);
 }
-
 
 .current-reservation-card .card-heading p,
 .quick-access-card .card-heading p {
@@ -211,39 +173,27 @@
     color: var(--text-secondary);
 }
 
+/* CARD HEADING LUCIDE ICONS */
 
-/* =========================================================
-   CARD HEADING LUCIDE ICONS
-   ========================================================= */
-
-.current-reservation-card
-.card-heading-icon,
-.quick-access-card
-.card-heading-icon {
+.current-reservation-card .card-heading-icon,
+.quick-access-card .card-heading-icon {
     transition:
         background-color 0.2s ease,
         color 0.2s ease,
         transform 0.2s ease;
 }
 
-
-.current-reservation-card
-.card-heading-icon svg,
-.quick-access-card
-.card-heading-icon svg {
+.current-reservation-card .card-heading-icon svg,
+.quick-access-card .card-heading-icon svg {
     display: block;
 
     stroke: currentColor;
 
-    transition:
-        transform 0.2s ease;
+    transition: transform 0.2s ease;
 }
 
-
-.current-reservation-card:hover
-.card-heading-icon,
-.quick-access-card:hover
-.card-heading-icon {
+.current-reservation-card:hover .card-heading-icon,
+.quick-access-card:hover .card-heading-icon {
     background: var(--primary);
 
     color: #ffffff;
@@ -251,18 +201,12 @@
     transform: translateY(-2px);
 }
 
-
-.current-reservation-card:hover
-.card-heading-icon svg,
-.quick-access-card:hover
-.card-heading-icon svg {
+.current-reservation-card:hover .card-heading-icon svg,
+.quick-access-card:hover .card-heading-icon svg {
     transform: scale(1.08);
 }
 
-
-/* =========================================================
-   CURRENT RESERVATION
-   ========================================================= */
+/* CURRENT RESERVATION */
 
 .current-reservation-header {
     display: flex;
@@ -276,10 +220,8 @@
 
     padding-bottom: 16px;
 
-    border-bottom:
-        1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
 }
-
 
 .reservation-reference-label {
     display: block;
@@ -292,7 +234,6 @@
     color: var(--text-muted);
 }
 
-
 #currentReservationReference {
     font-size: 15px;
     font-weight: 700;
@@ -300,10 +241,7 @@
     color: var(--text-primary);
 }
 
-
-/* =========================================================
-   CURRENT RESERVATION ACTIONS
-   ========================================================= */
+/* CURRENT RESERVATION ACTIONS */
 
 .current-reservation-actions {
     display: flex;
@@ -314,28 +252,20 @@
 
     padding-top: 16px;
 
-    border-top:
-        1px solid var(--border-light);
+    border-top: 1px solid var(--border-light);
 }
-
 
 .dashboard-card-link {
     flex-shrink: 0;
 }
 
+/* EMPTY STATE */
 
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
-
-.current-reservation-card
-.empty-state {
+.current-reservation-card .empty-state {
     padding: 22px 16px;
 }
 
-
-.current-reservation-card
-.empty-state > svg {
+.current-reservation-card .empty-state > svg {
     display: block;
 
     stroke: currentColor;
@@ -345,20 +275,13 @@
         color 0.2s ease;
 }
 
-
-.current-reservation-card
-.empty-state:hover > svg {
+.current-reservation-card .empty-state:hover > svg {
     color: var(--primary);
 
-    transform:
-        translateY(-2px)
-        scale(1.05);
+    transform: translateY(-2px) scale(1.05);
 }
 
-
-/* =========================================================
-   QUICK ACCESS
-   ========================================================= */
+/* QUICK ACCESS */
 
 .quick-access-list {
     display: flex;
@@ -367,7 +290,6 @@
 
     gap: 8px;
 }
-
 
 .quick-access-item {
     display: flex;
@@ -378,14 +300,11 @@
 
     padding: 11px 12px;
 
-    border:
-        1px solid var(--border);
+    border: 1px solid var(--border);
 
-    border-radius:
-        var(--radius-medium);
+    border-radius: var(--radius-medium);
 
-    background:
-        var(--surface);
+    background: var(--surface);
 
     color: inherit;
 
@@ -397,21 +316,15 @@
         transform 0.2s ease;
 }
 
-
 .quick-access-item:hover {
     border-color: #bfdbfe;
 
-    background:
-        var(--primary-light);
+    background: var(--primary-light);
 
-    transform:
-        translateX(2px);
+    transform: translateX(2px);
 }
 
-
-/* =========================================================
-   QUICK ACCESS ICON
-   ========================================================= */
+/* QUICK ACCESS ICON */
 
 .quick-access-icon {
     display: flex;
@@ -424,21 +337,17 @@
 
     flex-shrink: 0;
 
-    border-radius:
-        var(--radius-small);
+    border-radius: var(--radius-small);
 
-    background:
-        var(--primary-light);
+    background: var(--primary-light);
 
-    color:
-        var(--primary);
+    color: var(--primary);
 
     transition:
         background-color 0.2s ease,
         color 0.2s ease,
         transform 0.2s ease;
 }
-
 
 .quick-access-icon svg {
     display: block;
@@ -448,33 +357,22 @@
 
     stroke: currentColor;
 
-    transition:
-        transform 0.2s ease;
+    transition: transform 0.2s ease;
 }
 
-
-.quick-access-item:hover
-.quick-access-icon {
-    background:
-        var(--primary);
+.quick-access-item:hover .quick-access-icon {
+    background: var(--primary);
 
     color: #ffffff;
 
-    transform:
-        scale(1.04);
+    transform: scale(1.04);
 }
 
-
-.quick-access-item:hover
-.quick-access-icon svg {
-    transform:
-        scale(1.08);
+.quick-access-item:hover .quick-access-icon svg {
+    transform: scale(1.08);
 }
 
-
-/* =========================================================
-   QUICK ACCESS CONTENT
-   ========================================================= */
+/* QUICK ACCESS CONTENT */
 
 .quick-access-content {
     display: flex;
@@ -486,31 +384,24 @@
     min-width: 0;
 }
 
-
 .quick-access-content strong {
     margin-bottom: 2px;
 
     font-size: 12px;
     font-weight: 600;
 
-    color:
-        var(--text-primary);
+    color: var(--text-primary);
 }
-
 
 .quick-access-content small {
     font-size: 11px;
 
     line-height: 1.45;
 
-    color:
-        var(--text-secondary);
+    color: var(--text-secondary);
 }
 
-
-/* =========================================================
-   QUICK ACCESS ARROW
-   ========================================================= */
+/* QUICK ACCESS ARROW */
 
 .quick-access-arrow {
     display: block;
@@ -520,8 +411,7 @@
 
     flex-shrink: 0;
 
-    color:
-        var(--text-muted);
+    color: var(--text-muted);
 
     stroke: currentColor;
 
@@ -530,95 +420,58 @@
         transform 0.2s ease;
 }
 
+.quick-access-item:hover .quick-access-arrow {
+    color: var(--primary);
 
-.quick-access-item:hover
-.quick-access-arrow {
-    color:
-        var(--primary);
-
-    transform:
-        translateX(3px);
+    transform: translateX(3px);
 }
 
+/* BUTTON ICONS */
 
-/* =========================================================
-   BUTTON ICONS
-   ========================================================= */
-
-.dashboard-page-header
-.primary-button svg,
-.current-reservation-actions
-.primary-button svg,
-.empty-state
-.primary-button svg {
+.dashboard-page-header .primary-button svg,
+.current-reservation-actions .primary-button svg,
+.empty-state .primary-button svg {
     display: block;
 
     stroke: currentColor;
 
-    transition:
-        transform 0.2s ease;
+    transition: transform 0.2s ease;
 }
 
-
-.dashboard-page-header
-.primary-button:hover svg,
-.current-reservation-actions
-.primary-button:hover svg,
-.empty-state
-.primary-button:hover svg {
-    transform:
-        translateY(-1px)
-        scale(1.05);
+.dashboard-page-header .primary-button:hover svg,
+.current-reservation-actions .primary-button:hover svg,
+.empty-state .primary-button:hover svg {
+    transform: translateY(-1px) scale(1.05);
 }
 
-
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+/* RESPONSIVE */
 
 @media (max-width: 900px) {
-
     .dashboard-summary-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-
 
     .dashboard-content-grid {
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
     }
-
 }
-
 
 @media (max-width: 760px) {
-
-    .current-reservation-card
-    .card-header,
-    .quick-access-card
-    .card-header {
+    .current-reservation-card .card-header,
+    .quick-access-card .card-header {
         padding: 16px;
     }
 
-
-    .current-reservation-card
-    .card-body,
-    .quick-access-card
-    .card-body {
+    .current-reservation-card .card-body,
+    .quick-access-card .card-body {
         padding: 16px;
     }
-
 }
 
-
 @media (max-width: 560px) {
-
     .dashboard-summary-grid {
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
     }
-
 
     .dashboard-summary-card {
         min-height: 90px;
@@ -626,11 +479,9 @@
         padding: 15px;
     }
 
-
     .dashboard-summary-value {
         font-size: 22px;
     }
-
 
     .current-reservation-header {
         align-items: flex-start;
@@ -638,53 +489,35 @@
         flex-direction: column;
     }
 
-
     .current-reservation-actions {
         justify-content: stretch;
     }
 
-
-    .current-reservation-actions
-    .primary-button {
+    .current-reservation-actions .primary-button {
         width: 100%;
     }
-
 
     .dashboard-card-link {
         display: none;
     }
-
 }
 
-
-/* =========================================================
-   TOUCH
-   ========================================================= */
+/* TOUCH */
 
 @media (hover: none) {
-
     .dashboard-summary-card:hover,
-    .dashboard-summary-card:hover
-    .dashboard-summary-icon,
+    .dashboard-summary-card:hover .dashboard-summary-icon,
     .quick-access-item:hover,
-    .quick-access-item:hover
-    .quick-access-icon,
-    .current-reservation-card:hover
-    .card-heading-icon,
-    .quick-access-card:hover
-    .card-heading-icon {
+    .quick-access-item:hover .quick-access-icon,
+    .current-reservation-card:hover .card-heading-icon,
+    .quick-access-card:hover .card-heading-icon {
         transform: none;
     }
-
 }
 
-
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
+/* REDUCED MOTION */
 
 @media (prefers-reduced-motion: reduce) {
-
     .dashboard-summary-card,
     .dashboard-summary-icon,
     .dashboard-summary-icon svg,
@@ -696,5 +529,4 @@
     .card-heading-icon svg {
         transition: none;
     }
-
 }

@@ -1,40 +1,39 @@
 "use strict";
 
-/* =========================================================
-   RESORTHUB - CLIENT NEW RESERVATION
-   File: js/client/Reservations.js
+/* RESORTHUB - CLIENT NEW RESERVATION File: js/client/Reservations.js Frontend development: - Uses dummy data while the backend is not connected. - Does not use localStorage. - Designed for Node.js + Express + MySQL later. */
 
-   Frontend development:
-   - Uses dummy data while the backend is not connected.
-   - Does not use localStorage.
-   - Designed for Node.js + Express + MySQL later.
-   ========================================================= */
-
-
-/* =========================================================
-   FRONTEND DEVELOPMENT MODE
-
-   true  = use dummy frontend data
-   false = use real backend API
-   ========================================================= */
+/* FRONTEND DEVELOPMENT MODE true = use dummy frontend data false = use real backend API */
 
 const USE_DUMMY_DATA = false;
 
-
-/* =========================================================
-   API ENDPOINTS
-   ========================================================= */
+/* API ENDPOINTS */
 
 const API_ENDPOINTS = {
     clientProfile: "/api/client/profile",
 
     resorts: "/api/resorts",
 
-    accommodationsByResort(resortId) {
-        return `/api/resorts/${encodeURIComponent(resortId)}/accommodations`;
+    accommodationsByResort(resortId, checkIn, checkOut) {
+        const parameters = new URLSearchParams();
+
+        if (checkIn && checkOut) {
+            parameters.set("check_in", checkIn);
+
+            parameters.set("check_out", checkOut);
+        }
+
+        const query = parameters.toString();
+
+        return `/api/resorts/${encodeURIComponent(resortId)}/accommodations${
+            query ? `?${query}` : ""
+        }`;
     },
 
-    createReservation: "/api/client/reservations"
+    unavailableDatesByAccommodation(accommodationId) {
+        return `/api/accommodations/${encodeURIComponent(accommodationId)}/unavailable-dates`;
+    },
+
+    createReservation: "/api/client/reservations",
 };
 
 const accessToken = sessionStorage.getItem("resorthub_access_token");
@@ -43,57 +42,35 @@ if (!accessToken) {
     window.location.href = "../auth/login.html";
 }
 
-/* =========================================================
-   DUMMY CLIENT DATA
-
-   Frontend sample only.
-   NOT a database record.
-   ========================================================= */
+/* DUMMY CLIENT DATA Frontend sample only. NOT a database record. */
 
 const DUMMY_CLIENT = {
     id: 1,
     name: "Juan Dela Cruz",
     email: "juan@example.com",
-    contact_number: "09123456789"
+    contact_number: "09123456789",
 };
 
-
-/* =========================================================
-   DUMMY RESORT DATA
-
-   Frontend sample only.
-   ========================================================= */
+/* DUMMY RESORT DATA Frontend sample only. */
 
 const DUMMY_RESORTS = [
     {
         id: 1,
-        name: "Sample Resort A"
+        name: "Sample Resort A",
     },
 
     {
         id: 2,
-        name: "Sample Resort B"
+        name: "Sample Resort B",
     },
 
     {
         id: 3,
-        name: "Sample Resort C"
-    }
+        name: "Sample Resort C",
+    },
 ];
 
-
-/* =========================================================
-   DUMMY ACCOMMODATION DATA
-
-   The thesis supports displaying:
-   - room/cottage type
-   - capacity
-   - amenities
-   - pricing information
-   - accommodation availability
-
-   The values below are sample frontend values only.
-   ========================================================= */
+/* DUMMY ACCOMMODATION DATA The thesis supports displaying: - room/cottage type - capacity - amenities - pricing information - accommodation availability The values below are sample frontend values only. */
 
 const DUMMY_ACCOMMODATIONS = [
     {
@@ -102,12 +79,9 @@ const DUMMY_ACCOMMODATIONS = [
         name: "Family Room",
         type: "Room",
         capacity: 4,
-        amenities: [
-            "Air Conditioning",
-            "Private Bathroom"
-        ],
+        amenities: ["Air Conditioning", "Private Bathroom"],
         price: 3500,
-        availability: "Available"
+        availability: "Available",
     },
 
     {
@@ -116,12 +90,9 @@ const DUMMY_ACCOMMODATIONS = [
         name: "Standard Cottage",
         type: "Cottage",
         capacity: 6,
-        amenities: [
-            "Table",
-            "Seating Area"
-        ],
+        amenities: ["Table", "Seating Area"],
         price: 2500,
-        availability: "Available"
+        availability: "Available",
     },
 
     {
@@ -130,12 +101,9 @@ const DUMMY_ACCOMMODATIONS = [
         name: "Family Cottage",
         type: "Cottage",
         capacity: 8,
-        amenities: [
-            "Table",
-            "Seating Area"
-        ],
+        amenities: ["Table", "Seating Area"],
         price: 4000,
-        availability: "Available"
+        availability: "Available",
     },
 
     {
@@ -144,11 +112,9 @@ const DUMMY_ACCOMMODATIONS = [
         name: "Standard Room",
         type: "Room",
         capacity: 2,
-        amenities: [
-            "Air Conditioning"
-        ],
+        amenities: ["Air Conditioning"],
         price: 2200,
-        availability: "Available"
+        availability: "Available",
     },
 
     {
@@ -157,19 +123,13 @@ const DUMMY_ACCOMMODATIONS = [
         name: "Group Cottage",
         type: "Cottage",
         capacity: 10,
-        amenities: [
-            "Table",
-            "Seating Area"
-        ],
+        amenities: ["Table", "Seating Area"],
         price: 4500,
-        availability: "Available"
-    }
+        availability: "Available",
+    },
 ];
 
-
-/* =========================================================
-   APPLICATION STATE
-   ========================================================= */
+/* APPLICATION STATE */
 
 const reservationState = {
     client: null,
@@ -182,176 +142,125 @@ const reservationState = {
 
     selectedAccommodation: null,
 
+    unavailableDateRanges: [],
+
     usingDummyData: false,
 
-    submitting: false
+    submitting: false,
 };
 
+/* DOM ELEMENTS */
 
-/* =========================================================
-   DOM ELEMENTS
-   ========================================================= */
+const clientApp = document.getElementById("clientApp");
 
-const clientApp =
-    document.getElementById("clientApp");
+const sidebarToggle = document.getElementById("sidebarToggle");
 
-const sidebarToggle =
-    document.getElementById("sidebarToggle");
+const clientProfileButton = document.getElementById("clientProfileButton");
 
-const clientProfileButton =
-    document.getElementById("clientProfileButton");
-
-const clientDisplayName =
-    document.getElementById("clientDisplayName");
-
+const clientDisplayName = document.getElementById("clientDisplayName");
 
 /* Form */
 
-const reservationForm =
-    document.getElementById("reservationForm");
-
+const reservationForm = document.getElementById("reservationForm");
 
 /* Resort and accommodation */
 
-const resortId =
-    document.getElementById("resortId");
+const resortId = document.getElementById("resortId");
 
-const accommodationId =
-    document.getElementById("accommodationId");
-
+const accommodationId = document.getElementById("accommodationId");
 
 /* Selected accommodation */
 
-const selectedAccommodation =
-    document.getElementById("selectedAccommodation");
+const selectedAccommodation = document.getElementById("selectedAccommodation");
 
-const accommodationEmptyState =
-    document.getElementById("accommodationEmptyState");
+const accommodationEmptyState = document.getElementById("accommodationEmptyState");
 
-const selectedAccommodationName =
-    document.getElementById("selectedAccommodationName");
+const selectedAccommodationName = document.getElementById("selectedAccommodationName");
 
-const selectedAccommodationAvailability =
-    document.getElementById("selectedAccommodationAvailability");
+const selectedAccommodationAvailability = document.getElementById(
+    "selectedAccommodationAvailability",
+);
 
-const selectedAccommodationType =
-    document.getElementById("selectedAccommodationType");
+const selectedAccommodationType = document.getElementById("selectedAccommodationType");
 
-const selectedAccommodationCapacity =
-    document.getElementById("selectedAccommodationCapacity");
+const selectedAccommodationCapacity = document.getElementById("selectedAccommodationCapacity");
 
-const selectedAccommodationPrice =
-    document.getElementById("selectedAccommodationPrice");
+const selectedAccommodationPrice = document.getElementById("selectedAccommodationPrice");
 
-const selectedAccommodationAmenities =
-    document.getElementById("selectedAccommodationAmenities");
-
+const selectedAccommodationAmenities = document.getElementById("selectedAccommodationAmenities");
 
 /* Schedule */
 
-const checkIn =
-    document.getElementById("checkIn");
+const checkIn = document.getElementById("checkIn");
 
-const checkOut =
-    document.getElementById("checkOut");
+const checkOut = document.getElementById("checkOut");
 
-const scheduleMessage =
-    document.getElementById("scheduleMessage");
+const scheduleMessage = document.getElementById("scheduleMessage");
 
+let checkInCalendar = null;
+
+let checkOutCalendar = null;
 
 /* Client information */
 
-const clientName =
-    document.getElementById("clientName");
+const clientName = document.getElementById("clientName");
 
-const contactNumber =
-    document.getElementById("contactNumber");
+const contactNumber = document.getElementById("contactNumber");
 
-const clientEmail =
-    document.getElementById("clientEmail");
-
+const clientEmail = document.getElementById("clientEmail");
 
 /* Reservation summary */
 
-const summaryResort =
-    document.getElementById("summaryResort");
+const summaryResort = document.getElementById("summaryResort");
 
-const summaryAccommodation =
-    document.getElementById("summaryAccommodation");
+const summaryAccommodation = document.getElementById("summaryAccommodation");
 
-const summaryCheckIn =
-    document.getElementById("summaryCheckIn");
+const summaryCheckIn = document.getElementById("summaryCheckIn");
 
-const summaryCheckOut =
-    document.getElementById("summaryCheckOut");
-
+const summaryCheckOut = document.getElementById("summaryCheckOut");
 
 /* Submit */
 
-const submitReservationButton =
-    document.getElementById("submitReservationButton");
+const submitReservationButton = document.getElementById("submitReservationButton");
 
-const reservationFormMessage =
-    document.getElementById("reservationFormMessage");
+const reservationFormMessage = document.getElementById("reservationFormMessage");
 
+/* PAGE INITIALIZATION */
 
-/* =========================================================
-   PAGE INITIALIZATION
-   ========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    initializeReservationPage
-);
-
+document.addEventListener("DOMContentLoaded", initializeReservationPage);
 
 async function initializeReservationPage() {
-
     initializeIcons();
 
     initializeSidebar();
 
     initializeProfileButton();
 
-    initializeFormEvents();
-
     initializeDateInputs();
 
+    initializeFormEvents();
 
     if (USE_DUMMY_DATA) {
-
         loadDummyData();
 
         return;
     }
 
-
     await loadInitialApiData();
 }
 
-
-/* =========================================================
-   DUMMY DATA INITIALIZATION
-   ========================================================= */
+/* DUMMY DATA INITIALIZATION */
 
 function loadDummyData() {
-
     reservationState.usingDummyData = true;
 
-
     reservationState.client = {
-        ...DUMMY_CLIENT
+        ...DUMMY_CLIENT,
     };
 
-
-    reservationState.resorts =
-        DUMMY_RESORTS.map(
-            resort => ({ ...resort })
-        );
-
+    reservationState.resorts = DUMMY_RESORTS.map((resort) => ({ ...resort }));
 
     reservationState.accommodations = [];
-
 
     renderClient();
 
@@ -364,81 +273,47 @@ function loadDummyData() {
     renderReservationSummary();
 }
 
-
-/* =========================================================
-   LOAD INITIAL API DATA
-   ========================================================= */
+/* LOAD INITIAL API DATA */
 
 async function loadInitialApiData() {
-
     try {
+        const [clientResponse, resortsResponse] = await Promise.all([
+            fetch(API_ENDPOINTS.clientProfile, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }),
 
-        const [
-            clientResponse,
-            resortsResponse
-        ] = await Promise.all([
-
-            fetch(
-                API_ENDPOINTS.clientProfile,
-                {
-                    method: "GET",
-                    credentials: "include",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": `Bearer ${accessToken}`
-                    }
-                }
-            ),
-
-            fetch(
-                API_ENDPOINTS.resorts,
-                {
-                    method: "GET",
-                    credentials: "include",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": `Bearer ${accessToken}`
-                    }
-                }
-            )
-
+            fetch(API_ENDPOINTS.resorts, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }),
         ]);
 
-
         if (!clientResponse.ok) {
-
-            throw new Error(
-                "Unable to load client information."
-            );
+            throw new Error("Unable to load client information.");
         }
-
 
         if (!resortsResponse.ok) {
-
-            throw new Error(
-                "Unable to load resorts."
-            );
+            throw new Error("Unable to load resorts.");
         }
 
+        const clientData = await clientResponse.json();
 
-        const clientData =
-            await clientResponse.json();
+        const resortsData = await resortsResponse.json();
 
-        const resortsData =
-            await resortsResponse.json();
+        reservationState.client = normalizeClient(clientData);
 
+        reservationState.resorts = normalizeResorts(resortsData);
 
-        reservationState.client =
-            normalizeClient(clientData);
-
-
-        reservationState.resorts =
-            normalizeResorts(resortsData);
-
-
-        reservationState.usingDummyData =
-            false;
-
+        reservationState.usingDummyData = false;
 
         renderClient();
 
@@ -449,1076 +324,781 @@ async function loadInitialApiData() {
         resetAccommodationSelection();
 
         renderReservationSummary();
-
-
     } catch (error) {
+        console.error("Reservation page API error:", error);
 
-        console.error(
-            "Reservation page API error:",
-            error
-        );
-
-
-        showFormMessage(
-            "Unable to load reservation information.",
-            "error"
-        );
+        showFormMessage("Unable to load reservation information.", "error");
     }
 }
 
-
-/* =========================================================
-   NORMALIZE CLIENT DATA
-   ========================================================= */
+/* NORMALIZE CLIENT DATA */
 
 function normalizeClient(data) {
+    const client = data?.client || data;
 
-    const client =
-        data?.client || data;
-
-
-    if (
-        !client ||
-        typeof client !== "object"
-    ) {
-
+    if (!client || typeof client !== "object") {
         return null;
     }
 
-
     return {
-        id:
-            client.id ??
-            null,
+        id: client.id ?? null,
 
-        name:
-            client.name ||
-            client.full_name ||
-            "",
+        name: client.name || client.full_name || "",
 
-        email:
-            client.email ||
-            "",
+        email: client.email || "",
 
-        contact_number:
-            client.contact_number ||
-            client.phone ||
-            ""
+        contact_number: client.contact_number || client.phone || "",
     };
 }
 
-
-/* =========================================================
-   NORMALIZE RESORT DATA
-   ========================================================= */
+/* NORMALIZE RESORT DATA */
 
 function normalizeResorts(data) {
-
-    const resorts =
-        Array.isArray(data)
-            ? data
-            : data?.resorts;
-
+    const resorts = Array.isArray(data) ? data : data?.resorts;
 
     if (!Array.isArray(resorts)) {
-
         return [];
     }
 
+    return resorts.map((resort) => ({
+        id: resort.id ?? null,
 
-    return resorts.map(
-        resort => ({
-            id:
-                resort.id ??
-                null,
-
-            name:
-                resort.name ||
-                resort.resort_name ||
-                ""
-        })
-    );
+        name: resort.name || resort.resort_name || "",
+    }));
 }
 
-
-/* =========================================================
-   NORMALIZE ACCOMMODATION DATA
-   ========================================================= */
+/* NORMALIZE ACCOMMODATION DATA */
 
 function normalizeAccommodations(data) {
-
-    const accommodations =
-        Array.isArray(data)
-            ? data
-            : data?.accommodations;
-
+    const accommodations = Array.isArray(data) ? data : data?.accommodations;
 
     if (!Array.isArray(accommodations)) {
-
         return [];
     }
 
+    return accommodations.map((accommodation) => ({
+        id: accommodation.id ?? null,
 
-    return accommodations.map(
-        accommodation => ({
-            id:
-                accommodation.id ??
-                null,
+        resort_id: accommodation.resort_id ?? null,
 
-            resort_id:
-                accommodation.resort_id ??
-                null,
+        name: accommodation.name || accommodation.accommodation_name || "",
 
-            name:
-                accommodation.name ||
-                accommodation.accommodation_name ||
-                "",
+        type: accommodation.type || accommodation.accommodation_type || "",
 
-            type:
-                accommodation.type ||
-                accommodation.accommodation_type ||
-                "",
+        capacity: accommodation.capacity ?? "",
 
-            capacity:
-                accommodation.capacity ??
-                "",
+        amenities: Array.isArray(accommodation.amenities) ? accommodation.amenities : [],
 
-            amenities:
-                Array.isArray(
-                    accommodation.amenities
-                )
-                    ? accommodation.amenities
-                    : [],
+        price: accommodation.price ?? null,
 
-            price:
-                accommodation.price ??
-                null,
-
-            availability:
-                accommodation.availability ||
-                accommodation.status ||
-                ""
-        })
-    );
+        availability: accommodation.availability || accommodation.status || "",
+    }));
 }
 
-
-/* =========================================================
-   CLIENT DISPLAY
-   ========================================================= */
+/* CLIENT DISPLAY */
 
 function renderClient() {
-
     if (!clientDisplayName) {
         return;
     }
 
-
-    clientDisplayName.textContent =
-        reservationState.client?.name ||
-        "Client";
+    clientDisplayName.textContent = reservationState.client?.name || "Client";
 }
 
-
-/* =========================================================
-   POPULATE CLIENT INFORMATION
-   ========================================================= */
+/* POPULATE CLIENT INFORMATION */
 
 function populateClientInformation() {
-
-    const client =
-        reservationState.client;
-
+    const client = reservationState.client;
 
     if (!client) {
         return;
     }
 
-
     if (clientName) {
-
-        clientName.value =
-            client.name || "";
+        clientName.value = client.name || "";
     }
-
 
     if (contactNumber) {
-
-        contactNumber.value =
-            client.contact_number || "";
+        contactNumber.value = client.contact_number || "";
     }
 
-
     if (clientEmail) {
-
-        clientEmail.value =
-            client.email || "";
+        clientEmail.value = client.email || "";
     }
 }
 
-
-/* =========================================================
-   RESORT OPTIONS
-   ========================================================= */
+/* RESORT OPTIONS */
 
 function renderResortOptions() {
-
     if (!resortId) {
         return;
     }
 
-
     resortId.innerHTML = "";
 
-
-    const defaultOption =
-        document.createElement("option");
-
+    const defaultOption = document.createElement("option");
 
     defaultOption.value = "";
 
-    defaultOption.textContent =
-        "Select a resort";
+    defaultOption.textContent = "Select a resort";
 
+    resortId.appendChild(defaultOption);
 
-    resortId.appendChild(
-        defaultOption
-    );
+    reservationState.resorts.forEach((resort) => {
+        const option = document.createElement("option");
 
+        option.value = String(resort.id);
 
-    reservationState.resorts.forEach(
-        resort => {
+        option.textContent = resort.name;
 
-            const option =
-                document.createElement("option");
-
-
-            option.value =
-                String(resort.id);
-
-
-            option.textContent =
-                resort.name;
-
-
-            resortId.appendChild(
-                option
-            );
-        }
-    );
+        resortId.appendChild(option);
+    });
 }
 
-
-/* =========================================================
-   RESORT CHANGE
-   ========================================================= */
+/* RESORT CHANGE */
 
 async function handleResortChange() {
-
-    const selectedResortId =
-        resortId?.value || "";
-
+    const selectedResortId = resortId?.value || "";
 
     reservationState.selectedResort =
-        reservationState.resorts.find(
-            resort =>
-                String(resort.id) ===
-                String(selectedResortId)
-        ) || null;
-
-
-    reservationState.selectedAccommodation =
+        reservationState.resorts.find((resort) => String(resort.id) === String(selectedResortId)) ||
         null;
 
+    reservationState.selectedAccommodation = null;
+
+    resetAvailabilityCalendars();
 
     resetAccommodationSelection();
 
     renderReservationSummary();
 
-
     if (!selectedResortId) {
         return;
     }
 
-
-    await loadAccommodations(
-        selectedResortId
-    );
+    await loadAccommodations(selectedResortId);
 }
 
+/* LOAD ACCOMMODATIONS */
 
-/* =========================================================
-   LOAD ACCOMMODATIONS
-   ========================================================= */
-
-async function loadAccommodations(
-    selectedResortId
-) {
-
-    setAccommodationSelectDisabled(
-        true
-    );
-
+async function loadAccommodations(selectedResortId) {
+    setAccommodationSelectDisabled(true);
 
     if (reservationState.usingDummyData) {
-
-        reservationState.accommodations =
-            DUMMY_ACCOMMODATIONS.filter(
-                accommodation =>
-                    String(accommodation.resort_id) ===
-                    String(selectedResortId)
-            );
-
+        reservationState.accommodations = DUMMY_ACCOMMODATIONS.filter(
+            (accommodation) => String(accommodation.resort_id) === String(selectedResortId),
+        );
 
         renderAccommodationOptions();
 
-        setAccommodationSelectDisabled(
-            false
-        );
-
+        setAccommodationSelectDisabled(false);
 
         return;
     }
 
-
     try {
-
-        const response =
-            await fetch(
-                API_ENDPOINTS.accommodationsByResort(
-                    selectedResortId
-                ),
-                {
-                    method: "GET",
-                    credentials: "include",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": `Bearer ${accessToken}`
-                    }
-                }
-            );
-
+        const response = await fetch(
+            API_ENDPOINTS.accommodationsByResort(
+                selectedResortId,
+                checkIn?.value || "",
+                checkOut?.value || "",
+            ),
+            {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            },
+        );
 
         if (!response.ok) {
-
-            throw new Error(
-                "Unable to load accommodations."
-            );
+            throw new Error("Unable to load accommodations.");
         }
 
+        const data = await response.json();
 
-        const data =
-            await response.json();
-
-
-        reservationState.accommodations =
-            normalizeAccommodations(data);
-
+        reservationState.accommodations = normalizeAccommodations(data);
 
         renderAccommodationOptions();
-
-
     } catch (error) {
+        console.error("Accommodation API error:", error);
 
-        console.error(
-            "Accommodation API error:",
-            error
-        );
-
-
-        reservationState.accommodations =
-            [];
-
+        reservationState.accommodations = [];
 
         renderAccommodationOptions();
 
-
-        showFormMessage(
-            "Unable to load accommodations for the selected resort.",
-            "error"
-        );
-
+        showFormMessage("Unable to load accommodations for the selected resort.", "error");
     } finally {
-
-        setAccommodationSelectDisabled(
-            false
-        );
+        setAccommodationSelectDisabled(false);
     }
 }
 
-
-/* =========================================================
-   ACCOMMODATION OPTIONS
-   ========================================================= */
+/* ACCOMMODATION OPTIONS */
 
 function renderAccommodationOptions() {
-
     if (!accommodationId) {
         return;
     }
 
-
     accommodationId.innerHTML = "";
 
-
-    const defaultOption =
-        document.createElement("option");
-
+    const defaultOption = document.createElement("option");
 
     defaultOption.value = "";
 
     defaultOption.textContent =
         reservationState.accommodations.length > 0
             ? "Select an accommodation"
-            : "No accommodations available";
+            : checkIn?.value && checkOut?.value
+              ? "No accommodations available for these dates"
+              : "No accommodations available";
 
+    accommodationId.appendChild(defaultOption);
 
-    accommodationId.appendChild(
-        defaultOption
-    );
+    reservationState.accommodations.forEach((accommodation) => {
+        const option = document.createElement("option");
 
+        option.value = String(accommodation.id);
 
-    reservationState.accommodations.forEach(
-        accommodation => {
+        option.textContent = accommodation.name;
 
-            const option =
-                document.createElement("option");
+        accommodationId.appendChild(option);
+    });
 
-
-            option.value =
-                String(accommodation.id);
-
-
-            option.textContent =
-                accommodation.name;
-
-
-            accommodationId.appendChild(
-                option
-            );
-        }
-    );
-
-
-    accommodationId.disabled =
-        reservationState.accommodations.length === 0;
+    accommodationId.disabled = reservationState.accommodations.length === 0;
 }
 
+/* ACCOMMODATION CHANGE */
 
-/* =========================================================
-   ACCOMMODATION CHANGE
-   ========================================================= */
-
-function handleAccommodationChange() {
-
-    const selectedAccommodationId =
-        accommodationId?.value || "";
-
+async function handleAccommodationChange() {
+    const selectedAccommodationId = accommodationId?.value || "";
 
     reservationState.selectedAccommodation =
         reservationState.accommodations.find(
-            accommodation =>
-                String(accommodation.id) ===
-                String(selectedAccommodationId)
+            (accommodation) => String(accommodation.id) === String(selectedAccommodationId),
         ) || null;
 
+    resetAvailabilityCalendars();
 
     renderSelectedAccommodation();
 
     renderReservationSummary();
+
+    if (!selectedAccommodationId) {
+        return;
+    }
+
+    await loadUnavailableDateRanges(selectedAccommodationId);
 }
 
+async function loadUnavailableDateRanges(selectedAccommodationId) {
+    clearScheduleMessage();
 
-/* =========================================================
-   SELECTED ACCOMMODATION
-   ========================================================= */
+    if (reservationState.usingDummyData) {
+        reservationState.unavailableDateRanges = [];
+        refreshAvailabilityCalendars();
+        setCheckInCalendarEnabled(true);
+        return;
+    }
+
+    setCheckInCalendarEnabled(false);
+
+    try {
+        const response = await fetch(
+            API_ENDPOINTS.unavailableDatesByAccommodation(selectedAccommodationId),
+            {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            },
+        );
+
+        const data = await readJsonResponse(response);
+
+        if (!response.ok) {
+            throw new Error(data?.message || "Unable to load unavailable dates.");
+        }
+
+        reservationState.unavailableDateRanges = normalizeUnavailableDateRanges(data);
+
+        refreshAvailabilityCalendars();
+        setCheckInCalendarEnabled(true);
+    } catch (error) {
+        console.error("Unavailable date API error:", error);
+
+        reservationState.unavailableDateRanges = [];
+        refreshAvailabilityCalendars();
+
+        showScheduleMessage(error.message || "Unable to load unavailable dates.", "error");
+    }
+}
+
+function normalizeUnavailableDateRanges(data) {
+    const ranges = Array.isArray(data) ? data : data?.unavailable_ranges;
+
+    if (!Array.isArray(ranges)) {
+        return [];
+    }
+
+    return ranges
+        .map((range) => ({
+            check_in: String(range?.check_in || "").slice(0, 10),
+
+            check_out: String(range?.check_out || "").slice(0, 10),
+        }))
+        .filter(
+            (range) =>
+                /^\d{4}-\d{2}-\d{2}$/.test(range.check_in) &&
+                /^\d{4}-\d{2}-\d{2}$/.test(range.check_out) &&
+                range.check_out > range.check_in,
+        );
+}
+
+/* SELECTED ACCOMMODATION */
 
 function renderSelectedAccommodation() {
-
-    const accommodation =
-        reservationState.selectedAccommodation;
-
+    const accommodation = reservationState.selectedAccommodation;
 
     if (!accommodation) {
-
         resetSelectedAccommodationDisplay();
 
         return;
     }
 
-
     if (selectedAccommodation) {
-
-        selectedAccommodation.hidden =
-            false;
+        selectedAccommodation.hidden = false;
     }
-
 
     if (accommodationEmptyState) {
-
-        accommodationEmptyState.hidden =
-            true;
+        accommodationEmptyState.hidden = true;
     }
 
+    setText(selectedAccommodationName, accommodation.name);
 
-    setText(
-        selectedAccommodationName,
-        accommodation.name
-    );
+    setText(selectedAccommodationAvailability, accommodation.availability);
 
+    setText(selectedAccommodationType, accommodation.type);
 
-    setText(
-        selectedAccommodationAvailability,
-        accommodation.availability
-    );
+    setText(selectedAccommodationCapacity, formatCapacity(accommodation.capacity));
 
+    setText(selectedAccommodationPrice, formatCurrency(accommodation.price));
 
-    setText(
-        selectedAccommodationType,
-        accommodation.type
-    );
-
-
-    setText(
-        selectedAccommodationCapacity,
-        formatCapacity(
-            accommodation.capacity
-        )
-    );
-
-
-    setText(
-        selectedAccommodationPrice,
-        formatCurrency(
-            accommodation.price
-        )
-    );
-
-
-    setText(
-        selectedAccommodationAmenities,
-        formatAmenities(
-            accommodation.amenities
-        )
-    );
+    setText(selectedAccommodationAmenities, formatAmenities(accommodation.amenities));
 }
 
-
-/* =========================================================
-   RESET ACCOMMODATION
-   ========================================================= */
+/* RESET ACCOMMODATION */
 
 function resetAccommodationSelection() {
+    reservationState.accommodations = [];
 
-    reservationState.accommodations =
-        [];
-
-    reservationState.selectedAccommodation =
-        null;
-
+    reservationState.selectedAccommodation = null;
 
     if (accommodationId) {
+        accommodationId.innerHTML = '<option value="">Select a resort first</option>';
 
-        accommodationId.innerHTML =
-            '<option value="">Select a resort first</option>';
-
-
-        accommodationId.disabled =
-            true;
+        accommodationId.disabled = true;
     }
-
 
     resetSelectedAccommodationDisplay();
 }
 
-
 function resetSelectedAccommodationDisplay() {
-
     if (selectedAccommodation) {
-
-        selectedAccommodation.hidden =
-            true;
+        selectedAccommodation.hidden = true;
     }
-
 
     if (accommodationEmptyState) {
-
-        accommodationEmptyState.hidden =
-            false;
+        accommodationEmptyState.hidden = false;
     }
 
+    setText(selectedAccommodationName, "—");
 
-    setText(
-        selectedAccommodationName,
-        "—"
-    );
+    setText(selectedAccommodationAvailability, "—");
 
-    setText(
-        selectedAccommodationAvailability,
-        "—"
-    );
+    setText(selectedAccommodationType, "—");
 
-    setText(
-        selectedAccommodationType,
-        "—"
-    );
+    setText(selectedAccommodationCapacity, "—");
 
-    setText(
-        selectedAccommodationCapacity,
-        "—"
-    );
+    setText(selectedAccommodationPrice, "—");
 
-    setText(
-        selectedAccommodationPrice,
-        "—"
-    );
-
-    setText(
-        selectedAccommodationAmenities,
-        "—"
-    );
+    setText(selectedAccommodationAmenities, "—");
 }
 
+/* ENABLE / DISABLE ACCOMMODATION SELECT */
 
-/* =========================================================
-   ENABLE / DISABLE ACCOMMODATION SELECT
-   ========================================================= */
-
-function setAccommodationSelectDisabled(
-    disabled
-) {
-
+function setAccommodationSelectDisabled(disabled) {
     if (!accommodationId) {
         return;
     }
 
-
-    accommodationId.disabled =
-        disabled;
+    accommodationId.disabled = disabled;
 }
 
-
-/* =========================================================
-   DATE INPUTS
-   ========================================================= */
+/* DATE INPUTS */
 
 function initializeDateInputs() {
+    const today = getTodayDateString();
 
-    const today =
-        getTodayDateString();
+    if (typeof flatpickr !== "function") {
+        if (checkIn) {
+            checkIn.min = today;
+            checkIn.disabled = true;
+        }
 
+        if (checkOut) {
+            checkOut.min = today;
+            checkOut.disabled = true;
+        }
 
-    if (checkIn) {
-
-        checkIn.min =
-            today;
+        return;
     }
 
+    checkInCalendar = flatpickr(checkIn, {
+        altInput: true,
+        altFormat: "m/d/Y",
+        dateFormat: "Y-m-d",
+        minDate: today,
+        disableMobile: true,
+        disable: [isCheckInDateUnavailable],
+        onDayCreate: markUnavailableCalendarDate,
+        onChange: handleCheckInCalendarChange,
+    });
 
-    if (checkOut) {
+    checkOutCalendar = flatpickr(checkOut, {
+        altInput: true,
+        altFormat: "m/d/Y",
+        dateFormat: "Y-m-d",
+        minDate: today,
+        disableMobile: true,
+        disable: [isCheckOutDateUnavailable],
+        onDayCreate: markUnavailableCalendarDate,
+        onChange: handleCheckOutCalendarChange,
+    });
 
-        checkOut.min =
-            today;
-    }
+    setCheckInCalendarEnabled(false);
 }
 
-
-/* =========================================================
-   SCHEDULE CHANGE
-   ========================================================= */
-
-function handleScheduleChange() {
+function handleCheckInCalendarChange() {
+    if (checkOutCalendar) {
+        checkOutCalendar.clear(false);
+    } else if (checkOut) {
+        checkOut.value = "";
+    }
 
     updateCheckOutMinimum();
+    refreshCheckOutCalendar();
+    handleScheduleChange();
+}
 
-    validateSchedule();
+function handleCheckOutCalendarChange() {
+    handleScheduleChange();
+}
 
+function resetAvailabilityCalendars() {
+    reservationState.unavailableDateRanges = [];
+
+    if (checkInCalendar) {
+        checkInCalendar.clear(false);
+    } else if (checkIn) {
+        checkIn.value = "";
+    }
+
+    if (checkOutCalendar) {
+        checkOutCalendar.clear(false);
+    } else if (checkOut) {
+        checkOut.value = "";
+    }
+
+    refreshAvailabilityCalendars();
+    setCheckInCalendarEnabled(false);
     renderReservationSummary();
 }
 
-
-/* =========================================================
-   UPDATE CHECK-OUT MINIMUM
-   ========================================================= */
-
-function updateCheckOutMinimum() {
-
-    if (
-        !checkIn ||
-        !checkOut
-    ) {
-
-        return;
+function refreshAvailabilityCalendars() {
+    if (checkInCalendar) {
+        checkInCalendar.set("disable", [isCheckInDateUnavailable]);
     }
 
-
-    if (!checkIn.value) {
-
-        checkOut.min =
-            getTodayDateString();
-
-        return;
-    }
-
-
-    checkOut.min =
-        getNextDateString(
-            checkIn.value
-        );
+    refreshCheckOutCalendar();
 }
 
+function refreshCheckOutCalendar() {
+    const hasCheckIn = Boolean(checkIn?.value);
 
-/* =========================================================
-   VALIDATE SCHEDULE
-   ========================================================= */
+    if (checkOutCalendar) {
+        checkOutCalendar.set(
+            "minDate",
+            hasCheckIn ? getNextDateString(checkIn.value) : getTodayDateString(),
+        );
+
+        checkOutCalendar.set("disable", [isCheckOutDateUnavailable]);
+    }
+
+    setCheckOutCalendarEnabled(hasCheckIn);
+}
+
+function setCheckInCalendarEnabled(enabled) {
+    setCalendarEnabled(checkInCalendar, checkIn, enabled);
+
+    setCheckOutCalendarEnabled(enabled && Boolean(checkIn?.value));
+}
+
+function setCheckOutCalendarEnabled(enabled) {
+    setCalendarEnabled(checkOutCalendar, checkOut, enabled);
+}
+
+function setCalendarEnabled(calendar, input, enabled) {
+    if (calendar) {
+        calendar.set("clickOpens", enabled);
+
+        if (calendar.altInput) {
+            calendar.altInput.disabled = !enabled;
+        }
+
+        return;
+    }
+
+    if (input) {
+        input.disabled = !enabled;
+    }
+}
+
+function isCheckInDateUnavailable(date) {
+    const dateValue = formatDateForInput(date);
+
+    return reservationState.unavailableDateRanges.some(
+        (range) => range.check_in <= dateValue && dateValue < range.check_out,
+    );
+}
+
+function markUnavailableCalendarDate(selectedDates, dateText, calendar, dayElement) {
+    if (!isCheckInDateUnavailable(dayElement.dateObj)) {
+        return;
+    }
+
+    dayElement.classList.add("booked-date");
+    dayElement.title = "Unavailable";
+}
+
+function isCheckOutDateUnavailable(date) {
+    const selectedCheckIn = checkIn?.value || "";
+
+    if (!selectedCheckIn) {
+        return false;
+    }
+
+    const candidateCheckOut = formatDateForInput(date);
+
+    return reservationState.unavailableDateRanges.some(
+        (range) => range.check_in < candidateCheckOut && range.check_out > selectedCheckIn,
+    );
+}
+
+/* SCHEDULE CHANGE */
+
+function handleScheduleChange() {
+    updateCheckOutMinimum();
+    validateSchedule();
+    renderReservationSummary();
+}
+
+/* UPDATE CHECK-OUT MINIMUM */
+
+function updateCheckOutMinimum() {
+    if (!checkIn || !checkOut) {
+        return;
+    }
+
+    if (!checkIn.value) {
+        checkOut.min = getTodayDateString();
+
+        return;
+    }
+
+    checkOut.min = getNextDateString(checkIn.value);
+}
+
+/* VALIDATE SCHEDULE */
 
 function validateSchedule() {
-
     clearScheduleMessage();
 
+    const checkInValue = checkIn?.value || "";
 
-    const checkInValue =
-        checkIn?.value || "";
+    const checkOutValue = checkOut?.value || "";
 
-    const checkOutValue =
-        checkOut?.value || "";
-
-
-    if (
-        !checkInValue ||
-        !checkOutValue
-    ) {
-
+    if (!checkInValue || !checkOutValue) {
         return true;
     }
 
-
-    if (
-        compareDates(
-            checkOutValue,
-            checkInValue
-        ) <= 0
-    ) {
-
-        showScheduleMessage(
-            "Check-out date must be after the check-in date.",
-            "error"
-        );
-
+    if (compareDates(checkOutValue, checkInValue) <= 0) {
+        showScheduleMessage("Check-out date must be after the check-in date.", "error");
 
         return false;
     }
 
-
     return true;
 }
 
-
-/* =========================================================
-   RESERVATION SUMMARY
-   ========================================================= */
+/* RESERVATION SUMMARY */
 
 function renderReservationSummary() {
+    setText(summaryResort, reservationState.selectedResort?.name);
 
-    setText(
-        summaryResort,
-        reservationState.selectedResort?.name
-    );
+    setText(summaryAccommodation, reservationState.selectedAccommodation?.name);
 
+    setText(summaryCheckIn, checkIn?.value ? formatDate(checkIn.value) : "—");
 
-    setText(
-        summaryAccommodation,
-        reservationState.selectedAccommodation?.name
-    );
-
-
-    setText(
-        summaryCheckIn,
-        checkIn?.value
-            ? formatDate(checkIn.value)
-            : "—"
-    );
-
-
-    setText(
-        summaryCheckOut,
-        checkOut?.value
-            ? formatDate(checkOut.value)
-            : "—"
-    );
+    setText(summaryCheckOut, checkOut?.value ? formatDate(checkOut.value) : "—");
 }
 
-
-/* =========================================================
-   FORM EVENTS
-   ========================================================= */
+/* FORM EVENTS */
 
 function initializeFormEvents() {
-
     if (resortId) {
-
-        resortId.addEventListener(
-            "change",
-            handleResortChange
-        );
+        resortId.addEventListener("change", handleResortChange);
     }
-
 
     if (accommodationId) {
-
-        accommodationId.addEventListener(
-            "change",
-            handleAccommodationChange
-        );
+        accommodationId.addEventListener("change", handleAccommodationChange);
     }
 
-
-    if (checkIn) {
-
-        checkIn.addEventListener(
-            "change",
-            handleScheduleChange
-        );
+    if (!checkInCalendar && checkIn) {
+        checkIn.addEventListener("change", handleScheduleChange);
     }
 
-
-    if (checkOut) {
-
-        checkOut.addEventListener(
-            "change",
-            handleScheduleChange
-        );
+    if (!checkOutCalendar && checkOut) {
+        checkOut.addEventListener("change", handleScheduleChange);
     }
-
 
     if (reservationForm) {
-
-        reservationForm.addEventListener(
-            "submit",
-            handleReservationSubmit
-        );
+        reservationForm.addEventListener("submit", handleReservationSubmit);
     }
 }
 
+/* SUBMIT RESERVATION */
 
-/* =========================================================
-   SUBMIT RESERVATION
-   ========================================================= */
-
-async function handleReservationSubmit(
-    event
-) {
-
+async function handleReservationSubmit(event) {
     event.preventDefault();
-
-
     clearFormMessage();
-
 
     if (reservationState.submitting) {
         return;
     }
 
-
     if (!reservationForm) {
         return;
     }
 
-
     if (!reservationForm.checkValidity()) {
-
         reservationForm.reportValidity();
-
         return;
     }
-
 
     if (!reservationState.selectedResort) {
-
-        showFormMessage(
-            "Please select a resort.",
-            "error"
-        );
-
+        showFormMessage("Please select a resort.", "error");
         return;
     }
-
 
     if (!reservationState.selectedAccommodation) {
-
-        showFormMessage(
-            "Please select an accommodation.",
-            "error"
-        );
+        showFormMessage("Please select an accommodation.", "error");
 
         return;
     }
-
 
     if (!validateSchedule()) {
-
         return;
     }
 
-
-    const payload =
-        buildReservationPayload();
-
+    const payload = buildReservationPayload();
 
     /*
      * Dummy mode must not pretend that a
      * database record was actually created.
      */
     if (USE_DUMMY_DATA) {
-
-        console.log(
-            "Dummy reservation payload:",
-            payload
-        );
-
+        console.log("Dummy reservation payload:", payload);
 
         showFormMessage(
             "Demo mode: the reservation information is ready, but it was not saved because the backend database is not connected yet.",
-            "info"
+            "info",
         );
-
 
         return;
     }
 
-
-    await submitReservation(
-        payload
-    );
+    await submitReservation(payload);
 }
 
-
-/* =========================================================
-   BUILD DATABASE-READY PAYLOAD
-   ========================================================= */
+/* BUILD DATABASE-READY PAYLOAD */
 
 function buildReservationPayload() {
-
     return {
         /*
          * The backend should ultimately determine the
          * authenticated client from the login session.
          */
-        client_id:
-            reservationState.client?.id ??
-            null,
+        client_id: reservationState.client?.id ?? null,
 
+        resort_id: reservationState.selectedResort?.id ?? null,
 
-        resort_id:
-            reservationState.selectedResort?.id ??
-            null,
+        accommodation_id: reservationState.selectedAccommodation?.id ?? null,
 
+        check_in: checkIn?.value || null,
 
-        accommodation_id:
-            reservationState.selectedAccommodation?.id ??
-            null,
+        check_out: checkOut?.value || null,
 
+        client_name: clientName?.value.trim() || "",
 
-        check_in:
-            checkIn?.value ||
-            null,
+        contact_number: contactNumber?.value.trim() || "",
 
-
-        check_out:
-            checkOut?.value ||
-            null,
-
-
-        client_name:
-            clientName?.value.trim() ||
-            "",
-
-
-        contact_number:
-            contactNumber?.value.trim() ||
-            "",
-
-
-        client_email:
-            clientEmail?.value.trim() ||
-            ""
+        client_email: clientEmail?.value.trim() || "",
     };
 }
 
+/* POST RESERVATION TO API */
 
-/* =========================================================
-   POST RESERVATION TO API
-   ========================================================= */
-
-async function submitReservation(
-    payload
-) {
-
-    setSubmittingState(
-        true
-    );
-
+async function submitReservation(payload) {
+    setSubmittingState(true);
 
     try {
-
-        const response =
-            await fetch(
-                API_ENDPOINTS.createReservation,
-                {
-                    method: "POST",
-                    credentials: "include",
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${accessToken}`
-                    },
-                    body: JSON.stringify(payload)
-                }
-            );
+        const response = await fetch(API_ENDPOINTS.createReservation, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify(payload),
+        });
 
         const data = await readJsonResponse(response);
 
         if (!response.ok) {
-            throw new Error(
-                data?.message ||
-                "Unable to submit reservation."
-            );
+            throw new Error(data?.message || "Unable to submit reservation.");
         }
 
-        showFormMessage(
-            data?.message ||
-            "Reservation request submitted successfully.",
-            "success"
-        );
+        showFormMessage(data?.message || "Reservation request submitted successfully.", "success");
 
         /*Navigate only if the backend actually
           returns a database reservation ID. */
-        const reservationId =
-            data?.reservation?.id ??
-            data?.reservation_id ??
-            data?.id ??
-            null;
+        const reservationId = data?.reservation?.id ?? data?.reservation_id ?? data?.id ?? null;
 
         if (reservationId !== null) {
-            window.location.href =
-                `ReservationStatus.html?id=${encodeURIComponent(reservationId)}`;
+            window.location.href = `ReservationStatus.html?id=${encodeURIComponent(reservationId)}`;
         }
-
     } catch (error) {
-        console.error(
-            "Reservation submission error:",
-            error
-        );
+        console.error("Reservation submission error:", error);
 
-        showFormMessage(
-            error.message ||
-            "Unable to submit reservation.",
-            "error"
-        );
+        showFormMessage(error.message || "Unable to submit reservation.", "error");
     } finally {
-        setSubmittingState(
-            false
-        );
+        setSubmittingState(false);
     }
 }
 /* SUBMITTING STATE */
@@ -1532,21 +1112,12 @@ function setSubmittingState(submitting) {
 
     submitReservationButton.disabled = submitting;
 
-    submitReservationButton.setAttribute(
-        "aria-busy",
-        String(submitting)
-    );
+    submitReservationButton.setAttribute("aria-busy", String(submitting));
 
-    const textElement =
-        submitReservationButton.querySelector(
-            "span"
-        );
+    const textElement = submitReservationButton.querySelector("span");
 
     if (textElement) {
-        textElement.textContent =
-            submitting
-                ? "Submitting..."
-                : "Submit Reservation";
+        textElement.textContent = submitting ? "Submitting..." : "Submit Reservation";
     }
 }
 /*JSON RESPONSE*/
@@ -1569,15 +1140,9 @@ function showFormMessage(message, type = "info") {
     reservationFormMessage.hidden = false;
     reservationFormMessage.textContent = message;
 
-    reservationFormMessage.classList.remove(
-        "success",
-        "error",
-        "info"
-    );
+    reservationFormMessage.classList.remove("success", "error", "info");
 
-    reservationFormMessage.classList.add(
-        type
-    );
+    reservationFormMessage.classList.add(type);
 }
 
 function clearFormMessage() {
@@ -1588,13 +1153,8 @@ function clearFormMessage() {
     reservationFormMessage.hidden = true;
     reservationFormMessage.textContent = "";
 
-    reservationFormMessage.classList.remove(
-        "success",
-        "error",
-        "info"
-    );
+    reservationFormMessage.classList.remove("success", "error", "info");
 }
-
 
 /*SCHEDULE MESSAGE*/
 
@@ -1606,14 +1166,9 @@ function showScheduleMessage(message, type = "error") {
     scheduleMessage.hidden = false;
     scheduleMessage.textContent = message;
 
-    scheduleMessage.classList.remove(
-        "success",
-        "error",
-        "info"
-    );
+    scheduleMessage.classList.remove("success", "error", "info");
     scheduleMessage.classList.add(type);
 }
-
 
 function clearScheduleMessage() {
     if (!scheduleMessage) {
@@ -1623,11 +1178,7 @@ function clearScheduleMessage() {
     scheduleMessage.hidden = true;
     scheduleMessage.textContent = "";
 
-    scheduleMessage.classList.remove(
-        "success",
-        "error",
-        "info"
-    );
+    scheduleMessage.classList.remove("success", "error", "info");
 }
 /*GENERIC TEXT SETTER*/
 
@@ -1636,12 +1187,7 @@ function setText(element, value) {
         return;
     }
 
-    const text =
-        value === null ||
-        value === undefined ||
-        value === ""
-            ? "—"
-            : String(value);
+    const text = value === null || value === undefined || value === "" ? "—" : String(value);
 
     element.textContent = text;
 }
@@ -1650,33 +1196,20 @@ function setText(element, value) {
 function formatCurrency(value) {
     const numericValue = Number(value);
 
-    if (
-        value === null ||
-        value === undefined ||
-        Number.isNaN(numericValue)
-    ) {
+    if (value === null || value === undefined || Number.isNaN(numericValue)) {
         return "—";
     }
 
-    return new Intl.NumberFormat(
-        "en-PH",
-        {
-            style: "currency",
-            currency: "PHP",
-            minimumFractionDigits: 2
-        }
-    ).format(
-        numericValue
-    );
+    return new Intl.NumberFormat("en-PH", {
+        style: "currency",
+        currency: "PHP",
+        minimumFractionDigits: 2,
+    }).format(numericValue);
 }
 /*FORMAT CAPACITY*/
 
 function formatCapacity(capacity) {
-    if (
-        capacity === null ||
-        capacity === undefined ||
-        capacity === ""
-    ) {
+    if (capacity === null || capacity === undefined || capacity === "") {
         return "—";
     }
     return String(capacity);
@@ -1684,10 +1217,7 @@ function formatCapacity(capacity) {
 /*FORMAT AMENITIES*/
 
 function formatAmenities(amenities) {
-    if (
-        !Array.isArray(amenities) ||
-        amenities.length === 0
-    ) {
+    if (!Array.isArray(amenities) || amenities.length === 0) {
         return "—";
     }
     return amenities.join(", ");
@@ -1699,8 +1229,7 @@ function formatDate(value) {
         return "—";
     }
 
-    const dateString = String(value)
-            .slice(0, 10);
+    const dateString = String(value).slice(0, 10);
 
     const parts = dateString.split("-");
 
@@ -1712,25 +1241,17 @@ function formatDate(value) {
     const month = Number(parts[1]);
     const day = Number(parts[2]);
 
-    const date =
-        new Date(
-            year,
-            month - 1,
-            day
-        );
+    const date = new Date(year, month - 1, day);
 
     if (Number.isNaN(date.getTime())) {
         return dateString;
     }
 
-    return new Intl.DateTimeFormat(
-        "en-PH",
-        {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-        }
-    ).format(date);
+    return new Intl.DateTimeFormat("en-PH", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    }).format(date);
 }
 /*DATE HELPERS*/
 function getTodayDateString() {
@@ -1745,12 +1266,7 @@ function getNextDateString(dateValue) {
         return getTodayDateString();
     }
 
-    const date =
-        new Date(
-            Number(parts[0]),
-            Number(parts[1]) - 1,
-            Number(parts[2])
-        );
+    const date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
 
     date.setDate(date.getDate() + 1);
     return formatDateForInput(date);
@@ -1793,15 +1309,9 @@ function handleSidebarToggle() {
 
     clientApp.classList.toggle("sidebar-collapsed");
 
-    const isCollapsed =
-        clientApp.classList.contains(
-            "sidebar-collapsed"
-        );
+    const isCollapsed = clientApp.classList.contains("sidebar-collapsed");
 
-    sidebarToggle.setAttribute(
-        "aria-expanded",
-        String(!isCollapsed)
-    );
+    sidebarToggle.setAttribute("aria-expanded", String(!isCollapsed));
 }
 /*PROFILE BUTTON*/
 
@@ -1810,13 +1320,9 @@ function initializeProfileButton() {
         return;
     }
 
-    clientProfileButton.addEventListener(
-        "click",
-        () => {
-            window.location.href =
-                "Profile.html";
-        }
-    );
+    clientProfileButton.addEventListener("click", () => {
+        window.location.href = "Profile.html";
+    });
 }
 /*LUCIDE ICONS*/
 

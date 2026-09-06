@@ -1,12 +1,6 @@
-/* =========================================================
-   RESORTHUB - CLIENT PROFILE
-   File: css/client/profile.css
-   ========================================================= */
+/* RESORTHUB - CLIENT PROFILE File: css/client/profile.css */
 
-
-/* =========================================================
-   PROFILE OVERVIEW
-   ========================================================= */
+/* PROFILE OVERVIEW */
 
 .profile-overview-card {
     margin-bottom: 20px;
@@ -68,10 +62,7 @@
     overflow-wrap: anywhere;
 }
 
-
-/* =========================================================
-   ROLE
-   ========================================================= */
+/* ROLE */
 
 .profile-role {
     display: inline-flex;
@@ -95,10 +86,7 @@
     height: 14px;
 }
 
-
-/* =========================================================
-   PROFILE INFORMATION CARD
-   ========================================================= */
+/* PROFILE INFORMATION CARD */
 
 .profile-information-card {
     overflow: hidden;
@@ -134,10 +122,7 @@
     padding: 20px;
 }
 
-
-/* =========================================================
-   PROFILE FORM GRID
-   ========================================================= */
+/* PROFILE FORM GRID */
 
 .profile-form-grid {
     display: grid;
@@ -145,10 +130,7 @@
     gap: 18px;
 }
 
-
-/* =========================================================
-   INPUT WRAPPER
-   ========================================================= */
+/* INPUT WRAPPER */
 
 .profile-input-wrapper {
     position: relative;
@@ -175,10 +157,7 @@
     padding-left: 40px;
 }
 
-
-/* =========================================================
-   READONLY FIELD
-   ========================================================= */
+/* READONLY FIELD */
 
 .profile-input-wrapper input[readonly] {
     background: var(--surface-soft);
@@ -188,10 +167,7 @@
     cursor: default;
 }
 
-
-/* =========================================================
-   FORM MESSAGE
-   ========================================================= */
+/* FORM MESSAGE */
 
 .profile-form-message {
     margin-top: 18px;
@@ -229,10 +205,7 @@
     color: var(--primary);
 }
 
-
-/* =========================================================
-   FORM ACTIONS
-   ========================================================= */
+/* FORM ACTIONS */
 
 .profile-form-actions {
     display: flex;
@@ -249,10 +222,7 @@
     min-width: 135px;
 }
 
-
-/* =========================================================
-   DISABLED / SAVING STATE
-   ========================================================= */
+/* DISABLED / SAVING STATE */
 
 #saveProfileButton:disabled {
     opacity: 0.65;
@@ -260,13 +230,9 @@
     cursor: not-allowed;
 }
 
-
-/* =========================================================
-   TABLET
-   ========================================================= */
+/* TABLET */
 
 @media (max-width: 760px) {
-
     .profile-overview {
         padding: 18px;
     }
@@ -283,16 +249,11 @@
         grid-template-columns: 1fr;
         gap: 15px;
     }
-
 }
 
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
+/* MOBILE */
 
 @media (max-width: 560px) {
-
     .profile-overview {
         align-items: flex-start;
         gap: 13px;
@@ -325,18 +286,12 @@
     .profile-form-actions .primary-button {
         width: 100%;
     }
-
 }
 
-
-/* =========================================================
-   TOUCH DEVICES
-   ========================================================= */
+/* TOUCH DEVICES */
 
 @media (hover: none) {
-
     .profile-form-actions .primary-button:hover {
         transform: none;
     }
-
 }

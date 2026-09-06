@@ -30,11 +30,7 @@
 
             <header class="client-topbar">
                 <div class="topbar-left">
-                    <a
-                        href="Dashboard.html"
-                        class="client-brand"
-                        aria-label="ResortHub Dashboard"
-                    >
+                    <a href="Dashboard.html" class="client-brand" aria-label="ResortHub Dashboard">
                         <i data-lucide="building-2"></i>
 
                         <span>ResortHub</span>
@@ -68,10 +64,7 @@
                             <small> Client </small>
                         </span>
 
-                        <i
-                            class="profile-chevron"
-                            data-lucide="chevron-down"
-                        ></i>
+                        <i class="profile-chevron" data-lucide="chevron-down"></i>
                     </button>
                 </div>
             </header>
@@ -82,10 +75,7 @@
                 <!-- SIDEBAR -->
 
                 <aside class="client-sidebar" id="clientSidebar">
-                    <nav
-                        class="sidebar-navigation"
-                        aria-label="Client navigation"
-                    >
+                    <nav class="sidebar-navigation" aria-label="Client navigation">
                         <!-- Dashboard -->
 
                         <a href="Dashboard.html" class="sidebar-link">
@@ -123,11 +113,7 @@
                         <div class="sidebar-section">
                             <span class="sidebar-section-title"> PAYMENT </span>
 
-                            <a
-                                href="Payments.html"
-                                class="sidebar-link active"
-                                aria-current="page"
-                            >
+                            <a href="Payments.html" class="sidebar-link active" aria-current="page">
                                 <i data-lucide="wallet-cards"></i>
 
                                 <span> Billing & Payment </span>
@@ -137,9 +123,7 @@
                         <!-- Documents -->
 
                         <div class="sidebar-section">
-                            <span class="sidebar-section-title">
-                                DOCUMENTS
-                            </span>
+                            <span class="sidebar-section-title"> DOCUMENTS </span>
 
                             <a href="UploadDocuments.html" class="sidebar-link">
                                 <i data-lucide="file-up"></i>
@@ -153,10 +137,7 @@
                         <div class="sidebar-section">
                             <span class="sidebar-section-title"> STATUS </span>
 
-                            <a
-                                href="ReservationStatus.html"
-                                class="sidebar-link"
-                            >
+                            <a href="ReservationStatus.html" class="sidebar-link">
                                 <i data-lucide="clock-3"></i>
 
                                 <span> Reservation Status </span>
@@ -194,27 +175,23 @@
                                 <h1>Billing & Payment</h1>
 
                                 <p>
-                                    View billing information, submit payment
-                                    information, and monitor payment status.
+                                    View billing information, submit payment information, and
+                                    monitor payment status.
                                 </p>
                             </div>
                         </div>
 
                         <!-- NO BILLING RECORD -->
 
-                        <section
-                            class="card payment-empty-card"
-                            id="paymentEmptyState"
-                            hidden
-                        >
+                        <section class="card payment-empty-card" id="paymentEmptyState" hidden>
                             <div class="empty-state">
                                 <i data-lucide="receipt-text"></i>
 
                                 <h2>No Billing Information</h2>
 
                                 <p>
-                                    There is currently no billing information
-                                    available for this reservation.
+                                    There is currently no billing information available for this
+                                    reservation.
                                 </p>
                             </div>
                         </section>
@@ -238,12 +215,7 @@
                                         </div>
                                     </div>
 
-                                    <span
-                                        class="status-badge"
-                                        id="paymentStatusBadge"
-                                    >
-                                        —
-                                    </span>
+                                    <span class="status-badge" id="paymentStatusBadge"> — </span>
                                 </div>
 
                                 <div class="card-body">
@@ -253,11 +225,7 @@
                                         <div class="billing-information-item">
                                             <span> Reservation Reference </span>
 
-                                            <strong
-                                                id="billingReservationReference"
-                                            >
-                                                —
-                                            </strong>
+                                            <strong id="billingReservationReference"> — </strong>
                                         </div>
 
                                         <!-- Resort -->
@@ -265,9 +233,7 @@
                                         <div class="billing-information-item">
                                             <span> Resort </span>
 
-                                            <strong id="billingResortName">
-                                                —
-                                            </strong>
+                                            <strong id="billingResortName"> — </strong>
                                         </div>
 
                                         <!-- Accommodation -->
@@ -275,24 +241,26 @@
                                         <div class="billing-information-item">
                                             <span> Accommodation </span>
 
-                                            <strong
-                                                id="billingAccommodationName"
-                                            >
-                                                —
-                                            </strong>
+                                            <strong id="billingAccommodationName"> — </strong>
                                         </div>
 
                                         <!-- Billing Amount -->
 
                                         <div class="billing-information-item">
-                                            <span> Billing Amount </span>
-
-                                            <strong
-                                                class="billing-amount"
-                                                id="billingAmount"
-                                            >
+                                            <span>Total Amount</span>
+                                            <strong class="billing-amount" id="billingAmount">
                                                 —
                                             </strong>
+                                        </div>
+
+                                        <div class="billing-information-item">
+                                            <span>Amount Paid</span>
+                                            <strong id="billingAmountPaid"> — </strong>
+                                        </div>
+
+                                        <div class="billing-information-item">
+                                            <span>Remaining Balance</span>
+                                            <strong id="billingRemainingBalance"> — </strong>
                                         </div>
 
                                         <!-- Payment Status -->
@@ -302,9 +270,7 @@
                                         >
                                             <span> Payment Status </span>
 
-                                            <strong id="billingPaymentStatus">
-                                                —
-                                            </strong>
+                                            <strong id="billingPaymentStatus"> — </strong>
                                         </div>
                                     </div>
                                 </div>
@@ -320,22 +286,34 @@
                                         </span>
 
                                         <div>
-                                            <h2>Payment Submission</h2>
+                                            <h2 id="paymentSubmissionTitle">Payment Submission</h2>
 
-                                            <p>
-                                                Submit payment information for
-                                                manual verification.
+                                            <p id="paymentSubmissionDescription">
+                                                Submit payment information for manual verification.
                                             </p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="card-body">
-                                    <form
-                                        id="paymentForm"
-                                        enctype="multipart/form-data"
-                                        novalidate
+                                    <div
+                                        class="payment-complete-message"
+                                        id="paymentCompleteMessage"
+                                        hidden
                                     >
+                                        <span class="payment-complete-icon">
+                                            <i data-lucide="badge-check"></i>
+                                        </span>
+
+                                        <div>
+                                            <strong>Payment completed</strong>
+                                            <p>
+                                                Your full payment has been verified. No further
+                                                payment is required.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <form id="paymentForm" enctype="multipart/form-data" novalidate>
                                         <!-- Hidden database relationships -->
 
                                         <input
@@ -351,35 +329,25 @@
                                         />
 
                                         <fieldset class="payment-option-group">
-                                            <legend>
-                                                Choose Payment Option
-                                            </legend>
+                                            <legend>Choose Payment Option</legend>
 
-                                            <label class="payment-option">
+                                            <label class="payment-option" id="fullPaymentOption">
                                                 <input
                                                     type="radio"
                                                     name="payment_option"
                                                     value="full"
                                                 />
 
-                                                <span
-                                                    class="payment-option-content"
-                                                >
-                                                    <strong
-                                                        >Pay 100% Now</strong
-                                                    >
+                                                <span class="payment-option-content">
+                                                    <strong>Pay 100% Now</strong>
                                                     <small>
-                                                        Pay the complete amount
-                                                        of
-                                                        <span
-                                                            id="fullPaymentAmount"
-                                                            >—</span
-                                                        >
+                                                        Pay the complete amount of
+                                                        <span id="fullPaymentAmount">—</span>
                                                     </small>
                                                 </span>
                                             </label>
 
-                                            <label class="payment-option">
+                                            <label class="payment-option" id="depositPaymentOption">
                                                 <input
                                                     type="radio"
                                                     name="payment_option"
@@ -387,19 +355,35 @@
                                                     checked
                                                 />
 
-                                                <span
-                                                    class="payment-option-content"
-                                                >
+                                                <span class="payment-option-content">
                                                     <strong>Pay 50% Now</strong>
                                                     <small>
                                                         Pay
-                                                        <span
-                                                            id="depositPaymentAmount"
-                                                            >—</span
-                                                        >
-                                                        now and settle the
-                                                        remaining balance at the
+                                                        <span id="depositPaymentAmount">—</span>
+                                                        now and settle the remaining balance at the
                                                         resort.
+                                                    </small>
+                                                </span>
+                                            </label>
+
+                                            <label
+                                                class="payment-option"
+                                                id="balancePaymentOption"
+                                                hidden
+                                            >
+                                                <input
+                                                    type="radio"
+                                                    name="payment_option"
+                                                    value="balance"
+                                                />
+
+                                                <span class="payment-option-content">
+                                                    <strong>Pay Remaining Balance</strong>
+
+                                                    <small>
+                                                        Pay the remaining
+                                                        <span id="balancePaymentAmount"> — </span>
+                                                        to complete your payment.
                                                     </small>
                                                 </span>
                                             </label>
@@ -409,15 +393,10 @@
                                                 class="payment-option payment-later-button"
                                                 id="payLaterButton"
                                             >
-                                                <span
-                                                    class="payment-option-content"
-                                                >
-                                                    <strong
-                                                        >Pay 50% Later</strong
-                                                    >
+                                                <span class="payment-option-content">
+                                                    <strong>Pay 50% Later</strong>
                                                     <small>
-                                                        Return before the
-                                                        12-hour payment deadline
+                                                        Return before the 12-hour payment deadline
                                                         expires.
                                                     </small>
                                                 </span>
@@ -431,36 +410,24 @@
                                         >
                                             <div class="gcash-payment-heading">
                                                 <div>
-                                                    <strong
-                                                        >Send payment through
-                                                        GCash</strong
-                                                    >
+                                                    <strong>Send payment through GCash</strong>
 
                                                     <p>
-                                                        Pay the displayed
-                                                        amount, then enter the
-                                                        transaction reference
-                                                        and upload the receipt
+                                                        Pay the displayed amount, then enter the
+                                                        transaction reference and upload the receipt
                                                     </p>
                                                 </div>
                                             </div>
 
-                                            <div
-                                                class="gcash-account-information"
-                                            >
+                                            <div class="gcash-account-information">
                                                 <div>
                                                     <span>Account name</span>
-                                                    <strong
-                                                        id="gcashAccountName"
-                                                        >—</strong
-                                                    >
+                                                    <strong id="gcashAccountName">—</strong>
                                                 </div>
 
                                                 <div>
                                                     <span>GCash number</span>
-                                                    <strong id="gcashNumber"
-                                                        >—</strong
-                                                    >
+                                                    <strong id="gcashNumber">—</strong>
                                                 </div>
                                             </div>
 
@@ -469,14 +436,8 @@
                                                 id="gcashQrContainer"
                                                 hidden
                                             >
-                                                <span
-                                                    >Scan the resort's GCash
-                                                    QR</span
-                                                >
-                                                <img
-                                                    id="gcashQrImage"
-                                                    alt="Resort GCash QR code"
-                                                />
+                                                <span>Scan the resort's GCash QR</span>
+                                                <img id="gcashQrImage" alt="Resort GCash QR code" />
                                             </div>
 
                                             <p
@@ -484,10 +445,9 @@
                                                 id="gcashUnavailableMessage"
                                                 hidden
                                             >
-                                                The resort has not configured
-                                                its GCash payment information.
-                                                Contact the resort before
-                                                submitting payment.
+                                                The resort has not configured its GCash payment
+                                                information. Contact the resort before submitting
+                                                payment.
                                             </p>
                                         </section>
 
@@ -496,9 +456,7 @@
                                         <div class="form-group">
                                             <label for="paymentMethod">
                                                 Payment Method
-                                                <span aria-hidden="true"
-                                                    >*</span
-                                                >
+                                                <span aria-hidden="true">*</span>
                                             </label>
 
                                             <select
@@ -506,17 +464,11 @@
                                                 name="payment_method"
                                                 required
                                             >
-                                                <option value="">
-                                                    Select payment method
-                                                </option>
+                                                <option value="">Select payment method</option>
 
-                                                <option value="gcash">
-                                                    GCash
-                                                </option>
+                                                <option value="gcash">GCash</option>
 
-                                                <option
-                                                    value="manual_transaction"
-                                                >
+                                                <option value="manual_transaction">
                                                     Manual Transaction
                                                 </option>
                                             </select>
@@ -527,9 +479,7 @@
                                         <div class="form-group">
                                             <label for="transactionReference">
                                                 Transaction Reference Number
-                                                <span aria-hidden="true"
-                                                    >*</span
-                                                >
+                                                <span aria-hidden="true">*</span>
                                             </label>
 
                                             <input
@@ -546,28 +496,18 @@
                                         <div class="form-group">
                                             <label for="proofOfPayment">
                                                 Proof of Payment
-                                                <span aria-hidden="true"
-                                                    >*</span
-                                                >
+                                                <span aria-hidden="true">*</span>
                                             </label>
 
                                             <div class="payment-upload-area">
-                                                <div
-                                                    class="payment-upload-icon"
-                                                >
+                                                <div class="payment-upload-icon">
                                                     <i data-lucide="upload"></i>
                                                 </div>
 
-                                                <div
-                                                    class="payment-upload-content"
-                                                >
-                                                    <strong>
-                                                        Upload proof of payment
-                                                    </strong>
+                                                <div class="payment-upload-content">
+                                                    <strong> Upload proof of payment </strong>
 
-                                                    <p
-                                                        id="proofOfPaymentFileName"
-                                                    >
+                                                    <p id="proofOfPaymentFileName">
                                                         No file selected
                                                     </p>
                                                 </div>
@@ -576,9 +516,7 @@
                                                     for="proofOfPayment"
                                                     class="secondary-button payment-upload-button"
                                                 >
-                                                    <i
-                                                        data-lucide="file-up"
-                                                    ></i>
+                                                    <i data-lucide="file-up"></i>
 
                                                     <span> Choose File </span>
                                                 </label>
@@ -595,17 +533,13 @@
 
                                         <!-- VERIFICATION NOTICE -->
 
-                                        <div
-                                            class="payment-verification-notice"
-                                        >
+                                        <div class="payment-verification-notice">
                                             <i data-lucide="info"></i>
 
                                             <p>
-                                                Submitted payment information
-                                                and proof of payment will be
-                                                reviewed by authorized resort
-                                                personnel before the payment
-                                                status is updated.
+                                                Submitted payment information and proof of payment
+                                                will be reviewed by authorized resort personnel
+                                                before the payment status is updated.
                                             </p>
                                         </div>
 
@@ -642,18 +576,13 @@
                                 <div class="card-header">
                                     <div class="card-heading">
                                         <span class="card-heading-icon">
-                                            <i
-                                                data-lucide="circle-dollar-sign"
-                                            ></i>
+                                            <i data-lucide="circle-dollar-sign"></i>
                                         </span>
 
                                         <div>
                                             <h2>Payment Status</h2>
 
-                                            <p>
-                                                Current payment verification
-                                                status.
-                                            </p>
+                                            <p>Current payment verification status.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -667,9 +596,7 @@
                                         <div class="payment-status-content">
                                             <span> Status </span>
 
-                                            <strong id="currentPaymentStatus">
-                                                —
-                                            </strong>
+                                            <strong id="currentPaymentStatus"> — </strong>
                                         </div>
                                     </div>
                                 </div>

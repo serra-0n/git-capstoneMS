@@ -1,6 +1,4 @@
-/* =========================================
-   RESORTHUB RESORT SIGNUP
-========================================= */
+/* RESORTHUB RESORT SIGNUP */
 
 * {
     box-sizing: border-box;
@@ -27,10 +25,7 @@ body {
         sans-serif;
 }
 
-
-/* =========================================
-   HEADER
-========================================= */
+/* HEADER */
 
 .auth-header {
     width: 100%;
@@ -46,10 +41,7 @@ body {
     border-bottom: 1px solid #e5e7eb;
 }
 
-
-/* =========================================
-   LOGO
-========================================= */
+/* LOGO */
 
 .auth-logo {
     display: inline-flex;
@@ -92,10 +84,7 @@ body {
     background: #93c5fd;
 }
 
-
-/* =========================================
-   NAVIGATION
-========================================= */
+/* NAVIGATION */
 
 .auth-navigation {
     display: flex;
@@ -138,10 +127,7 @@ body {
     color: #2563eb;
 }
 
-
-/* =========================================
-   HEADER BUTTON
-========================================= */
+/* HEADER BUTTON */
 
 .header-button {
     min-height: 38px;
@@ -183,10 +169,7 @@ body {
     color: #ffffff;
 }
 
-
-/* =========================================
-   MAIN
-========================================= */
+/* MAIN */
 
 .auth-main {
     flex: 1;
@@ -204,10 +187,7 @@ body {
     justify-content: center;
 }
 
-
-/* =========================================
-   CARD
-========================================= */
+/* CARD */
 
 .auth-card {
     width: 100%;
@@ -220,18 +200,14 @@ body {
     border: 1px solid #e5e7eb;
     border-radius: 14px;
 
-    box-shadow:
-        0 8px 25px rgba(15, 23, 42, 0.06);
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
 }
 
 .onboarding-card {
     max-width: 590px;
 }
 
-
-/* =========================================
-   CARD HEADER
-========================================= */
+/* CARD HEADER */
 
 .auth-card-header {
     margin-bottom: 24px;
@@ -262,36 +238,26 @@ body {
     line-height: 1.5;
 }
 
-
-/* =========================================
-   FORM
-========================================= */
+/* FORM */
 
 .signup-form {
     width: 100%;
 }
 
-
-/* =========================================
-   FORM ROW
-========================================= */
+/* FORM ROW */
 
 .form-row {
     width: 100%;
 
     display: grid;
 
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
     align-items: stretch;
     gap: 16px;
 }
 
-
-/* =========================================
-   FORM GROUP
-========================================= */
+/* FORM GROUP */
 
 .form-group {
     width: 100%;
@@ -319,10 +285,7 @@ body {
     align-items: flex-end;
 }
 
-
-/* =========================================
-   TEXT INPUT
-========================================= */
+/* TEXT INPUT */
 
 .form-group input[type="text"],
 .form-group input[type="email"] {
@@ -369,14 +332,10 @@ body {
 .form-group input:focus {
     border-color: #2563eb;
 
-    box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.10);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-
-/* =========================================
-   SELECT
-========================================= */
+/* SELECT */
 
 .resort-type-select {
     width: 100%;
@@ -419,14 +378,10 @@ body {
 .resort-type-select:focus {
     border-color: #2563eb;
 
-    box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.10);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-
-/* =========================================
-   FILE FIELD
-========================================= */
+/* FILE FIELD */
 
 .file-field {
     width: 100%;
@@ -442,10 +397,7 @@ body {
     font-weight: 600;
 }
 
-
-/* =========================================
-   FILE INPUT
-========================================= */
+/* FILE INPUT */
 
 .file-field input[type="file"] {
     width: 100%;
@@ -485,14 +437,10 @@ body {
 
     border-color: #2563eb;
 
-    box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.10);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-
-/* =========================================
-   FILE BUTTON
-========================================= */
+/* FILE BUTTON */
 
 .file-field input[type="file"]::file-selector-button {
     margin-right: 10px;
@@ -527,10 +475,7 @@ body {
     border-color: #9ca3af;
 }
 
-
-/* =========================================
-   FILE HELP TEXT
-========================================= */
+/* FILE HELP TEXT */
 
 .file-field small {
     display: block;
@@ -545,10 +490,7 @@ body {
     line-height: 1.4;
 }
 
-
-/* =========================================
-   SUBMIT BUTTON
-========================================= */
+/* SUBMIT BUTTON */
 
 .continue-button {
     width: 100%;
@@ -587,8 +529,7 @@ body {
 .continue-button:hover {
     background: #1d4ed8;
 
-    box-shadow:
-        0 4px 10px rgba(37, 99, 235, 0.18);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.18);
 
     transform: translateY(-1px);
 }
@@ -607,10 +548,7 @@ body {
     box-shadow: none;
 }
 
-
-/* =========================================
-   FORM MESSAGE
-========================================= */
+/* FORM MESSAGE */
 
 .message {
     min-height: 18px;
@@ -625,10 +563,7 @@ body {
     text-align: center;
 }
 
-
-/* =========================================
-   BACK LINK
-========================================= */
+/* BACK LINK */
 
 .back-link {
     display: block;
@@ -649,10 +584,7 @@ body {
     text-decoration: underline;
 }
 
-
-/* =========================================
-   FOOTER
-========================================= */
+/* FOOTER */
 
 .auth-footer {
     width: 100%;
@@ -671,8 +603,7 @@ body {
 
     display: grid;
 
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 
     gap: 35px;
 }
@@ -709,13 +640,9 @@ body {
     color: #2563eb;
 }
 
-
-/* =========================================
-   TABLET
-========================================= */
+/* TABLET */
 
 @media (max-width: 850px) {
-
     .auth-header {
         padding: 0 24px;
     }
@@ -729,13 +656,9 @@ body {
     }
 }
 
-
-/* =========================================
-   MOBILE
-========================================= */
+/* MOBILE */
 
 @media (max-width: 720px) {
-
     .auth-header {
         height: 60px;
 
@@ -803,13 +726,9 @@ body {
     }
 }
 
-
-/* =========================================
-   SMALL MOBILE
-========================================= */
+/* SMALL MOBILE */
 
 @media (max-width: 400px) {
-
     .logo-text {
         font-size: 17px;
     }

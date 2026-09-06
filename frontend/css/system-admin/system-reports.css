@@ -180,7 +180,8 @@
 .report-select:focus,
 .report-input:focus {
     border-color: #9ca3af;
-}.generate-report-button {
+}
+.generate-report-button {
     height: 40px;
     padding: 0 15px;
     display: inline-flex;
@@ -219,7 +220,7 @@
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-}   
+}
 
 .available-reports-header {
     padding: 22px 24px 18px;

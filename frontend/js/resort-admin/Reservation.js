@@ -19,13 +19,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     function escapeHtml(value) {
         return String(value ?? "").replace(
             /[&<>"']/g,
-            character => ({
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#39;"
-            })[character]
+            (character) =>
+                ({
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#39;",
+                })[character],
         );
     }
 
@@ -34,32 +35,24 @@ document.addEventListener("DOMContentLoaded", async () => {
             return "—";
         }
 
-        return new Date(value).toLocaleDateString(
-            "en-PH",
-            {
-                year: "numeric",
-                month: "short",
-                day: "numeric"
-            }
-        );
+        return new Date(value).toLocaleDateString("en-PH", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+        });
     }
 
     function formatCurrency(value) {
-        return new Intl.NumberFormat(
-            "en-PH",
-            {
-                style: "currency",
-                currency: "PHP"
-            }
-        ).format(Number(value) || 0);
+        return new Intl.NumberFormat("en-PH", {
+            style: "currency",
+            currency: "PHP",
+        }).format(Number(value) || 0);
     }
 
     function formatStatus(value) {
         return String(value || "")
             .replaceAll("_", " ")
-            .replace(/\b\w/g, letter =>
-                letter.toUpperCase()
-            );
+            .replace(/\b\w/g, (letter) => letter.toUpperCase());
     }
 
     function getStatusClass(status) {
@@ -71,60 +64,39 @@ document.addEventListener("DOMContentLoaded", async () => {
             completed: "green",
             rejected: "red",
             cancelled: "red",
-            expired: "red"
+            expired: "red",
         };
 
         return statusClasses[status] || "blue";
     }
 
     function renderMetrics() {
-        totalReservationCount.textContent =
-            reservations.length;
+        totalReservationCount.textContent = reservations.length;
 
-        confirmedReservationCount.textContent =
-            reservations.filter(reservation =>
-                reservation.reservation_status ===
-                "confirmed"
-            ).length;
+        confirmedReservationCount.textContent = reservations.filter(
+            (reservation) => reservation.reservation_status === "confirmed",
+        ).length;
 
-        pendingReservationCount.textContent =
-            reservations.filter(reservation =>
-                [
-                    "pending",
-                    "awaiting_deposit",
-                    "deposit_verification"
-                ].includes(
-                    reservation.reservation_status
-                )
-            ).length;
+        pendingReservationCount.textContent = reservations.filter((reservation) =>
+            ["pending", "awaiting_deposit", "deposit_verification"].includes(
+                reservation.reservation_status,
+            ),
+        ).length;
 
-        cancelledReservationCount.textContent =
-            reservations.filter(reservation =>
-                [
-                    "cancelled",
-                    "expired",
-                    "rejected"
-                ].includes(
-                    reservation.reservation_status
-                )
-            ).length;
+        cancelledReservationCount.textContent = reservations.filter((reservation) =>
+            ["cancelled", "expired", "rejected"].includes(reservation.reservation_status),
+        ).length;
     }
 
     function renderAccommodationFilter() {
         const accommodationNames = [
-            ...new Set(
-                reservations.map(reservation =>
-                    reservation.accommodation_name
-                )
-            )
+            ...new Set(reservations.map((reservation) => reservation.accommodation_name)),
         ].filter(Boolean);
 
-        accommodationFilter.innerHTML =
-            '<option value="">All Accommodations</option>';
+        accommodationFilter.innerHTML = '<option value="">All Accommodations</option>';
 
-        accommodationNames.forEach(name => {
-            const option =
-                document.createElement("option");
+        accommodationNames.forEach((name) => {
+            const option = document.createElement("option");
 
             option.value = name;
             option.textContent = name;
@@ -145,83 +117,54 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
-        reservationTableBody.innerHTML =
-            reservations.map(reservation => `
+        reservationTableBody.innerHTML = reservations
+            .map(
+                (reservation) => `
                 <tr data-reservation-id="${reservation.id}">
                     <td>
-                        ${escapeHtml(
-                            reservation.reservation_code
-                        )}
+                        ${escapeHtml(reservation.reservation_code)}
                     </td>
 
                     <td>
-                        ${escapeHtml(
-                            reservation.guest_name
-                        )}
+                        ${escapeHtml(reservation.guest_name)}
                     </td>
 
                     <td>
-                        ${escapeHtml(
-                            reservation.accommodation_name
-                        )}
+                        ${escapeHtml(reservation.accommodation_name)}
                     </td>
 
                     <td>
-                        ${formatDate(
-                            reservation.check_in
-                        )}
+                        ${formatDate(reservation.check_in)}
                     </td>
 
                     <td>
-                        ${formatDate(
-                            reservation.check_out
-                        )}
+                        ${formatDate(reservation.check_out)}
                     </td>
 
                     <td>
-                        ${escapeHtml(
-                            reservation.guest_count
-                        )}
+                        ${escapeHtml(reservation.guest_count)}
                     </td>
 
                     <td>
-                        ${formatCurrency(
-                            reservation.total_amount
-                        )}
+                        ${formatCurrency(reservation.total_amount)}
                     </td>
 
                     <td>
-                        <span class="status ${
-                            getStatusClass(
-                                reservation.payment_status
-                            )
-                        }">
-                            ${escapeHtml(
-                                formatStatus(
-                                    reservation.payment_status
-                                )
-                            )}
+                        <span class="status ${getStatusClass(reservation.payment_status)}">
+                            ${escapeHtml(formatStatus(reservation.payment_status))}
                         </span>
                     </td>
 
                     <td>
-                        <span class="status ${
-                            getStatusClass(
-                                reservation.reservation_status
-                            )
-                        }">
-                            ${escapeHtml(
-                                formatStatus(
-                                    reservation.reservation_status
-                                )
-                            )}
+                        <span class="status ${getStatusClass(reservation.reservation_status)}">
+                            ${escapeHtml(formatStatus(reservation.reservation_status))}
                         </span>
                     </td>
 
                     <td>
                         ${
-                            reservation.reservation_status === "pending" ?
-                            `
+                            reservation.reservation_status === "pending"
+                                ? `
                                 <button
                                     type="button"
                                     class="button primary"
@@ -239,7 +182,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                                     Reject
                                 </button>
-                            ` : `
+                            `
+                                : `
                                 <button
                                     type="button"
                                     class="view-reservation-button"
@@ -252,36 +196,28 @@ document.addEventListener("DOMContentLoaded", async () => {
                         }
                     </td>
                 </tr>
-            `).join("");
+            `,
+            )
+            .join("");
     }
 
     async function loadReservations() {
         try {
-            const response = await fetch(
-                "/api/resort-admin/reservations",
-                {
-                    method: "GET",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization":
-                            `Bearer ${accessToken}`
-                    }
-                }
-            );
+            const response = await fetch("/api/resort-admin/reservations", {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
 
             const result = await response.json();
 
             if (!response.ok) {
-                throw new Error(
-                    result.message ||
-                    "Unable to load reservations."
-                );
+                throw new Error(result.message || "Unable to load reservations.");
             }
 
-            reservations =
-                Array.isArray(result.reservations)
-                    ? result.reservations
-                    : [];
+            reservations = Array.isArray(result.reservations) ? result.reservations : [];
 
             renderReservations();
             renderMetrics();
@@ -290,8 +226,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (typeof lucide !== "undefined") {
                 lucide.createIcons({
                     attrs: {
-                        "stroke-width": 1.8
-                    }
+                        "stroke-width": 1.8,
+                    },
                 });
             }
         } catch (error) {
@@ -312,12 +248,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                 {
                     method: "PATCH",
                     headers: {
-                        "Accept": "application/json",
+                        Accept: "application/json",
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${accessToken}`
+                        Authorization: `Bearer ${accessToken}`,
                     },
-                    body: JSON.stringify({ status, notes })
-                }
+                    body: JSON.stringify({ status, notes }),
+                },
             );
 
             const result = await response.json();
@@ -330,7 +266,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             await loadReservations();
         }
 
-        reservationTableBody.addEventListener("click", async event => {
+        reservationTableBody.addEventListener("click", async (event) => {
             const button = event.target.closest("[data-action]");
 
             if (!button) {
@@ -342,7 +278,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             try {
                 if (action === "accept") {
-                    const confirmed = confirm("Accept this reservation and start the 12-hour deposit deadline?");
+                    const confirmed = confirm(
+                        "Accept this reservation and start the 12-hour deposit deadline?",
+                    );
 
                     if (!confirmed) {
                         return;

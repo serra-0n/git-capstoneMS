@@ -1,43 +1,18 @@
 "use strict";
 
-/* =========================================================
-   RESORTHUB - CLIENT PROFILE
-   File: js/client/Profile.js
-
-   FRONTEND DEVELOPMENT MODE
-
-   true:
-   - Uses dummy client data
-   - Simulates saving only in memory
-   - Does NOT save to localStorage
-   - Does NOT update MySQL
-
-   false:
-   - Loads the client profile from the Express backend
-   - Sends profile updates to the backend
-   ========================================================= */
+/* RESORTHUB - CLIENT PROFILE File: js/client/Profile.js FRONTEND DEVELOPMENT MODE true: - Uses dummy client data - Simulates saving only in memory - Does NOT save to localStorage - Does NOT update MySQL false: - Loads the client profile from the Express backend - Sends profile updates to the backend */
 
 const USE_DUMMY_DATA = true;
 
-
-/* =========================================================
-   API ENDPOINTS
-   ========================================================= */
+/* API ENDPOINTS */
 
 const API_ENDPOINTS = {
-
-    profile: "/api/client/profile"
-
+    profile: "/api/client/profile",
 };
 
-
-/* =========================================================
-   DUMMY CLIENT DATA
-   Presentation data only.
-   ========================================================= */
+/* DUMMY CLIENT DATA Presentation data only. */
 
 const DUMMY_CLIENT = {
-
     id: 1,
 
     full_name: "Juan Dela Cruz",
@@ -46,92 +21,58 @@ const DUMMY_CLIENT = {
 
     contact_number: "09171234567",
 
-    role: "Client"
-
+    role: "Client",
 };
 
-
-/* =========================================================
-   APPLICATION STATE
-   ========================================================= */
+/* APPLICATION STATE */
 
 const profileState = {
-
     client: null,
 
-    saving: false
-
+    saving: false,
 };
 
+/* DOM ELEMENTS */
 
-/* =========================================================
-   DOM ELEMENTS
-   ========================================================= */
+const clientApp = document.getElementById("clientApp");
 
-const clientApp =
-    document.getElementById("clientApp");
+const sidebarToggle = document.getElementById("sidebarToggle");
 
-const sidebarToggle =
-    document.getElementById("sidebarToggle");
+const clientProfileButton = document.getElementById("clientProfileButton");
 
-const clientProfileButton =
-    document.getElementById("clientProfileButton");
-
-const clientDisplayName =
-    document.getElementById("clientDisplayName");
-
+const clientDisplayName = document.getElementById("clientDisplayName");
 
 /* Profile overview */
 
-const profileDisplayName =
-    document.getElementById("profileDisplayName");
+const profileDisplayName = document.getElementById("profileDisplayName");
 
-const profileDisplayEmail =
-    document.getElementById("profileDisplayEmail");
-
+const profileDisplayEmail = document.getElementById("profileDisplayEmail");
 
 /* Form */
 
-const profileForm =
-    document.getElementById("profileForm");
+const profileForm = document.getElementById("profileForm");
 
-const clientId =
-    document.getElementById("clientId");
+const clientId = document.getElementById("clientId");
 
-const fullName =
-    document.getElementById("fullName");
+const fullName = document.getElementById("fullName");
 
-const emailAddress =
-    document.getElementById("emailAddress");
+const emailAddress = document.getElementById("emailAddress");
 
-const contactNumber =
-    document.getElementById("contactNumber");
+const contactNumber = document.getElementById("contactNumber");
 
-const accountRole =
-    document.getElementById("accountRole");
-
+const accountRole = document.getElementById("accountRole");
 
 /* Form message */
 
-const profileFormMessage =
-    document.getElementById("profileFormMessage");
+const profileFormMessage = document.getElementById("profileFormMessage");
 
-const saveProfileButton =
-    document.getElementById("saveProfileButton");
+const saveProfileButton = document.getElementById("saveProfileButton");
 
+/* INITIALIZATION */
 
-/* =========================================================
-   INITIALIZATION
-   ========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    initializeProfilePage
-);
-
+document.addEventListener("DOMContentLoaded", initializeProfilePage);
 
 async function initializeProfilePage() {
-
     initializeIcons();
 
     initializeSidebar();
@@ -140,496 +81,272 @@ async function initializeProfilePage() {
 
     initializeProfileForm();
 
-
     if (USE_DUMMY_DATA) {
-
         loadDummyProfile();
 
         return;
     }
 
-
     await loadProfileFromDatabase();
 }
 
-
-/* =========================================================
-   DUMMY PROFILE
-   ========================================================= */
+/* DUMMY PROFILE */
 
 function loadDummyProfile() {
-
     profileState.client = {
-        ...DUMMY_CLIENT
+        ...DUMMY_CLIENT,
     };
-
 
     renderProfile();
 }
 
-
-/* =========================================================
-   LOAD PROFILE FROM BACKEND
-   ========================================================= */
+/* LOAD PROFILE FROM BACKEND */
 
 async function loadProfileFromDatabase() {
-
     setSavingState(true);
 
-
     try {
+        const response = await fetch(API_ENDPOINTS.profile, {
+            method: "GET",
 
-        const response =
-            await fetch(
-                API_ENDPOINTS.profile,
-                {
-                    method: "GET",
+            credentials: "include",
 
-                    credentials: "include",
-
-                    headers: {
-                        "Accept": "application/json"
-                    }
-                }
-            );
-
+            headers: {
+                Accept: "application/json",
+            },
+        });
 
         if (!response.ok) {
-
-            throw new Error(
-                "Unable to load client profile."
-            );
+            throw new Error("Unable to load client profile.");
         }
 
+        const data = await response.json();
 
-        const data =
-            await response.json();
-
-
-        profileState.client =
-            normalizeClient(data);
-
+        profileState.client = normalizeClient(data);
 
         if (!profileState.client) {
-
-            throw new Error(
-                "Client profile data is unavailable."
-            );
+            throw new Error("Client profile data is unavailable.");
         }
 
-
         renderProfile();
-
-
     } catch (error) {
+        console.error("Profile loading error:", error);
 
-        console.error(
-            "Profile loading error:",
-            error
-        );
-
-
-        showProfileMessage(
-            "Unable to load your profile.",
-            "error"
-        );
-
-
+        showProfileMessage("Unable to load your profile.", "error");
     } finally {
-
         setSavingState(false);
     }
 }
 
-
-/* =========================================================
-   NORMALIZE CLIENT DATA
-
-   Supports responses such as:
-
-   {
-       client: {...}
-   }
-
-   or directly:
-
-   {...}
-   ========================================================= */
+/* NORMALIZE CLIENT DATA Supports responses such as: { client: {...} } or directly: {...} */
 
 function normalizeClient(data) {
+    const client = data?.client || data;
 
-    const client =
-        data?.client ||
-        data;
-
-
-    if (
-        !client ||
-        typeof client !== "object"
-    ) {
-
+    if (!client || typeof client !== "object") {
         return null;
     }
 
-
     return {
+        id: client.id ?? client.client_id ?? null,
 
-        id:
-            client.id ??
-            client.client_id ??
-            null,
+        full_name: client.full_name || client.name || "",
 
-        full_name:
-            client.full_name ||
-            client.name ||
-            "",
+        email: client.email || "",
 
-        email:
-            client.email ||
-            "",
+        contact_number: client.contact_number || client.phone || "",
 
-        contact_number:
-            client.contact_number ||
-            client.phone ||
-            "",
-
-        role:
-            client.role ||
-            "Client"
+        role: client.role || "Client",
     };
 }
 
-
-/* =========================================================
-   RENDER PROFILE
-   ========================================================= */
+/* RENDER PROFILE */
 
 function renderProfile() {
-
-    const client =
-        profileState.client;
-
+    const client = profileState.client;
 
     if (!client) {
-
         return;
     }
 
-
     /* Top navigation */
 
-    setText(
-        clientDisplayName,
-        client.full_name || "Client"
-    );
-
+    setText(clientDisplayName, client.full_name || "Client");
 
     /* Overview */
 
-    setText(
-        profileDisplayName,
-        client.full_name
-    );
+    setText(profileDisplayName, client.full_name);
 
-
-    setText(
-        profileDisplayEmail,
-        client.email
-    );
-
+    setText(profileDisplayEmail, client.email);
 
     /* Form */
 
     if (clientId) {
-
-        clientId.value =
-            client.id ?? "";
+        clientId.value = client.id ?? "";
     }
-
 
     if (fullName) {
-
-        fullName.value =
-            client.full_name || "";
+        fullName.value = client.full_name || "";
     }
-
 
     if (emailAddress) {
-
-        emailAddress.value =
-            client.email || "";
+        emailAddress.value = client.email || "";
     }
-
 
     if (contactNumber) {
-
-        contactNumber.value =
-            client.contact_number || "";
+        contactNumber.value = client.contact_number || "";
     }
 
-
     if (accountRole) {
-
-        accountRole.value =
-            client.role || "Client";
+        accountRole.value = client.role || "Client";
     }
 }
 
-
-/* =========================================================
-   INITIALIZE PROFILE FORM
-   ========================================================= */
+/* INITIALIZE PROFILE FORM */
 
 function initializeProfileForm() {
-
     if (!profileForm) {
-
         return;
     }
 
-
-    profileForm.addEventListener(
-        "submit",
-        handleProfileSubmit
-    );
+    profileForm.addEventListener("submit", handleProfileSubmit);
 }
 
-
-/* =========================================================
-   PROFILE SUBMIT
-   ========================================================= */
+/* PROFILE SUBMIT */
 
 async function handleProfileSubmit(event) {
-
     event.preventDefault();
-
 
     clearProfileMessage();
 
-
     if (profileState.saving) {
-
         return;
     }
 
+    const formData = collectProfileFormData();
 
-    const formData =
-        collectProfileFormData();
-
-
-    const validationMessage =
-        validateProfileForm(formData);
-
+    const validationMessage = validateProfileForm(formData);
 
     if (validationMessage) {
-
-        showProfileMessage(
-            validationMessage,
-            "error"
-        );
+        showProfileMessage(validationMessage, "error");
 
         return;
     }
 
-
     if (USE_DUMMY_DATA) {
-
         saveDummyProfile(formData);
 
         return;
     }
 
-
     await saveProfileToDatabase(formData);
 }
 
-
-/* =========================================================
-   COLLECT FORM DATA
-   ========================================================= */
+/* COLLECT FORM DATA */
 
 function collectProfileFormData() {
-
     return {
+        client_id: clientId?.value ? Number(clientId.value) : null,
 
-        client_id:
-            clientId?.value
-                ? Number(clientId.value)
-                : null,
+        full_name: fullName?.value.trim() || "",
 
-        full_name:
-            fullName?.value.trim() || "",
+        email: emailAddress?.value.trim() || "",
 
-        email:
-            emailAddress?.value.trim() || "",
-
-        contact_number:
-            contactNumber?.value.trim() || ""
-
+        contact_number: contactNumber?.value.trim() || "",
     };
 }
 
-
-/* =========================================================
-   FORM VALIDATION
-   ========================================================= */
+/* FORM VALIDATION */
 
 function validateProfileForm(data) {
-
     if (!data.full_name) {
-
         return "Full name is required.";
     }
 
-
     if (!data.email) {
-
         return "Email address is required.";
     }
 
-
     if (!isValidEmail(data.email)) {
-
         return "Please enter a valid email address.";
     }
 
-
     if (!data.contact_number) {
-
         return "Contact number is required.";
     }
-
 
     return "";
 }
 
-
-/* =========================================================
-   EMAIL VALIDATION
-   ========================================================= */
+/* EMAIL VALIDATION */
 
 function isValidEmail(email) {
-
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-        email
-    );
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-
-/* =========================================================
-   DUMMY SAVE
-
-   This changes only the current page state.
-   Nothing is stored permanently.
-   ========================================================= */
+/* DUMMY SAVE This changes only the current page state. Nothing is stored permanently. */
 
 function saveDummyProfile(formData) {
-
     setSavingState(true);
-
 
     /*
      * Small delay only for frontend interaction feedback.
      * This is not a real database request.
      */
 
-    window.setTimeout(
-        () => {
+    window.setTimeout(() => {
+        profileState.client = {
+            ...profileState.client,
 
-            profileState.client = {
+            id: formData.client_id ?? profileState.client?.id ?? null,
 
-                ...profileState.client,
+            full_name: formData.full_name,
 
-                id:
-                    formData.client_id ??
-                    profileState.client?.id ??
-                    null,
+            email: formData.email,
 
-                full_name:
-                    formData.full_name,
+            contact_number: formData.contact_number,
 
-                email:
-                    formData.email,
+            role: profileState.client?.role || "Client",
+        };
 
-                contact_number:
-                    formData.contact_number,
+        renderProfile();
 
-                role:
-                    profileState.client?.role ||
-                    "Client"
+        showProfileMessage("Profile changes saved for frontend preview.", "success");
 
-            };
-
-
-            renderProfile();
-
-
-            showProfileMessage(
-                "Profile changes saved for frontend preview.",
-                "success"
-            );
-
-
-            setSavingState(false);
-
-        },
-        500
-    );
+        setSavingState(false);
+    }, 500);
 }
 
+/* SAVE PROFILE TO BACKEND */
 
-/* =========================================================
-   SAVE PROFILE TO BACKEND
-   ========================================================= */
-
-async function saveProfileToDatabase(
-    formData
-) {
-
+async function saveProfileToDatabase(formData) {
     setSavingState(true);
 
-
     try {
+        const response = await fetch(API_ENDPOINTS.profile, {
+            method: "PUT",
 
-        const response =
-            await fetch(
-                API_ENDPOINTS.profile,
-                {
-                    method: "PUT",
+            credentials: "include",
 
-                    credentials: "include",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
 
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json"
-                    },
+            body: JSON.stringify({
+                full_name: formData.full_name,
 
-                    body:
-                        JSON.stringify({
-                            full_name:
-                                formData.full_name,
+                email: formData.email,
 
-                            email:
-                                formData.email,
-
-                            contact_number:
-                                formData.contact_number
-                        })
-                }
-            );
-
+                contact_number: formData.contact_number,
+            }),
+        });
 
         if (!response.ok) {
-
-            throw new Error(
-                "Unable to update client profile."
-            );
+            throw new Error("Unable to update client profile.");
         }
 
-
-        const data =
-            await response.json();
-
+        const data = await response.json();
 
         /*
          * Prefer the backend-returned record.
@@ -637,283 +354,134 @@ async function saveProfileToDatabase(
          * fall back to the submitted values.
          */
 
-        const updatedClient =
-            normalizeClient(data);
+        const updatedClient = normalizeClient(data);
 
+        profileState.client = updatedClient || {
+            ...profileState.client,
 
-        profileState.client =
-            updatedClient || {
+            full_name: formData.full_name,
 
-                ...profileState.client,
+            email: formData.email,
 
-                full_name:
-                    formData.full_name,
-
-                email:
-                    formData.email,
-
-                contact_number:
-                    formData.contact_number
-            };
-
+            contact_number: formData.contact_number,
+        };
 
         renderProfile();
 
-
-        showProfileMessage(
-            "Profile updated successfully.",
-            "success"
-        );
-
-
+        showProfileMessage("Profile updated successfully.", "success");
     } catch (error) {
+        console.error("Profile update error:", error);
 
-        console.error(
-            "Profile update error:",
-            error
-        );
-
-
-        showProfileMessage(
-            "Unable to update your profile.",
-            "error"
-        );
-
-
+        showProfileMessage("Unable to update your profile.", "error");
     } finally {
-
         setSavingState(false);
     }
 }
 
+/* SAVING STATE */
 
-/* =========================================================
-   SAVING STATE
-   ========================================================= */
-
-function setSavingState(
-    saving
-) {
-
-    profileState.saving =
-        saving;
-
+function setSavingState(saving) {
+    profileState.saving = saving;
 
     if (!saveProfileButton) {
-
         return;
     }
 
+    saveProfileButton.disabled = saving;
 
-    saveProfileButton.disabled =
-        saving;
-
-
-    const buttonText =
-        saveProfileButton.querySelector(
-            "span"
-        );
-
+    const buttonText = saveProfileButton.querySelector("span");
 
     if (buttonText) {
-
-        buttonText.textContent =
-            saving
-                ? "Saving..."
-                : "Save Changes";
+        buttonText.textContent = saving ? "Saving..." : "Save Changes";
     }
 }
 
+/* FORM MESSAGE */
 
-/* =========================================================
-   FORM MESSAGE
-   ========================================================= */
-
-function showProfileMessage(
-    message,
-    type = "info"
-) {
-
+function showProfileMessage(message, type = "info") {
     if (!profileFormMessage) {
-
         return;
     }
 
+    profileFormMessage.textContent = message;
 
-    profileFormMessage.textContent =
-        message;
+    profileFormMessage.classList.remove("success", "error", "info");
 
+    profileFormMessage.classList.add(type);
 
-    profileFormMessage.classList.remove(
-        "success",
-        "error",
-        "info"
-    );
-
-
-    profileFormMessage.classList.add(
-        type
-    );
-
-
-    profileFormMessage.hidden =
-        false;
+    profileFormMessage.hidden = false;
 }
-
 
 function clearProfileMessage() {
-
     if (!profileFormMessage) {
-
         return;
     }
 
+    profileFormMessage.textContent = "";
 
-    profileFormMessage.textContent =
-        "";
+    profileFormMessage.classList.remove("success", "error", "info");
 
-
-    profileFormMessage.classList.remove(
-        "success",
-        "error",
-        "info"
-    );
-
-
-    profileFormMessage.hidden =
-        true;
+    profileFormMessage.hidden = true;
 }
 
+/* SET TEXT */
 
-/* =========================================================
-   SET TEXT
-   ========================================================= */
-
-function setText(
-    element,
-    value
-) {
-
+function setText(element, value) {
     if (!element) {
+        return;
+    }
+
+    if (value === null || value === undefined || value === "") {
+        element.textContent = "—";
 
         return;
     }
 
-
-    if (
-        value === null ||
-        value === undefined ||
-        value === ""
-    ) {
-
-        element.textContent =
-            "—";
-
-        return;
-    }
-
-
-    element.textContent =
-        String(value);
+    element.textContent = String(value);
 }
 
-
-/* =========================================================
-   SIDEBAR
-   ========================================================= */
+/* SIDEBAR */
 
 function initializeSidebar() {
-
-    if (
-        !sidebarToggle ||
-        !clientApp
-    ) {
-
+    if (!sidebarToggle || !clientApp) {
         return;
     }
 
-
-    sidebarToggle.addEventListener(
-        "click",
-        handleSidebarToggle
-    );
+    sidebarToggle.addEventListener("click", handleSidebarToggle);
 }
-
 
 function handleSidebarToggle() {
-
-    const isMobile =
-        window.matchMedia(
-            "(max-width: 760px)"
-        ).matches;
-
+    const isMobile = window.matchMedia("(max-width: 760px)").matches;
 
     if (isMobile) {
-
-        clientApp.classList.toggle(
-            "sidebar-mobile-open"
-        );
+        clientApp.classList.toggle("sidebar-mobile-open");
 
         return;
     }
 
+    clientApp.classList.toggle("sidebar-collapsed");
 
-    clientApp.classList.toggle(
-        "sidebar-collapsed"
-    );
+    const collapsed = clientApp.classList.contains("sidebar-collapsed");
 
-
-    const collapsed =
-        clientApp.classList.contains(
-            "sidebar-collapsed"
-        );
-
-
-    sidebarToggle.setAttribute(
-        "aria-expanded",
-        String(!collapsed)
-    );
+    sidebarToggle.setAttribute("aria-expanded", String(!collapsed));
 }
 
-
-/* =========================================================
-   PROFILE BUTTON
-
-   The user is already on Profile.html, so no redirect
-   is necessary.
-   ========================================================= */
+/* PROFILE BUTTON The user is already on Profile.html, so no redirect is necessary. */
 
 function initializeProfileButton() {
-
     if (!clientProfileButton) {
-
         return;
     }
 
-
-    clientProfileButton.addEventListener(
-        "click",
-        () => {
-
-            window.location.href =
-                "Profile.html";
-        }
-    );
+    clientProfileButton.addEventListener("click", () => {
+        window.location.href = "Profile.html";
+    });
 }
 
-
-/* =========================================================
-   LUCIDE ICONS
-   ========================================================= */
+/* LUCIDE ICONS */
 
 function initializeIcons() {
-
-    if (
-        typeof lucide !== "undefined" &&
-        typeof lucide.createIcons ===
-            "function"
-    ) {
-
+    if (typeof lucide !== "undefined" && typeof lucide.createIcons === "function") {
         lucide.createIcons();
     }
 }

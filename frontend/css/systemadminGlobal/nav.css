@@ -1,14 +1,8 @@
-/* =========================================
-   GLOBAL NAVIGATION
-========================================= */
+/* GLOBAL NAVIGATION */
 
-
-/* =========================================
-   NAVIGATION CONTAINER
-========================================= */
+/* NAVIGATION CONTAINER */
 
 .sidebar-nav {
-
     flex: 1;
 
     padding: 18px 12px;
@@ -19,19 +13,13 @@
     scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
 }
 
-
-/* =========================================
-   NAVIGATION SECTION
-========================================= */
+/* NAVIGATION SECTION */
 
 .nav-section {
-
     margin-bottom: 22px;
 }
 
-
 .nav-section-title {
-
     display: block;
 
     padding: 0 12px;
@@ -46,13 +34,9 @@
     letter-spacing: 0.8px;
 }
 
-
-/* =========================================
-   NAVIGATION ITEM
-========================================= */
+/* NAVIGATION ITEM */
 
 .nav-item {
-
     min-height: 40px;
 
     display: flex;
@@ -76,13 +60,9 @@
         color 0.2s ease;
 }
 
-
-/* =========================================
-   NAVIGATION ICON
-========================================= */
+/* NAVIGATION ICON */
 
 .nav-item svg {
-
     width: 17px;
     height: 17px;
 
@@ -91,25 +71,17 @@
     stroke-width: 1.8;
 }
 
-
-/* =========================================
-   HOVER
-========================================= */
+/* HOVER */
 
 .nav-item:hover {
-
     background: rgba(255, 255, 255, 0.06);
 
     color: var(--white);
 }
 
-
-/* =========================================
-   ACTIVE
-========================================= */
+/* ACTIVE */
 
 .nav-item.active {
-
     background: var(--primary);
 
     color: var(--white);
@@ -117,38 +89,26 @@
     font-weight: 600;
 }
 
-
 .nav-item.active svg {
-
     stroke-width: 2;
 }
 
-
-/* =========================================
-   NAVIGATION SCROLLBAR
-========================================= */
+/* NAVIGATION SCROLLBAR */
 
 .sidebar-nav::-webkit-scrollbar {
-
     width: 5px;
 }
 
-
 .sidebar-nav::-webkit-scrollbar-track {
-
     background: transparent;
 }
 
-
 .sidebar-nav::-webkit-scrollbar-thumb {
-
     background: rgba(255, 255, 255, 0.15);
 
     border-radius: 10px;
 }
 
-
 .sidebar-nav::-webkit-scrollbar-thumb:hover {
-
     background: rgba(255, 255, 255, 0.25);
 }

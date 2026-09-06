@@ -1,66 +1,28 @@
 "use strict";
 
-/* =========================================================
-   RESORTHUB - CLIENT NOTIFICATIONS
-   File: js/client/Notifications.js
-
-   FRONTEND DEVELOPMENT MODE
-
-   true:
-   - Uses dummy notification data
-   - Does NOT save notifications in localStorage
-   - Does NOT connect to MySQL
-   - Does NOT simulate unsupported notification services
-
-   false:
-   - Loads notifications from the Express backend
-   - Database records become the source of truth
-   ========================================================= */
+/* RESORTHUB - CLIENT NOTIFICATIONS File: js/client/Notifications.js FRONTEND DEVELOPMENT MODE true: - Uses dummy notification data - Does NOT save notifications in localStorage - Does NOT connect to MySQL - Does NOT simulate unsupported notification services false: - Loads notifications from the Express backend - Database records become the source of truth */
 
 const USE_DUMMY_DATA = true;
 
-
-/* =========================================================
-   API ENDPOINTS
-   ========================================================= */
+/* API ENDPOINTS */
 
 const API_ENDPOINTS = {
-
     clientProfile: "/api/client/profile",
 
-    notifications: "/api/client/notifications"
-
+    notifications: "/api/client/notifications",
 };
 
-
-/* =========================================================
-   DUMMY CLIENT
-   Presentation data only.
-   ========================================================= */
+/* DUMMY CLIENT Presentation data only. */
 
 const DUMMY_CLIENT = {
-
     id: 1,
 
-    name: "Juan Dela Cruz"
-
+    name: "Juan Dela Cruz",
 };
 
-
-/* =========================================================
-   DUMMY NOTIFICATIONS
-
-   These are frontend presentation records only.
-
-   The thesis supports clients monitoring reservation-related
-   transactions, payment status, and document verification.
-
-   The exact notification table fields and message wording
-   are implementation structures, not thesis-defined fields.
-   ========================================================= */
+/* DUMMY NOTIFICATIONS These are frontend presentation records only. The thesis supports clients monitoring reservation-related transactions, payment status, and document verification. The exact notification table fields and message wording are implementation structures, not thesis-defined fields. */
 
 const DUMMY_NOTIFICATIONS = [
-
     {
         id: 801,
 
@@ -72,8 +34,7 @@ const DUMMY_NOTIFICATIONS = [
 
         related_type: "reservation",
 
-        message:
-            "The status of your reservation has been updated."
+        message: "The status of your reservation has been updated.",
     },
 
     {
@@ -87,8 +48,7 @@ const DUMMY_NOTIFICATIONS = [
 
         related_type: "payment",
 
-        message:
-            "The payment status for your reservation has been updated."
+        message: "The payment status for your reservation has been updated.",
     },
 
     {
@@ -102,388 +62,217 @@ const DUMMY_NOTIFICATIONS = [
 
         related_type: "document",
 
-        message:
-            "The document verification status for your reservation has been updated."
-    }
-
+        message: "The document verification status for your reservation has been updated.",
+    },
 ];
 
-
-/* =========================================================
-   APPLICATION STATE
-   ========================================================= */
+/* APPLICATION STATE */
 
 const notificationState = {
-
     client: null,
 
     notifications: [],
 
     selectedNotification: null,
 
-    loading: false
-
+    loading: false,
 };
 
-
-/* =========================================================
-   DOM ELEMENTS
-   ========================================================= */
+/* DOM ELEMENTS */
 
 /* Shared */
 
-const clientApp =
-    document.getElementById("clientApp");
+const clientApp = document.getElementById("clientApp");
 
-const sidebarToggle =
-    document.getElementById("sidebarToggle");
+const sidebarToggle = document.getElementById("sidebarToggle");
 
-const clientProfileButton =
-    document.getElementById("clientProfileButton");
+const clientProfileButton = document.getElementById("clientProfileButton");
 
-const clientDisplayName =
-    document.getElementById("clientDisplayName");
-
+const clientDisplayName = document.getElementById("clientDisplayName");
 
 /* Notification list */
 
-const notificationList =
-    document.getElementById("notificationList");
+const notificationList = document.getElementById("notificationList");
 
-const notificationEmptyState =
-    document.getElementById("notificationEmptyState");
-
+const notificationEmptyState = document.getElementById("notificationEmptyState");
 
 /* Notification details */
 
-const notificationDetailCard =
-    document.getElementById("notificationDetailCard");
+const notificationDetailCard = document.getElementById("notificationDetailCard");
 
-const notificationDetailType =
-    document.getElementById("notificationDetailType");
+const notificationDetailType = document.getElementById("notificationDetailType");
 
-const notificationDetailMessage =
-    document.getElementById("notificationDetailMessage");
+const notificationDetailMessage = document.getElementById("notificationDetailMessage");
 
-const notificationDetailReservation =
-    document.getElementById("notificationDetailReservation");
+const notificationDetailReservation = document.getElementById("notificationDetailReservation");
 
-const notificationDetailRelatedType =
-    document.getElementById("notificationDetailRelatedType");
+const notificationDetailRelatedType = document.getElementById("notificationDetailRelatedType");
 
-const notificationRelatedLink =
-    document.getElementById("notificationRelatedLink");
+const notificationRelatedLink = document.getElementById("notificationRelatedLink");
 
-const notificationRelatedLinkText =
-    document.getElementById("notificationRelatedLinkText");
+const notificationRelatedLinkText = document.getElementById("notificationRelatedLinkText");
 
+/* INITIALIZATION */
 
-/* =========================================================
-   INITIALIZATION
-   ========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    initializeNotificationsPage
-);
-
+document.addEventListener("DOMContentLoaded", initializeNotificationsPage);
 
 async function initializeNotificationsPage() {
-
     initializeIcons();
 
     initializeSidebar();
 
     initializeProfileButton();
 
-
     if (USE_DUMMY_DATA) {
-
         loadDummyData();
 
         return;
     }
 
-
     await loadNotificationsFromDatabase();
 }
 
-
-/* =========================================================
-   DUMMY DATA MODE
-   ========================================================= */
+/* DUMMY DATA MODE */
 
 function loadDummyData() {
-
     notificationState.client = {
-        ...DUMMY_CLIENT
+        ...DUMMY_CLIENT,
     };
 
-
-    notificationState.notifications =
-        DUMMY_NOTIFICATIONS.map(
-            notification => ({
-                ...notification
-            })
-        );
-
+    notificationState.notifications = DUMMY_NOTIFICATIONS.map((notification) => ({
+        ...notification,
+    }));
 
     renderClient();
 
     renderNotifications();
 }
 
-
-/* =========================================================
-   DATABASE / API MODE
-   ========================================================= */
+/* DATABASE / API MODE */
 
 async function loadNotificationsFromDatabase() {
-
     setLoadingState(true);
 
-
     try {
-
-        await Promise.all([
-            loadClientFromApi(),
-            loadNotificationsFromApi()
-        ]);
-
+        await Promise.all([loadClientFromApi(), loadNotificationsFromApi()]);
 
         renderClient();
 
         renderNotifications();
-
-
     } catch (error) {
-
-        console.error(
-            "Unable to load notifications:",
-            error
-        );
-
+        console.error("Unable to load notifications:", error);
 
         notificationState.notifications = [];
 
         renderNotifications();
-
-
     } finally {
-
         setLoadingState(false);
     }
 }
 
-
-/* =========================================================
-   LOAD CLIENT PROFILE
-   ========================================================= */
+/* LOAD CLIENT PROFILE */
 
 async function loadClientFromApi() {
+    const response = await fetch(API_ENDPOINTS.clientProfile, {
+        method: "GET",
 
-    const response =
-        await fetch(
-            API_ENDPOINTS.clientProfile,
-            {
-                method: "GET",
+        credentials: "include",
 
-                credentials: "include",
-
-                headers: {
-                    "Accept": "application/json"
-                }
-            }
-        );
-
+        headers: {
+            Accept: "application/json",
+        },
+    });
 
     if (!response.ok) {
-
-        throw new Error(
-            "Unable to load client profile."
-        );
+        throw new Error("Unable to load client profile.");
     }
 
+    const data = await response.json();
 
-    const data =
-        await response.json();
-
-
-    notificationState.client =
-        normalizeClient(data);
+    notificationState.client = normalizeClient(data);
 }
 
-
-/* =========================================================
-   LOAD NOTIFICATIONS
-   ========================================================= */
+/* LOAD NOTIFICATIONS */
 
 async function loadNotificationsFromApi() {
+    const response = await fetch(API_ENDPOINTS.notifications, {
+        method: "GET",
 
-    const response =
-        await fetch(
-            API_ENDPOINTS.notifications,
-            {
-                method: "GET",
+        credentials: "include",
 
-                credentials: "include",
-
-                headers: {
-                    "Accept": "application/json"
-                }
-            }
-        );
-
+        headers: {
+            Accept: "application/json",
+        },
+    });
 
     if (!response.ok) {
-
-        throw new Error(
-            "Unable to load notifications."
-        );
+        throw new Error("Unable to load notifications.");
     }
 
+    const data = await response.json();
 
-    const data =
-        await response.json();
-
-
-    notificationState.notifications =
-        normalizeNotifications(data);
+    notificationState.notifications = normalizeNotifications(data);
 }
 
-
-/* =========================================================
-   NORMALIZE CLIENT
-   ========================================================= */
+/* NORMALIZE CLIENT */
 
 function normalizeClient(data) {
+    const client = data?.client || data;
 
-    const client =
-        data?.client ||
-        data;
-
-
-    if (
-        !client ||
-        typeof client !== "object"
-    ) {
-
+    if (!client || typeof client !== "object") {
         return null;
     }
 
-
     return {
+        id: client.id ?? client.client_id ?? null,
 
-        id:
-            client.id ??
-            client.client_id ??
-            null,
-
-        name:
-            client.name ||
-            client.full_name ||
-            ""
+        name: client.name || client.full_name || "",
     };
 }
 
-
-/* =========================================================
-   NORMALIZE NOTIFICATIONS
-
-   Supports responses such as:
-
-   {
-       notifications: [...]
-   }
-
-   or directly:
-
-   [...]
-   ========================================================= */
+/* NORMALIZE NOTIFICATIONS Supports responses such as: { notifications: [...] } or directly: [...] */
 
 function normalizeNotifications(data) {
-
-    const notifications =
-        Array.isArray(data)
-            ? data
-            : data?.notifications;
-
+    const notifications = Array.isArray(data) ? data : data?.notifications;
 
     if (!Array.isArray(notifications)) {
-
         return [];
     }
 
-
-    return notifications
-        .map(normalizeNotification)
-        .filter(Boolean);
+    return notifications.map(normalizeNotification).filter(Boolean);
 }
 
-
-/* =========================================================
-   NORMALIZE SINGLE NOTIFICATION
-   ========================================================= */
+/* NORMALIZE SINGLE NOTIFICATION */
 
 function normalizeNotification(notification) {
-
-    if (
-        !notification ||
-        typeof notification !== "object"
-    ) {
-
+    if (!notification || typeof notification !== "object") {
         return null;
     }
 
-
     return {
+        id: notification.id ?? notification.notification_id ?? null,
 
-        id:
-            notification.id ??
-            notification.notification_id ??
-            null,
+        client_id: notification.client_id ?? null,
 
-        client_id:
-            notification.client_id ??
-            null,
-
-        reservation_id:
-            notification.reservation_id ??
-            null,
+        reservation_id: notification.reservation_id ?? null,
 
         reservation_reference:
-            notification.reservation_reference ||
-            notification.reference_number ||
-            "",
+            notification.reservation_reference || notification.reference_number || "",
 
-        related_type:
-            normalizeRelatedType(
-                notification.related_type ||
-                notification.type ||
-                ""
-            ),
+        related_type: normalizeRelatedType(notification.related_type || notification.type || ""),
 
-        message:
-            notification.message ||
-            ""
+        message: notification.message || "",
     };
 }
 
-
-/* =========================================================
-   NORMALIZE RELATED TYPE
-   ========================================================= */
+/* NORMALIZE RELATED TYPE */
 
 function normalizeRelatedType(type) {
-
-    const value =
-        String(type || "")
-            .trim()
-            .toLowerCase();
-
+    const value = String(type || "")
+        .trim()
+        .toLowerCase();
 
     switch (value) {
-
         case "reservation":
             return "reservation";
 
@@ -499,815 +288,396 @@ function normalizeRelatedType(type) {
     }
 }
 
-
-/* =========================================================
-   RENDER CLIENT
-   ========================================================= */
+/* RENDER CLIENT */
 
 function renderClient() {
-
     if (!clientDisplayName) {
-
         return;
     }
 
-
-    clientDisplayName.textContent =
-        notificationState.client?.name ||
-        "Client";
+    clientDisplayName.textContent = notificationState.client?.name || "Client";
 }
 
-
-/* =========================================================
-   RENDER NOTIFICATIONS
-   ========================================================= */
+/* RENDER NOTIFICATIONS */
 
 function renderNotifications() {
-
     if (!notificationList) {
-
         return;
     }
-
 
     notificationList.innerHTML = "";
 
+    const notifications = notificationState.notifications;
 
-    const notifications =
-        notificationState.notifications;
-
-
-    if (
-        !Array.isArray(notifications) ||
-        notifications.length === 0
-    ) {
-
+    if (!Array.isArray(notifications) || notifications.length === 0) {
         showEmptyState();
 
         return;
     }
 
-
     hideEmptyState();
 
+    notifications.forEach((notification) => {
+        const item = createNotificationItem(notification);
 
-    notifications.forEach(
-        notification => {
-
-            const item =
-                createNotificationItem(
-                    notification
-                );
-
-
-            notificationList.appendChild(
-                item
-            );
-        }
-    );
-
+        notificationList.appendChild(item);
+    });
 
     initializeIcons();
 }
 
+/* CREATE NOTIFICATION ITEM */
 
-/* =========================================================
-   CREATE NOTIFICATION ITEM
-   ========================================================= */
-
-function createNotificationItem(
-    notification
-) {
-
-    const button =
-        document.createElement("button");
-
+function createNotificationItem(notification) {
+    const button = document.createElement("button");
 
     button.type = "button";
 
-    button.className =
-        "notification-item";
+    button.className = "notification-item";
 
-    button.dataset.notificationId =
-        String(notification.id ?? "");
+    button.dataset.notificationId = String(notification.id ?? "");
 
-    button.dataset.notificationType =
-        notification.related_type ||
-        "notification";
+    button.dataset.notificationType = notification.related_type || "notification";
 
+    /* Icon */
 
-    /* -----------------------------------------
-       Icon
-       ----------------------------------------- */
+    const iconWrapper = document.createElement("span");
 
-    const iconWrapper =
-        document.createElement("span");
+    iconWrapper.className = "notification-item-icon";
 
+    const icon = document.createElement("i");
 
-    iconWrapper.className =
-        "notification-item-icon";
-
-
-    const icon =
-        document.createElement("i");
-
-
-    icon.setAttribute(
-        "data-lucide",
-        getNotificationIcon(
-            notification.related_type
-        )
-    );
-
+    icon.setAttribute("data-lucide", getNotificationIcon(notification.related_type));
 
     iconWrapper.appendChild(icon);
 
+    /* Content */
 
-    /* -----------------------------------------
-       Content
-       ----------------------------------------- */
+    const content = document.createElement("div");
 
-    const content =
-        document.createElement("div");
-
-
-    content.className =
-        "notification-item-content";
-
+    content.className = "notification-item-content";
 
     /* Heading */
 
-    const heading =
-        document.createElement("div");
+    const heading = document.createElement("div");
 
+    heading.className = "notification-item-heading";
 
-    heading.className =
-        "notification-item-heading";
+    const title = document.createElement("strong");
 
+    title.textContent = getNotificationTitle(notification.related_type);
 
-    const title =
-        document.createElement("strong");
+    const typeBadge = document.createElement("span");
 
+    typeBadge.className = "notification-type-badge";
 
-    title.textContent =
-        getNotificationTitle(
-            notification.related_type
-        );
+    typeBadge.textContent = getRelatedTypeLabel(notification.related_type);
 
-
-    const typeBadge =
-        document.createElement("span");
-
-
-    typeBadge.className =
-        "notification-type-badge";
-
-
-    typeBadge.textContent =
-        getRelatedTypeLabel(
-            notification.related_type
-        );
-
-
-    heading.append(
-        title,
-        typeBadge
-    );
-
+    heading.append(title, typeBadge);
 
     /* Message */
 
-    const message =
-        document.createElement("p");
+    const message = document.createElement("p");
 
+    message.className = "notification-item-message";
 
-    message.className =
-        "notification-item-message";
-
-
-    message.textContent =
-        notification.message ||
-        "Notification update.";
-
+    message.textContent = notification.message || "Notification update.";
 
     /* Metadata */
 
-    const meta =
-        document.createElement("div");
+    const meta = document.createElement("div");
 
+    meta.className = "notification-item-meta";
 
-    meta.className =
-        "notification-item-meta";
+    if (notification.reservation_reference) {
+        const reservationMeta = document.createElement("span");
 
+        const reservationIcon = document.createElement("i");
 
-    if (
-        notification.reservation_reference
-    ) {
+        reservationIcon.setAttribute("data-lucide", "calendar-days");
 
-        const reservationMeta =
-            document.createElement("span");
+        const reservationText = document.createElement("span");
 
+        reservationText.textContent = notification.reservation_reference;
 
-        const reservationIcon =
-            document.createElement("i");
+        reservationMeta.append(reservationIcon, reservationText);
 
-
-        reservationIcon.setAttribute(
-            "data-lucide",
-            "calendar-days"
-        );
-
-
-        const reservationText =
-            document.createElement("span");
-
-
-        reservationText.textContent =
-            notification.reservation_reference;
-
-
-        reservationMeta.append(
-            reservationIcon,
-            reservationText
-        );
-
-
-        meta.appendChild(
-            reservationMeta
-        );
+        meta.appendChild(reservationMeta);
     }
 
-
-    content.append(
-        heading,
-        message
-    );
-
+    content.append(heading, message);
 
     if (meta.children.length > 0) {
-
         content.appendChild(meta);
     }
 
+    button.append(iconWrapper, content);
 
-    button.append(
-        iconWrapper,
-        content
-    );
-
-
-    button.addEventListener(
-        "click",
-        () => {
-
-            selectNotification(
-                notification.id
-            );
-        }
-    );
-
+    button.addEventListener("click", () => {
+        selectNotification(notification.id);
+    });
 
     return button;
 }
 
+/* SELECT NOTIFICATION */
 
-/* =========================================================
-   SELECT NOTIFICATION
-   ========================================================= */
-
-function selectNotification(
-    notificationId
-) {
-
-    const notification =
-        notificationState.notifications.find(
-            item =>
-                String(item.id) ===
-                String(notificationId)
-        );
-
+function selectNotification(notificationId) {
+    const notification = notificationState.notifications.find(
+        (item) => String(item.id) === String(notificationId),
+    );
 
     if (!notification) {
-
         return;
     }
 
+    notificationState.selectedNotification = notification;
 
-    notificationState.selectedNotification =
-        notification;
+    updateSelectedNotificationItem(notification.id);
 
-
-    updateSelectedNotificationItem(
-        notification.id
-    );
-
-
-    renderNotificationDetails(
-        notification
-    );
+    renderNotificationDetails(notification);
 }
 
+/* SELECTED ITEM STYLE */
 
-/* =========================================================
-   SELECTED ITEM STYLE
-   ========================================================= */
+function updateSelectedNotificationItem(notificationId) {
+    const items = document.querySelectorAll(".notification-item");
 
-function updateSelectedNotificationItem(
-    notificationId
-) {
+    items.forEach((item) => {
+        const selected = String(item.dataset.notificationId) === String(notificationId);
 
-    const items =
-        document.querySelectorAll(
-            ".notification-item"
-        );
-
-
-    items.forEach(
-        item => {
-
-            const selected =
-                String(
-                    item.dataset.notificationId
-                ) ===
-                String(notificationId);
-
-
-            item.classList.toggle(
-                "selected",
-                selected
-            );
-        }
-    );
+        item.classList.toggle("selected", selected);
+    });
 }
 
+/* RENDER NOTIFICATION DETAILS */
 
-/* =========================================================
-   RENDER NOTIFICATION DETAILS
-   ========================================================= */
-
-function renderNotificationDetails(
-    notification
-) {
-
+function renderNotificationDetails(notification) {
     if (!notificationDetailCard) {
-
         return;
     }
 
+    notificationDetailCard.hidden = false;
 
-    notificationDetailCard.hidden =
-        false;
+    setText(notificationDetailType, getNotificationTitle(notification.related_type));
 
+    setText(notificationDetailMessage, notification.message);
 
-    setText(
-        notificationDetailType,
-        getNotificationTitle(
-            notification.related_type
-        )
-    );
+    setText(notificationDetailReservation, notification.reservation_reference);
 
+    setText(notificationDetailRelatedType, getRelatedTypeLabel(notification.related_type));
 
-    setText(
-        notificationDetailMessage,
-        notification.message
-    );
-
-
-    setText(
-        notificationDetailReservation,
-        notification.reservation_reference
-    );
-
-
-    setText(
-        notificationDetailRelatedType,
-        getRelatedTypeLabel(
-            notification.related_type
-        )
-    );
-
-
-    updateRelatedLink(
-        notification
-    );
-
+    updateRelatedLink(notification);
 
     initializeIcons();
 }
 
+/* RELATED PAGE LINK Reservation: ReservationStatus.html?id=<reservation_id> Payment: Payments.html?reservation=<reservation_id> Document: UploadDocuments.html?reservation=<reservation_id> */
 
-/* =========================================================
-   RELATED PAGE LINK
-
-   Reservation:
-   ReservationStatus.html?id=<reservation_id>
-
-   Payment:
-   Payments.html?reservation=<reservation_id>
-
-   Document:
-   UploadDocuments.html?reservation=<reservation_id>
-   ========================================================= */
-
-function updateRelatedLink(
-    notification
-) {
-
-    if (
-        !notificationRelatedLink ||
-        !notificationRelatedLinkText
-    ) {
-
+function updateRelatedLink(notification) {
+    if (!notificationRelatedLink || !notificationRelatedLinkText) {
         return;
     }
 
-
-    const reservationId =
-        notification.reservation_id;
-
+    const reservationId = notification.reservation_id;
 
     if (!reservationId) {
+        notificationRelatedLink.hidden = true;
 
-        notificationRelatedLink.hidden =
-            true;
-
-        notificationRelatedLink.removeAttribute(
-            "href"
-        );
+        notificationRelatedLink.removeAttribute("href");
 
         return;
     }
 
+    const encodedReservationId = encodeURIComponent(reservationId);
 
-    const encodedReservationId =
-        encodeURIComponent(
-            reservationId
-        );
-
-
-    switch (
-        notification.related_type
-    ) {
-
+    switch (notification.related_type) {
         case "reservation":
+            notificationRelatedLink.href = `ReservationStatus.html?id=${encodedReservationId}`;
 
-            notificationRelatedLink.href =
-                `ReservationStatus.html?id=${encodedReservationId}`;
+            notificationRelatedLinkText.textContent = "View Reservation Status";
 
-            notificationRelatedLinkText.textContent =
-                "View Reservation Status";
-
-            notificationRelatedLink.hidden =
-                false;
+            notificationRelatedLink.hidden = false;
 
             break;
-
 
         case "payment":
+            notificationRelatedLink.href = `Payments.html?reservation=${encodedReservationId}`;
 
-            notificationRelatedLink.href =
-                `Payments.html?reservation=${encodedReservationId}`;
+            notificationRelatedLinkText.textContent = "View Billing & Payment";
 
-            notificationRelatedLinkText.textContent =
-                "View Billing & Payment";
-
-            notificationRelatedLink.hidden =
-                false;
+            notificationRelatedLink.hidden = false;
 
             break;
-
 
         case "document":
+            notificationRelatedLink.href = `UploadDocuments.html?reservation=${encodedReservationId}`;
 
-            notificationRelatedLink.href =
-                `UploadDocuments.html?reservation=${encodedReservationId}`;
+            notificationRelatedLinkText.textContent = "View Documents";
 
-            notificationRelatedLinkText.textContent =
-                "View Documents";
-
-            notificationRelatedLink.hidden =
-                false;
+            notificationRelatedLink.hidden = false;
 
             break;
 
-
         default:
+            notificationRelatedLink.hidden = true;
 
-            notificationRelatedLink.hidden =
-                true;
-
-            notificationRelatedLink.removeAttribute(
-                "href"
-            );
+            notificationRelatedLink.removeAttribute("href");
     }
 }
 
+/* NOTIFICATION TITLE */
 
-/* =========================================================
-   NOTIFICATION TITLE
-   ========================================================= */
-
-function getNotificationTitle(
-    relatedType
-) {
-
-    switch (
-        relatedType
-    ) {
-
+function getNotificationTitle(relatedType) {
+    switch (relatedType) {
         case "reservation":
-
             return "Reservation Update";
 
-
         case "payment":
-
             return "Payment Update";
 
-
         case "document":
-
             return "Document Verification Update";
 
-
         default:
-
             return "Notification";
     }
 }
 
+/* RELATED TYPE LABEL */
 
-/* =========================================================
-   RELATED TYPE LABEL
-   ========================================================= */
-
-function getRelatedTypeLabel(
-    relatedType
-) {
-
-    switch (
-        relatedType
-    ) {
-
+function getRelatedTypeLabel(relatedType) {
+    switch (relatedType) {
         case "reservation":
-
             return "Reservation";
 
-
         case "payment":
-
             return "Payment";
 
-
         case "document":
-
             return "Document Verification";
 
-
         default:
-
             return "Update";
     }
 }
 
+/* NOTIFICATION ICON */
 
-/* =========================================================
-   NOTIFICATION ICON
-   ========================================================= */
-
-function getNotificationIcon(
-    relatedType
-) {
-
-    switch (
-        relatedType
-    ) {
-
+function getNotificationIcon(relatedType) {
+    switch (relatedType) {
         case "reservation":
-
             return "calendar-clock";
 
-
         case "payment":
-
             return "wallet-cards";
 
-
         case "document":
-
             return "file-check-2";
 
-
         default:
-
             return "bell";
     }
 }
 
-
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
+/* EMPTY STATE */
 
 function showEmptyState() {
-
     if (notificationList) {
-
-        notificationList.hidden =
-            true;
+        notificationList.hidden = true;
     }
-
 
     if (notificationEmptyState) {
-
-        notificationEmptyState.hidden =
-            false;
+        notificationEmptyState.hidden = false;
     }
-
 
     if (notificationDetailCard) {
-
-        notificationDetailCard.hidden =
-            true;
+        notificationDetailCard.hidden = true;
     }
 
-
-    notificationState.selectedNotification =
-        null;
-
+    notificationState.selectedNotification = null;
 
     initializeIcons();
 }
 
-
 function hideEmptyState() {
-
     if (notificationList) {
-
-        notificationList.hidden =
-            false;
+        notificationList.hidden = false;
     }
-
 
     if (notificationEmptyState) {
-
-        notificationEmptyState.hidden =
-            true;
+        notificationEmptyState.hidden = true;
     }
 }
 
+/* LOADING STATE No artificial loading notification is displayed because the HTML does not include a separate loading component. */
 
-/* =========================================================
-   LOADING STATE
-
-   No artificial loading notification is displayed because
-   the HTML does not include a separate loading component.
-   ========================================================= */
-
-function setLoadingState(
-    loading
-) {
-
-    notificationState.loading =
-        loading;
-
+function setLoadingState(loading) {
+    notificationState.loading = loading;
 
     if (notificationList) {
-
-        notificationList.setAttribute(
-            "aria-busy",
-            String(loading)
-        );
+        notificationList.setAttribute("aria-busy", String(loading));
     }
 }
 
+/* SET TEXT */
 
-/* =========================================================
-   SET TEXT
-   ========================================================= */
-
-function setText(
-    element,
-    value
-) {
-
+function setText(element, value) {
     if (!element) {
+        return;
+    }
+
+    if (value === null || value === undefined || value === "") {
+        element.textContent = "—";
 
         return;
     }
 
-
-    if (
-        value === null ||
-        value === undefined ||
-        value === ""
-    ) {
-
-        element.textContent =
-            "—";
-
-        return;
-    }
-
-
-    element.textContent =
-        String(value);
+    element.textContent = String(value);
 }
 
-
-/* =========================================================
-   SIDEBAR
-   ========================================================= */
+/* SIDEBAR */
 
 function initializeSidebar() {
-
-    if (
-        !sidebarToggle ||
-        !clientApp
-    ) {
-
+    if (!sidebarToggle || !clientApp) {
         return;
     }
 
-
-    sidebarToggle.addEventListener(
-        "click",
-        handleSidebarToggle
-    );
+    sidebarToggle.addEventListener("click", handleSidebarToggle);
 }
-
 
 function handleSidebarToggle() {
-
-    const isMobile =
-        window.matchMedia(
-            "(max-width: 760px)"
-        ).matches;
-
+    const isMobile = window.matchMedia("(max-width: 760px)").matches;
 
     if (isMobile) {
-
-        clientApp.classList.toggle(
-            "sidebar-mobile-open"
-        );
+        clientApp.classList.toggle("sidebar-mobile-open");
 
         return;
     }
 
+    clientApp.classList.toggle("sidebar-collapsed");
 
-    clientApp.classList.toggle(
-        "sidebar-collapsed"
-    );
+    const collapsed = clientApp.classList.contains("sidebar-collapsed");
 
-
-    const collapsed =
-        clientApp.classList.contains(
-            "sidebar-collapsed"
-        );
-
-
-    sidebarToggle.setAttribute(
-        "aria-expanded",
-        String(!collapsed)
-    );
+    sidebarToggle.setAttribute("aria-expanded", String(!collapsed));
 }
 
-
-/* =========================================================
-   PROFILE BUTTON
-   ========================================================= */
+/* PROFILE BUTTON */
 
 function initializeProfileButton() {
-
     if (!clientProfileButton) {
-
         return;
     }
 
-
-    clientProfileButton.addEventListener(
-        "click",
-        () => {
-
-            window.location.href =
-                "Profile.html";
-        }
-    );
+    clientProfileButton.addEventListener("click", () => {
+        window.location.href = "Profile.html";
+    });
 }
 
-
-/* =========================================================
-   LUCIDE ICONS
-   ========================================================= */
+/* LUCIDE ICONS */
 
 function initializeIcons() {
-
-    if (
-        typeof lucide !== "undefined" &&
-        typeof lucide.createIcons ===
-            "function"
-    ) {
-
+    if (typeof lucide !== "undefined" && typeof lucide.createIcons === "function") {
         lucide.createIcons();
     }
 }

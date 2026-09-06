@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get("/resorts", authenticateUser, requireRole("client"), controller.listResorts);
 router.get("/resorts/:id/accommodations", authenticateUser, requireRole("client"), controller.listAccommodations);
+router.get("/accommodations/:id/unavailable-dates", authenticateUser, requireRole("client"), controller.listUnavailableDates);
 router.get("/client/profile", authenticateUser, requireRole("client"), controller.clientProfile);
 router.post("/client/reservations", authenticateUser, requireRole("client"), controller.createReservation);
 router.get("/client/reservations", authenticateUser, requireRole("client"), controller.listClientReservations);

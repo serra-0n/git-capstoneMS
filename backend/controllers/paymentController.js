@@ -18,7 +18,7 @@ async function submitDeposit(request, response) {
         .trim()
         .toLowerCase();
 
-    const allowedPaymentOptions = ["full", "deposit"];
+    const allowedPaymentOptions = ["full", "deposit", "balance"];
 
     const paymentMethod = String(request.body.payment_method || "")
         .trim();
@@ -78,6 +78,7 @@ async function submitDeposit(request, response) {
             `SELECT id, tenant_id, client_id,
                     total_amount,
                     deposit_amount,
+                    amount_paid,
                     reservation_status,
                     payment_status,
                     deposit_due_at
@@ -103,13 +104,15 @@ async function submitDeposit(request, response) {
 
         const reservation = reservations[0];
 
-        const paymentStage = paymentOption === "full"
-            ? "full"
-            : "deposit";
+        const paymentStage = paymentOption;
+        const totalAmount = Number(reservation.total_amount);
+        const amountPaid = Number(reservation.amount_paid);
 
         const requiredAmount = paymentOption === "full"
-            ? Number(reservation.total_amount)
-            : Number(reservation.deposit_amount);
+            ? totalAmount
+            : paymentOption === "balance"
+                ? Math.max(totalAmount - amountPaid, 0)
+                : Number(reservation.deposit_amount);
 
         if (!Number.isFinite(requiredAmount) || requiredAmount <= 0) {
             await connection.rollback();
@@ -120,41 +123,59 @@ async function submitDeposit(request, response) {
             });
         }
 
-        if (reservation.reservation_status !== "awaiting_deposit") {
-            await connection.rollback();
-            removeUploadFile(request.file);
+        const balancePayment = paymentOption === "balance";
 
-            return response.status(409).json({
-                message: "This reservation is not awaiting a deposit."
-            });
-        }
+        if (balancePayment) {
+            const balanceAvailable = reservation.reservation_status === "confirmed"
+                && reservation.payment_status === "partially_paid";
 
-        if (!reservation.deposit_due_at || new Date(reservation.deposit_due_at)
-                .getTime() <= Date.now()) {
+            if (!balanceAvailable) {
+                await connection.rollback();
+                removeUploadFile(request.file);
 
-            await connection.execute(
-                `UPDATE reservations
-                    SET reservation_status = 'cancelled',
-                        expired_at = NOW()
-                    WHERE id = ?`,
-                [reservation.id]
-            );
+                return response.status(409).json({
+                    message: "This reservation is not awaiting a balance payment."
+                });
+            }
+        } else {
+            if (reservation.reservation_status !== "awaiting_deposit") {
+                await connection.rollback();
+                removeUploadFile(request.file);
 
-            await connection.commit();
-            removeUploadFile(request.file);
+                return response.status(409).json({
+                    message: "This reservation is not awaiting an initial payment."
+                });
+            }
 
-            return response.status(410).json({
-                message: "The deposit payment period has expired."
-            });
-        }
+            const depositDeadline = reservation.deposit_due_at
+                ? new Date(reservation.deposit_due_at)
+                : null;
 
-        if (reservation.payment_status !== "unpaid") {
-            await connection.rollback();
-            removeUploadFile(request.file);
+            if (!depositDeadline || depositDeadline.getTime() <= Date.now()) {
+                await connection.execute(
+                    `UPDATE reservations
+                        SET reservation_status = 'cancelled',
+                            expired_at = NOW()
+                        WHERE id = ?`,
+                    [reservation.id]
+                );
 
-            return response.status(409).json({
-                message: "A payment has already been submitted."
-            });
+                await connection.commit();
+                removeUploadFile(request.file);
+
+                return response.status(410).json({
+                    message: "The initial payment period has expired."
+                });
+            }
+
+            if (reservation.payment_status !== "unpaid") {
+                await connection.rollback();
+                removeUploadFile(request.file);
+
+                return response.status(409).json({
+                    message: "An initial payment has already been submitted."
+                });
+            }
         }
 
         const existingPayment = await Payment.findByTransactionReference(transactionReference);
@@ -200,7 +221,11 @@ async function submitDeposit(request, response) {
         await connection.commit();
 
         return response.status(201).json({
-            message: "Deposit proof submitted for verification.",
+            message: paymentStage === "balance"
+                ? "Balance payment proof submitted for verification."
+                : paymentStage === "full"
+                    ? "Full payment proof submitted for verification."
+                    : "Deposit proof submitted for verification.",
             payment: {
                 id: payment.id,
                 reservation_id: reservation.id,
@@ -239,6 +264,90 @@ async function listTenantPayments(request, response) {
         console.error("Unable to load resort payments:", error)
         return response.status(500).json({
             message: "Unable to load resort payment submissions."
+        });
+    }
+}
+
+async function viewTenantPaymentProof(
+    request,
+    response
+) {
+    const paymentId = Number(request.params.id);
+
+    if (
+        !Number.isInteger(paymentId) ||
+        paymentId <= 0
+    ) {
+        return response.status(400).json({
+            message:
+                "A valid payment ID is required."
+        });
+    }
+
+    try {
+        const proof =
+            await Payment.findProofForTenant(
+                paymentId,
+                request.user.tenantId
+            );
+
+        if (!proof?.file_path) {
+            return response.status(404).json({
+                message:
+                    "The payment proof was not found."
+            });
+        }
+
+        const projectRoot = path.resolve(
+            __dirname,
+            "../.."
+        );
+
+        const uploadRoot = path.resolve(
+            projectRoot,
+            "backend/uploads/files"
+        );
+
+        const absolutePath = path.resolve(
+            projectRoot,
+            proof.file_path
+        );
+
+        if (
+            absolutePath !== uploadRoot &&
+            !absolutePath.startsWith(
+                `${uploadRoot}${path.sep}`
+            )
+        ) {
+            return response.status(400).json({
+                message:
+                    "The payment proof path is invalid."
+            });
+        }
+
+        response.type(
+            proof.mime_type ||
+            "application/octet-stream"
+        );
+
+        response.set(
+            "Content-Disposition",
+            `inline; filename*=UTF-8''${encodeURIComponent(
+                proof.original_filename ||
+                "payment-proof"
+            )}`
+        );
+
+        return response.sendFile(absolutePath);
+    } catch (error) {
+        console.error(
+            "Unable to load payment proof:",
+            error
+        );
+
+        return response.status(500).json({
+            message:
+                "Unable to load the payment proof."
         });
     }
 }
@@ -342,5 +451,6 @@ async function reviewTenantPayment(
 module.exports = {
     submitDeposit,
     listTenantPayments,
+    viewTenantPaymentProof,
     reviewTenantPayment
 };

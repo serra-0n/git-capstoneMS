@@ -14,18 +14,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const resortType = document.getElementById("resortType");
     const location = document.getElementById("location");
 
-
     const progressText = document.querySelector(".progress-header strong");
     const progressBar = document.querySelector(".progress-bar span");
     const formMessage = document.getElementById("formMessage");
     const completeAccountButton = document.getElementById("completeAccountButton");
 
-
-    function setupPasswordToggle(
-        toggleButton,
-        passwordInput,
-        icon
-    ) {
+    function setupPasswordToggle(toggleButton, passwordInput, icon) {
         if (!toggleButton || !passwordInput || !icon) {
             return;
         }
@@ -49,17 +43,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    setupPasswordToggle(
-        passwordToggle,
-        password,
-        passwordIcon
-    );
+    setupPasswordToggle(passwordToggle, password, passwordIcon);
 
-    setupPasswordToggle(
-        confirmPasswordToggle,
-        confirmPassword,
-        confirmPasswordIcon
-    );
+    setupPasswordToggle(confirmPasswordToggle, confirmPassword, confirmPasswordIcon);
 
     function checkPasswordMatch() {
         if (!password || !confirmPassword) {
@@ -87,11 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
-    const allowedFileTypes = [
-        "image/jpeg",
-        "image/png",
-        "image/webp"
-    ];
+    const allowedFileTypes = ["image/jpeg", "image/png", "image/webp"];
 
     if (resortLogo) {
         resortLogo.addEventListener("change", function () {
@@ -103,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 updateProgress();
                 return;
             }
-                /* Check file type */
+            /* Check file type */
             if (!allowedFileTypes.includes(file.type)) {
                 showMessage("Please upload a JPG, PNG, or WEBP image.", "error");
                 resortLogo.value = "";
@@ -133,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
         contactEmail,
         resortName,
         resortType,
-        location
+        location,
     ];
 
     fields.forEach(function (field) {
@@ -248,13 +230,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            const apiBaseUrl = window.location.port === "3000"
-                ? ""
-                : "http://localhost:3000";
+            const apiBaseUrl = window.location.port === "3000" ? "" : "http://localhost:3000";
 
             fetch(`${apiBaseUrl}/api/onboarding/resorts/${tenantId}/complete`, {
                 method: "POST",
-                body: new FormData(form)
+                body: new FormData(form),
             })
                 .then(async function (response) {
                     const responseText = await response.text();
@@ -263,7 +243,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     try {
                         result = JSON.parse(responseText);
                     } catch (error) {
-                        throw new Error("The Node.js server did not return a JSON response. Open this page through port 3000.");
+                        throw new Error(
+                            "The Node.js server did not return a JSON response. Open this page through port 3000.",
+                        );
                     }
 
                     if (!response.ok) {
@@ -281,9 +263,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     completeAccountButton.disabled = false;
                     completeAccountButton.textContent = "Complete resort profile";
                 });
-        }); 
+        });
     }
 
     updateProgress();
 });
-

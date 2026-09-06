@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
         totalTenants: 32,
         totalUsers: 248,
         activeTenants: 9,
-        pendingApprovals: 8
+        pendingApprovals: 8,
     };
 
     const totalTenantElement = document.getElementById("totalTenantCount");
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const reportItems = document.querySelectorAll(".dashboard-report-item");
 
     reportItems.forEach(function (report) {
-        report.addEventListener("click", function() {
+        report.addEventListener("click", function () {
             const reportType = report.getAttribute("data-report");
 
             if (reportType) {

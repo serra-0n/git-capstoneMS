@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.querySelector(".platform-user-search input");
     const roleFilter = document.querySelector(".user-role-filter");
     const statusFilter = document.querySelector(".user-status-filter");
@@ -7,8 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const actionButtons = document.querySelectorAll(".user-action-button");
     const addUserButton = document.querySelector(".add-user-button");
 
-
-    function filterUsers(){
+    function filterUsers() {
         const searchValue = searchInput ? searchInput.value.toLowerCase().trim() : "";
         const selectedRole = roleFilter ? roleFilter.value.toLowerCase() : "";
         const selectedStatus = statusFilter ? statusFilter.value.toLowerCase() : "";
@@ -27,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (selectedRole !== "") {
                 if (selectedRole === "system-admin") {
-                    matchesRole = userRole.includes ("system-admin");
+                    matchesRole = userRole.includes("system-admin");
                 } else if (selectedRole === "resort-admin") {
                     matchesRole = userRole.includes("resort-admin");
                 } else if (selectedRole === "client") {
@@ -45,10 +44,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
 
-            if (
-                matchesSearch &&
-                matchesRole &&
-                matchesStatus) {
+            if (matchesSearch && matchesRole && matchesStatus) {
                 row.style.display = "";
             } else {
                 row.style.display = "none";
@@ -68,8 +64,8 @@ document.addEventListener("DOMContentLoaded", function() {
         statusFilter.addEventListener("change", filterUsers);
     }
 
-    actionButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
+    actionButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
             const row = button.closest("tr");
 
             if (!row) {
@@ -85,19 +81,26 @@ document.addEventListener("DOMContentLoaded", function() {
             const email = emailElement ? emailElement.textContent.trim() : "Unknown Role";
             const role = roleElement ? roleElement.textContent.trim() : "Unknown Role";
             const status = statusElement ? statusElement.textContent.trim() : "Unknown Status";
-            
+
             alert(
                 "User Information\n\n" +
-                "Name: " + userName + "\n" +
-                "Email: " + email + "\n" +
-                "Role: " + role + "\n" +
-                "Status " + status
+                    "Name: " +
+                    userName +
+                    "\n" +
+                    "Email: " +
+                    email +
+                    "\n" +
+                    "Role: " +
+                    role +
+                    "\n" +
+                    "Status " +
+                    status,
             );
         });
     });
 
     if (addUserButton) {
-        addUserButton.addEventListener("click", function(){
+        addUserButton.addEventListener("click", function () {
             alert("Add User functionally will be connected to the backend later.");
         });
     }

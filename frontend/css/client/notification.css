@@ -1,12 +1,6 @@
-/* =========================================================
-   RESORTHUB - CLIENT NOTIFICATIONS
-   File: css/client/notifications.css
-   ========================================================= */
+/* RESORTHUB - CLIENT NOTIFICATIONS File: css/client/notifications.css */
 
-
-/* =========================================================
-   NOTIFICATIONS CARD
-   ========================================================= */
+/* NOTIFICATIONS CARD */
 
 .notifications-card {
     overflow: hidden;
@@ -42,21 +36,14 @@
     padding: 0;
 }
 
-
-/* =========================================================
-   NOTIFICATION LIST
-   ========================================================= */
+/* NOTIFICATION LIST */
 
 .notification-list {
     display: flex;
     flex-direction: column;
 }
 
-
-/* =========================================================
-   NOTIFICATION ITEM
-   Created dynamically by Notifications.js
-   ========================================================= */
+/* NOTIFICATION ITEM Created dynamically by Notifications.js */
 
 .notification-item {
     display: flex;
@@ -93,10 +80,7 @@
     background: var(--primary-light);
 }
 
-
-/* =========================================================
-   NOTIFICATION ICON
-   ========================================================= */
+/* NOTIFICATION ICON */
 
 .notification-item-icon {
     display: flex;
@@ -120,10 +104,7 @@
     height: 19px;
 }
 
-
-/* =========================================================
-   NOTIFICATION CONTENT
-   ========================================================= */
+/* NOTIFICATION CONTENT */
 
 .notification-item-content {
     display: flex;
@@ -165,10 +146,7 @@
     overflow-wrap: anywhere;
 }
 
-
-/* =========================================================
-   RELATED INFORMATION
-   ========================================================= */
+/* RELATED INFORMATION */
 
 .notification-item-meta {
     display: flex;
@@ -194,10 +172,7 @@
     height: 13px;
 }
 
-
-/* =========================================================
-   TYPE BADGE
-   ========================================================= */
+/* TYPE BADGE */
 
 .notification-type-badge {
     display: inline-flex;
@@ -218,10 +193,7 @@
     line-height: 1.2;
 }
 
-
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
+/* EMPTY STATE */
 
 .notification-empty-state {
     min-height: 300px;
@@ -258,10 +230,7 @@
     color: var(--text-secondary);
 }
 
-
-/* =========================================================
-   NOTIFICATION DETAIL CARD
-   ========================================================= */
+/* NOTIFICATION DETAIL CARD */
 
 .notification-detail-card {
     margin-top: 20px;
@@ -299,10 +268,7 @@
     padding: 20px;
 }
 
-
-/* =========================================================
-   NOTIFICATION DETAIL GRID
-   ========================================================= */
+/* NOTIFICATION DETAIL GRID */
 
 .notification-detail-grid {
     display: grid;
@@ -343,10 +309,7 @@
     overflow-wrap: anywhere;
 }
 
-
-/* =========================================================
-   MESSAGE DETAIL
-   ========================================================= */
+/* MESSAGE DETAIL */
 
 .notification-detail-message {
     grid-column: 1 / -1;
@@ -356,10 +319,7 @@
     font-weight: 500;
 }
 
-
-/* =========================================================
-   DETAIL ACTION
-   ========================================================= */
+/* DETAIL ACTION */
 
 .notification-detail-actions {
     display: flex;
@@ -376,35 +336,24 @@
     flex-shrink: 0;
 }
 
+/* DYNAMIC TYPE STYLES These are presentation-only classes that can be applied by Notifications.js. */
 
-/* =========================================================
-   DYNAMIC TYPE STYLES
-   These are presentation-only classes that can be applied
-   by Notifications.js.
-   ========================================================= */
-
-.notification-item[data-notification-type="reservation"]
-.notification-item-icon {
+.notification-item[data-notification-type="reservation"] .notification-item-icon {
     background: var(--primary-light);
     color: var(--primary);
 }
 
-.notification-item[data-notification-type="payment"]
-.notification-item-icon {
+.notification-item[data-notification-type="payment"] .notification-item-icon {
     background: var(--success-background);
     color: var(--success);
 }
 
-.notification-item[data-notification-type="document"]
-.notification-item-icon {
+.notification-item[data-notification-type="document"] .notification-item-icon {
     background: var(--warning-background);
     color: var(--warning);
 }
 
-
-/* =========================================================
-   FOCUS
-   ========================================================= */
+/* FOCUS */
 
 .notification-item:focus-visible {
     position: relative;
@@ -414,13 +363,9 @@
     outline-offset: -2px;
 }
 
-
-/* =========================================================
-   TABLET
-   ========================================================= */
+/* TABLET */
 
 @media (max-width: 760px) {
-
     .notifications-card .card-header {
         padding: 16px;
     }
@@ -448,16 +393,11 @@
     .notification-detail-message {
         grid-column: auto;
     }
-
 }
 
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
+/* MOBILE */
 
 @media (max-width: 560px) {
-
     .notification-item {
         gap: 11px;
 
@@ -511,16 +451,11 @@
 
         padding: 34px 18px;
     }
-
 }
 
-
-/* =========================================================
-   TOUCH DEVICES
-   ========================================================= */
+/* TOUCH DEVICES */
 
 @media (hover: none) {
-
     .notification-item:hover {
         background: var(--surface);
     }
@@ -528,5 +463,4 @@
     .notification-item.selected:hover {
         background: var(--primary-light);
     }
-
 }

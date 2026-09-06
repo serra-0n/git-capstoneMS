@@ -1,12 +1,6 @@
-/* =========================================================
-   RESORTHUB - CLIENT BILLING & PAYMENT
-   File: css/client/payments.css
-   ========================================================= */
+/* RESORTHUB - CLIENT BILLING & PAYMENT File: css/client/payments.css */
 
-
-/* =========================================================
-   PAYMENT PAGE LAYOUT
-   ========================================================= */
+/* PAYMENT PAGE LAYOUT */
 
 .payment-content {
     display: grid;
@@ -15,10 +9,7 @@
     align-items: start;
 }
 
-
-/* =========================================================
-   BILLING CARD
-   ========================================================= */
+/* BILLING CARD */
 
 .billing-card {
     grid-column: 1 / -1;
@@ -31,10 +22,7 @@
     gap: 16px;
 }
 
-
-/* =========================================================
-   BILLING INFORMATION GRID
-   ========================================================= */
+/* BILLING INFORMATION GRID */
 
 .billing-information-grid {
     display: grid;
@@ -86,10 +74,7 @@
     color: var(--primary) !important;
 }
 
-
-/* =========================================================
-   PAYMENT SUBMISSION CARD
-   ========================================================= */
+/* PAYMENT SUBMISSION CARD */
 
 .payment-submission-card {
     min-width: 0;
@@ -105,10 +90,7 @@
     gap: 18px;
 }
 
-
-/* =========================================================
-   FORM GROUP
-   ========================================================= */
+/* FORM GROUP */
 
 #paymentForm .form-group {
     display: flex;
@@ -155,13 +137,54 @@
 #paymentForm select:focus {
     border-color: var(--primary);
 
-    box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-/* =========================================================
-   PAYMENT OPTIONS
-   ========================================================= */
+#paymentForm[hidden],
+.payment-complete-message[hidden] {
+    display: none;
+}
+
+.payment-complete-message {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px;
+    border: 1px solid #bbf7d0;
+    border-radius: var(--radius-medium);
+    background: var(--success-background);
+    color: var(--success);
+}
+
+.payment-complete-icon {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #dcfce7;
+}
+
+.payment-complete-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.payment-complete-message strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 15px;
+}
+
+.payment-complete-message p {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* PAYMENT OPTIONS */
 
 .payment-option-group {
     display: grid;
@@ -210,6 +233,10 @@
         box-shadow var(--transition);
 }
 
+.payment-option[hidden] {
+    display: none;
+}
+
 .payment-option:hover {
     border-color: var(--primary);
 }
@@ -219,8 +246,7 @@
 
     background: rgba(37, 99, 235, 0.06);
 
-    box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.08);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
 }
 
 .payment-option input[type="radio"] {
@@ -262,10 +288,7 @@
     cursor: not-allowed;
 }
 
-
-/* =========================================================
-   GCASH PAYMENT DETAILS
-   ========================================================= */
+/* GCASH PAYMENT DETAILS */
 
 .gcash-payment-details {
     padding: 16px;
@@ -354,9 +377,7 @@
     line-height: 1.5;
 }
 
-/* =========================================================
-   FILE UPLOAD
-   ========================================================= */
+/* FILE UPLOAD */
 
 .payment-upload-area {
     position: relative;
@@ -465,10 +486,7 @@
     border: 0;
 }
 
-
-/* =========================================================
-   PAYMENT VERIFICATION NOTICE
-   ========================================================= */
+/* PAYMENT VERIFICATION NOTICE */
 
 .payment-verification-notice {
     display: flex;
@@ -503,10 +521,7 @@
     color: var(--text-secondary);
 }
 
-
-/* =========================================================
-   FORM MESSAGE
-   ========================================================= */
+/* FORM MESSAGE */
 
 .payment-form-message {
     padding: 11px 12px;
@@ -541,10 +556,7 @@
     color: var(--info);
 }
 
-
-/* =========================================================
-   FORM ACTIONS
-   ========================================================= */
+/* FORM ACTIONS */
 
 .payment-form-actions {
     display: flex;
@@ -557,10 +569,7 @@
     min-width: 150px;
 }
 
-
-/* =========================================================
-   PAYMENT STATUS CARD
-   ========================================================= */
+/* PAYMENT STATUS CARD */
 
 .payment-status-card {
     min-width: 0;
@@ -626,10 +635,7 @@
     overflow-wrap: anywhere;
 }
 
-
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
+/* EMPTY STATE */
 
 .payment-empty-card {
     overflow: hidden;
@@ -670,10 +676,7 @@
     color: var(--text-secondary);
 }
 
-
-/* =========================================================
-   DISABLED / SUBMITTING STATE
-   ========================================================= */
+/* DISABLED / SUBMITTING STATE */
 
 #submitPaymentButton:disabled {
     cursor: not-allowed;
@@ -690,13 +693,9 @@
     color: var(--text-muted);
 }
 
-
-/* =========================================================
-   RESPONSIVE - TABLET
-   ========================================================= */
+/* RESPONSIVE - TABLET */
 
 @media (max-width: 960px) {
-
     .payment-content {
         grid-template-columns: 1fr;
     }
@@ -704,16 +703,11 @@
     .billing-card {
         grid-column: auto;
     }
-
 }
 
-
-/* =========================================================
-   RESPONSIVE - SMALL TABLET
-   ========================================================= */
+/* RESPONSIVE - SMALL TABLET */
 
 @media (max-width: 760px) {
-
     .billing-information-grid {
         grid-template-columns: 1fr;
     }
@@ -745,13 +739,9 @@
     }
 }
 
-
-/* =========================================================
-   RESPONSIVE - MOBILE
-   ========================================================= */
+/* RESPONSIVE - MOBILE */
 
 @media (max-width: 520px) {
-
     .payment-content {
         gap: 16px;
     }
@@ -792,20 +782,14 @@
     .payment-status-information {
         align-items: flex-start;
     }
-
 }
 
-
-/* =========================================================
-   TOUCH DEVICES
-   ========================================================= */
+/* TOUCH DEVICES */
 
 @media (hover: none) {
-
     .payment-upload-area:hover {
         border-color: #cbd5e1;
 
         background: var(--surface-soft);
     }
-
 }

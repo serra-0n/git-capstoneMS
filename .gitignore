@@ -1,1 +1,11 @@
 .env
+.env.*
+!.env.example
+node_modules/
+backend/uploads/files/*
+!backend/uploads/files/.gitkeep
+frontend/image/gcash/*
+!frontend/image/gcash/.gitkeep
+output/
+tmp/
+tmp_capstone_review.txt

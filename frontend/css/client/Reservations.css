@@ -135,6 +135,51 @@
     outline: 3px solid rgba(23, 100, 255, 0.12);
 }
 
+.date-input-wrap {
+    position: relative;
+    display: block;
+}
+
+.date-input-wrap input {
+    padding-right: 42px;
+}
+
+.date-input-icon {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    width: 18px;
+    height: 18px;
+    color: #61718d;
+    pointer-events: none;
+    transform: translateY(-50%);
+}
+
+.availability-legend {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    color: #61718d;
+    font-size: 13px;
+}
+
+.availability-legend-color {
+    width: 13px;
+    height: 13px;
+    border: 1px solid #ef4444;
+    border-radius: 4px;
+    background: #fee2e2;
+}
+
+.flatpickr-day.flatpickr-disabled.booked-date,
+.flatpickr-day.flatpickr-disabled.booked-date:hover {
+    border-color: #fecaca;
+    background: #fee2e2;
+    color: #dc2626;
+    cursor: not-allowed;
+}
+
 .accommodation-empty {
     display: grid;
     min-height: 128px;

@@ -1,6 +1,4 @@
-/* ==========================================
-   RESERVATION PAGE
-========================================== */
+/* RESERVATION PAGE */
 
 /* PAGE HEADER */
 
@@ -22,9 +20,7 @@
     font-size: 11px;
 }
 
-/* ==========================================
-   SUMMARY CARDS
-========================================== */
+/* SUMMARY CARDS */
 
 .metric-grid {
     display: grid;
@@ -39,13 +35,13 @@
     border: 1px solid var(--line);
     border-radius: 8px;
     box-shadow: var(--shadow);
-    transition: .25s ease;
+    transition: 0.25s ease;
     cursor: pointer;
 }
 
 .metric-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0,0,0,.08);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
 }
 
 .metric-content {
@@ -91,9 +87,7 @@
     font-weight: 700;
 }
 
-/* ==========================================
-   FILTER PANEL
-========================================== */
+/* FILTER PANEL */
 
 .filter-panel {
     display: flex;
@@ -102,11 +96,11 @@
     align-items: center;
     padding: 16px;
     margin-bottom: 20px;
-    transition: .25s ease;
+    transition: 0.25s ease;
 }
 
 .filter-panel:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }
 
 .filter-panel input,
@@ -128,9 +122,7 @@
     border-color: var(--blue);
 }
 
-/* ==========================================
-   MAIN CONTENT
-========================================== */
+/* MAIN CONTENT */
 
 .reservation-layout {
     display: grid;
@@ -139,16 +131,14 @@
     align-items: start;
 }
 
-/* ==========================================
-   PANELS
-========================================== */
+/* PANELS */
 
 .panel {
-    transition: .25s ease;
+    transition: 0.25s ease;
 }
 
 .panel:hover {
-    box-shadow: 0 12px 25px rgba(0,0,0,.08);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
 }
 
 .panel-header {
@@ -163,9 +153,7 @@
     font-size: 13px;
 }
 
-/* ==========================================
-   TABLE
-========================================== */
+/* TABLE */
 
 .table-wrap {
     overflow-x: auto;
@@ -194,17 +182,20 @@
     font-size: 11px;
 }
 
+.data-table td:last-child {
+    min-width: 142px;
+    white-space: nowrap;
+}
+
 .data-table tbody tr {
-    transition: .2s;
+    transition: 0.2s;
 }
 
 .data-table tbody tr:hover {
     background: #f5f9ff;
 }
 
-/* ==========================================
-   STATUS BADGES
-========================================== */
+/* STATUS BADGES */
 
 .status {
     display: inline-block;
@@ -234,9 +225,7 @@
     background: #fdecec;
 }
 
-/* ==========================================
-   ACTION BUTTONS
-========================================== */
+/* ACTION BUTTONS */
 
 .data-table button {
     height: 30px;
@@ -247,16 +236,14 @@
     background: var(--blue);
     color: white;
     font-size: 10px;
-    transition: .2s;
+    transition: 0.2s;
 }
 
 .data-table button:hover {
     transform: translateY(-2px);
 }
 
-/* ==========================================
-   SIDE COLUMN
-========================================== */
+/* SIDE COLUMN */
 
 .side-column {
     display: flex;
@@ -275,9 +262,7 @@
     border-bottom: none;
 }
 
-/* ==========================================
-   QUICK ACTIONS
-========================================== */
+/* QUICK ACTIONS */
 
 .quick-actions {
     display: grid;
@@ -291,7 +276,7 @@
     border-radius: 6px;
     background: white;
     font-weight: 600;
-    transition: .25s ease;
+    transition: 0.25s ease;
 }
 
 .quick-action:hover {
@@ -299,12 +284,10 @@
     color: white;
     border-color: var(--blue);
     transform: translateY(-3px);
-    box-shadow: 0 8px 18px rgba(40,101,223,.25);
+    box-shadow: 0 8px 18px rgba(40, 101, 223, 0.25);
 }
 
-/* ==========================================
-   PAGINATION
-========================================== */
+/* PAGINATION */
 
 .pagination {
     display: flex;
@@ -319,7 +302,7 @@
     border: 1px solid var(--line);
     border-radius: 6px;
     background: white;
-    transition: .2s;
+    transition: 0.2s;
 }
 
 .pagination button:hover {
@@ -333,12 +316,9 @@
     border-color: var(--blue);
 }
 
-/* ==========================================
-   RESPONSIVE
-========================================== */
+/* RESPONSIVE */
 
 @media (max-width: 1200px) {
-
     .reservation-layout {
         grid-template-columns: 1fr;
     }
@@ -346,19 +326,15 @@
     .side-column {
         order: -1;
     }
-
 }
 
 @media (max-width: 900px) {
-
     .metric-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-
 }
 
 @media (max-width: 600px) {
-
     .metric-grid {
         grid-template-columns: 1fr;
     }
@@ -373,5 +349,4 @@
     .filter-panel button {
         width: 100%;
     }
-
 }

@@ -1,21 +1,12 @@
-/* =========================================================
-   RESORTHUB - CLIENT UPLOAD DOCUMENTS
-   File: css/client/upload-documents.css
-   ========================================================= */
+/* RESORTHUB - CLIENT UPLOAD DOCUMENTS File: css/client/upload-documents.css */
 
-
-/* =========================================================
-   PAGE
-   ========================================================= */
+/* PAGE */
 
 .upload-documents-content {
     padding-bottom: 40px;
 }
 
-
-/* =========================================================
-   CARD SPACING
-   ========================================================= */
+/* CARD SPACING */
 
 .document-upload-card,
 .uploaded-documents-card {
@@ -26,10 +17,7 @@
     margin-bottom: 20px;
 }
 
-
-/* =========================================================
-   CARD HEADERS
-   ========================================================= */
+/* CARD HEADERS */
 
 .document-upload-card .card-header,
 .uploaded-documents-card .card-header,
@@ -65,10 +53,7 @@
     color: var(--text-secondary);
 }
 
-
-/* =========================================================
-   FORM GRID
-   ========================================================= */
+/* FORM GRID */
 
 .document-form-grid {
     display: grid;
@@ -76,19 +61,13 @@
     gap: 18px;
 }
 
-
-/* =========================================================
-   FILE GROUP
-   ========================================================= */
+/* FILE GROUP */
 
 .document-file-group {
     margin-top: 18px;
 }
 
-
-/* =========================================================
-   FILE UPLOAD AREA
-   ========================================================= */
+/* FILE UPLOAD AREA */
 
 .document-file-upload {
     position: relative;
@@ -129,10 +108,8 @@
 .document-file-upload:focus-within {
     border-color: var(--primary);
 
-    box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
-
 
 /* Actual input */
 
@@ -147,10 +124,7 @@
     pointer-events: none;
 }
 
-
-/* =========================================================
-   UPLOAD ICON
-   ========================================================= */
+/* UPLOAD ICON */
 
 .document-upload-icon {
     display: flex;
@@ -195,10 +169,7 @@
     transform: translateY(-2px) scale(1.08);
 }
 
-
-/* =========================================================
-   UPLOAD TEXT
-   ========================================================= */
+/* UPLOAD TEXT */
 
 .document-upload-text {
     display: flex;
@@ -223,10 +194,7 @@
     color: var(--text-secondary);
 }
 
-
-/* =========================================================
-   SELECTED FILE
-   ========================================================= */
+/* SELECTED FILE */
 
 .selected-document-file {
     display: flex;
@@ -247,7 +215,6 @@
 .selected-document-file[hidden] {
     display: none;
 }
-
 
 /* Selected icon */
 
@@ -288,7 +255,6 @@
     transform: scale(1.06);
 }
 
-
 /* Selected file details */
 
 .selected-document-file-info {
@@ -319,7 +285,6 @@
     color: var(--text-muted);
 }
 
-
 /* Remove button */
 
 .remove-document-button {
@@ -334,10 +299,7 @@
     transform: rotate(90deg);
 }
 
-
-/* =========================================================
-   OCR QUALITY NOTICE
-   ========================================================= */
+/* OCR QUALITY NOTICE */
 
 .ocr-quality-notice {
     display: flex;
@@ -405,10 +367,7 @@
     color: var(--text-secondary);
 }
 
-
-/* =========================================================
-   FORM MESSAGE
-   ========================================================= */
+/* FORM MESSAGE */
 
 .document-form-message {
     display: flex;
@@ -462,10 +421,7 @@
     flex-shrink: 0;
 }
 
-
-/* =========================================================
-   FORM ACTIONS
-   ========================================================= */
+/* FORM ACTIONS */
 
 .document-form-actions {
     display: flex;
@@ -502,18 +458,13 @@
     cursor: not-allowed;
 }
 
-
-/* =========================================================
-   UPLOAD BUTTON LOADING ICON
-   ========================================================= */
+/* UPLOAD BUTTON LOADING ICON */
 
 #submitDocumentButton.is-loading svg {
-    animation:
-        upload-icon-pulse 0.9s ease-in-out infinite;
+    animation: upload-icon-pulse 0.9s ease-in-out infinite;
 }
 
 @keyframes upload-icon-pulse {
-
     0%,
     100% {
         transform: translateY(0) scale(1);
@@ -524,13 +475,9 @@
         transform: translateY(-2px) scale(0.92);
         opacity: 0.65;
     }
-
 }
 
-
-/* =========================================================
-   UPLOADED DOCUMENT LIST
-   ========================================================= */
+/* UPLOADED DOCUMENT LIST */
 
 .uploaded-document-list {
     display: flex;
@@ -539,10 +486,7 @@
     gap: 9px;
 }
 
-
-/* =========================================================
-   DOCUMENT ITEM
-   ========================================================= */
+/* DOCUMENT ITEM */
 
 .uploaded-document-item {
     display: flex;
@@ -589,10 +533,7 @@
     background: var(--primary-light);
 }
 
-
-/* =========================================================
-   DOCUMENT ITEM ICON
-   ========================================================= */
+/* DOCUMENT ITEM ICON */
 
 .uploaded-document-item-icon {
     display: flex;
@@ -641,10 +582,7 @@
     color: #ffffff;
 }
 
-
-/* =========================================================
-   DOCUMENT ITEM CONTENT
-   ========================================================= */
+/* DOCUMENT ITEM CONTENT */
 
 .uploaded-document-item-content {
     flex: 1;
@@ -698,19 +636,13 @@
     height: 13px;
 }
 
-
-/* =========================================================
-   DOCUMENT STATUS
-   ========================================================= */
+/* DOCUMENT STATUS */
 
 .document-status {
     flex-shrink: 0;
 }
 
-
-/* =========================================================
-   EMPTY STATE ICON
-   ========================================================= */
+/* EMPTY STATE ICON */
 
 .uploaded-documents-empty-state > svg {
     transition:
@@ -724,10 +656,7 @@
     color: var(--primary);
 }
 
-
-/* =========================================================
-   DOCUMENT DETAIL GRID
-   ========================================================= */
+/* DOCUMENT DETAIL GRID */
 
 .document-detail-grid {
     display: grid;
@@ -780,10 +709,7 @@
     overflow-wrap: anywhere;
 }
 
-
-/* =========================================================
-   LUCIDE CARD EFFECTS
-   ========================================================= */
+/* LUCIDE CARD EFFECTS */
 
 .document-upload-card .card-heading-icon,
 .uploaded-documents-card .card-heading-icon,
@@ -821,10 +747,7 @@
     transform: rotate(-4deg) scale(1.08);
 }
 
-
-/* =========================================================
-   KEYBOARD FOCUS
-   ========================================================= */
+/* KEYBOARD FOCUS */
 
 .uploaded-document-item:focus-visible,
 .document-file-upload:focus-visible {
@@ -832,13 +755,9 @@
     outline-offset: 2px;
 }
 
-
-/* =========================================================
-   TABLET
-   ========================================================= */
+/* TABLET */
 
 @media (max-width: 760px) {
-
     .document-upload-card .card-header,
     .uploaded-documents-card .card-header,
     .document-detail-card .card-header {
@@ -855,16 +774,11 @@
         grid-template-columns: 1fr;
         gap: 15px;
     }
-
 }
 
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
+/* MOBILE */
 
 @media (max-width: 560px) {
-
     .document-file-upload {
         align-items: flex-start;
 
@@ -912,16 +826,11 @@
     .document-detail-item:last-child {
         border-bottom: 0;
     }
-
 }
 
-
-/* =========================================================
-   TOUCH DEVICES
-   ========================================================= */
+/* TOUCH DEVICES */
 
 @media (hover: none) {
-
     .document-file-upload:hover,
     .uploaded-document-item:hover,
     .document-upload-card:hover .card-heading-icon,
@@ -931,16 +840,11 @@
     .uploaded-documents-empty-state:hover > svg {
         transform: none;
     }
-
 }
 
-
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
+/* REDUCED MOTION */
 
 @media (prefers-reduced-motion: reduce) {
-
     .upload-documents-content *,
     .upload-documents-content *::before,
     .upload-documents-content *::after {
@@ -949,5 +853,4 @@
 
         transition-duration: 0.01ms !important;
     }
-
 }

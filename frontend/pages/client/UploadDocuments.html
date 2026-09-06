@@ -30,11 +30,7 @@
 
             <header class="client-topbar">
                 <div class="topbar-left">
-                    <a
-                        href="Dashboard.html"
-                        class="client-brand"
-                        aria-label="ResortHub Dashboard"
-                    >
+                    <a href="Dashboard.html" class="client-brand" aria-label="ResortHub Dashboard">
                         <i data-lucide="building-2"></i>
 
                         <span> ResortHub </span>
@@ -68,10 +64,7 @@
                             <small> Client </small>
                         </span>
 
-                        <i
-                            class="profile-chevron"
-                            data-lucide="chevron-down"
-                        ></i>
+                        <i class="profile-chevron" data-lucide="chevron-down"></i>
                     </button>
                 </div>
             </header>
@@ -82,10 +75,7 @@
                 <!-- SIDEBAR -->
 
                 <aside class="client-sidebar" id="clientSidebar">
-                    <nav
-                        class="sidebar-navigation"
-                        aria-label="Client navigation"
-                    >
+                    <nav class="sidebar-navigation" aria-label="Client navigation">
                         <a href="Dashboard.html" class="sidebar-link">
                             <i data-lucide="layout-dashboard"></i>
 
@@ -131,9 +121,7 @@
                         <!-- Documents -->
 
                         <div class="sidebar-section">
-                            <span class="sidebar-section-title">
-                                DOCUMENTS
-                            </span>
+                            <span class="sidebar-section-title"> DOCUMENTS </span>
 
                             <a
                                 href="UploadDocuments.html"
@@ -151,10 +139,7 @@
                         <div class="sidebar-section">
                             <span class="sidebar-section-title"> STATUS </span>
 
-                            <a
-                                href="ReservationStatus.html"
-                                class="sidebar-link"
-                            >
+                            <a href="ReservationStatus.html" class="sidebar-link">
                                 <i data-lucide="clock-3"></i>
 
                                 <span> Reservation Status </span>
@@ -192,8 +177,8 @@
                                 <h1>Upload Documents</h1>
 
                                 <p>
-                                    Upload reservation-related documents for
-                                    document verification and OCR processing.
+                                    Upload reservation-related documents for document verification
+                                    and OCR processing.
                                 </p>
                             </div>
                         </div>
@@ -211,8 +196,7 @@
                                         <h2>Upload Document</h2>
 
                                         <p>
-                                            Select the reservation and document
-                                            you want to submit.
+                                            Select the reservation and document you want to submit.
                                         </p>
                                     </div>
                                 </div>
@@ -228,56 +212,36 @@
                                         <!-- Reservation -->
 
                                         <div class="form-group">
-                                            <label for="reservationId">
-                                                Reservation
-                                            </label>
+                                            <label for="reservationId"> Reservation </label>
 
                                             <select
                                                 id="reservationId"
                                                 name="reservation_id"
                                                 required
                                             >
-                                                <option value="">
-                                                    Select reservation
-                                                </option>
+                                                <option value="">Select reservation</option>
                                             </select>
                                         </div>
 
                                         <!-- Document Type -->
 
                                         <div class="form-group">
-                                            <label for="documentType">
-                                                Document Type
-                                            </label>
+                                            <label for="documentType"> Document Type </label>
 
-                                            <select
-                                                id="documentType"
-                                                name="document_type"
-                                                required
-                                            >
-                                                <option value="">
-                                                    Select document type
-                                                </option>
+                                            <select id="documentType" name="document_type" required>
+                                                <option value="">Select document type</option>
 
-                                                <option value="valid_id">
-                                                    Valid ID
-                                                </option>
+                                                <option value="valid_id">Valid ID</option>
 
-                                                <option
-                                                    value="proof_of_payment"
-                                                >
+                                                <option value="proof_of_payment">
                                                     Proof of Payment
                                                 </option>
 
-                                                <option
-                                                    value="reservation_form"
-                                                >
+                                                <option value="reservation_form">
                                                     Reservation Form
                                                 </option>
 
-                                                <option
-                                                    value="other_operational_document"
-                                                >
+                                                <option value="other_operational_document">
                                                     Other Operational Document
                                                 </option>
                                             </select>
@@ -299,14 +263,9 @@
                                             </span>
 
                                             <span class="document-upload-text">
-                                                <strong>
-                                                    Choose a document to upload
-                                                </strong>
+                                                <strong> Choose a document to upload </strong>
 
-                                                <small>
-                                                    Select an image or PDF
-                                                    document.
-                                                </small>
+                                                <small> Select an image or PDF document. </small>
                                             </span>
 
                                             <input
@@ -323,28 +282,14 @@
                                             id="selectedDocumentFile"
                                             hidden
                                         >
-                                            <span
-                                                class="selected-document-icon"
-                                            >
-                                                <i
-                                                    data-lucide="file-check-2"
-                                                ></i>
+                                            <span class="selected-document-icon">
+                                                <i data-lucide="file-check-2"></i>
                                             </span>
 
-                                            <div
-                                                class="selected-document-file-info"
-                                            >
-                                                <strong
-                                                    id="selectedDocumentFileName"
-                                                >
-                                                    —
-                                                </strong>
+                                            <div class="selected-document-file-info">
+                                                <strong id="selectedDocumentFileName"> — </strong>
 
-                                                <small
-                                                    id="selectedDocumentFileSize"
-                                                >
-                                                    —
-                                                </small>
+                                                <small id="selectedDocumentFileSize"> — </small>
                                             </div>
 
                                             <button
@@ -369,9 +314,8 @@
                                             <strong> Document Quality </strong>
 
                                             <p>
-                                                Clear and readable documents
-                                                help improve OCR text extraction
-                                                and document verification.
+                                                Clear and readable documents help improve OCR text
+                                                extraction and document verification.
                                             </p>
                                         </div>
                                     </div>
@@ -415,19 +359,13 @@
                                     <div>
                                         <h2>Uploaded Documents</h2>
 
-                                        <p>
-                                            View your submitted
-                                            reservation-related documents.
-                                        </p>
+                                        <p>View your submitted reservation-related documents.</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="card-body">
-                                <div
-                                    class="uploaded-document-list"
-                                    id="uploadedDocumentList"
-                                ></div>
+                                <div class="uploaded-document-list" id="uploadedDocumentList"></div>
 
                                 <!-- Empty State -->
 
@@ -440,21 +378,14 @@
 
                                     <h3>No Uploaded Documents</h3>
 
-                                    <p>
-                                        Your uploaded documents will appear
-                                        here.
-                                    </p>
+                                    <p>Your uploaded documents will appear here.</p>
                                 </div>
                             </div>
                         </section>
 
                         <!-- DOCUMENT DETAILS -->
 
-                        <section
-                            class="card document-detail-card"
-                            id="documentDetailCard"
-                            hidden
-                        >
+                        <section class="card document-detail-card" id="documentDetailCard" hidden>
                             <div class="card-header">
                                 <div class="card-heading">
                                     <span class="card-heading-icon">
@@ -465,8 +396,7 @@
                                         <h2>Document Details</h2>
 
                                         <p>
-                                            Information related to the selected
-                                            uploaded document.
+                                            Information related to the selected uploaded document.
                                         </p>
                                     </div>
                                 </div>
@@ -477,35 +407,26 @@
                                     <div class="document-detail-item">
                                         <span> Document Type </span>
 
-                                        <strong id="documentDetailType">
-                                            —
-                                        </strong>
+                                        <strong id="documentDetailType"> — </strong>
                                     </div>
 
                                     <div class="document-detail-item">
                                         <span> Reservation </span>
 
-                                        <strong id="documentDetailReservation">
-                                            —
-                                        </strong>
+                                        <strong id="documentDetailReservation"> — </strong>
                                     </div>
 
                                     <div class="document-detail-item">
                                         <span> File Name </span>
 
-                                        <strong id="documentDetailFileName">
-                                            —
-                                        </strong>
+                                        <strong id="documentDetailFileName"> — </strong>
                                     </div>
 
                                     <div class="document-detail-item">
                                         <span> Verification Status </span>
 
                                         <strong>
-                                            <span
-                                                class="status-badge"
-                                                id="documentDetailStatus"
-                                            >
+                                            <span class="status-badge" id="documentDetailStatus">
                                                 —
                                             </span>
                                         </strong>

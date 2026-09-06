@@ -1,61 +1,32 @@
-/* =========================================================
-   RESORTHUB - STAFF MANAGEMENT
-   File: staff-management.js
+/* RESORTHUB - STAFF MANAGEMENT File: staff-management.js Frontend functionality: - Staff search - Role filtering - Account status filtering - Staff record counting - Summary statistics - Add Staff button - Staff action buttons - Sidebar toggle - Lucide icon refresh Database/API integration will be added later. */
 
-   Frontend functionality:
-   - Staff search
-   - Role filtering
-   - Account status filtering
-   - Staff record counting
-   - Summary statistics
-   - Add Staff button
-   - Staff action buttons
-   - Sidebar toggle
-   - Lucide icon refresh
-
-   Database/API integration will be added later.
-   ========================================================= */
-
-
-/* =========================================================
-   DOM READY
-   ========================================================= */
+/* DOM READY */
 
 document.addEventListener("DOMContentLoaded", function () {
-
-  initializeStaffManagement();
-
+    initializeStaffManagement();
 });
 
-
-/* =========================================================
-   MAIN INITIALIZATION
-   ========================================================= */
+/* MAIN INITIALIZATION */
 
 function initializeStaffManagement() {
+    initializeStaffElements();
 
-  initializeStaffElements();
+    initializeStaffFilters();
 
-  initializeStaffFilters();
+    initializeAddStaffButton();
 
-  initializeAddStaffButton();
+    initializeStaffActions();
 
-  initializeStaffActions();
+    initializeSidebarToggle();
 
-  initializeSidebarToggle();
+    updateStaffSummary();
 
-  updateStaffSummary();
+    updateStaffRecordCount();
 
-  updateStaffRecordCount();
-
-  refreshIcons();
-
+    refreshIcons();
 }
 
-
-/* =========================================================
-   ELEMENT REFERENCES
-   ========================================================= */
+/* ELEMENT REFERENCES */
 
 let staffTableBody;
 let staffRows;
@@ -70,900 +41,512 @@ let activeStaffElement;
 let inactiveStaffElement;
 let roleCountElement;
 
-
-/* =========================================================
-   INITIALIZE ELEMENTS
-   ========================================================= */
+/* INITIALIZE ELEMENTS */
 
 function initializeStaffElements() {
+    staffTableBody = document.getElementById("staffTableBody");
 
-  staffTableBody =
-    document.getElementById("staffTableBody");
+    staffSearch = document.getElementById("staffSearch");
 
-  staffSearch =
-    document.getElementById("staffSearch");
+    staffRoleFilter = document.getElementById("staffRoleFilter");
 
-  staffRoleFilter =
-    document.getElementById("staffRoleFilter");
+    staffStatusFilter = document.getElementById("staffStatusFilter");
 
-  staffStatusFilter =
-    document.getElementById("staffStatusFilter");
+    emptyStaffState = document.getElementById("emptyStaffState");
 
-  emptyStaffState =
-    document.getElementById("emptyStaffState");
+    staffRecordCount = document.getElementById("staffRecordCount");
 
-  staffRecordCount =
-    document.getElementById("staffRecordCount");
+    totalStaffElement = document.getElementById("totalStaff");
 
-  totalStaffElement =
-    document.getElementById("totalStaff");
+    activeStaffElement = document.getElementById("activeStaff");
 
-  activeStaffElement =
-    document.getElementById("activeStaff");
+    inactiveStaffElement = document.getElementById("inactiveStaff");
 
-  inactiveStaffElement =
-    document.getElementById("inactiveStaff");
+    roleCountElement = document.getElementById("roleCount");
 
-  roleCountElement =
-    document.getElementById("roleCount");
-
-  if (staffTableBody) {
-
-    staffRows =
-      Array.from(
-        staffTableBody.querySelectorAll("tr")
-      );
-
-  } else {
-
-    staffRows = [];
-
-  }
-
+    if (staffTableBody) {
+        staffRows = Array.from(staffTableBody.querySelectorAll("tr"));
+    } else {
+        staffRows = [];
+    }
 }
 
-
-/* =========================================================
-   SEARCH AND FILTERS
-   ========================================================= */
+/* SEARCH AND FILTERS */
 
 function initializeStaffFilters() {
+    if (staffSearch) {
+        staffSearch.addEventListener("input", filterStaff);
+    }
 
-  if (staffSearch) {
+    if (staffRoleFilter) {
+        staffRoleFilter.addEventListener("change", filterStaff);
+    }
 
-    staffSearch.addEventListener(
-      "input",
-      filterStaff
-    );
-
-  }
-
-
-  if (staffRoleFilter) {
-
-    staffRoleFilter.addEventListener(
-      "change",
-      filterStaff
-    );
-
-  }
-
-
-  if (staffStatusFilter) {
-
-    staffStatusFilter.addEventListener(
-      "change",
-      filterStaff
-    );
-
-  }
-
+    if (staffStatusFilter) {
+        staffStatusFilter.addEventListener("change", filterStaff);
+    }
 }
 
-
-/* =========================================================
-   FILTER STAFF
-   ========================================================= */
+/* FILTER STAFF */
 
 function filterStaff() {
+    const searchValue = staffSearch ? staffSearch.value.trim().toLowerCase() : "";
 
-  const searchValue =
-    staffSearch
-      ? staffSearch.value.trim().toLowerCase()
-      : "";
+    const selectedRole = staffRoleFilter ? staffRoleFilter.value : "all";
 
-  const selectedRole =
-    staffRoleFilter
-      ? staffRoleFilter.value
-      : "all";
+    const selectedStatus = staffStatusFilter ? staffStatusFilter.value : "all";
 
-  const selectedStatus =
-    staffStatusFilter
-      ? staffStatusFilter.value
-      : "all";
+    let visibleCount = 0;
 
+    staffRows.forEach(function (row) {
+        const name = (row.dataset.name || "").toLowerCase();
 
-  let visibleCount = 0;
+        const role = (row.dataset.role || "").toLowerCase();
 
+        const status = (row.dataset.status || "").toLowerCase();
 
-  staffRows.forEach(function (row) {
+        /*
+         * Search checks the staff name.
+         *
+         * This can later be expanded to include:
+         * - Staff ID
+         * - Email
+         * - Role
+         *
+         * when the database is connected.
+         */
 
-    const name =
-      (row.dataset.name || "").toLowerCase();
+        const matchesSearch = searchValue === "" || name.includes(searchValue);
 
-    const role =
-      (row.dataset.role || "").toLowerCase();
+        const matchesRole = selectedRole === "all" || role === selectedRole;
 
-    const status =
-      (row.dataset.status || "").toLowerCase();
+        const matchesStatus = selectedStatus === "all" || status === selectedStatus;
 
+        const shouldShow = matchesSearch && matchesRole && matchesStatus;
 
-    /*
-     * Search checks the staff name.
-     *
-     * This can later be expanded to include:
-     * - Staff ID
-     * - Email
-     * - Role
-     *
-     * when the database is connected.
-     */
+        row.style.display = shouldShow ? "" : "none";
 
-    const matchesSearch =
-      searchValue === "" ||
-      name.includes(searchValue);
+        if (shouldShow) {
+            visibleCount++;
+        }
+    });
 
+    updateEmptyState(visibleCount);
 
-    const matchesRole =
-      selectedRole === "all" ||
-      role === selectedRole;
-
-
-    const matchesStatus =
-      selectedStatus === "all" ||
-      status === selectedStatus;
-
-
-    const shouldShow =
-      matchesSearch &&
-      matchesRole &&
-      matchesStatus;
-
-
-    row.style.display =
-      shouldShow ? "" : "none";
-
-
-    if (shouldShow) {
-
-      visibleCount++;
-
-    }
-
-  });
-
-
-  updateEmptyState(visibleCount);
-
-  updateFilteredRecordCount(visibleCount);
-
+    updateFilteredRecordCount(visibleCount);
 }
 
-
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
+/* EMPTY STATE */
 
 function updateEmptyState(visibleCount) {
+    if (!emptyStaffState) {
+        return;
+    }
 
-  if (!emptyStaffState) {
-    return;
-  }
-
-
-  if (visibleCount === 0) {
-
-    emptyStaffState.hidden = false;
-
-  } else {
-
-    emptyStaffState.hidden = true;
-
-  }
-
+    if (visibleCount === 0) {
+        emptyStaffState.hidden = false;
+    } else {
+        emptyStaffState.hidden = true;
+    }
 }
 
-
-/* =========================================================
-   UPDATE FILTERED RECORD COUNT
-   ========================================================= */
+/* UPDATE FILTERED RECORD COUNT */
 
 function updateFilteredRecordCount(visibleCount) {
+    if (!staffRecordCount) {
+        return;
+    }
 
-  if (!staffRecordCount) {
-    return;
-  }
-
-
-  if (visibleCount === 1) {
-
-    staffRecordCount.textContent =
-      "1 record";
-
-  } else {
-
-    staffRecordCount.textContent =
-      visibleCount + " records";
-
-  }
-
+    if (visibleCount === 1) {
+        staffRecordCount.textContent = "1 record";
+    } else {
+        staffRecordCount.textContent = visibleCount + " records";
+    }
 }
 
-
-/* =========================================================
-   STAFF SUMMARY
-   ========================================================= */
+/* STAFF SUMMARY */
 
 function updateStaffSummary() {
+    const total = staffRows.length;
 
-  const total =
-    staffRows.length;
+    let active = 0;
+    let inactive = 0;
 
+    const roles = new Set();
 
-  let active = 0;
-  let inactive = 0;
+    staffRows.forEach(function (row) {
+        const status = (row.dataset.status || "").toLowerCase();
 
+        const role = (row.dataset.role || "").toLowerCase();
 
-  const roles =
-    new Set();
+        if (status === "active") {
+            active++;
+        }
 
+        if (status === "inactive") {
+            inactive++;
+        }
 
-  staffRows.forEach(function (row) {
+        if (role !== "") {
+            roles.add(role);
+        }
+    });
 
-    const status =
-      (row.dataset.status || "").toLowerCase();
-
-    const role =
-      (row.dataset.role || "").toLowerCase();
-
-
-    if (status === "active") {
-
-      active++;
-
+    if (totalStaffElement) {
+        totalStaffElement.textContent = total;
     }
 
-
-    if (status === "inactive") {
-
-      inactive++;
-
+    if (activeStaffElement) {
+        activeStaffElement.textContent = active;
     }
 
-
-    if (role !== "") {
-
-      roles.add(role);
-
+    if (inactiveStaffElement) {
+        inactiveStaffElement.textContent = inactive;
     }
 
-  });
-
-
-  if (totalStaffElement) {
-
-    totalStaffElement.textContent =
-      total;
-
-  }
-
-
-  if (activeStaffElement) {
-
-    activeStaffElement.textContent =
-      active;
-
-  }
-
-
-  if (inactiveStaffElement) {
-
-    inactiveStaffElement.textContent =
-      inactive;
-
-  }
-
-
-  if (roleCountElement) {
-
-    roleCountElement.textContent =
-      roles.size;
-
-  }
-
+    if (roleCountElement) {
+        roleCountElement.textContent = roles.size;
+    }
 }
 
-
-/* =========================================================
-   INITIAL RECORD COUNT
-   ========================================================= */
+/* INITIAL RECORD COUNT */
 
 function updateStaffRecordCount() {
+    if (!staffRecordCount) {
+        return;
+    }
 
-  if (!staffRecordCount) {
-    return;
-  }
+    const total = staffRows.length;
 
-
-  const total =
-    staffRows.length;
-
-
-  if (total === 1) {
-
-    staffRecordCount.textContent =
-      "1 record";
-
-  } else {
-
-    staffRecordCount.textContent =
-      total + " records";
-
-  }
-
+    if (total === 1) {
+        staffRecordCount.textContent = "1 record";
+    } else {
+        staffRecordCount.textContent = total + " records";
+    }
 }
 
-
-/* =========================================================
-   ADD STAFF BUTTON
-   ========================================================= */
+/* ADD STAFF BUTTON */
 
 function initializeAddStaffButton() {
+    const addStaffButton = document.getElementById("addStaffButton");
 
-  const addStaffButton =
-    document.getElementById("addStaffButton");
-
-
-  if (!addStaffButton) {
-    return;
-  }
-
-
-  addStaffButton.addEventListener(
-    "click",
-    function () {
-
-      openAddStaffForm();
-
+    if (!addStaffButton) {
+        return;
     }
-  );
 
+    addStaffButton.addEventListener("click", function () {
+        openAddStaffForm();
+    });
 }
 
-
-/* =========================================================
-   ADD STAFF FORM
-   ========================================================= */
+/* ADD STAFF FORM */
 
 function openAddStaffForm() {
+    /*
+     * Temporary frontend behavior.
+     *
+     * The actual staff creation form will later
+     * connect to the database.
+     */
 
-  /*
-   * Temporary frontend behavior.
-   *
-   * The actual staff creation form will later
-   * connect to the database.
-   */
+    const staffName = window.prompt("Enter staff member name:");
 
+    if (!staffName) {
+        return;
+    }
 
-  const staffName =
-    window.prompt(
-      "Enter staff member name:"
+    const staffEmail = window.prompt("Enter staff email:");
+
+    if (!staffEmail) {
+        return;
+    }
+
+    const staffRole = window.prompt(
+        "Enter staff role:\n\n" + "Administrator\n" + "Front Desk\n" + "Staff",
     );
 
+    if (!staffRole) {
+        return;
+    }
 
-  if (!staffName) {
-    return;
-  }
+    const normalizedRole = normalizeRole(staffRole);
 
+    if (!normalizedRole) {
+        alert("Invalid role. Please use Administrator, Front Desk, or Staff.");
 
-  const staffEmail =
-    window.prompt(
-      "Enter staff email:"
-    );
+        return;
+    }
 
-
-  if (!staffEmail) {
-    return;
-  }
-
-
-  const staffRole =
-    window.prompt(
-      "Enter staff role:\n\n" +
-      "Administrator\n" +
-      "Front Desk\n" +
-      "Staff"
-    );
-
-
-  if (!staffRole) {
-    return;
-  }
-
-
-  const normalizedRole =
-    normalizeRole(staffRole);
-
-
-  if (!normalizedRole) {
+    /*
+     * At this stage, the form does not write
+     * anything to a database.
+     *
+     * This only demonstrates the intended
+     * frontend interaction.
+     */
 
     alert(
-      "Invalid role. Please use Administrator, Front Desk, or Staff."
+        "Staff account form received.\n\n" +
+            "Name: " +
+            staffName +
+            "\n" +
+            "Email: " +
+            staffEmail +
+            "\n" +
+            "Role: " +
+            formatRole(normalizedRole) +
+            "\n\n" +
+            "Database connection will be added later.",
     );
-
-    return;
-
-  }
-
-
-  /*
-   * At this stage, the form does not write
-   * anything to a database.
-   *
-   * This only demonstrates the intended
-   * frontend interaction.
-   */
-
-  alert(
-    "Staff account form received.\n\n" +
-    "Name: " + staffName + "\n" +
-    "Email: " + staffEmail + "\n" +
-    "Role: " + formatRole(normalizedRole) +
-    "\n\n" +
-    "Database connection will be added later."
-  );
-
 }
 
-
-/* =========================================================
-   NORMALIZE ROLE
-   ========================================================= */
+/* NORMALIZE ROLE */
 
 function normalizeRole(role) {
+    const value = role.trim().toLowerCase();
 
-  const value =
-    role.trim().toLowerCase();
+    if (value === "administrator" || value === "admin") {
+        return "administrator";
+    }
 
+    if (value === "front desk" || value === "front-desk" || value === "frontdesk") {
+        return "front-desk";
+    }
 
-  if (
-    value === "administrator" ||
-    value === "admin"
-  ) {
+    if (value === "staff") {
+        return "staff";
+    }
 
-    return "administrator";
-
-  }
-
-
-  if (
-    value === "front desk" ||
-    value === "front-desk" ||
-    value === "frontdesk"
-  ) {
-
-    return "front-desk";
-
-  }
-
-
-  if (value === "staff") {
-
-    return "staff";
-
-  }
-
-
-  return null;
-
+    return null;
 }
 
-
-/* =========================================================
-   FORMAT ROLE
-   ========================================================= */
+/* FORMAT ROLE */
 
 function formatRole(role) {
+    if (role === "administrator") {
+        return "Administrator";
+    }
 
-  if (role === "administrator") {
+    if (role === "front-desk") {
+        return "Front Desk";
+    }
 
-    return "Administrator";
+    if (role === "staff") {
+        return "Staff";
+    }
 
-  }
-
-
-  if (role === "front-desk") {
-
-    return "Front Desk";
-
-  }
-
-
-  if (role === "staff") {
-
-    return "Staff";
-
-  }
-
-
-  return role;
-
+    return role;
 }
 
-
-/* =========================================================
-   STAFF ACTION BUTTONS
-   ========================================================= */
+/* STAFF ACTION BUTTONS */
 
 function initializeStaffActions() {
+    const actionButtons = document.querySelectorAll(".table-action");
 
-  const actionButtons =
-    document.querySelectorAll(
-      ".table-action"
-    );
-
-
-  actionButtons.forEach(function (button) {
-
-    button.addEventListener(
-      "click",
-      function (event) {
-
-        handleStaffAction(event.currentTarget);
-
-      }
-    );
-
-  });
-
+    actionButtons.forEach(function (button) {
+        button.addEventListener("click", function (event) {
+            handleStaffAction(event.currentTarget);
+        });
+    });
 }
 
-
-/* =========================================================
-   HANDLE STAFF ACTION
-   ========================================================= */
+/* HANDLE STAFF ACTION */
 
 function handleStaffAction(button) {
+    const row = button.closest("tr");
 
-  const row =
-    button.closest("tr");
+    if (!row) {
+        return;
+    }
 
+    const name = row.dataset.name || "Staff Member";
 
-  if (!row) {
-    return;
-  }
+    const role = row.dataset.role || "";
 
+    const status = row.dataset.status || "";
 
-  const name =
-    row.dataset.name || "Staff Member";
+    /*
+     * Temporary frontend action menu.
+     *
+     * Actual Edit / Activate / Deactivate
+     * functionality will be connected to the
+     * database later.
+     */
 
-  const role =
-    row.dataset.role || "";
-
-  const status =
-    row.dataset.status || "";
-
-
-  /*
-   * Temporary frontend action menu.
-   *
-   * Actual Edit / Activate / Deactivate
-   * functionality will be connected to the
-   * database later.
-   */
-
-  const action =
-    window.prompt(
-      "Manage Staff\n\n" +
-      "Staff: " + name + "\n" +
-      "Role: " + formatRole(role) + "\n" +
-      "Status: " + formatStatus(status) +
-      "\n\n" +
-      "Enter an action:\n" +
-      "Edit\n" +
-      "Toggle Status\n" +
-      "Cancel"
+    const action = window.prompt(
+        "Manage Staff\n\n" +
+            "Staff: " +
+            name +
+            "\n" +
+            "Role: " +
+            formatRole(role) +
+            "\n" +
+            "Status: " +
+            formatStatus(status) +
+            "\n\n" +
+            "Enter an action:\n" +
+            "Edit\n" +
+            "Toggle Status\n" +
+            "Cancel",
     );
 
+    if (!action) {
+        return;
+    }
 
-  if (!action) {
-    return;
-  }
+    const normalizedAction = action.trim().toLowerCase();
 
+    if (normalizedAction === "edit") {
+        editStaffPreview(row);
 
-  const normalizedAction =
-    action.trim().toLowerCase();
+        return;
+    }
 
+    if (normalizedAction === "toggle status" || normalizedAction === "toggle") {
+        toggleStaffStatus(row);
 
-  if (normalizedAction === "edit") {
+        return;
+    }
 
-    editStaffPreview(row);
+    if (normalizedAction === "cancel") {
+        return;
+    }
 
-    return;
-
-  }
-
-
-  if (
-    normalizedAction === "toggle status" ||
-    normalizedAction === "toggle"
-  ) {
-
-    toggleStaffStatus(row);
-
-    return;
-
-  }
-
-
-  if (normalizedAction === "cancel") {
-
-    return;
-
-  }
-
-
-  alert(
-    "Invalid action."
-  );
-
+    alert("Invalid action.");
 }
 
-
-/* =========================================================
-   EDIT STAFF PREVIEW
-   ========================================================= */
+/* EDIT STAFF PREVIEW */
 
 function editStaffPreview(row) {
+    const name = row.dataset.name || "";
 
-  const name =
-    row.dataset.name || "";
+    const role = row.dataset.role || "";
 
-  const role =
-    row.dataset.role || "";
+    const newName = window.prompt("Edit staff name:", name);
 
-  const newName =
-    window.prompt(
-      "Edit staff name:",
-      name
+    if (!newName) {
+        return;
+    }
+
+    const newRole = window.prompt(
+        "Edit staff role:\n\n" + "Administrator\n" + "Front Desk\n" + "Staff",
+        formatRole(role),
     );
 
+    if (!newRole) {
+        return;
+    }
 
-  if (!newName) {
-    return;
-  }
+    const normalizedRole = normalizeRole(newRole);
 
+    if (!normalizedRole) {
+        alert("Invalid role.");
 
-  const newRole =
-    window.prompt(
-      "Edit staff role:\n\n" +
-      "Administrator\n" +
-      "Front Desk\n" +
-      "Staff",
-      formatRole(role)
-    );
+        return;
+    }
 
+    /*
+     * Update the frontend row.
+     *
+     * Later this section will instead
+     * send an update request to the backend.
+     */
 
-  if (!newRole) {
-    return;
-  }
+    row.dataset.name = newName.trim();
 
+    row.dataset.role = normalizedRole;
 
-  const normalizedRole =
-    normalizeRole(newRole);
+    const nameElement = row.querySelector(".staff-member strong");
 
+    const roleElement = row.querySelector(".role-badge");
 
-  if (!normalizedRole) {
+    if (nameElement) {
+        nameElement.textContent = newName.trim();
+    }
+
+    if (roleElement) {
+        roleElement.textContent = formatRole(normalizedRole);
+
+        roleElement.className = "role-badge " + normalizedRole;
+    }
+
+    updateStaffSummary();
+
+    filterStaff();
+
+    refreshIcons();
 
     alert(
-      "Invalid role."
+        "Staff information updated in the frontend.\n\n" +
+            "Database update will be connected later.",
     );
-
-    return;
-
-  }
-
-
-  /*
-   * Update the frontend row.
-   *
-   * Later this section will instead
-   * send an update request to the backend.
-   */
-
-  row.dataset.name =
-    newName.trim();
-
-  row.dataset.role =
-    normalizedRole;
-
-
-  const nameElement =
-    row.querySelector(
-      ".staff-member strong"
-    );
-
-
-  const roleElement =
-    row.querySelector(
-      ".role-badge"
-    );
-
-
-  if (nameElement) {
-
-    nameElement.textContent =
-      newName.trim();
-
-  }
-
-
-  if (roleElement) {
-
-    roleElement.textContent =
-      formatRole(normalizedRole);
-
-    roleElement.className =
-      "role-badge " + normalizedRole;
-
-  }
-
-
-  updateStaffSummary();
-
-  filterStaff();
-
-  refreshIcons();
-
-
-  alert(
-    "Staff information updated in the frontend.\n\n" +
-    "Database update will be connected later."
-  );
-
 }
 
-
-/* =========================================================
-   TOGGLE STAFF STATUS
-   ========================================================= */
+/* TOGGLE STAFF STATUS */
 
 function toggleStaffStatus(row) {
+    const currentStatus = (row.dataset.status || "").toLowerCase();
 
-  const currentStatus =
-    (row.dataset.status || "").toLowerCase();
+    const newStatus = currentStatus === "active" ? "inactive" : "active";
 
+    row.dataset.status = newStatus;
 
-  const newStatus =
-    currentStatus === "active"
-      ? "inactive"
-      : "active";
+    const statusElement = row.querySelector(".status-badge");
 
+    if (statusElement) {
+        statusElement.className = "status-badge " + newStatus;
 
-  row.dataset.status =
-    newStatus;
+        statusElement.innerHTML = '<span class="status-dot"></span>' + formatStatus(newStatus);
+    }
 
+    updateStaffSummary();
 
-  const statusElement =
-    row.querySelector(
-      ".status-badge"
+    filterStaff();
+
+    refreshIcons();
+
+    alert(
+        "Account status changed to " +
+            formatStatus(newStatus) +
+            ".\n\n" +
+            "Database update will be connected later.",
     );
-
-
-  if (statusElement) {
-
-    statusElement.className =
-      "status-badge " + newStatus;
-
-
-    statusElement.innerHTML =
-      '<span class="status-dot"></span>' +
-      formatStatus(newStatus);
-
-  }
-
-
-  updateStaffSummary();
-
-  filterStaff();
-
-  refreshIcons();
-
-
-  alert(
-    "Account status changed to " +
-    formatStatus(newStatus) +
-    ".\n\n" +
-    "Database update will be connected later."
-  );
-
 }
 
-
-/* =========================================================
-   FORMAT STATUS
-   ========================================================= */
+/* FORMAT STATUS */
 
 function formatStatus(status) {
+    if (status === "active") {
+        return "Active";
+    }
 
-  if (status === "active") {
+    if (status === "inactive") {
+        return "Inactive";
+    }
 
-    return "Active";
-
-  }
-
-
-  if (status === "inactive") {
-
-    return "Inactive";
-
-  }
-
-
-  return status;
-
+    return status;
 }
 
-
-/* =========================================================
-   SIDEBAR TOGGLE
-   ========================================================= */
+/* SIDEBAR TOGGLE */
 
 function initializeSidebarToggle() {
+    const toggleButton = document.querySelector(".sidebar-toggle");
 
-  const toggleButton =
-    document.querySelector(
-      ".sidebar-toggle"
-    );
+    const sidebar = document.querySelector(".sidebar");
 
-  const sidebar =
-    document.querySelector(
-      ".sidebar"
-    );
-
-
-  if (!toggleButton || !sidebar) {
-    return;
-  }
-
-
-  toggleButton.addEventListener(
-    "click",
-    function () {
-
-      sidebar.classList.toggle(
-        "sidebar-collapsed"
-      );
-
+    if (!toggleButton || !sidebar) {
+        return;
     }
-  );
 
+    toggleButton.addEventListener("click", function () {
+        sidebar.classList.toggle("sidebar-collapsed");
+    });
 }
 
-
-/* =========================================================
-   LUCIDE ICON REFRESH
-   ========================================================= */
+/* LUCIDE ICON REFRESH */
 
 function refreshIcons() {
-
-  if (
-    typeof lucide !== "undefined" &&
-    typeof lucide.createIcons === "function"
-  ) {
-
-    lucide.createIcons();
-
-  }
-
+    if (typeof lucide !== "undefined" && typeof lucide.createIcons === "function") {
+        lucide.createIcons();
+    }
 }

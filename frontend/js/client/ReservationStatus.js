@@ -1,14 +1,12 @@
 "use strict";
 
-const USE_DUMMY_DATA = false;  // Set to true for frontend development without backend
+const USE_DUMMY_DATA = false; // Set to true for frontend development without backend
 
 const accessToken = sessionStorage.getItem("resorthub_access_token");
 
 if (!accessToken) {
     window.location.href = "../auth/Login.html";
 }
-
-
 
 /*API ENDPOINTS*/
 
@@ -18,31 +16,19 @@ const API_ENDPOINTS = {
 
     reservationById(reservationId) {
         return `/api/client/reservations/${encodeURIComponent(reservationId)}`;
-    }
+    },
 };
 
-
-/* =========================================================
-   DUMMY CLIENT
-   Presentation data only.
-   ========================================================= */
+/* DUMMY CLIENT Presentation data only. */
 
 const DUMMY_CLIENT = {
     id: 1,
-    name: "Juan Dela Cruz"
+    name: "Juan Dela Cruz",
 };
 
-
-/* =========================================================
-   DUMMY RESERVATIONS
-   Presentation data only.
-
-   These records are structured similarly to data that can
-   later come from MySQL through the Express backend.
-   ========================================================= */
+/* DUMMY RESERVATIONS Presentation data only. These records are structured similarly to data that can later come from MySQL through the Express backend. */
 
 const DUMMY_RESERVATIONS = [
-
     {
         id: 105,
         client_id: 1,
@@ -61,7 +47,7 @@ const DUMMY_RESERVATIONS = [
 
         payment_status: "Pending Verification",
 
-        document_verification_status: "Pending Verification"
+        document_verification_status: "Pending Verification",
     },
 
     {
@@ -82,7 +68,7 @@ const DUMMY_RESERVATIONS = [
 
         payment_status: "Pending Verification",
 
-        document_verification_status: "Verified"
+        document_verification_status: "Verified",
     },
 
     {
@@ -103,7 +89,7 @@ const DUMMY_RESERVATIONS = [
 
         payment_status: "Verified",
 
-        document_verification_status: "Verified"
+        document_verification_status: "Verified",
     },
 
     {
@@ -124,18 +110,16 @@ const DUMMY_RESERVATIONS = [
 
         payment_status: "Pending",
 
-        document_verification_status: "Pending Verification"
-    }
-
+        document_verification_status: "Pending Verification",
+    },
 ];
-
 
 /*APPLICATION STATE*/
 
 const reservationStatusState = {
     client: null,
     reservation: null,
-    loading: false
+    loading: false,
 };
 
 let depositCountDownTimer = null;
@@ -144,111 +128,76 @@ let depositCountDownTimer = null;
 
 /* Shared */
 
-const clientApp =
-    document.getElementById("clientApp");
+const clientApp = document.getElementById("clientApp");
 
-const sidebarToggle =
-    document.getElementById("sidebarToggle");
+const sidebarToggle = document.getElementById("sidebarToggle");
 
-const clientProfileButton =
-    document.getElementById("clientProfileButton");
+const clientProfileButton = document.getElementById("clientProfileButton");
 
-const clientDisplayName =
-    document.getElementById("clientDisplayName");
-
+const clientDisplayName = document.getElementById("clientDisplayName");
 
 /* Page states */
 
-const reservationStatusEmptyState =
-    document.getElementById("reservationStatusEmptyState");
+const reservationStatusEmptyState = document.getElementById("reservationStatusEmptyState");
 
-const reservationStatusContent =
-    document.getElementById("reservationStatusContent");
-
+const reservationStatusContent = document.getElementById("reservationStatusContent");
 
 /* Reservation information */
 
-const reservationReference =
-    document.getElementById("reservationReference");
+const reservationReference = document.getElementById("reservationReference");
 
-const reservationMainStatus =
-    document.getElementById("reservationMainStatus");
+const reservationMainStatus = document.getElementById("reservationMainStatus");
 
-const reservationResort =
-    document.getElementById("reservationResort");
+const reservationResort = document.getElementById("reservationResort");
 
-const reservationAccommodation =
-    document.getElementById("reservationAccommodation");
+const reservationAccommodation = document.getElementById("reservationAccommodation");
 
-const reservationCheckIn =
-    document.getElementById("reservationCheckIn");
+const reservationCheckIn = document.getElementById("reservationCheckIn");
 
-const reservationCheckOut =
-    document.getElementById("reservationCheckOut");
-
+const reservationCheckOut = document.getElementById("reservationCheckOut");
 
 /* Status overview */
 
-const reservationStatusBadge =
-    document.getElementById("reservationStatusBadge");
+const reservationStatusBadge = document.getElementById("reservationStatusBadge");
 
-const paymentStatusBadge =
-    document.getElementById("paymentStatusBadge");
+const paymentStatusBadge = document.getElementById("paymentStatusBadge");
 
-const documentStatusBadge =
-    document.getElementById("documentStatusBadge");
-
+const documentStatusBadge = document.getElementById("documentStatusBadge");
 
 /* Related transaction cards */
 
-const paymentTransactionStatus =
-    document.getElementById("paymentTransactionStatus");
+const paymentTransactionStatus = document.getElementById("paymentTransactionStatus");
 
-const reservationTotalAmount =
-    document.getElementById("reservationTotalAmount");
+const reservationTotalAmount = document.getElementById("reservationTotalAmount");
 
-const reservationDepositAmount =
-    document.getElementById("reservationDepositAmount");
+const reservationDepositAmount = document.getElementById("reservationDepositAmount");
 
-const reservationAmountPaid =
-    document.getElementById("reservationAmountPaid");
+const reservationAmountPaid = document.getElementById("reservationAmountPaid");
 
-const reservationBalance =
-    document.getElementById("reservationBalance");
+const reservationBalance = document.getElementById("reservationBalance");
 
-const reservationDepositDeadline =
-    document.getElementById("reservationDepositDeadline");
+const reservationDepositDeadline = document.getElementById("reservationDepositDeadline");
 
-const reservationDepositCountdown =
-    document.getElementById("reservationDepositCountdown");
+const reservationDepositCountdown = document.getElementById("reservationDepositCountdown");
 
-const documentTransactionStatus =
-    document.getElementById("documentTransactionStatus");
+const documentTransactionStatus = document.getElementById("documentTransactionStatus");
 
-const viewPaymentButton =
-    document.getElementById("viewPaymentButton");
+const viewPaymentButton = document.getElementById("viewPaymentButton");
 
-const viewDocumentsButton =
-    document.getElementById("viewDocumentsButton");
+const viewDocumentsButton = document.getElementById("viewDocumentsButton");
 
+/* INITIALIZATION */
 
-/* =========================================================
-   INITIALIZATION
-   ========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    initializeReservationStatusPage
-);
+document.addEventListener("DOMContentLoaded", initializeReservationStatusPage);
 
 async function getDefaultReservationId() {
     const response = await fetch(API_ENDPOINTS.reservations, {
         method: "GET",
         credentials: "include",
         headers: {
-            "Accept": "application/json",
-            "Authorization": `Bearer ${accessToken}`
-        }
+            Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
     });
 
     const data = await response.json();
@@ -257,42 +206,27 @@ async function getDefaultReservationId() {
         throw new Error(data.message || "Unable to load reservations.");
     }
 
-    const reservations = Array.isArray(data.reservations)
-        ? data.reservations
-        : [];
+    const reservations = Array.isArray(data.reservations) ? data.reservations : [];
 
-    const activeStatuses = [
-        "pending",
-        "awaiting_deposit",
-        "deposit_verification",
-        "confirmed"
-    ];
+    const activeStatuses = ["pending", "awaiting_deposit", "deposit_verification", "confirmed"];
 
-    const activeReservation = reservations.find(reservation => activeStatuses.includes(
-        String(reservation.reservation_status).toLowerCase()
-    ));
+    const activeReservation = reservations.find((reservation) =>
+        activeStatuses.includes(String(reservation.reservation_status).toLowerCase()),
+    );
 
-    const selectedReservation = activeReservation || reservations[0] ||
-        null;
+    const selectedReservation = activeReservation || reservations[0] || null;
 
-    return selectedReservation
-        ? selectedReservation.id
-        : null;
+    return selectedReservation ? selectedReservation.id : null;
 }
 
-
 async function initializeReservationStatusPage() {
-
     initializeIcons();
 
     initializeSidebar();
 
     initializeProfileButton();
 
-
-    const reservationId =
-        getReservationIdFromUrl();
-
+    const reservationId = getReservationIdFromUrl();
 
     /*
      * During frontend development, if no ID is supplied,
@@ -312,63 +246,40 @@ async function initializeReservationStatusPage() {
         }
     }
 
-    if (selectedReservationId &&
-        !reservationId &&
-        !USE_DUMMY_DATA) {
-            const reservationUrl = `ReservationStatus.html?id=${
-                encodeURIComponent(selectedReservationId)
-            }`;
-            window.history.replaceState(null, "", reservationUrl);
+    if (selectedReservationId && !reservationId && !USE_DUMMY_DATA) {
+        const reservationUrl = `ReservationStatus.html?id=${encodeURIComponent(
+            selectedReservationId,
+        )}`;
+        window.history.replaceState(null, "", reservationUrl);
     }
 
-
     if (!selectedReservationId) {
-
         showReservationNotFound();
 
         return;
     }
 
-
     if (USE_DUMMY_DATA) {
-
-        loadDummyReservation(
-            selectedReservationId
-        );
+        loadDummyReservation(selectedReservationId);
 
         return;
     }
 
-
-    await loadReservationFromDatabase(
-        selectedReservationId
-    );
+    await loadReservationFromDatabase(selectedReservationId);
 }
 
+/* DUMMY MODE */
 
-/* =========================================================
-   DUMMY MODE
-   ========================================================= */
-
-function loadDummyReservation(
-    reservationId
-) {
-
+function loadDummyReservation(reservationId) {
     reservationStatusState.client = {
-        ...DUMMY_CLIENT
+        ...DUMMY_CLIENT,
     };
 
-
-    const reservation =
-        DUMMY_RESERVATIONS.find(
-            record =>
-                String(record.id) ===
-                String(reservationId)
-        );
-
+    const reservation = DUMMY_RESERVATIONS.find(
+        (record) => String(record.id) === String(reservationId),
+    );
 
     if (!reservation) {
-
         renderClient();
 
         showReservationNotFound();
@@ -376,513 +287,254 @@ function loadDummyReservation(
         return;
     }
 
-
     reservationStatusState.reservation = {
-        ...reservation
+        ...reservation,
     };
-
 
     renderClient();
 
     renderReservation();
 }
 
+/* DATABASE / API MODE */
 
-/* =========================================================
-   DATABASE / API MODE
-   ========================================================= */
-
-async function loadReservationFromDatabase(
-    reservationId
-) {
-
+async function loadReservationFromDatabase(reservationId) {
     setLoadingState(true);
 
-
     try {
-
-        await Promise.all([
-            loadClientFromApi(),
-            loadReservationFromApi(reservationId)
-        ]);
-
+        await Promise.all([loadClientFromApi(), loadReservationFromApi(reservationId)]);
 
         renderClient();
 
-
         if (!reservationStatusState.reservation) {
-
             showReservationNotFound();
 
             return;
         }
 
-
         renderReservation();
-
-
     } catch (error) {
-
-        console.error(
-            "Reservation Status loading error:",
-            error
-        );
-
+        console.error("Reservation Status loading error:", error);
 
         showReservationNotFound();
-
-
     } finally {
-
         setLoadingState(false);
     }
 }
 /*LOAD CLIENT*/
 
 async function loadClientFromApi() {
-
-    const response =
-        await fetch(
-            API_ENDPOINTS.clientProfile,
-            {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${accessToken}`
-                }
-            }
-        );
-
+    const response = await fetch(API_ENDPOINTS.clientProfile, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
 
     if (!response.ok) {
-
-        throw new Error(
-            "Unable to load client profile."
-        );
+        throw new Error("Unable to load client profile.");
     }
 
+    const data = await response.json();
 
-    const data =
-        await response.json();
-
-
-    reservationStatusState.client =
-        normalizeClient(data);
+    reservationStatusState.client = normalizeClient(data);
 }
 /*LOAD RESERVATION*/
 
-async function loadReservationFromApi(
-    reservationId
-) {
-
-    const response =
-        await fetch(
-            API_ENDPOINTS.reservationById(
-                reservationId
-            ),
-            {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${accessToken}`
-                }
-            }
-        );
-
+async function loadReservationFromApi(reservationId) {
+    const response = await fetch(API_ENDPOINTS.reservationById(reservationId), {
+        method: "GET",
+        credentials: "include",
+        headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
 
     if (response.status === 404) {
-
-        reservationStatusState.reservation =
-            null;
+        reservationStatusState.reservation = null;
 
         return;
     }
 
-
     if (!response.ok) {
-
-        throw new Error(
-            "Unable to load reservation."
-        );
+        throw new Error("Unable to load reservation.");
     }
 
+    const data = await response.json();
 
-    const data =
-        await response.json();
-
-
-    reservationStatusState.reservation =
-        normalizeReservation(data);
+    reservationStatusState.reservation = normalizeReservation(data);
 }
 
-
-/* =========================================================
-   NORMALIZE CLIENT
-   ========================================================= */
+/* NORMALIZE CLIENT */
 
 function normalizeClient(data) {
+    const client = data?.client || data;
 
-    const client =
-        data?.client ||
-        data;
-
-
-    if (
-        !client ||
-        typeof client !== "object"
-    ) {
-
+    if (!client || typeof client !== "object") {
         return null;
     }
 
-
     return {
+        id: client.id ?? client.client_id ?? null,
 
-        id:
-            client.id ??
-            client.client_id ??
-            null,
-
-        name:
-            client.name ||
-            client.full_name ||
-            ""
+        name: client.name || client.full_name || "",
     };
 }
 
-
-/* =========================================================
-   NORMALIZE RESERVATION
-
-   This allows the frontend to work even if your backend
-   later uses slightly different property names.
-   ========================================================= */
+/* NORMALIZE RESERVATION This allows the frontend to work even if your backend later uses slightly different property names. */
 
 function normalizeReservation(data) {
+    const reservation = data?.reservation || data;
 
-    const reservation =
-        data?.reservation ||
-        data;
-
-
-    if (
-        !reservation ||
-        typeof reservation !== "object"
-    ) {
-
+    if (!reservation || typeof reservation !== "object") {
         return null;
     }
 
-
     return {
+        id: reservation.id ?? reservation.reservation_id ?? null,
 
-        id:
-            reservation.id ??
-            reservation.reservation_id ??
-            null,
+        client_id: reservation.client_id ?? null,
 
-        client_id:
-            reservation.client_id ??
-            null,
+        reference_number: reservation.reference_number || reservation.reservation_reference || "",
 
-        reference_number:
-            reservation.reference_number ||
-            reservation.reservation_reference ||
-            "",
+        resort_name: reservation.resort_name || "",
 
-        resort_name:
-            reservation.resort_name ||
-            "",
+        accommodation_name: reservation.accommodation_name || "",
 
-        accommodation_name:
-            reservation.accommodation_name ||
-            "",
+        check_in: reservation.check_in || reservation.check_in_date || "",
 
-        check_in:
-            reservation.check_in ||
-            reservation.check_in_date ||
-            "",
+        check_out: reservation.check_out || reservation.check_out_date || "",
 
-        check_out:
-            reservation.check_out ||
-            reservation.check_out_date ||
-            "",
+        reservation_status: reservation.reservation_status || reservation.status || "",
 
-        reservation_status:
-            reservation.reservation_status ||
-            reservation.status ||
-            "",
+        payment_status: reservation.payment_status || "",
 
-        payment_status:
-            reservation.payment_status ||
-            "",
+        total_amount: Number(reservation.total_amount || 0),
 
-        total_amount:
-            Number(
-                reservation.total_amount || 0
-            ),
+        deposit_percentage: Number(reservation.deposit_percentage || 0),
 
-        deposit_percentage:
-            Number(
-                reservation.deposit_percentage || 0
-            ),
+        deposit_amount: Number(reservation.deposit_amount || 0),
 
-        deposit_amount:
-            Number(
-                reservation.deposit_amount || 0
-            ),
+        amount_paid: Number(reservation.amount_paid || 0),
 
-        amount_paid:
-            Number(
-                reservation.amount_paid || 0
-            ),
-
-        deposit_due_at:
-                reservation.deposit_due_at ||
-                null,
+        deposit_due_at: reservation.deposit_due_at || null,
 
         document_verification_status:
-            reservation.document_verification_status ||
-            reservation.document_status ||
-            ""
+            reservation.document_verification_status || reservation.document_status || "",
     };
 }
 
-
-/* =========================================================
-   RENDER CLIENT
-   ========================================================= */
+/* RENDER CLIENT */
 
 function renderClient() {
-
     if (!clientDisplayName) {
         return;
     }
 
-
-    clientDisplayName.textContent =
-        reservationStatusState.client?.name ||
-        "Client";
+    clientDisplayName.textContent = reservationStatusState.client?.name || "Client";
 }
 
-
-/* =========================================================
-   RENDER RESERVATION
-   ========================================================= */
+/* RENDER RESERVATION */
 
 function renderReservation() {
-
-    const reservation =
-        reservationStatusState.reservation;
-
+    const reservation = reservationStatusState.reservation;
 
     if (!reservation) {
-
         showReservationNotFound();
 
         return;
     }
 
-
     showReservationContent();
-
 
     /* Reservation information */
 
-    setText(
-        reservationReference,
-        reservation.reference_number
-    );
+    setText(reservationReference, reservation.reference_number);
 
+    setText(reservationResort, reservation.resort_name);
 
-    setText(
-        reservationResort,
-        reservation.resort_name
-    );
+    setText(reservationAccommodation, reservation.accommodation_name);
 
+    setText(reservationCheckIn, formatDate(reservation.check_in));
 
-    setText(
-        reservationAccommodation,
-        reservation.accommodation_name
-    );
-
-
-    setText(
-        reservationCheckIn,
-        formatDate(
-            reservation.check_in
-        )
-    );
-
-
-    setText(
-        reservationCheckOut,
-        formatDate(
-            reservation.check_out
-        )
-    );
-
+    setText(reservationCheckOut, formatDate(reservation.check_out));
 
     /* Reservation status */
 
-    applyStatusBadge(
-        reservationMainStatus,
-        reservation.reservation_status
-    );
+    applyStatusBadge(reservationMainStatus, reservation.reservation_status);
 
-
-    applyStatusBadge(
-        reservationStatusBadge,
-        reservation.reservation_status
-    );
-
+    applyStatusBadge(reservationStatusBadge, reservation.reservation_status);
 
     /* Payment status */
 
-    applyStatusBadge(
-        paymentStatusBadge,
-        reservation.payment_status
-    );
+    applyStatusBadge(paymentStatusBadge, reservation.payment_status);
 
+    applyStatusBadge(paymentTransactionStatus, reservation.payment_status);
 
-    applyStatusBadge(
-        paymentTransactionStatus,
-        reservation.payment_status
-    );
+    setText(reservationTotalAmount, formatCurrency(reservation.total_amount));
 
-    setText(
-        reservationTotalAmount,
-        formatCurrency(reservation.total_amount)
-    );
+    setText(reservationDepositAmount, formatCurrency(reservation.deposit_amount));
 
-    setText(
-        reservationDepositAmount,
-        formatCurrency(reservation.deposit_amount)
-    );
+    setText(reservationAmountPaid, formatCurrency(reservation.amount_paid));
 
-    setText(
-        reservationAmountPaid,
-        formatCurrency(reservation.amount_paid)
-    );
+    const remainingBalance = Math.max(reservation.total_amount - reservation.amount_paid, 0);
 
-    const remainingBalance = Math.max(
-        reservation.total_amount -
-        reservation.amount_paid, 0);
+    setText(reservationBalance, formatCurrency(remainingBalance));
 
-    setText(
-        reservationBalance,
-        formatCurrency(remainingBalance)
-    );
-
-    setText(
-        reservationDepositDeadline,
-        formatDateTime(reservation.deposit_due_at)
-    );
+    setText(reservationDepositDeadline, formatDateTime(reservation.deposit_due_at));
 
     /* Document verification */
 
-    applyStatusBadge(
-        documentStatusBadge,
-        reservation.document_verification_status
-    );
+    applyStatusBadge(documentStatusBadge, reservation.document_verification_status);
 
-
-    applyStatusBadge(
-        documentTransactionStatus,
-        reservation.document_verification_status
-    );
+    applyStatusBadge(documentTransactionStatus, reservation.document_verification_status);
 
     updateRelatedPageLinks();
     startDepositCountdown(reservation.deposit_due_at);
     initializeIcons();
 }
 
-
-/* =========================================================
-   RELATED PAGE LINKS
-
-   Passes the selected reservation ID to the related pages.
-
-   Examples:
-   Payments.html?reservation=105
-   UploadDocuments.html?reservation=105
-   ========================================================= */
+/* RELATED PAGE LINKS Passes the selected reservation ID to the related pages. Examples: Payments.html?reservation=105 UploadDocuments.html?reservation=105 */
 
 function updateRelatedPageLinks() {
-
-    const reservation =
-        reservationStatusState.reservation;
-
+    const reservation = reservationStatusState.reservation;
 
     if (!reservation) {
         return;
     }
 
-
-    const reservationId =
-        encodeURIComponent(
-            reservation.id
-        );
-
+    const reservationId = encodeURIComponent(reservation.id);
 
     if (viewPaymentButton) {
-
-        viewPaymentButton.href =
-            `Payments.html?reservation=${reservationId}`;
+        viewPaymentButton.href = `Payments.html?reservation=${reservationId}`;
     }
 
-
     if (viewDocumentsButton) {
-
-        viewDocumentsButton.href =
-            `UploadDocuments.html?reservation=${reservationId}`;
+        viewDocumentsButton.href = `UploadDocuments.html?reservation=${reservationId}`;
     }
 }
 
+/* STATUS BADGE Status values remain backend/database values. This function only controls presentation. */
 
-/* =========================================================
-   STATUS BADGE
-
-   Status values remain backend/database values.
-   This function only controls presentation.
-   ========================================================= */
-
-function applyStatusBadge(
-    element,
-    status
-) {
-
+function applyStatusBadge(element, status) {
     if (!element) {
         return;
     }
 
+    const value = String(status || "").trim();
 
-    const value =
-        String(
-            status || ""
-        ).trim();
+    element.className = "status-badge";
 
+    element.textContent = value || "—";
 
-    element.className =
-        "status-badge";
-
-
-    element.textContent =
-        value || "—";
-
-
-    switch (
-        value.toLowerCase()
-    ) {
-
+    switch (value.toLowerCase()) {
         case "confirmed":
 
         case "verified":
-            element.classList.add(
-                "status-success"
-            );
+            element.classList.add("status-success");
             break;
 
         case "awaiting_deposit":
@@ -891,30 +543,19 @@ function applyStatusBadge(
             break;
 
         case "pending verification":
-            element.classList.add(
-                "status-warning"
-            );
+            element.classList.add("status-warning");
             break;
-
 
         case "pending":
-            element.classList.add(
-                "status-info"
-            );
+            element.classList.add("status-info");
             break;
-
 
         case "rejected":
-            element.classList.add(
-                "status-danger"
-            );
+            element.classList.add("status-danger");
             break;
 
-
         default:
-            element.classList.add(
-                "status-neutral"
-            );
+            element.classList.add("status-neutral");
     }
 }
 
@@ -973,13 +614,10 @@ function formatCurrency(value) {
         return "—";
     }
 
-    return new Intl.NumberFormat(
-        "en-PH",
-        {
-            style: "currency",
-            currency: "PHP"
-        }
-    ).format(amount);
+    return new Intl.NumberFormat("en-PH", {
+        style: "currency",
+        currency: "PHP",
+    }).format(amount);
 }
 
 function formatDateTime(value) {
@@ -993,322 +631,164 @@ function formatDateTime(value) {
         return "—";
     }
 
-    return new Intl.DateTimeFormat(
-        "en-PH",
-        {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-            hour: "numeric",
-            minute: "2-digit"
-        }
-    ).format(date);
+    return new Intl.DateTimeFormat("en-PH", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+    }).format(date);
 }
 
-/* =========================================================
-   DATE FORMAT
-   ========================================================= */
+/* DATE FORMAT */
 
-function formatDate(
-    value
-) {
-
+function formatDate(value) {
     if (!value) {
-
         return "—";
     }
-
 
     /*
      * YYYY-MM-DD values are parsed manually so the
      * displayed date is not shifted by timezone conversion.
      */
 
-    const dateOnlyPattern =
-        /^\d{4}-\d{2}-\d{2}$/;
+    const dateOnlyPattern = /^\d{4}-\d{2}-\d{2}$/;
 
+    if (dateOnlyPattern.test(value)) {
+        const [year, month, day] = value.split("-").map(Number);
 
-    if (
-        dateOnlyPattern.test(value)
-    ) {
+        const date = new Date(year, month - 1, day);
 
-        const [
-            year,
-            month,
-            day
-        ] = value
-            .split("-")
-            .map(Number);
-
-
-        const date =
-            new Date(
-                year,
-                month - 1,
-                day
-            );
-
-
-        return new Intl.DateTimeFormat(
-            "en-PH",
-            {
-                year: "numeric",
-                month: "long",
-                day: "numeric"
-            }
-        ).format(date);
+        return new Intl.DateTimeFormat("en-PH", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        }).format(date);
     }
 
+    const date = new Date(value);
 
-    const date =
-        new Date(value);
-
-
-    if (
-        Number.isNaN(
-            date.getTime()
-        )
-    ) {
-
+    if (Number.isNaN(date.getTime())) {
         return String(value);
     }
 
-
-    return new Intl.DateTimeFormat(
-        "en-PH",
-        {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-        }
-    ).format(date);
+    return new Intl.DateTimeFormat("en-PH", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    }).format(date);
 }
 
-
-/* =========================================================
-   SHOW RESERVATION CONTENT
-   ========================================================= */
+/* SHOW RESERVATION CONTENT */
 
 function showReservationContent() {
-
     if (reservationStatusEmptyState) {
-
-        reservationStatusEmptyState.hidden =
-            true;
+        reservationStatusEmptyState.hidden = true;
     }
 
-
     if (reservationStatusContent) {
-
-        reservationStatusContent.hidden =
-            false;
+        reservationStatusContent.hidden = false;
     }
 }
 
-
-/* =========================================================
-   RESERVATION NOT FOUND
-   ========================================================= */
+/* RESERVATION NOT FOUND */
 
 function showReservationNotFound() {
-
-    reservationStatusState.reservation =
-        null;
-
+    reservationStatusState.reservation = null;
 
     if (reservationStatusContent) {
-
-        reservationStatusContent.hidden =
-            true;
+        reservationStatusContent.hidden = true;
     }
-
 
     if (reservationStatusEmptyState) {
-
-        reservationStatusEmptyState.hidden =
-            false;
+        reservationStatusEmptyState.hidden = false;
     }
-
 
     initializeIcons();
 }
 
+/* LOADING STATE */
 
-/* =========================================================
-   LOADING STATE
-   ========================================================= */
-
-function setLoadingState(
-    loading
-) {
-
-    reservationStatusState.loading =
-        loading;
-
+function setLoadingState(loading) {
+    reservationStatusState.loading = loading;
 
     if (loading) {
-
         if (reservationStatusContent) {
-
-            reservationStatusContent.hidden =
-                true;
+            reservationStatusContent.hidden = true;
         }
 
-
         if (reservationStatusEmptyState) {
-
-            reservationStatusEmptyState.hidden =
-                true;
+            reservationStatusEmptyState.hidden = true;
         }
     }
 }
 
-
-/* =========================================================
-   URL RESERVATION ID
-
-   Example:
-   ReservationStatus.html?id=105
-   ========================================================= */
+/* URL RESERVATION ID Example: ReservationStatus.html?id=105 */
 
 function getReservationIdFromUrl() {
+    const parameters = new URLSearchParams(window.location.search);
 
-    const parameters =
-        new URLSearchParams(
-            window.location.search
-        );
-
-
-    return parameters.get(
-        "id"
-    );
+    return parameters.get("id");
 }
 
+/* SET TEXT */
 
-/* =========================================================
-   SET TEXT
-   ========================================================= */
-
-function setText(
-    element,
-    value
-) {
-
+function setText(element, value) {
     if (!element) {
         return;
     }
 
-
-    if (
-        value === null ||
-        value === undefined ||
-        value === ""
-    ) {
-
-        element.textContent =
-            "—";
+    if (value === null || value === undefined || value === "") {
+        element.textContent = "—";
 
         return;
     }
 
-
-    element.textContent =
-        String(value);
+    element.textContent = String(value);
 }
 
-
-/* =========================================================
-   SIDEBAR
-   ========================================================= */
+/* SIDEBAR */
 
 function initializeSidebar() {
-
-    if (
-        !sidebarToggle ||
-        !clientApp
-    ) {
-
+    if (!sidebarToggle || !clientApp) {
         return;
     }
 
-
-    sidebarToggle.addEventListener(
-        "click",
-        handleSidebarToggle
-    );
+    sidebarToggle.addEventListener("click", handleSidebarToggle);
 }
-
 
 function handleSidebarToggle() {
-
-    const isMobile =
-        window.matchMedia(
-            "(max-width: 760px)"
-        ).matches;
-
+    const isMobile = window.matchMedia("(max-width: 760px)").matches;
 
     if (isMobile) {
-
-        clientApp.classList.toggle(
-            "sidebar-mobile-open"
-        );
+        clientApp.classList.toggle("sidebar-mobile-open");
 
         return;
     }
 
+    clientApp.classList.toggle("sidebar-collapsed");
 
-    clientApp.classList.toggle(
-        "sidebar-collapsed"
-    );
+    const collapsed = clientApp.classList.contains("sidebar-collapsed");
 
-
-    const collapsed =
-        clientApp.classList.contains(
-            "sidebar-collapsed"
-        );
-
-
-    sidebarToggle.setAttribute(
-        "aria-expanded",
-        String(!collapsed)
-    );
+    sidebarToggle.setAttribute("aria-expanded", String(!collapsed));
 }
 
-
-/* =========================================================
-   PROFILE
-   ========================================================= */
+/* PROFILE */
 
 function initializeProfileButton() {
-
     if (!clientProfileButton) {
         return;
     }
 
-
-    clientProfileButton.addEventListener(
-        "click",
-        () => {
-
-            window.location.href =
-                "Profile.html";
-        }
-    );
+    clientProfileButton.addEventListener("click", () => {
+        window.location.href = "Profile.html";
+    });
 }
 
-
-/* =========================================================
-   LUCIDE ICONS
-   ========================================================= */
+/* LUCIDE ICONS */
 
 function initializeIcons() {
-
-    if (
-        typeof lucide !== "undefined" &&
-        typeof lucide.createIcons ===
-            "function"
-    ) {
-
+    if (typeof lucide !== "undefined" && typeof lucide.createIcons === "function") {
         lucide.createIcons();
     }
 }

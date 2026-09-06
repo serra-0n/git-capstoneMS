@@ -1,12 +1,6 @@
-/* =========================================================
-   RESORTHUB - SHARED GLOBAL STYLES
-   File: css/style.css
-   ========================================================= */
+/* RESORTHUB - SHARED GLOBAL STYLES File: css/style.css */
 
-
-/* =========================================================
-   DESIGN VARIABLES
-   ========================================================= */
+/* DESIGN VARIABLES */
 
 :root {
     /* Primary */
@@ -54,20 +48,15 @@
     --radius-large: 10px;
 
     /* Shadows */
-    --shadow-small:
-        0 2px 6px rgba(30, 45, 70, 0.04);
+    --shadow-small: 0 2px 6px rgba(30, 45, 70, 0.04);
 
-    --shadow-medium:
-        0 5px 16px rgba(30, 45, 70, 0.06);
+    --shadow-medium: 0 5px 16px rgba(30, 45, 70, 0.06);
 
     /* Animation */
     --transition: 0.2s ease;
 }
 
-
-/* =========================================================
-   RESET
-   ========================================================= */
+/* RESET */
 
 *,
 *::before,
@@ -141,10 +130,7 @@ svg {
     display: block;
 }
 
-
-/* =========================================================
-   MAIN CLIENT LAYOUT
-   ========================================================= */
+/* MAIN CLIENT LAYOUT */
 
 .client-app {
     min-height: 100vh;
@@ -159,31 +145,22 @@ svg {
 }
 
 .client-main {
-    min-height: calc(
-        100vh - var(--topbar-height)
-    );
+    min-height: calc(100vh - var(--topbar-height));
 
     margin-left: var(--sidebar-width);
 
     padding: 28px;
 
-    transition:
-        margin-left var(--transition);
+    transition: margin-left var(--transition);
 }
-
 
 /* Sidebar collapsed */
 
-.client-app.sidebar-collapsed
-.client-main {
-    margin-left:
-        var(--sidebar-collapsed-width);
+.client-app.sidebar-collapsed .client-main {
+    margin-left: var(--sidebar-collapsed-width);
 }
 
-
-/* =========================================================
-   PAGE CONTAINER
-   ========================================================= */
+/* PAGE CONTAINER */
 
 .page-container {
     width: 100%;
@@ -192,10 +169,7 @@ svg {
     margin: 0 auto;
 }
 
-
-/* =========================================================
-   PAGE HEADER
-   ========================================================= */
+/* PAGE HEADER */
 
 .page-header {
     display: flex;
@@ -237,10 +211,7 @@ svg {
     flex-shrink: 0;
 }
 
-
-/* =========================================================
-   SECTION HEADING
-   ========================================================= */
+/* SECTION HEADING */
 
 .section-heading {
     margin: 0;
@@ -251,10 +222,7 @@ svg {
     font-weight: 650;
 }
 
-
-/* =========================================================
-   CARD
-   ========================================================= */
+/* CARD */
 
 .card {
     background: var(--surface);
@@ -280,10 +248,7 @@ svg {
     padding: 18px;
 }
 
-
-/* =========================================================
-   CARD HEADING
-   ========================================================= */
+/* CARD HEADING */
 
 .card-heading {
     display: flex;
@@ -338,10 +303,7 @@ svg {
     line-height: 1.4;
 }
 
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
+/* BUTTONS */
 
 .primary-button,
 .secondary-button {
@@ -367,7 +329,6 @@ svg {
         box-shadow var(--transition);
 }
 
-
 /* Primary */
 
 .primary-button {
@@ -382,7 +343,6 @@ svg {
 
     background: var(--primary-hover);
 }
-
 
 /* Secondary */
 
@@ -399,7 +359,6 @@ svg {
     background: var(--surface-soft);
 }
 
-
 /* Button icons */
 
 .primary-button svg,
@@ -407,7 +366,6 @@ svg {
     width: 16px;
     height: 16px;
 }
-
 
 /* Disabled */
 
@@ -418,10 +376,7 @@ svg {
     opacity: 0.6;
 }
 
-
-/* =========================================================
-   ICON BUTTON
-   ========================================================= */
+/* ICON BUTTON */
 
 .icon-button {
     width: 36px;
@@ -457,10 +412,7 @@ svg {
     height: 17px;
 }
 
-
-/* =========================================================
-   FORMS
-   ========================================================= */
+/* FORMS */
 
 .form-group {
     display: flex;
@@ -501,8 +453,7 @@ svg {
 .form-control:focus {
     border-color: var(--primary);
 
-    box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.08);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
 }
 
 textarea.form-control {
@@ -515,10 +466,7 @@ select.form-control {
     cursor: pointer;
 }
 
-
-/* =========================================================
-   STATUS BADGES
-   ========================================================= */
+/* STATUS BADGES */
 
 .status-badge {
     min-height: 25px;
@@ -546,14 +494,12 @@ select.form-control {
     height: 12px;
 }
 
-
 /* Success */
 
 .status-success {
     background: var(--success-background);
     color: var(--success);
 }
-
 
 /* Warning */
 
@@ -562,14 +508,12 @@ select.form-control {
     color: var(--warning);
 }
 
-
 /* Danger */
 
 .status-danger {
     background: var(--danger-background);
     color: var(--danger);
 }
-
 
 /* Information */
 
@@ -578,10 +522,7 @@ select.form-control {
     color: var(--info);
 }
 
-
-/* =========================================================
-   INFORMATION ROWS
-   ========================================================= */
+/* INFORMATION ROWS */
 
 .info-list {
     display: flex;
@@ -624,10 +565,7 @@ select.form-control {
     text-align: right;
 }
 
-
-/* =========================================================
-   DIVIDER
-   ========================================================= */
+/* DIVIDER */
 
 .divider {
     width: 100%;
@@ -638,10 +576,7 @@ select.form-control {
     background: var(--border-light);
 }
 
-
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
+/* EMPTY STATE */
 
 .empty-state {
     min-height: 230px;
@@ -697,10 +632,7 @@ select.form-control {
     line-height: 1.5;
 }
 
-
-/* =========================================================
-   UTILITY CLASSES
-   ========================================================= */
+/* UTILITY CLASSES */
 
 .text-primary {
     color: var(--text-primary);
@@ -734,10 +666,7 @@ select.form-control {
     width: 100%;
 }
 
-
-/* =========================================================
-   SCREEN READER ONLY
-   ========================================================= */
+/* SCREEN READER ONLY */
 
 .sr-only {
     position: absolute;
@@ -757,19 +686,13 @@ select.form-control {
     border: 0;
 }
 
-
-/* =========================================================
-   HIDDEN
-   ========================================================= */
+/* HIDDEN */
 
 [hidden] {
     display: none !important;
 }
 
-
-/* =========================================================
-   FOCUS
-   ========================================================= */
+/* FOCUS */
 
 a:focus-visible,
 button:focus-visible,
@@ -780,25 +703,17 @@ textarea:focus-visible {
     outline-offset: 2px;
 }
 
-
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+/* RESPONSIVE */
 
 @media (max-width: 1000px) {
-
     .client-main {
         padding: 24px;
     }
-
 }
 
-
 @media (max-width: 760px) {
-
     .client-main,
-    .client-app.sidebar-collapsed
-    .client-main {
+    .client-app.sidebar-collapsed .client-main {
         margin-left: 0;
 
         padding: 20px 16px;
@@ -815,12 +730,9 @@ textarea:focus-visible {
     .page-header-actions {
         width: 100%;
     }
-
 }
 
-
 @media (max-width: 480px) {
-
     .client-main {
         padding: 18px 12px;
     }
@@ -842,5 +754,4 @@ textarea:focus-visible {
     .info-value {
         text-align: left;
     }
-
 }

@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function () {
     const tenantModal = document.getElementById("tenantModal");
     const closeTenantModal = document.getElementById("closeTenantModal");
     const closeTenantDetails = document.getElementById("closeTenantDetails");
@@ -9,19 +9,19 @@ document.addEventListener("DOMContentLoaded", function(){
     const modalTenantName = document.getElementById("modaltenantName");
     const modalResortName = document.getElementById("modalResortName");
     const modalLocation = document.getElementById("modalLocation");
-    
-    function openTenantModal(){
+
+    function openTenantModal() {
         tenantModal.classList.add("show");
         document.body.style.overflow = "hidden";
     }
 
-    function closeModal(){
+    function closeModal() {
         tenantModal.classList.remove("show");
         document.body.style.overflow = "";
     }
 
-    viewButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
+    viewButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
             const tenantItem = button.closest(".tenant-item");
 
             if (!tenantItem) {
@@ -73,38 +73,37 @@ document.addEventListener("DOMContentLoaded", function(){
 
                     fields[3].classList.remove("active", "suspended", "pending");
                     fields[3].classList.add(status.toLowerCase());
-                }   
+                }
             }
             openTenantModal();
         });
     });
 
     if (closeTenantModal) {
-        closeTenantModal.addEventListener("click", function() {
+        closeTenantModal.addEventListener("click", function () {
             closeModal();
         });
     }
 
     if (closeTenantDetails) {
-        closeTenantDetails.addEventListener("click", function() {
+        closeTenantDetails.addEventListener("click", function () {
             closeModal();
         });
     }
 
     if (tenantModalOverlay) {
-        tenantModalOverlay.addEventListener("click", function() {
+        tenantModalOverlay.addEventListener("click", function () {
             closeModal();
         });
     }
 
-
-    document.addEventListener("keydown", function(event) {
+    document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {
             closeModal();
         }
     });
 
     if (tenantModal) {
-    tenantModal.classList.remove("show");
+        tenantModal.classList.remove("show");
     }
 });

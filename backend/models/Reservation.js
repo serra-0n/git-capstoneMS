@@ -10,22 +10,37 @@ const RESERVATION_SELECT = `
            r.deposit_due_at, r.expired_at, r.created_at,
            t.resort_name, t.location AS resort_location,
         CASE
-            WHEN r.reservation_status = 'awaiting_deposit'
-            AND r.deposit_due_at > NOW()
+            WHEN (
+                r.reservation_status = 'awaiting_deposit'
+                AND r.deposit_due_at > NOW()
+            ) OR (
+                r.reservation_status = 'confirmed'
+                AND r.payment_status = 'partially_paid'
+            )
             THEN t.gcash_account_name
             ELSE NULL
         END AS gcash_account_name,
 
         CASE
-            WHEN r.reservation_status = 'awaiting_deposit'
-            AND r.deposit_due_at > NOW()
+            WHEN (
+                r.reservation_status = 'awaiting_deposit'
+                AND r.deposit_due_at > NOW()
+            ) OR (
+                r.reservation_status = 'confirmed'
+                AND r.payment_status = 'partially_paid'
+            )
             THEN t.gcash_number
             ELSE NULL
         END AS gcash_number,
 
         CASE
-            WHEN r.reservation_status = 'awaiting_deposit'
-            AND r.deposit_due_at > NOW()
+            WHEN (
+                r.reservation_status = 'awaiting_deposit'
+                AND r.deposit_due_at > NOW()
+            ) OR (
+                r.reservation_status = 'confirmed'
+                AND r.payment_status = 'partially_paid'
+            )
             THEN t.gcash_qr_path
             ELSE NULL
         END AS gcash_qr_path,
@@ -40,33 +55,126 @@ const RESERVATION_SELECT = `
 
 async function listApprovedResorts() {
     const [rows] = await pool.execute(
-        `SELECT DISTINCT t.id, t.resort_name AS name, t.resort_type, t.location
+        `SELECT t.id, t.resort_name AS name, t.resort_type, t.location
            FROM tenants t
-           JOIN accommodations a ON a.tenant_id = t.id
           WHERE t.approval_status = 'approved'
             AND t.tenant_status = 'active'
-            AND a.availability_status = 'available'
+            AND EXISTS (
+                SELECT 1
+                FROM accommodations a
+                WHERE a.tenant_id = t.id
+            )
           ORDER BY t.resort_name`
     );
     return rows;
 }
 
-async function listAccommodations(tenantId) {
-    const [rows] = await pool.execute(
-        `SELECT id, tenant_id AS resort_id, name,
-                accommodation_type AS type, capacity, amenities,
-                nightly_rate AS price,
-                availability_status AS availability
-           FROM accommodations
-          WHERE tenant_id = ? AND availability_status = 'available'
-          ORDER BY name`,
-        [tenantId]
+async function expireOverdueReservations(executor = pool) {
+    await executor.execute(
+        `UPDATE reservations
+            SET reservation_status = 'expired',
+                payment_status = 'not_required',
+                expired_at = COALESCE (
+                    expired_at,
+                    NOW()
+                )
+            WHERE reservation_status = 'awaiting_deposit'
+                AND payment_status = 'unpaid'
+                AND deposit_due_at IS NOT NULL
+                AND deposit_due_at <= NOW()`
     );
-    return rows.map(row => ({
-        ...row,
-        amenities: String(row.amenities || "").split(",").map(value => value.trim()).filter(Boolean),
-        availability: row.availability === "available" ? "Available" : row.availability
-    }));
+}
+
+async function listAccommodations(tenantId,
+    {checkIn, checkOut} = {}) {
+
+        await expireOverdueReservations();
+
+        const scheduleFilter =
+            checkIn && checkOut
+                ? `AND NOT EXISTS (
+                    SELECT 1
+                    FROM reservations r
+                    WHERE r.accommodation_id = a.id
+                        AND r.reservation_status IN (
+                            'pending',
+                            'awaiting_deposit',
+                            'deposit_verification',
+                            'confirmed',
+                            'checked_in'
+                        )
+                        AND r.check_in < ?
+                        AND r.check_out > ?
+                )`
+            : "";
+        const parameters =
+            checkIn && checkOut
+                ? [
+                    tenantId,
+                    checkOut,
+                    checkIn
+                ]
+                : [tenantId];
+        const [rows] = await pool.execute(
+            `SELECT
+                a.id,
+                a.tenant_id AS resort_id,
+                a.name,
+                a.accommodation_type AS type,
+                a.capacity,
+                a.amenities,
+                a.nightly_rate AS price,
+                a.availability_status AS availability
+            FROM accommodations a
+            WHERE a.tenant_id = ?
+                AND a.availability_status = 'available'
+                ${scheduleFilter}
+            ORDER BY a.name`,
+            parameters
+        );
+        return rows.map(row => ({
+            ...row,
+
+            amenities: String(row.amenities || "")
+                .split(",")
+                .map(value => value.trim())
+                .filter(Boolean),
+
+            availability: row.availability === "available"
+                ? "Available"
+                : row.availability
+        }));
+}
+
+async function listUnavailableDateRanges(
+    accommodationId
+) {
+    await expireOverdueReservations();
+
+    const [rows] = await pool.execute(
+        `SELECT
+            DATE_FORMAT(
+                check_in,
+                '%Y-%m-%d'
+            ) AS check_in,
+            DATE_FORMAT(
+                check_out,
+                '%Y-%m-%d'
+            ) AS check_out
+        FROM reservations
+        WHERE accommodation_id = ?
+            AND reservation_status IN (
+                'pending',
+                'awaiting_deposit',
+                'deposit_verification',
+                'confirmed',
+                'checked_in'
+            )
+            AND check_out > CURDATE()
+        ORDER BY check_in`,
+        [accommodationId]
+    );
+    return rows;
 }
 
 async function create({
@@ -76,6 +184,7 @@ async function create({
     const connection = await pool.getConnection();
     try {
         await connection.beginTransaction();
+        await expireOverdueReservations(connection);
 
         const [accommodations] = await connection.execute(
             `SELECT a.id, a.tenant_id, a.nightly_rate, a.capacity
@@ -105,7 +214,13 @@ async function create({
         const [conflicts] = await connection.execute(
             `SELECT id FROM reservations
               WHERE accommodation_id = ?
-                AND reservation_status IN ('pending', 'awaiting_deposit', 'confirmed')
+                AND reservation_status IN (
+                    'pending',
+                    'awaiting_deposit',
+                    'deposit_verification',
+                    'confirmed',
+                    'checked_in'
+                )
                 AND check_in < ? AND check_out > ?
               LIMIT 1 FOR UPDATE`,
             [accommodationId, checkOut, checkIn]
@@ -223,6 +338,7 @@ async function updateStatus({ reservationId, tenantId, reviewerId, status, notes
 module.exports = {
     listApprovedResorts,
     listAccommodations,
+    listUnavailableDateRanges,
     create,
     listForClient,
     findForClient,

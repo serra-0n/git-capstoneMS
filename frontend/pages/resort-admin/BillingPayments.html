@@ -9,22 +9,13 @@
         <!-- GLOBAL STYLES -->
 
         <link rel="stylesheet" href="../../css/resort-adminGlobal/Style.css" />
-        <link
-            rel="stylesheet"
-            href="../../css/resort-adminGlobal/Sidebar.css"
-        />
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/Sidebar.css" />
         <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css" />
-        <link
-            rel="stylesheet"
-            href="../../css/resort-admin/BillingPayments.css"
-        />
+        <link rel="stylesheet" href="../../css/resort-admin/BillingPayments.css" />
 
         <!-- PAGE STYLES -->
 
-        <link
-            rel="stylesheet"
-            href="../../css/resort-admin/billing-payments.css"
-        />
+        <link rel="stylesheet" href="../../css/resort-admin/billing-payments.css" />
 
         <!-- LUCIDE ICONS -->
 
@@ -151,29 +142,17 @@
                 <!-- GLOBAL TOPBAR -->
 
                 <header class="topbar">
-                    <button
-                        class="sidebar-toggle"
-                        type="button"
-                        aria-label="Toggle sidebar"
-                    >
+                    <button class="sidebar-toggle" type="button" aria-label="Toggle sidebar">
                         <i data-lucide="menu"></i>
                     </button>
 
-                    <input
-                        class="search"
-                        type="search"
-                        placeholder="Search transactions..."
-                    />
+                    <input class="search" type="search" placeholder="Search transactions..." />
 
                     <div class="topbar-spacer"></div>
 
                     <!-- Notification -->
 
-                    <button
-                        class="notification"
-                        type="button"
-                        aria-label="Notifications"
-                    >
+                    <button class="notification" type="button" aria-label="Notifications">
                         <i data-lucide="bell"></i>
                     </button>
 
@@ -216,9 +195,7 @@
 
                             <h1>Billing & Payments</h1>
 
-                            <p>
-                                Manage billing transactions and payment records.
-                            </p>
+                            <p>Manage billing transactions and payment records.</p>
                         </div>
 
                         <div class="page-actions">
@@ -299,10 +276,7 @@
                             <div>
                                 <h2>Billing & Payment Records</h2>
 
-                                <p>
-                                    View and monitor reservation-related billing
-                                    transactions.
-                                </p>
+                                <p>View and monitor reservation-related billing transactions.</p>
                             </div>
                         </div>
 
@@ -403,11 +377,7 @@
                                         <td>GCash</td>
 
                                         <td>
-                                            <span
-                                                class="status-badge paid-badge"
-                                            >
-                                                Paid
-                                            </span>
+                                            <span class="status-badge paid-badge"> Paid </span>
                                         </td>
 
                                         <td>
@@ -441,9 +411,7 @@
                                         <td>Maya</td>
 
                                         <td>
-                                            <span
-                                                class="status-badge partial-badge"
-                                            >
+                                            <span class="status-badge partial-badge">
                                                 Partially Paid
                                             </span>
                                         </td>
@@ -479,9 +447,7 @@
                                         <td>Bank Transfer</td>
 
                                         <td>
-                                            <span
-                                                class="status-badge pending-badge"
-                                            >
+                                            <span class="status-badge pending-badge">
                                                 Pending Verification
                                             </span>
                                         </td>
@@ -492,9 +458,7 @@
                                                 type="button"
                                                 title="Verify payment"
                                             >
-                                                <i
-                                                    data-lucide="scan-search"
-                                                ></i>
+                                                <i data-lucide="scan-search"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -519,11 +483,7 @@
                                         <td>GCash</td>
 
                                         <td>
-                                            <span
-                                                class="status-badge unpaid-badge"
-                                            >
-                                                Unpaid
-                                            </span>
+                                            <span class="status-badge unpaid-badge"> Unpaid </span>
                                         </td>
 
                                         <td>
@@ -557,17 +517,14 @@
                                         <h2>Document Verification</h2>
 
                                         <p>
-                                            Review submitted proof of payment
-                                            and extracted transaction
-                                            information.
+                                            Review submitted proof of payment and extracted
+                                            transaction information.
                                         </p>
                                     </div>
                                 </div>
                             </div>
 
-                            <span class="verification-status pending">
-                                Pending Verification
-                            </span>
+                            <span class="verification-status pending"> Pending Verification </span>
                         </div>
 
                         <!-- VERIFICATION CONTENT -->
@@ -589,10 +546,7 @@
 
                                     <small> Payment_Proof_TXN-0003.jpg </small>
 
-                                    <button
-                                        class="preview-button"
-                                        type="button"
-                                    >
+                                    <button class="preview-button" type="button">
                                         <i data-lucide="maximize-2"></i>
 
                                         View Document
@@ -664,10 +618,7 @@
              */
 
             document.addEventListener("DOMContentLoaded", function () {
-                if (
-                    typeof lucide !== "undefined" &&
-                    typeof lucide.createIcons === "function"
-                ) {
+                if (typeof lucide !== "undefined" && typeof lucide.createIcons === "function") {
                     lucide.createIcons();
                 }
             });

@@ -1,12 +1,6 @@
-/* =========================================================
-   RESORTHUB - CLIENT MY RESERVATIONS
-   File: css/client/my-reservations.css
-   ========================================================= */
+/* RESORTHUB - CLIENT MY RESERVATIONS File: css/client/my-reservations.css */
 
-
-/* =========================================================
-   RESERVATION OVERVIEW
-   ========================================================= */
+/* RESERVATION OVERVIEW */
 
 .reservation-overview {
     display: grid;
@@ -39,10 +33,7 @@
     box-shadow: var(--shadow-medium);
 }
 
-
-/* =========================================================
-   OVERVIEW ICON
-   ========================================================= */
+/* OVERVIEW ICON */
 
 .reservation-overview-icon {
     display: flex;
@@ -69,17 +60,13 @@
     height: 22px;
 }
 
-.reservation-overview-card:hover
-.reservation-overview-icon {
+.reservation-overview-card:hover .reservation-overview-icon {
     transform: scale(1.05);
 
     background: #e2ecff;
 }
 
-
-/* =========================================================
-   OVERVIEW CONTENT
-   ========================================================= */
+/* OVERVIEW CONTENT */
 
 .reservation-overview-content {
     min-width: 0;
@@ -125,10 +112,7 @@
     color: var(--text-secondary);
 }
 
-
-/* =========================================================
-   RESERVATIONS CARD
-   ========================================================= */
+/* RESERVATIONS CARD */
 
 .reservations-card {
     overflow: hidden;
@@ -152,10 +136,7 @@
     padding: 20px;
 }
 
-
-/* =========================================================
-   CARD HEADING
-   ========================================================= */
+/* CARD HEADING */
 
 .reservations-card .card-heading {
     align-items: flex-start;
@@ -179,10 +160,7 @@
     color: var(--text-secondary);
 }
 
-
-/* =========================================================
-   RESERVATION LIST
-   ========================================================= */
+/* RESERVATION LIST */
 
 .reservation-list {
     display: flex;
@@ -190,11 +168,7 @@
     gap: 14px;
 }
 
-
-/* =========================================================
-   RESERVATION ITEM
-   Created dynamically by MyReservations.js
-   ========================================================= */
+/* RESERVATION ITEM Created dynamically by MyReservations.js */
 
 .reservation-item {
     padding: 18px;
@@ -221,10 +195,7 @@
     box-shadow: var(--shadow-small);
 }
 
-
-/* =========================================================
-   RESERVATION ITEM HEADER
-   ========================================================= */
+/* RESERVATION ITEM HEADER */
 
 .reservation-item-header {
     display: flex;
@@ -264,10 +235,7 @@
     overflow-wrap: anywhere;
 }
 
-
-/* =========================================================
-   RESERVATION DETAILS
-   ========================================================= */
+/* RESERVATION DETAILS */
 
 .reservation-item-details {
     display: grid;
@@ -319,10 +287,7 @@
     overflow-wrap: anywhere;
 }
 
-
-/* =========================================================
-   RESERVATION ITEM FOOTER
-   ========================================================= */
+/* RESERVATION ITEM FOOTER */
 
 .reservation-item-footer {
     display: flex;
@@ -344,10 +309,7 @@
     color: var(--text-secondary);
 }
 
-
-/* =========================================================
-   VIEW STATUS BUTTON
-   ========================================================= */
+/* VIEW STATUS BUTTON */
 
 .view-status-button {
     display: inline-flex;
@@ -393,10 +355,7 @@
     color: var(--primary);
 }
 
-
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
+/* EMPTY STATE */
 
 .reservation-empty-state {
     min-height: 260px;
@@ -433,120 +392,86 @@
     color: var(--text-secondary);
 }
 
-
-/* =========================================================
-   STATUS BADGE SUPPORT
-   ========================================================= */
+/* STATUS BADGE SUPPORT */
 
 .reservation-item .status-badge {
     flex-shrink: 0;
 }
 
-
-/* =========================================================
-   RESPONSIVE - MEDIUM DESKTOP
-   ========================================================= */
+/* RESPONSIVE - MEDIUM DESKTOP */
 
 @media (max-width: 1050px) {
-
     .reservation-item-details {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-
 }
 
-
-/* =========================================================
-   RESPONSIVE - TABLET
-   ========================================================= */
+/* RESPONSIVE - TABLET */
 
 @media (max-width: 760px) {
-
     .reservation-overview {
         grid-template-columns: 1fr;
     }
-
 
     .reservations-card .card-header {
         padding: 16px;
     }
 
-
     .reservations-card .card-body {
         padding: 16px;
     }
-
 
     .reservation-item {
         padding: 16px;
     }
 
-
     .reservation-item-header {
         align-items: flex-start;
     }
-
 
     .reservation-item-footer {
         align-items: stretch;
         flex-direction: column;
     }
 
-
     .view-status-button {
         width: 100%;
     }
-
 }
 
-
-/* =========================================================
-   RESPONSIVE - MOBILE
-   ========================================================= */
+/* RESPONSIVE - MOBILE */
 
 @media (max-width: 560px) {
-
     .reservation-overview-card {
         min-height: 100px;
 
         padding: 15px;
     }
 
-
     .reservation-overview-value {
         font-size: 22px;
     }
-
 
     .reservation-overview-text {
         font-size: 16px;
     }
 
-
     .reservation-item-header {
         flex-direction: column;
     }
-
 
     .reservation-item-details {
         grid-template-columns: 1fr;
     }
 
-
     .reservation-detail {
         padding: 11px 12px;
     }
-
 }
 
-
-/* =========================================================
-   TOUCH DEVICES
-   ========================================================= */
+/* TOUCH DEVICES */
 
 @media (hover: none) {
-
     .reservation-overview-card:hover,
     .reservations-card:hover,
     .reservation-item:hover,
@@ -555,5 +480,4 @@
         transform: none;
         box-shadow: none;
     }
-
 }

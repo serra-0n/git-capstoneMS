@@ -21,10 +21,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function escapeHtml(value) {
-        return String(value ?? "").replace(/[&<>\'"]/g, character => ({
-            "&": "&amp;", "<": "&lt;", ">": "&gt;",
-            "\'": "&#39;", '"': "&quot;"
-        }[character]));
+        return String(value ?? "").replace(
+            /[&<>\'"]/g,
+            (character) =>
+                ({
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    "\'": "&#39;",
+                    '"': "&quot;",
+                })[character],
+        );
     }
 
     function parseOcrAnalysis(value) {
@@ -52,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (response.status === 404) {
             throw new Error(
-                "The OCR endpoint is not available. Restart the backend with npm.cmd start, then try again."
+                "The OCR endpoint is not available. Restart the backend with npm.cmd start, then try again.",
             );
         }
 
@@ -82,21 +89,31 @@ document.addEventListener("DOMContentLoaded", () => {
             strong_match: "Strong OCR Match",
             manual_review: "Manual Review Required",
             possible_mismatch: "Possible Mismatch",
-            unreadable_document: "Unreadable Document"
+            unreadable_document: "Unreadable Document",
         };
 
         if (!analysis) {
             summary.dataset.recommendation = "unavailable";
-            recommendation.textContent = tenant.license_ocr_status === "failed"
-                ? "OCR Processing Failed"
-                : "Not Analyzed";
+            recommendation.textContent =
+                tenant.license_ocr_status === "failed" ? "OCR Processing Failed" : "Not Analyzed";
             score.textContent = "—";
             confidence.textContent = "—";
             submittedNumber.textContent = tenant.business_registration_number || "—";
             detectedNumber.textContent = "—";
-            extractedText.textContent = tenant.license_extracted_text || "No OCR text is available.";
-            setComparisonState("#registrationMatchItem", "#registrationMatchResult", "", "Not checked");
-            setComparisonState("#businessNameMatchItem", "#businessNameMatchResult", "", "Not checked");
+            extractedText.textContent =
+                tenant.license_extracted_text || "No OCR text is available.";
+            setComparisonState(
+                "#registrationMatchItem",
+                "#registrationMatchResult",
+                "",
+                "Not checked",
+            );
+            setComparisonState(
+                "#businessNameMatchItem",
+                "#businessNameMatchResult",
+                "",
+                "Not checked",
+            );
             setComparisonState("#keywordMatchItem", "#keywordMatchResult", "", "Not checked");
             return;
         }
@@ -106,43 +123,50 @@ document.addEventListener("DOMContentLoaded", () => {
         const keywords = analysis.comparisons?.keywordsFound || [];
 
         summary.dataset.recommendation = analysis.recommendation;
-        recommendation.textContent = recommendationLabels[analysis.recommendation] || "Manual Review Required";
+        recommendation.textContent =
+            recommendationLabels[analysis.recommendation] || "Manual Review Required";
         score.textContent = `${analysis.consistencyScore ?? 0}/100`;
         confidence.textContent = `${analysis.confidence ?? 0}%`;
-        submittedNumber.textContent = analysis.submitted?.businessRegistrationNumber || tenant.business_registration_number || "—";
-        detectedNumber.textContent = analysis.detected?.businessRegistrationNumber || "Not detected";
+        submittedNumber.textContent =
+            analysis.submitted?.businessRegistrationNumber ||
+            tenant.business_registration_number ||
+            "—";
+        detectedNumber.textContent =
+            analysis.detected?.businessRegistrationNumber || "Not detected";
         extractedText.textContent = tenant.license_extracted_text || "No OCR text is available.";
 
         setComparisonState(
             "#registrationMatchItem",
             "#registrationMatchResult",
             numberMatches ? "valid" : "danger",
-            numberMatches ? "Exact Match" : "No Match"
+            numberMatches ? "Exact Match" : "No Match",
         );
         setComparisonState(
             "#businessNameMatchItem",
             "#businessNameMatchResult",
             nameSimilarity >= 0.75 ? "valid" : nameSimilarity >= 0.4 ? "warning" : "danger",
-            `${Math.round(nameSimilarity * 100)}% Similar`
+            `${Math.round(nameSimilarity * 100)}% Similar`,
         );
         setComparisonState(
             "#keywordMatchItem",
             "#keywordMatchResult",
             keywords.length >= 2 ? "valid" : keywords.length === 1 ? "warning" : "danger",
-            keywords.length ? `${keywords.length} Found` : "None Found"
+            keywords.length ? `${keywords.length} Found` : "None Found",
         );
     }
 
     function updateCounts() {
         const counts = { pending: 0, approved: 0, rejected: 0 };
-        document.querySelectorAll(".application-item").forEach(application => {
+        document.querySelectorAll(".application-item").forEach((application) => {
             const status = application.dataset.status;
             if (counts[status] !== undefined) counts[status]++;
         });
-        ["pending", "approved", "rejected"].forEach(status => {
+        ["pending", "approved", "rejected"].forEach((status) => {
             const count = document.querySelector(`#${status}Count`);
             if (count) count.textContent = counts[status];
-            const tabCount = document.querySelector(`.approval-tab[data-status="${status}"] .tab-count`);
+            const tabCount = document.querySelector(
+                `.approval-tab[data-status="${status}"] .tab-count`,
+            );
             if (tabCount) tabCount.textContent = counts[status];
         });
         const totalCount = document.querySelector("#totalCount");
@@ -151,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function filterApplications() {
         const searchValue = searchInput?.value.trim().toLowerCase() || "";
-        document.querySelectorAll(".application-item").forEach(application => {
+        document.querySelectorAll(".application-item").forEach((application) => {
             const matchesStatus = application.dataset.status === currentStatus;
             const matchesSearch = application.textContent.toLowerCase().includes(searchValue);
             application.style.display = matchesStatus && matchesSearch ? "" : "none";
@@ -165,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function bindReviewButtons() {
-        document.querySelectorAll(".view-button").forEach(button => {
+        document.querySelectorAll(".view-button").forEach((button) => {
             button.addEventListener("click", () => {
                 currentApplication = button.closest(".application-item");
                 const tenant = applicationsById.get(currentApplication?.dataset.tenantId);
@@ -177,13 +201,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.querySelector("#reviewResortType").textContent = tenant.resort_type || "—";
                 document.querySelector("#reviewOwnerName").textContent = tenant.owner_name || "—";
                 document.querySelector("#reviewOwnerEmail").textContent = tenant.owner_email || "—";
-                document.querySelector("#reviewBusinessName").textContent = tenant.business_name || "—";
-                document.querySelector("#reviewBusinessRegistrationNumber").textContent = tenant.business_registration_number || "—";
-                document.querySelector("#reviewBusinessAddress").textContent = tenant.location || "—";
+                document.querySelector("#reviewBusinessName").textContent =
+                    tenant.business_name || "—";
+                document.querySelector("#reviewBusinessRegistrationNumber").textContent =
+                    tenant.business_registration_number || "—";
+                document.querySelector("#reviewBusinessAddress").textContent =
+                    tenant.location || "—";
                 document.querySelector("#reviewSubmittedDate").textContent = tenant.created_at
                     ? new Date(tenant.created_at).toLocaleDateString()
                     : "—";
-                document.querySelector("#reviewLicenseName").textContent = tenant.license_filename || "Resort License";
+                document.querySelector("#reviewLicenseName").textContent =
+                    tenant.license_filename || "Resort License";
                 document.querySelector("#reviewLicenseStatus").textContent = tenant.license_filename
                     ? `OCR: ${tenant.license_ocr_status || "pending"} · Verification: ${tenant.license_verification_status || "pending"}`
                     : "No uploaded license";
@@ -200,16 +228,16 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await fetch("/api/admin/tenants", {
                 headers: {
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${accessToken}`
-                }
+                    Accept: "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
             });
             const tenants = await response.json();
             if (!response.ok) throw new Error(tenants.message || "Unable to load applications.");
-            applicationsById = new Map(
-                tenants.map(tenant => [String(tenant.id), tenant])
-            );
-            applicationList.innerHTML = tenants.map(tenant => `
+            applicationsById = new Map(tenants.map((tenant) => [String(tenant.id), tenant]));
+            applicationList.innerHTML = tenants
+                .map(
+                    (tenant) => `
                 <article class="application-item" data-tenant-id="${tenant.id}" data-status="${tenant.approval_status}">
                     <div class="application-resort">
                         <div class="resort-avatar"><i data-lucide="building-2"></i></div>
@@ -220,7 +248,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div><span class="approval-status ${tenant.approval_status}">${escapeHtml(tenant.approval_status)}</span></div>
                     <div><button type="button" class="view-button"><i data-lucide="eye"></i> Review</button></div>
                 </article>
-            `).join("");
+            `,
+                )
+                .join("");
             if (typeof lucide !== "undefined") lucide.createIcons();
             bindReviewButtons();
             updateCounts();
@@ -231,24 +261,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function changeStatus(status, notes) {
-        const response = await fetch(`/api/admin/tenants/${currentApplication.dataset.tenantId}/status`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${accessToken}`
+        const response = await fetch(
+            `/api/admin/tenants/${currentApplication.dataset.tenantId}/status`,
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify({ status, reviewNotes: notes }),
             },
-            body: JSON.stringify({ status, reviewNotes: notes })
-        });
+        );
         const result = await response.json();
         if (!response.ok) throw new Error(result.message || "Unable to update application.");
     }
 
-    tabs.forEach(tab => tab.addEventListener("click", () => {
-        tabs.forEach(item => item.classList.remove("active"));
-        tab.classList.add("active");
-        currentStatus = tab.dataset.status;
-        filterApplications();
-    }));
+    tabs.forEach((tab) =>
+        tab.addEventListener("click", () => {
+            tabs.forEach((item) => item.classList.remove("active"));
+            tab.classList.add("active");
+            currentStatus = tab.dataset.status;
+            filterApplications();
+        }),
+    );
     searchInput?.addEventListener("input", filterApplications);
     closeReviewModal?.addEventListener("click", closeModal);
     reviewModalOverlay?.addEventListener("click", closeModal);
@@ -268,9 +303,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 `/api/admin/tenants/${currentApplication.dataset.tenantId}/license`,
                 {
                     headers: {
-                        "Authorization": `Bearer ${accessToken}`
-                    }
-                }
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                },
             );
 
             if (!response.ok) {
@@ -298,15 +333,12 @@ document.addEventListener("DOMContentLoaded", () => {
         rerunOcrButton.textContent = "Analyzing license...";
 
         try {
-            const response = await fetch(
-                `/api/admin/tenants/${tenantId}/license/reanalyze`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Authorization": `Bearer ${accessToken}`
-                    }
-                }
-            );
+            const response = await fetch(`/api/admin/tenants/${tenantId}/license/reanalyze`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
             const result = await readJsonResponse(response, "OCR analysis failed.");
 
             if (!response.ok) {
@@ -334,7 +366,9 @@ document.addEventListener("DOMContentLoaded", () => {
             await changeStatus("approved", "");
             closeModal();
             await loadApplications();
-        } catch (error) { alert(error.message); }
+        } catch (error) {
+            alert(error.message);
+        }
     });
 
     rejectButton?.addEventListener("click", async () => {
@@ -351,7 +385,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (reviewNotes) reviewNotes.value = "";
             closeModal();
             await loadApplications();
-        } catch (error) { alert(error.message); }
+        } catch (error) {
+            alert(error.message);
+        }
     });
 
     loadApplications();

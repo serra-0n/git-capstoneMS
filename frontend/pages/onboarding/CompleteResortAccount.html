@@ -1,360 +1,326 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Resort Account | ResortHub</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Complete Resort Account | ResortHub</title>
 
-    <link rel="stylesheet" href="../../css/onboarding/complete-resort-account.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-<body>
-    <header class="auth-header">
-        <a href="../../index.html" class="auth-logo">
-            <span class="logo-text">ResortHub</span>
+        <link rel="stylesheet" href="../../css/onboarding/complete-resort-account.css" />
+        <script src="https://unpkg.com/lucide@latest"></script>
+    </head>
+    <body>
+        <header class="auth-header">
+            <a href="../../index.html" class="auth-logo">
+                <span class="logo-text">ResortHub</span>
 
-            <span class="logo-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </span>
-        </a>
-
-        <nav class="auth-navigation">
-            <a href="ResortSignup.html" class="header-link resort-link active">List your resort</a>
-            <a href="../auth/login.html" class="header-link">Sign in</a>
-            <a href="../auth/signup.html" class="header-button">Create account</a>
-        </nav>
-    </header>
-
-    <main class="auth-main complete-account-main">
-        <section class="auth-card complete-account-card">
-            <div class="auth-card-header">
-                <span class="completion-label">
-                    Resort Account Setup
-                </span>
-
-                <h1>
-                    Complete your resort account
-                </h1>
-
-                <p>
-                    Complete the remaining information to finish
-                    setting up your resort profile.
-                </p>
-            </div>
-
-            <div class="completion-progress">
-                <div class="progress-header">
-                    <span>Account completion</span>
-                    <strong>0%</strong>
-                </div>
-
-                <div class="progress-bar">
+                <span class="logo-dots">
                     <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </a>
+
+            <nav class="auth-navigation">
+                <a href="ResortSignup.html" class="header-link resort-link active"
+                    >List your resort</a
+                >
+                <a href="../auth/login.html" class="header-link">Sign in</a>
+                <a href="../auth/signup.html" class="header-button">Create account</a>
+            </nav>
+        </header>
+
+        <main class="auth-main complete-account-main">
+            <section class="auth-card complete-account-card">
+                <div class="auth-card-header">
+                    <span class="completion-label"> Resort Account Setup </span>
+
+                    <h1>Complete your resort account</h1>
+
+                    <p>
+                        Complete the remaining information to finish setting up your resort profile.
+                    </p>
+                </div>
+
+                <div class="completion-progress">
+                    <div class="progress-header">
+                        <span>Account completion</span>
+                        <strong>0%</strong>
+                    </div>
+
+                    <div class="progress-bar">
+                        <span></span>
+                    </div>
+                </div>
+
+                <form
+                    class="completion-account-form"
+                    id="completeResortAccountForm"
+                    enctype="multipart/form-data"
+                >
+                    <section class="completion-section">
+                        <div class="completion-section-header">
+                            <div class="section-icon">
+                                <i data-lucide="lock"></i>
+                            </div>
+
+                            <div>
+                                <h2>Create a password</h2>
+                                <p>
+                                    Create a secure password for your resort administrator account.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+
+                            <div class="password-input-wrapper">
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Create a password"
+                                    autocomplete="new-password"
+                                    minlength="6"
+                                    required
+                                />
+
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    id="passwordToggle"
+                                    aria-label="Show password"
+                                >
+                                    <i data-lucide="eye" id="passwordIcon"></i>
+                                </button>
+                            </div>
+
+                            <span class="password-hint">
+                                Password must be at least 6 characters.
+                            </span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword"> Confirm password </label>
+
+                            <div class="password-input-wrapper">
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    placeholder="Confirm your password"
+                                    autocomplete="new-password"
+                                    minlength="6"
+                                    required
+                                />
+
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    id="confirmPasswordToggle"
+                                    aria-label="Show password"
+                                >
+                                    <i data-lucide="eye" id="confirmPasswordIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="completion-section">
+                        <div class="completion-section-header">
+                            <div class="section-icon">
+                                <i data-lucide="image"></i>
+                            </div>
+
+                            <div>
+                                <h2>Upload a resort logo</h2>
+                                <p>Add a logo that will represent your resort on the platform.</p>
+                            </div>
+                        </div>
+
+                        <div class="file-field">
+                            <label for="resortLogo">Resort logo</label>
+
+                            <input
+                                type="file"
+                                id="resortLogo"
+                                name="resortLogo"
+                                accept="image/jpeg,image/png,image/webp"
+                            />
+
+                            <small> JPG, PNG, or WEBP. Maximum 5 MB. </small>
+                        </div>
+                    </section>
+
+                    <section class="completion-section">
+                        <div class="completion-section-header">
+                            <div class="section-icon">
+                                <i data-lucide="file-text"></i>
+                            </div>
+
+                            <div>
+                                <h2>Add resort description</h2>
+                                <p>Tell guests about your resort and what makes it special.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description"> Resort description </label>
+
+                            <textarea
+                                id="description"
+                                name="description"
+                                rows="5"
+                                maxlength="1000"
+                                placeholder="Tell guests about your resort..."
+                                required
+                            >
+                            </textarea>
+
+                            <span class="field-hint"> Maximum 1000 characters. </span>
+                        </div>
+                    </section>
+
+                    <section class="completion-section">
+                        <div class="completion-section-header">
+                            <div class="section-icon">
+                                <i data-lucide="phone"></i>
+                            </div>
+
+                            <div>
+                                <h2>Add contact information</h2>
+
+                                <p>
+                                    Provide contact details that guests can use to reach your
+                                    resort.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactNumber"> Contact number </label>
+
+                                <input
+                                    type="tel"
+                                    id="contactNumber"
+                                    name="contactNumber"
+                                    placeholder="+63 912 345 6789"
+                                    autocomplete="tel"
+                                    required
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contactEmail">Email</label>
+
+                                <input
+                                    type="email"
+                                    id="contactEmail"
+                                    name="contactEmail"
+                                    placeholder="resort@example.com"
+                                    autocomplete="email"
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- COMPLETE RESORT PROFILE -->
+                    <section class="completion-section">
+                        <div class="completion-section-header">
+                            <div class="section-icon">
+                                <i data-lucide="building-2"></i>
+                            </div>
+
+                            <div>
+                                <h2>Complete the resort profile</h2>
+                                <p>Add the remaining details about your resort.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="resortName">Resort name</label>
+
+                            <input
+                                type="text"
+                                id="resortName"
+                                name="resortName"
+                                placeholder="Resort name"
+                                maxlength="150"
+                                required
+                            />
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="resortType">Resort type</label>
+
+                                <select id="resortType" name="resortType" required>
+                                    <option value="">Select resort type</option>
+
+                                    <option value="Private Resort">Private Resort</option>
+
+                                    <option value="Public Resort">Public Resort</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="location">Location</label>
+
+                                <input
+                                    type="text"
+                                    id="location"
+                                    name="location"
+                                    placeholder="City, province"
+                                    maxlength="255"
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </section>
+
+                    <p id="formMessage" class="message" role="status"></p>
+
+                    <button type="submit" class="continue-button" id="completeAccountButton">
+                        Complete resort profile
+                    </button>
+                </form>
+
+                <p class="completion-note">
+                    Your resort profile will be available after completing the required information.
+                </p>
+            </section>
+        </main>
+
+        <footer class="auth-footer">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Help</h3>
+
+                    <a href="#">FAQs</a>
+                    <a href="#">Privacy policy</a>
+                    <a href="#">Terms of use</a>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <a href="#">About us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Press</a>
+                    <a href="#">Blog</a>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Destination</h3>
+                    <a href="#">Public Resorts</a>
+                    <a href="#">Private Resorts</a>
                 </div>
             </div>
-
-            <form
-                class="completion-account-form"
-                id="completeResortAccountForm"
-                enctype="multipart/form-data">
-            
-                <section class="completion-section">
-                    <div class="completion-section-header">
-                        <div class="section-icon">
-                            <i data-lucide="lock"></i>
-                        </div>
-
-                        <div>
-                            <h2>Create a password</h2>
-                            <p>
-                                Create a secure password for your
-                                resort administrator account.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Password</label>
-
-                        <div class="password-input-wrapper">
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Create a password"
-                                autocomplete="new-password"
-                                minlength="6"
-                                required>
-
-                            <button
-                                type="button"
-                                class="password-toggle"
-                                id="passwordToggle"
-                                aria-label="Show password">
-                            
-                                <i data-lucide="eye" id="passwordIcon"></i>
-                            </button>
-                        </div>
-
-                        <span class="password-hint">
-                            Password must be at least 6 characters.
-                        </span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="confirmPassword">
-                            Confirm password
-                        </label>
-
-                        <div class="password-input-wrapper">
-                            <input
-                                type="password"
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                placeholder="Confirm your password"
-                                autocomplete="new-password"
-                                minlength="6"
-                                required>
-                            
-                            <button
-                                type="button"
-                                class="password-toggle"
-                                id="confirmPasswordToggle"
-                                aria-label="Show password">
-
-                                <i data-lucide="eye" id="confirmPasswordIcon"></i>
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="completion-section">
-                    <div class="completion-section-header">
-                        <div class="section-icon">
-                            <i data-lucide="image"></i>
-                        </div>
-
-                        <div>
-                            <h2>Upload a resort logo</h2>
-                            <p>
-                                Add a logo that will represent your
-                                resort on the platform.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="file-field">
-                        <label for="resortLogo">Resort logo</label>
-
-                        <input
-                            type="file"
-                            id="resortLogo"
-                            name="resortLogo"
-                            accept="image/jpeg,image/png,image/webp">
-
-                        <small>
-                            JPG, PNG, or WEBP. Maximum 5 MB.
-                        </small>
-                    </div>
-                </section>
-
-                <section class="completion-section">
-                    <div class="completion-section-header">
-                        <div class="section-icon">
-                            <i data-lucide="file-text"></i>
-                        </div>
-
-                        <div>
-                            <h2>Add resort description</h2>
-                            <p>
-                                Tell guests about your resort and 
-                                what makes it special.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description">
-                            Resort description
-                        </label>
-
-                        <textarea
-                            id="description"
-                            name="description"
-                            rows="5"
-                            maxlength="1000"
-                            placeholder="Tell guests about your resort..."
-                            required>
-                        </textarea>
-
-                        <span class="field-hint">
-                            Maximum 1000 characters.
-                        </span>
-                    </div>
-                </section>
-
-                <section class="completion-section">
-                    <div class="completion-section-header">
-                        <div class="section-icon">
-                            <i data-lucide="phone"></i>
-                        </div>
-
-                        <div>
-                            <h2>
-                                Add contact information
-                            </h2>
-
-                            <p>
-                                Provide contact details that guests
-                                can use to reach your resort.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="contactNumber">
-                                Contact number
-                            </label>
-
-                            <input
-                                type="tel"
-                                id="contactNumber"
-                                name="contactNumber"
-                                placeholder="+63 912 345 6789"
-                                autocomplete="tel"
-                                required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="contactEmail">Email</label>
-
-                            <input
-                                type="email"
-                                id="contactEmail"
-                                name="contactEmail"
-                                placeholder="resort@example.com"
-                                autocomplete="email"
-                                required>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- COMPLETE RESORT PROFILE -->
-                 <section class="completion-section">
-                    <div class="completion-section-header">
-                        <div class="section-icon">
-                            <i data-lucide="building-2"></i>
-                        </div>
-
-                        <div>
-                            <h2>Complete the resort profile</h2>
-                            <p>
-                                Add the remaining details about your resort.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="resortName">Resort name</label>
-
-                        <input
-                            type="text"
-                            id="resortName"
-                            name="resortName"
-                            placeholder="Resort name"
-                            maxlength="150"
-                            required>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="resortType">Resort type</label>
-
-                            <select
-                                id="resortType"
-                                name="resortType"
-                                required>
-
-                                <option value="">
-                                    Select resort type
-                                </option>
-
-                                <option value="Private Resort">
-                                    Private Resort
-                                </option>
-
-                                <option value="Public Resort">
-                                    Public Resort
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="location">Location</label>
-
-                            <input  
-                                type="text"
-                                id="location"
-                                name="location"
-                                placeholder="City, province"
-                                maxlength="255"
-                                required>
-                        </div>
-                    </div>
-                 </section>
-
-                 <p 
-                    id="formMessage"
-                    class="message"
-                    role="status"></p>
-
-                <button
-                    type="submit"
-                    class="continue-button"
-                    id="completeAccountButton">
-                
-                    Complete resort profile
-                </button>
-            </form>
-
-            <p class="completion-note">
-                Your resort profile will be available after 
-                completing the required information.
-            </p>
-        </section>
-    </main>
-
-    <footer class="auth-footer">
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>Help</h3>
-
-                <a href="#">FAQs</a>
-                <a href="#">Privacy policy</a>
-                <a href="#">Terms of use</a>
-            </div>
-
-            <div class="footer-column">
-                <h3>Company</h3>
-                <a href="#">About us</a>
-                <a href="#">Careers</a>
-                <a href="#">Press</a>
-                <a href="#">Blog</a>
-            </div>
-
-            <div class="footer-column">
-                <h3>Destination</h3>
-                <a href="#">Public Resorts</a>
-                <a href="#">Private Resorts</a>
-            </div>
-        </div>
-    </footer>
-    <script src="../../js/onboarding/complete-resort-account.js"></script>
-    <script>
-        lucide.createIcons();
-    </script>
-</body>
+        </footer>
+        <script src="../../js/onboarding/complete-resort-account.js"></script>
+        <script>
+            lucide.createIcons();
+        </script>
+    </body>
 </html>

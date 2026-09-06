@@ -9,18 +9,12 @@
         <!-- GLOBAL STYLES -->
 
         <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css" />
-        <link
-            rel="stylesheet"
-            href="../../css/resort-adminGlobal/sidebar.css"
-        />
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/sidebar.css" />
         <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css" />
 
         <!-- PAGE STYLE -->
 
-        <link
-            rel="stylesheet"
-            href="../../css/resort-admin/ocr-verification.css"
-        />
+        <link rel="stylesheet" href="../../css/resort-admin/ocr-verification.css" />
 
         <!-- LUCIDE ICONS -->
 
@@ -151,32 +145,19 @@
                 <header class="topbar">
                     <!-- Sidebar Toggle -->
 
-                    <button
-                        class="sidebar-toggle"
-                        type="button"
-                        aria-label="Toggle sidebar"
-                    >
+                    <button class="sidebar-toggle" type="button" aria-label="Toggle sidebar">
                         <i data-lucide="menu"></i>
                     </button>
 
                     <!-- Search -->
 
-                    <input
-                        class="search"
-                        type="search"
-                        id="globalSearch"
-                        placeholder="Search..."
-                    />
+                    <input class="search" type="search" id="globalSearch" placeholder="Search..." />
 
                     <div class="topbar-spacer"></div>
 
                     <!-- Notification -->
 
-                    <button
-                        class="notification"
-                        type="button"
-                        aria-label="Notifications"
-                    >
+                    <button class="notification" type="button" aria-label="Notifications">
                         <i data-lucide="bell"></i>
                     </button>
 
@@ -219,10 +200,7 @@
 
                             <h1>OCR Verification</h1>
 
-                            <p>
-                                Verify uploaded guest documents and review
-                                extracted information.
-                            </p>
+                            <p>Verify uploaded guest documents and review extracted information.</p>
                         </div>
 
                         <div class="page-actions">
@@ -255,17 +233,11 @@
                                     <div>
                                         <h2>Document Verification</h2>
 
-                                        <p>
-                                            Upload a guest document for OCR
-                                            verification.
-                                        </p>
+                                        <p>Upload a guest document for OCR verification.</p>
                                     </div>
                                 </div>
 
-                                <span
-                                    class="verification-status idle"
-                                    id="verificationStatus"
-                                >
+                                <span class="verification-status idle" id="verificationStatus">
                                     Ready
                                 </span>
                             </div>
@@ -280,15 +252,9 @@
 
                                     <h3>Upload Document</h3>
 
-                                    <p>
-                                        Select a document image to begin
-                                        verification.
-                                    </p>
+                                    <p>Select a document image to begin verification.</p>
 
-                                    <label
-                                        class="upload-button"
-                                        for="documentInput"
-                                    >
+                                    <label class="upload-button" for="documentInput">
                                         <i data-lucide="upload"></i>
 
                                         Choose Document
@@ -306,16 +272,10 @@
 
                                 <!-- SELECTED DOCUMENT -->
 
-                                <div
-                                    class="document-preview"
-                                    id="documentPreview"
-                                    hidden
-                                >
+                                <div class="document-preview" id="documentPreview" hidden>
                                     <div class="preview-header">
                                         <div>
-                                            <span class="preview-label">
-                                                Selected Document
-                                            </span>
+                                            <span class="preview-label"> Selected Document </span>
 
                                             <strong id="documentName">
                                                 No document selected
@@ -336,9 +296,7 @@
                                         <div class="preview-placeholder">
                                             <i data-lucide="file-text"></i>
 
-                                            <span id="documentType">
-                                                Document preview
-                                            </span>
+                                            <span id="documentType"> Document preview </span>
                                         </div>
                                     </div>
 
@@ -346,25 +304,19 @@
                                         <div>
                                             <span> File Name </span>
 
-                                            <strong id="previewFileName">
-                                                â€”
-                                            </strong>
+                                            <strong id="previewFileName"> â€” </strong>
                                         </div>
 
                                         <div>
                                             <span> File Type </span>
 
-                                            <strong id="previewFileType">
-                                                â€”
-                                            </strong>
+                                            <strong id="previewFileType"> â€” </strong>
                                         </div>
 
                                         <div>
                                             <span> File Size </span>
 
-                                            <strong id="previewFileSize">
-                                                â€”
-                                            </strong>
+                                            <strong id="previewFileSize"> â€” </strong>
                                         </div>
                                     </div>
 
@@ -393,10 +345,7 @@
                                     <div>
                                         <h2>OCR Result</h2>
 
-                                        <p>
-                                            Extracted information from the
-                                            uploaded document.
-                                        </p>
+                                        <p>Extracted information from the uploaded document.</p>
                                     </div>
                                 </div>
                             </div>
@@ -414,31 +363,22 @@
                                     <strong> No verification result </strong>
 
                                     <p>
-                                        Upload a document and start verification
-                                        to view extracted information.
+                                        Upload a document and start verification to view extracted
+                                        information.
                                     </p>
                                 </div>
 
                                 <!-- Extracted Data -->
 
-                                <div
-                                    class="extracted-data"
-                                    id="extractedData"
-                                    hidden
-                                >
+                                <div class="extracted-data" id="extractedData" hidden>
                                     <div class="result-heading">
                                         <div>
                                             <span> Verification Result </span>
 
-                                            <strong id="resultMessage">
-                                                Document verified
-                                            </strong>
+                                            <strong id="resultMessage"> Document verified </strong>
                                         </div>
 
-                                        <span
-                                            class="result-badge verified"
-                                            id="resultBadge"
-                                        >
+                                        <span class="result-badge verified" id="resultBadge">
                                             Verified
                                         </span>
                                     </div>
@@ -449,9 +389,7 @@
                                         <div class="data-item">
                                             <span> Full Name </span>
 
-                                            <strong id="ocrFullName">
-                                                Juan Dela Cruz
-                                            </strong>
+                                            <strong id="ocrFullName"> Juan Dela Cruz </strong>
                                         </div>
 
                                         <div class="data-item">
@@ -465,33 +403,25 @@
                                         <div class="data-item">
                                             <span> Document Number </span>
 
-                                            <strong id="ocrDocumentNumber">
-                                                ************
-                                            </strong>
+                                            <strong id="ocrDocumentNumber"> ************ </strong>
                                         </div>
 
                                         <div class="data-item">
                                             <span> Date of Birth </span>
 
-                                            <strong id="ocrBirthDate">
-                                                â€”
-                                            </strong>
+                                            <strong id="ocrBirthDate"> â€” </strong>
                                         </div>
 
                                         <div class="data-item">
                                             <span> Expiration Date </span>
 
-                                            <strong id="ocrExpirationDate">
-                                                â€”
-                                            </strong>
+                                            <strong id="ocrExpirationDate"> â€” </strong>
                                         </div>
 
                                         <div class="data-item">
                                             <span> Verification Status </span>
 
-                                            <strong id="ocrVerificationResult">
-                                                Verified
-                                            </strong>
+                                            <strong id="ocrVerificationResult"> Verified </strong>
                                         </div>
                                     </div>
 
@@ -502,9 +432,7 @@
                                             <span> Document Check </span>
 
                                             <strong class="check-passed">
-                                                <i
-                                                    data-lucide="check-circle-2"
-                                                ></i>
+                                                <i data-lucide="check-circle-2"></i>
 
                                                 Passed
                                             </strong>
@@ -514,9 +442,7 @@
                                             <span> OCR Extraction </span>
 
                                             <strong class="check-passed">
-                                                <i
-                                                    data-lucide="check-circle-2"
-                                                ></i>
+                                                <i data-lucide="check-circle-2"></i>
 
                                                 Completed
                                             </strong>
@@ -526,9 +452,7 @@
                                             <span> Record Status </span>
 
                                             <strong class="check-passed">
-                                                <i
-                                                    data-lucide="check-circle-2"
-                                                ></i>
+                                                <i data-lucide="check-circle-2"></i>
 
                                                 Ready for Record
                                             </strong>
@@ -563,9 +487,8 @@
                                 <h2>Verification Process</h2>
 
                                 <p>
-                                    The document verification workflow uses
-                                    uploaded document data to support guest
-                                    record verification.
+                                    The document verification workflow uses uploaded document data
+                                    to support guest record verification.
                                 </p>
                             </div>
                         </div>
@@ -579,10 +502,7 @@
                                 <div>
                                     <strong> Upload Document </strong>
 
-                                    <small>
-                                        Select the guest document for
-                                        verification.
-                                    </small>
+                                    <small> Select the guest document for verification. </small>
                                 </div>
                             </div>
 
@@ -595,8 +515,7 @@
                                     <strong> OCR Processing </strong>
 
                                     <small>
-                                        Extract relevant information from the
-                                        uploaded document.
+                                        Extract relevant information from the uploaded document.
                                     </small>
                                 </div>
                             </div>
@@ -610,8 +529,7 @@
                                     <strong> Verification </strong>
 
                                     <small>
-                                        Review the extracted information and
-                                        verification result.
+                                        Review the extracted information and verification result.
                                     </small>
                                 </div>
                             </div>
@@ -625,8 +543,8 @@
                                     <strong> Save Record </strong>
 
                                     <small>
-                                        Store the verification result for the
-                                        appropriate guest record.
+                                        Store the verification result for the appropriate guest
+                                        record.
                                     </small>
                                 </div>
                             </div>
@@ -644,10 +562,7 @@
 
         <script>
             document.addEventListener("DOMContentLoaded", function () {
-                if (
-                    typeof lucide !== "undefined" &&
-                    typeof lucide.createIcons === "function"
-                ) {
+                if (typeof lucide !== "undefined" && typeof lucide.createIcons === "function") {
                     lucide.createIcons();
                 }
             });

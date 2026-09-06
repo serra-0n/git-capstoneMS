@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const email = document.getElementById("email");
     const createAccountButton = document.getElementById("createAccountButton");
 
-
     function togglePassword(input, icon, button) {
         if (!input || !icon || !button) {
             return;
@@ -48,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function validatePassword () {
+    function validatePassword() {
         if (!password) {
             return false;
         }
@@ -105,7 +104,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const confirmPasswordValid = validateConfirmPassword();
 
             if (agreeTerms && !agreeTerms.checked) {
-                agreeTerms.setCustomValidity("You must agree to the Terms of Use and Privacy Policy");
+                agreeTerms.setCustomValidity(
+                    "You must agree to the Terms of Use and Privacy Policy",
+                );
             } else if (agreeTerms) {
                 agreeTerms.setCustomValidity("");
             }
@@ -114,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 signupForm.reportValidity();
                 return;
             }
-            
+
             if (!passwordValid || !confirmPasswordValid) {
                 signupForm.reportValidity();
                 return;
@@ -127,30 +128,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 const response = await fetch("/api/auth/signup", {
                     method: "POST",
                     headers: {
-                        "content-Type": "application/json"
+                        "content-Type": "application/json",
                     },
                     body: JSON.stringify({
                         firstName: firstName.value.trim(),
                         lastName: lastName.value.trim(),
                         email: email.value.trim().toLowerCase(),
-                        password: password.value
-                    })
+                        password: password.value,
+                    }),
                 });
 
                 const result = await response.json();
 
                 if (!response.ok) {
-                    throw new Error(
-                        result.message || "Signup failed."
-                    );
+                    throw new Error(result.message || "Signup failed.");
                 }
 
                 alert(result.message);
                 window.location.href = "login.html";
-
-            }
-
-            catch (error) {
+            } catch (error) {
                 alert(error.message);
 
                 createAccountButton.disabled = false;
@@ -164,7 +160,9 @@ document.addEventListener("DOMContentLoaded", function () {
             if (agreeTerms.checked) {
                 agreeTerms.setCustomValidity("");
             } else {
-                agreeTerms.setCustomValidity("You must agree to the Terms of Use and Privacy Policy.");
+                agreeTerms.setCustomValidity(
+                    "You must agree to the Terms of Use and Privacy Policy.",
+                );
             }
         });
     }
