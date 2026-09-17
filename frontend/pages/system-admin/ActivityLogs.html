@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="../../assets/resorthub-mark.png?v=2" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Activity Logs | Resort Management System</title>
 
@@ -14,7 +15,7 @@
     <body>
         <aside class="sidebar">
             <div class="sidebar-brand">
-                <img src="../../frontend/image/logo.png" alt="ResortHub" />
+                <img class="system-brand-mark" src="../../assets/resorthub-mark.png?v=2" alt="ResortHub SRH logo" />
 
                 <div class="sidebar-brand-text">
                     <h2>ResortHub</h2>
@@ -81,7 +82,7 @@
             </nav>
 
             <div class="sidebar-user">
-                <img src="../../frontend/image/profile.png" alt="System Administrator" />
+                <span class="system-profile-avatar"><i data-lucide="user-round"></i></span>
 
                 <div class="sidebar-user-info">
                     <strong>System Admin</strong>
@@ -117,7 +118,7 @@
                     </button>
 
                     <div class="topbar-profile">
-                        <img src="../../image/profile.png" alt="System Administrator" />
+                        <span class="system-profile-avatar"><i data-lucide="user-round"></i></span>
 
                         <div>
                             <strong>System Admin</strong>
@@ -148,7 +149,7 @@
 
                     <div>
                         <span>Total Activities</span>
-                        <strong id="totalActivityCount">1,248</strong>
+                        <strong id="totalActivityCount">0</strong>
                     </div>
                 </article>
 
@@ -159,7 +160,7 @@
 
                     <div>
                         <span>Today's Activities</span>
-                        <strong id="todayActivityCount">86</strong>
+                        <strong id="todayActivityCount">0</strong>
                     </div>
                 </article>
 
@@ -170,7 +171,7 @@
 
                     <div>
                         <span>User Actions</span>
-                        <strong id="userActivityCount">72</strong>
+                        <strong id="userActivityCount">0</strong>
                     </div>
                 </article>
 
@@ -181,7 +182,7 @@
 
                     <div>
                         <span>Admin Actions</span>
-                        <strong id="adminActivityCount">14</strong>
+                        <strong id="adminActivityCount">0</strong>
                     </div>
                 </article>
             </section>
@@ -204,107 +205,7 @@
                     </button>
                 </div>
 
-                <div class="activity-timeline">
-                    <article class="activity-timeline-item" data-type="user" data-action="login">
-                        <div class="activity-timeline-icon login">
-                            <i data-lucide="log-in"></i>
-                        </div>
-
-                        <div class="activity-timeline-content">
-                            <div class="activity-timeline-main">
-                                <strong>User Logged in</strong>
-                                <span class="activity-tag user">User</span>
-                            </div>
-
-                            <p>Juan Dela Cruz logged into Blue Lagoon Resort.</p>
-
-                            <span class="activity-time">Today, 10:32 AM</span>
-                        </div>
-                    </article>
-
-                    <article
-                        class="activity-timeline-item"
-                        data-type="admin"
-                        data-action="approval"
-                    >
-                        <div class="activity-timeline-icon approval">
-                            <i data-lucide="check-circle"></i>
-                        </div>
-
-                        <div class="activity-timeline-content">
-                            <div class="activity-timeline-main">
-                                <strong>Resort application approved</strong>
-
-                                <span class="activity-tag admin">Admin</span>
-                            </div>
-
-                            <p>System Admin approved the Seaside View Resort application.</p>
-
-                            <span class="activity-time">Today, 9:45 AM</span>
-                        </div>
-                    </article>
-
-                    <article
-                        class="activity-timeline-item"
-                        data-type="user"
-                        data-action="reservation"
-                    >
-                        <div class="activity-timeline-icon reservation">
-                            <i data-lucide="calendar-plus"></i>
-                        </div>
-
-                        <div class="activity-timeline-content">
-                            <div class="activity-timeline-main">
-                                <strong>Reservation created</strong>
-                                <span class="activity-tag user">User</span>
-                            </div>
-
-                            <p>A new reservation was created at Mountain Breeze Resort.</p>
-
-                            <span class="activity-time"> Today, 9:18 AM </span>
-                        </div>
-                    </article>
-
-                    <article
-                        class="activity-timeline-item"
-                        data-type="admin"
-                        data-action="suspension"
-                    >
-                        <div class="activity-timeline-icon warning">
-                            <i data-lucide="pause-circle"></i>
-                        </div>
-
-                        <div class="activity-timeline-content">
-                            <div class="activity-timeline-main">
-                                <strong>Tenant Suspended</strong>
-
-                                <span class="activity-tag admin">Admin</span>
-                            </div>
-
-                            <p>Mountain Breeze Resort was temporarily suspended.</p>
-
-                            <span class="activity-time">Yesterday, 4:26 PM</span>
-                        </div>
-                    </article>
-
-                    <article class="activity-timeline-item" data-type="user" data-action="profile">
-                        <div class="activity-timeline-icon update">
-                            <i data-lucide="user-round-pen"></i>
-                        </div>
-
-                        <div class="activity-timeline-content">
-                            <div class="activity-timeline-main">
-                                <strong>User profile updated</strong>
-
-                                <span class="activity-tag user">User</span>
-                            </div>
-
-                            <p>Maria Santos updated her account information.</p>
-
-                            <span class="activity-time">Yesterday, 2:15 PM</span>
-                        </div>
-                    </article>
-                </div>
+                <div class="activity-timeline"><p>No recent activity to display.</p></div>
             </section>
 
             <!-- =====================================
@@ -372,239 +273,7 @@
                             </tr>
                         </thead>
 
-                        <tbody id="activityTableBody">
-                            <tr data-type="user" data-action="login">
-                                <td>
-                                    <div class="activity-date">
-                                        <strong>June 1, 2025</strong>
-                                        <span>10:32 AM</span>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="activity-user">
-                                        <div class="activity-user-avatar">
-                                            <i data-lucide="user"></i>
-                                        </div>
-
-                                        <div>
-                                            <strong>Juan Dela Cruz</strong>
-                                            <span>Resort Administrator</span>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="activity-description">
-                                        <strong>User Login</strong>
-                                        <span>Logged into the platform</span>
-                                    </div>
-                                </td>
-
-                                <td>Blue Lagoon Resort</td>
-
-                                <td>
-                                    <span class="activity-type user">User</span>
-                                </td>
-
-                                <td>
-                                    <button
-                                        type="button"
-                                        class="activity-view-button"
-                                        data-activity="login"
-                                    >
-                                        <i data-lucide="eye"></i>
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr data-type="admin" data-action="approval">
-                                <td>
-                                    <div class="activity-date">
-                                        <strong>June 1, 2025</strong>
-                                        <span>9:45 AM</span>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="activity-user">
-                                        <div class="activity-user-avatar admin">
-                                            <i data-lucide="shield"></i>
-                                        </div>
-
-                                        <div>
-                                            <strong>System Admin</strong>
-                                            <span>System Administrator</span>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="activity-description">
-                                        <strong>Resort Approved</strong>
-                                        <span>Approved resort registration</span>
-                                    </div>
-                                </td>
-
-                                <td>Seaside View Resort</td>
-
-                                <td>
-                                    <span class="activity-type admin">Admin</span>
-                                </td>
-
-                                <td>
-                                    <button
-                                        type="button"
-                                        class="activity-view-button"
-                                        data-activity="approval"
-                                    >
-                                        <i data-lucide="eye"></i>
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <!-- ROW 3 -->
-
-                            <tr data-type="user" data-action="reservation">
-                                <td>
-                                    <div class="activity-date">
-                                        <strong>June 1, 2025</strong>
-                                        <span>9:18 AM</span>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="activity-user">
-                                        <div class="activity-user-avatar">
-                                            <i data-lucide="user"></i>
-                                        </div>
-
-                                        <div>
-                                            <strong>Pedro Reyes</strong>
-                                            <span>Client</span>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="activity-description">
-                                        <strong>Reservation Created</strong>
-                                        <span>Created a new reservation</span>
-                                    </div>
-                                </td>
-
-                                <td>Mountain Breeze Resort</td>
-
-                                <td>
-                                    <span class="activity-type user">User</span>
-                                </td>
-
-                                <td>
-                                    <button
-                                        type="button"
-                                        class="activity-view-button"
-                                        data-activity="reservation"
-                                    >
-                                        <i data-lucide="eye"></i>
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr data-type="admin" data-action="suspension">
-                                <td>
-                                    <div class="activity-date">
-                                        <strong>May 31, 2025</strong>
-                                        <span>4:26 PM</span>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="activity-user">
-                                        <div class="activity-user-avatar admin">
-                                            <i data-lucide="shield"></i>
-                                        </div>
-
-                                        <div>
-                                            <strong>System Admin</strong>
-                                            <span>System Administrator</span>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="activity-description">
-                                        <strong>Tenant Suspended</strong>
-                                        <span>Suspended resort account</span>
-                                    </div>
-                                </td>
-
-                                <td>Mountain Breeze Resort</td>
-
-                                <td>
-                                    <span class="activity-type admin">Admin</span>
-                                </td>
-
-                                <td>
-                                    <button
-                                        type="button"
-                                        class="activity-view-button"
-                                        data-activity="suspension"
-                                    >
-                                        <i data-lucide="eye"></i>
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr data-type="user" data-action="profile">
-                                <td>
-                                    <div class="activity-date">
-                                        <strong>May 31, 2025</strong>
-                                        <span>2:15 PM</span>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="activity-user">
-                                        <div class="activity-user-avatar">
-                                            <i data-lucide="user"></i>
-                                        </div>
-
-                                        <div>
-                                            <strong>Maria Santos</strong>
-                                            <span>Resort Administrator</span>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="activity-description">
-                                        <strong>Profile Updated</strong>
-                                        <span>Updated account information</span>
-                                    </div>
-                                </td>
-
-                                <td>Seaside View Resort</td>
-
-                                <td>
-                                    <span class="activity-type user">User</span>
-                                </td>
-
-                                <td>
-                                    <button
-                                        type="button"
-                                        class="activity-view-button"
-                                        data-activity="profile"
-                                    >
-                                        <i data-lucide="eye"></i>
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
+<tbody id="activityTableBody"></tbody>
                     </table>
                 </div>
             </section>
@@ -646,7 +315,7 @@
                     <div class="activity-detail-grid">
                         <div class="activity-detail-field">
                             <span>Date & time</span>
-                            <strong id="modalActivityDate">June 1, 2025 - 10:32 AM</strong>
+                            <strong id="modalActivityDate">â€”</strong>
                         </div>
 
                         <div class="activity-detail-field">
@@ -656,7 +325,7 @@
 
                         <div class="activity-detail-field">
                             <span>User</span>
-                            <strong id="modalActivityUser">Juan Dela Cruz</strong>
+                            <strong id="modalActivityUser">â€”</strong>
                         </div>
 
                         <div class="activity-detail-field">
@@ -666,7 +335,7 @@
 
                         <div class="activity-detail-field">
                             <span>Tenant</span>
-                            <strong id="modalActivityTenant">Blue Lagoon Resort</strong>
+                            <strong id="modalActivityTenant">â€”</strong>
                         </div>
 
                         <div class="activity-detail-field">
@@ -694,7 +363,7 @@
 
                         <div class="activity-detail-field">
                             <span>IP Address</span>
-                            <strong id="modalActivityIp">192.168.1.100</strong>
+                            <strong id="modalActivityIp">â€”</strong>
                         </div>
 
                         <div class="activity-detail-field">
@@ -722,3 +391,4 @@
         </script>
     </body>
 </html>
+

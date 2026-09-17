@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="../../assets/resorthub-mark.png?v=2" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Platform Users | Resort Management System</title>
 
@@ -15,7 +16,7 @@
     <body>
         <aside class="sidebar">
             <div class="sidebar-brand">
-                <img src="../../image/logo.png" alt="ResortHub Logo" />
+                <img class="system-brand-mark" src="../../assets/resorthub-mark.png?v=2" alt="ResortHub SRH logo" />
 
                 <div class="sidebar-brand-text">
                     <h2>ResortHub</h2>
@@ -75,7 +76,7 @@
             </nav>
 
             <div class="sidebar-user">
-                <img src="../../image/profile.png" alt="System Administrator" />
+                <span class="system-profile-avatar"><i data-lucide="user-round"></i></span>
                 <div class="sidebar-user-info">
                     <strong>System Admin</strong>
                     <span>Administrator</span>
@@ -108,7 +109,7 @@
                     </button>
 
                     <div class="topbar-profile">
-                        <img src="../../image/profile.png" alt="System Administrator" />
+                        <span class="system-profile-avatar"><i data-lucide="user-round"></i></span>
 
                         <div>
                             <strong>System Admin</strong>
@@ -137,7 +138,7 @@
 
                     <div>
                         <span>Total Users</span>
-                        <strong>248</strong>
+                        <strong>0</strong>
                     </div>
                 </article>
 
@@ -148,7 +149,7 @@
 
                     <div>
                         <span>Active Users</span>
-                        <strong>221</strong>
+                        <strong>0</strong>
                     </div>
                 </article>
 
@@ -158,8 +159,8 @@
                     </div>
 
                     <div>
-                        <span>Inactive Users</span>
-                        <strong>19</strong>
+                        <span>Inactive / Suspended Users</span>
+                        <strong>0</strong>
                     </div>
                 </article>
 
@@ -169,7 +170,7 @@
                     </div>
                     <div>
                         <span>Administrators</span>
-                        <strong>8</strong>
+                        <strong>0</strong>
                     </div>
                 </article>
             </section>
@@ -209,12 +210,13 @@
                         <option value="">All Status</option>
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
+                        <option value="suspended">Suspended</option>
                     </select>
                 </div>
 
                 <div class="platform-user-table-wrapper">
                     <table class="platform-user-table">
-                        <thread>
+                        <thead>
                             <tr>
                                 <th>User</th>
                                 <th>Role</th>
@@ -223,164 +225,9 @@
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
-                        </thread>
+                        </thead>
 
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="platform-user-info">
-                                        <div class="platform-user-avatar">
-                                            <i data-lucide="user"></i>
-                                        </div>
-
-                                        <div>
-                                            <strong>Juan Dela Cruz</strong>
-                                            <span>juan@example.com</span>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <span class="user-role resort-admin">
-                                        Resort Administrator
-                                    </span>
-                                </td>
-
-                                <td>Blue Lagoon Resort</td>
-
-                                <td>June 1, 2025</td>
-
-                                <td>
-                                    <span class="user-account-status active"> Active </span>
-                                </td>
-
-                                <td>
-                                    <button
-                                        type="button"
-                                        class="user-action-button"
-                                        aria-label="View user"
-                                    >
-                                        <i data-lucide="ellipsis"></i>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="platform-user-info">
-                                        <div class="platform-user-avatar">
-                                            <i data-lucide="user"></i>
-                                        </div>
-
-                                        <div>
-                                            <strong>Maria Santos</strong>
-                                            <span>maria@example.com</span>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <span class="user-role resort-admin">
-                                        Resort Administrator
-                                    </span>
-                                </td>
-
-                                <td>Seaside View Resort</td>
-
-                                <td>May 30, 2025</td>
-
-                                <td>
-                                    <span class="user-account-status active"> Active </span>
-                                </td>
-
-                                <td>
-                                    <button
-                                        type="button"
-                                        class="user-action-button"
-                                        aria-label="View user"
-                                    >
-                                        <i data-lucide="ellipsis"></i>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="platform-user-info">
-                                        <div class="platform-user-avatar">
-                                            <i data-lucide="user"></i>
-                                        </div>
-                                        <div>
-                                            <strong>Pedro Reyes</strong>
-                                            <span>pedro@example.com</span>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <span class="user-role client"> Client </span>
-                                </td>
-
-                                <td>Mountain Breeze Resort</td>
-
-                                <td>May 28, 2025</td>
-
-                                <td>
-                                    <span class="user-account-status inactive"> Inactive </span>
-                                </td>
-
-                                <td>
-                                    <button
-                                        type="button"
-                                        class="user-action-button"
-                                        aria-label="View user"
-                                    >
-                                        <i data-lucide="ellipsis"></i>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="platform-user-info">
-                                        <div class="platform-user-avatar">
-                                            <i data-lucide="shield"></i>
-                                        </div>
-
-                                        <div>
-                                            <strong>System Admin</strong>
-                                            <span>admin@resorthub.com</span>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <span class="user-role system-admin">
-                                        System Administrator
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <span class="no-tenant">System</span>
-                                </td>
-
-                                <td>June 1, 2025</td>
-
-                                <td>
-                                    <span class="user-account-status active"> Active </span>
-                                </td>
-
-                                <td>
-                                    <button
-                                        type="button"
-                                        class="user-action-button"
-                                        aria-label="View user"
-                                    >
-                                        <i data-lucide="ellipsis"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
+<tbody></tbody>
                     </table>
                 </div>
             </section>
@@ -392,3 +239,4 @@
         </script>
     </body>
 </html>
+

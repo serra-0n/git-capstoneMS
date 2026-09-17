@@ -203,8 +203,8 @@
     align-items: center;
     justify-content: center;
     z-index: 2;
-    background: #f3f4f6;
-    color: #4b5563;
+    background: #dbeafe;
+    color: #2563eb;
 }
 
 .activity-timeline-icon svg {
@@ -519,8 +519,8 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    background: #f3f4f6;
-    color: #4b5563;
+    background: #dbeafe;
+    color: #2563eb;
 }
 
 .activity-user-avatar.admin {
@@ -545,7 +545,7 @@
     white-space: nowrap;
 }
 
-.activity-user span {
+.activity-user > div span {
     display: block;
     margin-top: 2px;
     color: #9ca3af;

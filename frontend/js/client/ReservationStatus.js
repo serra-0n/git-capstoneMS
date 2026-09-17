@@ -1,11 +1,9 @@
 "use strict";
 
-const USE_DUMMY_DATA = false; // Set to true for frontend development without backend
-
 const accessToken = sessionStorage.getItem("resorthub_access_token");
 
 if (!accessToken) {
-    window.location.href = "../auth/Login.html";
+    window.location.href = "../auth/login.html";
 }
 
 /*API ENDPOINTS*/
@@ -18,101 +16,6 @@ const API_ENDPOINTS = {
         return `/api/client/reservations/${encodeURIComponent(reservationId)}`;
     },
 };
-
-/* DUMMY CLIENT Presentation data only. */
-
-const DUMMY_CLIENT = {
-    id: 1,
-    name: "Juan Dela Cruz",
-};
-
-/* DUMMY RESERVATIONS Presentation data only. These records are structured similarly to data that can later come from MySQL through the Express backend. */
-
-const DUMMY_RESERVATIONS = [
-    {
-        id: 105,
-        client_id: 1,
-
-        reference_number: "RES-0105",
-
-        resort_name: "Azure Garden Resort",
-
-        accommodation_name: "Family Room",
-
-        check_in: "2026-09-10",
-
-        check_out: "2026-09-12",
-
-        reservation_status: "Pending",
-
-        payment_status: "Pending Verification",
-
-        document_verification_status: "Pending Verification",
-    },
-
-    {
-        id: 102,
-        client_id: 1,
-
-        reference_number: "RES-0102",
-
-        resort_name: "Palm Breeze Resort",
-
-        accommodation_name: "Standard Room",
-
-        check_in: "2026-09-15",
-
-        check_out: "2026-09-17",
-
-        reservation_status: "Confirmed",
-
-        payment_status: "Pending Verification",
-
-        document_verification_status: "Verified",
-    },
-
-    {
-        id: 103,
-        client_id: 1,
-
-        reference_number: "RES-0103",
-
-        resort_name: "Serenity Springs Resort",
-
-        accommodation_name: "Deluxe Room",
-
-        check_in: "2026-09-20",
-
-        check_out: "2026-09-22",
-
-        reservation_status: "Confirmed",
-
-        payment_status: "Verified",
-
-        document_verification_status: "Verified",
-    },
-
-    {
-        id: 104,
-        client_id: 1,
-
-        reference_number: "RES-0104",
-
-        resort_name: "Azure Garden Resort",
-
-        accommodation_name: "Standard Cottage",
-
-        check_in: "2026-09-25",
-
-        check_out: "2026-09-26",
-
-        reservation_status: "Pending",
-
-        payment_status: "Pending",
-
-        document_verification_status: "Pending Verification",
-    },
-];
 
 /*APPLICATION STATE*/
 
@@ -228,17 +131,9 @@ async function initializeReservationStatusPage() {
 
     const reservationId = getReservationIdFromUrl();
 
-    /*
-     * During frontend development, if no ID is supplied,
-     * use reservation 105 as the demo record.
-     *
-     * Example:
-     * ReservationStatus.html?id=105
-     */
+    let selectedReservationId = reservationId || null;
 
-    let selectedReservationId = reservationId || (USE_DUMMY_DATA ? "105" : null);
-
-    if (!selectedReservationId && !USE_DUMMY_DATA) {
+    if (!selectedReservationId) {
         try {
             selectedReservationId = await getDefaultReservationId();
         } catch (error) {
@@ -246,7 +141,7 @@ async function initializeReservationStatusPage() {
         }
     }
 
-    if (selectedReservationId && !reservationId && !USE_DUMMY_DATA) {
+    if (selectedReservationId && !reservationId) {
         const reservationUrl = `ReservationStatus.html?id=${encodeURIComponent(
             selectedReservationId,
         )}`;
@@ -259,44 +154,8 @@ async function initializeReservationStatusPage() {
         return;
     }
 
-    if (USE_DUMMY_DATA) {
-        loadDummyReservation(selectedReservationId);
-
-        return;
-    }
-
     await loadReservationFromDatabase(selectedReservationId);
 }
-
-/* DUMMY MODE */
-
-function loadDummyReservation(reservationId) {
-    reservationStatusState.client = {
-        ...DUMMY_CLIENT,
-    };
-
-    const reservation = DUMMY_RESERVATIONS.find(
-        (record) => String(record.id) === String(reservationId),
-    );
-
-    if (!reservation) {
-        renderClient();
-
-        showReservationNotFound();
-
-        return;
-    }
-
-    reservationStatusState.reservation = {
-        ...reservation,
-    };
-
-    renderClient();
-
-    renderReservation();
-}
-
-/* DATABASE / API MODE */
 
 async function loadReservationFromDatabase(reservationId) {
     setLoadingState(true);

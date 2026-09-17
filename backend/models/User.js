@@ -8,6 +8,7 @@ async function findByEmail(email) {
             first_name,
             last_name,
             email,
+            contact_number,
             password_hash,
             role,
             account_status,
@@ -77,6 +78,7 @@ async function findById(userId) {
             first_name,
             last_name,
             email,
+            contact_number,
             role,
             account_status,
             setup_status
@@ -89,9 +91,80 @@ async function findById(userId) {
     return users[0] || null;
 }
 
+async function findByGoogleId(googleId) {
+    const [users] = await pool.execute(
+        `SELECT
+            id,
+            tenant_id,
+            first_name,
+            last_name,
+            email,
+            role,
+            account_status,
+            setup_status
+        FROM users
+        WHERE google_id = ?
+        LIMIT 1`,
+        [googleId]
+    );
+    return users[0] || null;
+}
+
+async function createGoogleClient({
+    googleId,
+    firstName,
+    lastName,
+    email
+}) {
+    const [result] = await pool.execute(
+        `INSERT INTO users (
+            tenant_id,
+            google_id,
+            first_name,
+            last_name,
+            email,
+            password_hash,
+            role,
+            account_status,
+            setup_status
+        )
+        VALUE (
+        NULL, ?, ?, ?, ?, NULL,
+        'client', 'active', 'completed')`,
+        [
+            googleId,
+            firstName,
+            lastName,
+            email
+        ]
+    );
+    return result.insertId;
+}
+
+async function updateClientProfile(userId, {
+    firstName,
+    lastName,
+    contactNumber
+}) {
+    await pool.execute(
+        `UPDATE users
+         SET first_name = ?,
+             last_name = ?,
+             contact_number = ?
+         WHERE id = ?
+           AND role = 'client'`,
+        [firstName, lastName, contactNumber || null, userId]
+    );
+
+    return findById(userId);
+}
+
 module.exports = {
     findByEmail,
     findById,
+    findByGoogleId,
     updateLastLogin,
-    createClient
+    updateClientProfile,
+    createClient,
+    createGoogleClient
 };

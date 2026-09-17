@@ -2,6 +2,7 @@
 
 const express = require("express");
 const controller = require("../controllers/roomController");
+const upload = require("../middleware/uploadMiddleware");
 
 const {
     authenticateUser,
@@ -9,6 +10,22 @@ const {
 } = require("../middleware/authMiddleware");
 
 const router = express.Router();
+
+router.post(
+    "/resort-admin/rooms",
+    authenticateUser,
+    requireRole("resort_admin"),
+    upload.single("image"),
+    controller.createRoom
+);
+
+router.put(
+    "/resort-admin/rooms/:id",
+    authenticateUser,
+    requireRole("resort_admin"),
+    upload.single("image"),
+    controller.updateRoom
+);
 
 router.get(
     "/resort-admin/rooms",

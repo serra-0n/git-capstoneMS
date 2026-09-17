@@ -1,10 +1,6 @@
 "use strict";
 
-/* RESORTHUB - CLIENT NEW RESERVATION File: js/client/Reservations.js Frontend development: - Uses dummy data while the backend is not connected. - Does not use localStorage. - Designed for Node.js + Express + MySQL later. */
-
-/* FRONTEND DEVELOPMENT MODE true = use dummy frontend data false = use real backend API */
-
-const USE_DUMMY_DATA = false;
+/* ResortHub client reservation form backed by the authenticated API. */
 
 /* API ENDPOINTS */
 
@@ -42,93 +38,6 @@ if (!accessToken) {
     window.location.href = "../auth/login.html";
 }
 
-/* DUMMY CLIENT DATA Frontend sample only. NOT a database record. */
-
-const DUMMY_CLIENT = {
-    id: 1,
-    name: "Juan Dela Cruz",
-    email: "juan@example.com",
-    contact_number: "09123456789",
-};
-
-/* DUMMY RESORT DATA Frontend sample only. */
-
-const DUMMY_RESORTS = [
-    {
-        id: 1,
-        name: "Sample Resort A",
-    },
-
-    {
-        id: 2,
-        name: "Sample Resort B",
-    },
-
-    {
-        id: 3,
-        name: "Sample Resort C",
-    },
-];
-
-/* DUMMY ACCOMMODATION DATA The thesis supports displaying: - room/cottage type - capacity - amenities - pricing information - accommodation availability The values below are sample frontend values only. */
-
-const DUMMY_ACCOMMODATIONS = [
-    {
-        id: 101,
-        resort_id: 1,
-        name: "Family Room",
-        type: "Room",
-        capacity: 4,
-        amenities: ["Air Conditioning", "Private Bathroom"],
-        price: 3500,
-        availability: "Available",
-    },
-
-    {
-        id: 102,
-        resort_id: 1,
-        name: "Standard Cottage",
-        type: "Cottage",
-        capacity: 6,
-        amenities: ["Table", "Seating Area"],
-        price: 2500,
-        availability: "Available",
-    },
-
-    {
-        id: 201,
-        resort_id: 2,
-        name: "Family Cottage",
-        type: "Cottage",
-        capacity: 8,
-        amenities: ["Table", "Seating Area"],
-        price: 4000,
-        availability: "Available",
-    },
-
-    {
-        id: 202,
-        resort_id: 2,
-        name: "Standard Room",
-        type: "Room",
-        capacity: 2,
-        amenities: ["Air Conditioning"],
-        price: 2200,
-        availability: "Available",
-    },
-
-    {
-        id: 301,
-        resort_id: 3,
-        name: "Group Cottage",
-        type: "Cottage",
-        capacity: 10,
-        amenities: ["Table", "Seating Area"],
-        price: 4500,
-        availability: "Available",
-    },
-];
-
 /* APPLICATION STATE */
 
 const reservationState = {
@@ -143,8 +52,6 @@ const reservationState = {
     selectedAccommodation: null,
 
     unavailableDateRanges: [],
-
-    usingDummyData: false,
 
     submitting: false,
 };
@@ -189,6 +96,16 @@ const selectedAccommodationPrice = document.getElementById("selectedAccommodatio
 
 const selectedAccommodationAmenities = document.getElementById("selectedAccommodationAmenities");
 
+const selectedAccommodationImage = document.getElementById("selectedAccommodationImage");
+
+const selectedAccommodationDescription = document.getElementById(
+    "selectedAccommodationDescription",
+);
+
+const selectedResortName = document.getElementById("selectedResortName");
+
+const selectedResortLocation = document.getElementById("selectedResortLocation");
+
 /* Schedule */
 
 const checkIn = document.getElementById("checkIn");
@@ -205,6 +122,8 @@ let checkOutCalendar = null;
 
 const clientName = document.getElementById("clientName");
 
+const guestCount = document.getElementById("guestCount");
+
 const contactNumber = document.getElementById("contactNumber");
 
 const clientEmail = document.getElementById("clientEmail");
@@ -218,6 +137,20 @@ const summaryAccommodation = document.getElementById("summaryAccommodation");
 const summaryCheckIn = document.getElementById("summaryCheckIn");
 
 const summaryCheckOut = document.getElementById("summaryCheckOut");
+
+const summaryNights = document.getElementById("summaryNights");
+
+const summaryTotal = document.getElementById("summaryTotal");
+
+const summaryPaymentPlan = document.getElementById("summaryPaymentPlan");
+
+const summaryInitialPayment = document.getElementById("summaryInitialPayment");
+
+const fullPlanAmount = document.getElementById("fullPlanAmount");
+
+const halfPlanAmount = document.getElementById("halfPlanAmount");
+
+const paymentPlanInputs = document.querySelectorAll('input[name="payment_plan"]');
 
 /* Submit */
 
@@ -240,40 +173,8 @@ async function initializeReservationPage() {
 
     initializeFormEvents();
 
-    if (USE_DUMMY_DATA) {
-        loadDummyData();
-
-        return;
-    }
-
     await loadInitialApiData();
 }
-
-/* DUMMY DATA INITIALIZATION */
-
-function loadDummyData() {
-    reservationState.usingDummyData = true;
-
-    reservationState.client = {
-        ...DUMMY_CLIENT,
-    };
-
-    reservationState.resorts = DUMMY_RESORTS.map((resort) => ({ ...resort }));
-
-    reservationState.accommodations = [];
-
-    renderClient();
-
-    populateClientInformation();
-
-    renderResortOptions();
-
-    resetAccommodationSelection();
-
-    renderReservationSummary();
-}
-
-/* LOAD INITIAL API DATA */
 
 async function loadInitialApiData() {
     try {
@@ -313,8 +214,6 @@ async function loadInitialApiData() {
 
         reservationState.resorts = normalizeResorts(resortsData);
 
-        reservationState.usingDummyData = false;
-
         renderClient();
 
         populateClientInformation();
@@ -322,6 +221,10 @@ async function loadInitialApiData() {
         renderResortOptions();
 
         resetAccommodationSelection();
+
+        if (submitReservationButton) submitReservationButton.disabled = true;
+
+        await applyReservationSelectionFromUrl();
 
         renderReservationSummary();
     } catch (error) {
@@ -364,6 +267,14 @@ function normalizeResorts(data) {
         id: resort.id ?? null,
 
         name: resort.name || resort.resort_name || "",
+
+        type: resort.resort_type || "",
+
+        location: resort.location || "",
+
+        description: resort.description || "",
+
+        cover_image_path: resort.cover_image_path || "",
     }));
 }
 
@@ -388,6 +299,10 @@ function normalizeAccommodations(data) {
         capacity: accommodation.capacity ?? "",
 
         amenities: Array.isArray(accommodation.amenities) ? accommodation.amenities : [],
+
+        description: accommodation.description || "",
+
+        image_path: accommodation.image_path || "",
 
         price: accommodation.price ?? null,
 
@@ -455,6 +370,50 @@ function renderResortOptions() {
     });
 }
 
+async function applyReservationSelectionFromUrl() {
+    const parameters = new URLSearchParams(window.location.search);
+    const requestedResortId = parameters.get("resort");
+    const requestedAccommodationId = parameters.get("accommodation");
+
+    if (!requestedResortId || !requestedAccommodationId) {
+        if (submitReservationButton) submitReservationButton.disabled = true;
+        return;
+    }
+
+    const resort = reservationState.resorts.find(
+        (item) => String(item.id) === String(requestedResortId),
+    );
+
+    if (!resort) {
+        showFormMessage("The selected resort is no longer available. Please choose another stay.", "error");
+        return;
+    }
+
+    reservationState.selectedResort = resort;
+    resortId.value = String(resort.id);
+    await loadAccommodations(resort.id);
+
+    const accommodation = reservationState.accommodations.find(
+        (item) => String(item.id) === String(requestedAccommodationId),
+    );
+
+    if (!accommodation) {
+        showFormMessage(
+            "The selected room or cottage is no longer available. Please choose another stay.",
+            "error",
+        );
+        reservationState.selectedResort = null;
+        return;
+    }
+
+    reservationState.selectedAccommodation = accommodation;
+    accommodationId.value = String(accommodation.id);
+    renderSelectedAccommodation();
+    renderReservationSummary();
+    await loadUnavailableDateRanges(accommodation.id);
+    if (submitReservationButton) submitReservationButton.disabled = false;
+}
+
 /* RESORT CHANGE */
 
 async function handleResortChange() {
@@ -483,18 +442,6 @@ async function handleResortChange() {
 
 async function loadAccommodations(selectedResortId) {
     setAccommodationSelectDisabled(true);
-
-    if (reservationState.usingDummyData) {
-        reservationState.accommodations = DUMMY_ACCOMMODATIONS.filter(
-            (accommodation) => String(accommodation.resort_id) === String(selectedResortId),
-        );
-
-        renderAccommodationOptions();
-
-        setAccommodationSelectDisabled(false);
-
-        return;
-    }
 
     try {
         const response = await fetch(
@@ -596,13 +543,6 @@ async function handleAccommodationChange() {
 async function loadUnavailableDateRanges(selectedAccommodationId) {
     clearScheduleMessage();
 
-    if (reservationState.usingDummyData) {
-        reservationState.unavailableDateRanges = [];
-        refreshAvailabilityCalendars();
-        setCheckInCalendarEnabled(true);
-        return;
-    }
-
     setCheckInCalendarEnabled(false);
 
     try {
@@ -684,11 +624,59 @@ function renderSelectedAccommodation() {
 
     setText(selectedAccommodationType, accommodation.type);
 
-    setText(selectedAccommodationCapacity, formatCapacity(accommodation.capacity));
+    setText(
+        selectedAccommodationCapacity,
+        `${formatCapacity(accommodation.capacity)} ${Number(accommodation.capacity) === 1 ? "guest" : "guests"}`,
+    );
 
     setText(selectedAccommodationPrice, formatCurrency(accommodation.price));
 
-    setText(selectedAccommodationAmenities, formatAmenities(accommodation.amenities));
+    setText(selectedResortName, reservationState.selectedResort?.name);
+
+    setText(selectedResortLocation, reservationState.selectedResort?.location || "Location available soon");
+
+    setText(
+        selectedAccommodationDescription,
+        accommodation.description ||
+            `A ${String(accommodation.type || "stay").toLowerCase()} at ${reservationState.selectedResort?.name || "the selected resort"}.`,
+    );
+
+    if (selectedAccommodationImage) {
+        selectedAccommodationImage.src = accommodation.image_path || "../../assets/images/accommodation-fallback.png";
+        selectedAccommodationImage.alt = `${accommodation.name || "Accommodation"} photo`;
+        selectedAccommodationImage.onerror = () => {
+            selectedAccommodationImage.onerror = null;
+            selectedAccommodationImage.src = "../../assets/images/accommodation-fallback.png";
+        };
+    }
+
+    renderAmenityChips(accommodation.amenities);
+
+    if (guestCount) {
+        const capacity = Number(accommodation.capacity);
+        if (Number.isInteger(capacity) && capacity > 0) {
+            guestCount.max = String(capacity);
+            if (Number(guestCount.value) > capacity) guestCount.value = String(capacity);
+        }
+    }
+
+    initializeIcons();
+}
+
+function renderAmenityChips(amenities) {
+    if (!selectedAccommodationAmenities) return;
+    selectedAccommodationAmenities.replaceChildren();
+    const items = Array.isArray(amenities) && amenities.length
+        ? amenities
+        : ["Amenity details available on request"];
+
+    items.forEach((amenity) => {
+        const item = document.createElement("span");
+        const icon = document.createElement("i");
+        icon.setAttribute("data-lucide", "check");
+        item.append(icon, document.createTextNode(String(amenity)));
+        selectedAccommodationAmenities.appendChild(item);
+    });
 }
 
 /* RESET ACCOMMODATION */
@@ -726,7 +714,15 @@ function resetSelectedAccommodationDisplay() {
 
     setText(selectedAccommodationPrice, "—");
 
-    setText(selectedAccommodationAmenities, "—");
+    if (selectedAccommodationAmenities) selectedAccommodationAmenities.replaceChildren();
+
+    setText(selectedResortName, "—");
+
+    setText(selectedResortLocation, "—");
+
+    setText(selectedAccommodationDescription, "");
+
+    if (guestCount) guestCount.removeAttribute("max");
 }
 
 /* ENABLE / DISABLE ACCOMMODATION SELECT */
@@ -955,6 +951,50 @@ function renderReservationSummary() {
     setText(summaryCheckIn, checkIn?.value ? formatDate(checkIn.value) : "—");
 
     setText(summaryCheckOut, checkOut?.value ? formatDate(checkOut.value) : "—");
+
+    const pricing = getReservationPricing();
+
+    setText(summaryNights, pricing.nights > 0 ? pricing.nights : "—");
+    setText(summaryTotal, pricing.total > 0 ? formatCurrency(pricing.total) : "—");
+    setText(fullPlanAmount, pricing.total > 0 ? formatCurrency(pricing.total) : "—");
+    setText(halfPlanAmount, pricing.total > 0 ? formatCurrency(pricing.total * 0.5) : "—");
+
+    const labels = {
+        full: "Pay in full",
+        half: "Pay 50% deposit",
+        later: "Pay later",
+    };
+
+    setText(summaryPaymentPlan, labels[pricing.paymentPlan]);
+    setText(
+        summaryInitialPayment,
+        pricing.paymentPlan === "later"
+            ? "Due after resort approval"
+            : pricing.initialAmount > 0
+                ? formatCurrency(pricing.initialAmount)
+                : "—",
+    );
+}
+
+function getReservationPricing() {
+    const nightlyRate = Number(reservationState.selectedAccommodation?.price || 0);
+    const nights = calculateNights(checkIn?.value, checkOut?.value);
+    const total = nightlyRate > 0 && nights > 0 ? nightlyRate * nights : 0;
+    const paymentPlan =
+        document.querySelector('input[name="payment_plan"]:checked')?.value || "half";
+    const initialAmount = paymentPlan === "half" ? total * 0.5 : paymentPlan === "full" ? total : 0;
+
+    return { nightlyRate, nights, total, paymentPlan, initialAmount };
+}
+
+function calculateNights(checkInValue, checkOutValue) {
+    if (!checkInValue || !checkOutValue || checkOutValue <= checkInValue) return 0;
+
+    const start = new Date(`${checkInValue}T00:00:00Z`);
+    const end = new Date(`${checkOutValue}T00:00:00Z`);
+    const nights = Math.round((end - start) / 86400000);
+
+    return Number.isFinite(nights) && nights > 0 ? nights : 0;
 }
 
 /* FORM EVENTS */
@@ -975,6 +1015,8 @@ function initializeFormEvents() {
     if (!checkOutCalendar && checkOut) {
         checkOut.addEventListener("change", handleScheduleChange);
     }
+
+    paymentPlanInputs.forEach((input) => input.addEventListener("change", renderReservationSummary));
 
     if (reservationForm) {
         reservationForm.addEventListener("submit", handleReservationSubmit);
@@ -1017,21 +1059,6 @@ async function handleReservationSubmit(event) {
 
     const payload = buildReservationPayload();
 
-    /*
-     * Dummy mode must not pretend that a
-     * database record was actually created.
-     */
-    if (USE_DUMMY_DATA) {
-        console.log("Dummy reservation payload:", payload);
-
-        showFormMessage(
-            "Demo mode: the reservation information is ready, but it was not saved because the backend database is not connected yet.",
-            "info",
-        );
-
-        return;
-    }
-
     await submitReservation(payload);
 }
 
@@ -1049,6 +1076,8 @@ function buildReservationPayload() {
 
         accommodation_id: reservationState.selectedAccommodation?.id ?? null,
 
+        guest_count: Number(guestCount?.value || 1),
+
         check_in: checkIn?.value || null,
 
         check_out: checkOut?.value || null,
@@ -1058,6 +1087,9 @@ function buildReservationPayload() {
         contact_number: contactNumber?.value.trim() || "",
 
         client_email: clientEmail?.value.trim() || "",
+
+        payment_plan:
+            document.querySelector('input[name="payment_plan"]:checked')?.value || "half",
     };
 }
 

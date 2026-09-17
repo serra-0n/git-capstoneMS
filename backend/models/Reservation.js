@@ -5,7 +5,7 @@ const RESERVATION_SELECT = `
            r.accommodation_id, r.guest_name, r.contact_number,
            r.guest_email, r.guest_count, r.check_in, r.check_out,
            r.nightly_rate, r.total_amount, r.deposit_percentage,
-           r.deposit_amount, r.amount_paid, r.reservation_status,
+           r.deposit_amount, r.payment_plan, r.amount_paid, r.reservation_status,
            r.payment_status, r.review_notes, r.reviewed_at, r.accepted_at,
            r.deposit_due_at, r.expired_at, r.created_at,
            t.resort_name, t.location AS resort_location,
@@ -55,7 +55,9 @@ const RESERVATION_SELECT = `
 
 async function listApprovedResorts() {
     const [rows] = await pool.execute(
-        `SELECT t.id, t.resort_name AS name, t.resort_type, t.location
+        `SELECT t.id, t.resort_name AS name, t.resort_type, t.location,
+                t.description, t.features,
+                COALESCE(t.cover_image_path, '/assets/images/resort-fallback.png') AS cover_image_path
            FROM tenants t
           WHERE t.approval_status = 'approved'
             AND t.tenant_status = 'active'
@@ -123,6 +125,8 @@ async function listAccommodations(tenantId,
                 a.accommodation_type AS type,
                 a.capacity,
                 a.amenities,
+                a.description,
+                COALESCE(a.image_path, '/assets/images/accommodation-fallback.png') AS image_path,
                 a.nightly_rate AS price,
                 a.availability_status AS availability
             FROM accommodations a
@@ -179,7 +183,7 @@ async function listUnavailableDateRanges(
 
 async function create({
     clientId, tenantId, accommodationId, guestName,
-    contactNumber, guestEmail, guestCount, checkIn, checkOut
+    contactNumber, guestEmail, guestCount, checkIn, checkOut, paymentPlan
 }) {
     const connection = await pool.getConnection();
     try {
@@ -237,21 +241,31 @@ async function create({
         );
         const nightlyRate = Number(accommodation.nightly_rate);
         const totalAmount = nightlyRate * nights;
+        const depositPercentage = paymentPlan === "half" ? 50 : 100;
+        const requiredPaymentAmount = paymentPlan === "half" ? totalAmount * 0.5 : totalAmount;
         const reservationCode = `RH-${Date.now().toString(36).toUpperCase()}-${clientId}`;
 
         const [result] = await connection.execute(
             `INSERT INTO reservations
                 (reservation_code, tenant_id, client_id, accommodation_id,
                  guest_name, contact_number, guest_email, guest_count,
-                 check_in, check_out, nightly_rate, total_amount)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                 check_in, check_out, nightly_rate, total_amount,
+                 payment_plan, deposit_percentage, deposit_amount)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [reservationCode, tenantId, clientId, accommodationId, guestName,
              contactNumber, guestEmail, guestCount, checkIn, checkOut,
-             nightlyRate, totalAmount]
+             nightlyRate, totalAmount, paymentPlan, depositPercentage,
+             requiredPaymentAmount]
         );
 
         await connection.commit();
-        return { id: result.insertId, reservationCode, totalAmount };
+        return {
+            id: result.insertId,
+            reservationCode,
+            totalAmount,
+            paymentPlan,
+            requiredPaymentAmount
+        };
     } catch (error) {
         await connection.rollback();
         throw error;
@@ -290,14 +304,23 @@ async function updateStatus({ reservationId, tenantId, reviewerId, status, notes
             `UPDATE reservations
                 SET reservation_status = 'awaiting_deposit',
                     payment_status = 'unpaid',
-                    deposit_percentage = 50.00,
-                    deposit_amount = ROUND(total_amount * 0.50, 2),
+                    deposit_percentage = CASE
+                        WHEN payment_plan = 'half' THEN 50.00
+                        ELSE 100.00
+                    END,
+                    deposit_amount = CASE
+                        WHEN payment_plan = 'half' THEN ROUND(total_amount * 0.50, 2)
+                        ELSE total_amount
+                    END,
                     amount_paid = 0.00,
                     review_notes = ?,
                     reviewed_by = ?,
                     reviewed_at = NOW(),
                     accepted_at = NOW(),
-                    deposit_due_at = DATE_ADD(NOW(), INTERVAL 12 HOUR),
+                    deposit_due_at = CASE
+                        WHEN payment_plan = 'later' THEN DATE_ADD(NOW(), INTERVAL 24 HOUR)
+                        ELSE DATE_ADD(NOW(), INTERVAL 12 HOUR)
+                    END,
                     expired_at = NULL
               WHERE id = ?
                 AND tenant_id = ?

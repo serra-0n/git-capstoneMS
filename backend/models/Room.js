@@ -2,6 +2,66 @@
 
 const pool = require("../config/database");
 
+async function create({
+    tenantId,
+    name,
+    accommodationType,
+    capacity,
+    amenities,
+    nightlyRate,
+    description,
+    imagePath,
+    status
+}) {
+    const [result] = await pool.execute(
+        `INSERT INTO accommodations (
+            tenant_id,
+            name,
+            accommodation_type,
+            capacity,
+            amenities,
+            description,
+            image_path,
+            nightly_rate,
+            availability_status
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+            tenantId,
+            name,
+            accommodationType,
+            capacity,
+            amenities || null,
+            description || null,
+            imagePath || null,
+            nightlyRate,
+            status
+        ]
+    );
+
+    const [rooms] = await pool.execute(
+        `SELECT
+            id,
+            tenant_id,
+            name,
+            accommodation_type,
+            capacity,
+            amenities,
+            description,
+            image_path,
+            nightly_rate,
+            availability_status,
+            availability_status AS display_status
+        FROM accommodations
+        WHERE id = ?
+            AND tenant_id = ?
+        LIMIT 1`,
+        [result.insertId, tenantId]
+    );
+
+    return rooms[0];
+}
+
 async function listForTenant(tenantId) {
     const [rooms] = await pool.execute(
         `SELECT
@@ -11,6 +71,8 @@ async function listForTenant(tenantId) {
         a.accommodation_type,
         a.capacity,
         a.amenities,
+        a.description,
+        a.image_path,
         a.nightly_rate,
         a.availability_status,
         CASE
@@ -53,6 +115,51 @@ async function listForTenant(tenantId) {
     return rooms;
 }
 
+async function findForTenant(roomId, tenantId) {
+    const [rooms] = await pool.execute(
+        `SELECT id, tenant_id, name, accommodation_type, capacity, amenities,
+                description, image_path, nightly_rate, availability_status
+           FROM accommodations
+          WHERE id = ? AND tenant_id = ?
+          LIMIT 1`,
+        [roomId, tenantId]
+    );
+    return rooms[0] || null;
+}
+
+async function update({
+    roomId,
+    tenantId,
+    name,
+    accommodationType,
+    capacity,
+    amenities,
+    nightlyRate,
+    description,
+    imagePath,
+    status
+}) {
+    const [result] = await pool.execute(
+        `UPDATE accommodations
+            SET name = ?, accommodation_type = ?, capacity = ?, amenities = ?,
+                nightly_rate = ?, description = ?, image_path = ?, availability_status = ?
+          WHERE id = ? AND tenant_id = ?`,
+        [
+            name,
+            accommodationType,
+            capacity,
+            amenities || null,
+            nightlyRate,
+            description || null,
+            imagePath || null,
+            status,
+            roomId,
+            tenantId
+        ]
+    );
+    return result.affectedRows === 1;
+}
+
 async function updateAvailabilityStatus({
     roomId,
     tenantId,
@@ -70,6 +177,9 @@ async function updateAvailabilityStatus({
 }
 
 module.exports = {
+    create,
     listForTenant,
+    findForTenant,
+    update,
     updateAvailabilityStatus
 };

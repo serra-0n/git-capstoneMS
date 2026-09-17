@@ -41,6 +41,30 @@
     margin-right: 8px;
 }
 
+.system-brand-mark {
+    width: 34px;
+    height: 34px;
+    margin-right: 8px;
+    display: block;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    flex: none;
+}
+
+.system-profile-avatar {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #2563eb;
+    background: #dbeafe;
+    border-radius: 50%;
+    flex: none;
+}
+.system-profile-avatar svg { width: 18px; height: 18px; }
+.sidebar-user .system-profile-avatar { width: 32px; height: 32px; }
+
 .sidebar-brand-text {
     display: flex;
     flex-direction: column;

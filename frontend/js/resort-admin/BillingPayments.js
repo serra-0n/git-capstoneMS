@@ -1,6 +1,6 @@
 /* RESORTHUB - BILLING & PAYMENTS File: billingPayments.js Frontend prototype / database-ready structure */
 
-/* SAMPLE BILLING & PAYMENT DATA NOTE: These are temporary sample records. Later, this data will come from the database/API. */
+/* Billing and payment records are loaded from the database API. */
 
 const API_ENDPOINTS = {
     payments: "/api/resort-admin/payments",
@@ -360,7 +360,7 @@ function updateSummary() {
 
         /*
          * Since these values are now calculated,
-         * replace "Sample data" with a simple
+         * describe the currently loaded records with a simple
          * data indicator.
          */
 
@@ -741,13 +741,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.error("Unable to load payments:", error);
         billingTransactions = [];
     }
-    /*Calculate the summary cards from the sample records.*/
+    /* Calculate the summary cards from the loaded records. */
     updateSummary();
 
     /*Render transaction records.*/
     renderTransactions(billingTransactions);
 
-    /*Load the sample pending payment into the verification widget.*/
+    /* Load the first pending payment into the verification widget. */
     const pendingTransaction = billingTransactions.find(
         (transaction) => transaction.status === "Pending Verification",
     );

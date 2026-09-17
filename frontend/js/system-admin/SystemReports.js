@@ -1,312 +1,152 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const reportModal = document.getElementById("reportModal");
-    const reportModalOverlay = document.getElementById("reportModalOverlay");
+"use strict";
 
-    const closeReportModal = document.getElementById("closeReportModal");
-    const closeReportDetails = document.getElementById("closeReportDetails");
-
-    const generateReportButton = document.getElementById("generateReportButton");
-
-    const reportTypeSelect = document.getElementById("reportType");
-    const reportDateFrom = document.getElementById("reportDateFrom");
-    const reportDateTo = document.getElementById("reportDateTo");
-
-    const modalReportTitle = document.getElementById("modalReportTitle");
-    const modalReportDescription = document.getElementById("modalReportDescription");
-    const modalReportName = document.getElementById("modalReportName");
-    const modalReportType = document.getElementById("modalReportType");
-    const modalReportDate = document.getElementById("modalReportDate");
-
-    const modalReportDownload = document.getElementById("modalReportDownload");
-
-    const reportItems = document.querySelectorAll(".report-item");
-    const reportList = document.querySelector(".report-list");
-
-    const reportData = {
-        tenant: {
-            title: "Tenant Management Report",
-            description: "Summary of registered tenants.",
-            type: "Tenant Report",
-            date: "June 1, 2025",
-            total: "12",
-            active: "9",
-            suspended: "2",
-            pending: "1",
-        },
-
-        user: {
-            title: "Platform User Report",
-            description: "Overview of platform users, roles, and account statuses.",
-            type: "User Report",
-            date: "June 1, 2025",
-            total: "248",
-            active: "220",
-            suspended: "18",
-            pending: "10",
-        },
-
-        activity: {
-            title: "Activity Report",
-            description: "Summary of user and administrator activities.",
-            type: "Activity Report",
-            date: "May 31, 2025",
-            total: "1,248",
-            active: "1,100",
-            suspended: "0",
-            pending: "148",
-        },
-
-        system: {
-            title: "System Summary Report",
-            description: "Overall summary of the ResortHub platform.",
-            type: "System Summary Report",
-            date: "May 31, 2025",
-            total: "12",
-            active: "9",
-            suspended: "2",
-            pending: "1",
-        },
-    };
-
-    let currentReportType = "tenant";
-
-    function openReportModal(reportType) {
-        const report = reportData[reportType];
-
-        if (!report) {
-            return;
+window.SystemAdmin = {
+    escape(value) {
+        return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+            "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+        })[character]);
+    },
+    async get(url, options = {}) {
+        const token = sessionStorage.getItem("resorthub_access_token");
+        if (!token) {
+            window.location.href = "../auth/login.html";
+            throw new Error("Authentication is required.");
         }
-
-        currentReportType = reportType;
-        modalReportTitle.textContent = report.title;
-        modalReportDescription.textContent = report.description;
-        modalReportName.textContent = report.title;
-        modalReportType.textContent = report.type;
-        modalReportDate.textContent = report.date;
-
-        const summaryItems = document.querySelectorAll(".report-summary-item strong");
-
-        if (summaryItems.length >= 4) {
-            summaryItems[0].textContent = report.total;
-            summaryItems[1].textContent = report.active;
-            summaryItems[2].textContent = report.suspended;
-            summaryItems[3].textContent = report.pending;
-        }
-
-        reportModal.classList.add("show");
-        document.body.style.overflow = "hidden";
-
-        if (typeof lucide !== "undefined") {
-            lucide.createIcons();
-        }
-    }
-
-    function closeModal() {
-        reportModal.classList.remove("show");
-        document.body.style.overflow = "";
-    }
-
-    function attachViewButtons() {
-        const viewButtons = document.querySelectorAll(".report-view-button");
-
-        viewButtons.forEach(function (button) {
-            button.addEventListener("click", function () {
-                const reportType = button.dataset.report;
-                openReportModal(reportType);
-            });
+        const response = await fetch(url, {
+            ...options,
+            headers: { Accept: "application/json", Authorization: `Bearer ${token}`, ...options.headers }
         });
-    }
-
-    attachViewButtons();
-
-    if (closeReportModal) {
-        closeReportModal.addEventListener("click", closeModal);
-    }
-
-    if (closeReportDetails) {
-        closeReportDetails.addEventListener("click", closeModal);
-    }
-
-    if (reportModalOverlay) {
-        reportModalOverlay.addEventListener("click", closeModal);
-    }
-
-    document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") {
-            if (reportModal.classList.contains("show")) {
-                closeModal();
+        const data = await response.json();
+        if (!response.ok) {
+            if (response.status === 401) {
+                sessionStorage.removeItem("resorthub_access_token");
+                window.location.href = "../auth/login.html";
             }
+            throw new Error(data.message || "Unable to load system data.");
         }
+        return data;
+    },
+    date(value) {
+        if (!value) return "—";
+        const parsed = new Date(String(value).replace(" ", "T"));
+        return Number.isNaN(parsed.getTime()) ? String(value) : parsed.toLocaleString("en-PH", { dateStyle: "medium", timeStyle: "short" });
+    },
+    error(container, error) {
+        if (container) container.textContent = error.message || "Unable to load records.";
+    }
+};
+
+document.addEventListener("DOMContentLoaded", async () => {
+    document.querySelector(".sidebar-logout")?.addEventListener("click", (event) => {
+        event.preventDefault();
+        sessionStorage.removeItem("resorthub_access_token");
+        window.location.href = "../auth/login.html";
     });
-
-    if (generateReportButton) {
-        generateReportButton.addEventListener("click", function () {
-            const selectedType = reportTypeSelect.value;
-            const dateFrom = reportDateFrom.value;
-            const dateTo = reportDateTo.value;
-
-            if (!selectedType) {
-                alert("Please select a report type.");
-                return;
-            }
-
-            if (!dateFrom || !dateTo) {
-                alert("Please select bote Date From and Date To.");
-                return;
-            }
-
-            /* Check date order */
-
-            if (dateFrom > dateTo) {
-                alert("Date From cannot be later than Date To.");
-                return;
-            }
-
-            const report = reportData[selectedType];
-
-            if (!report) {
-                alert("Invalid report type.");
-                return;
-            }
-
-            const generatedDate = new Date().toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-            });
-
-            const newReport = document.createElement("article");
-            newReport.className = "report-item";
-            newReport.dataset.reportType = selectedType;
-
-            newReport.innerHTML = `
-                <div class="report-item-icon ${selectedType}">
-                    <i data-lucide="${getReportIcon(selectedType)}"></i>
-                </div>
-
-                <div class="report-item-info">
-                    <strong>${report.title}</strong>
-                    <span>${report.description}</span>
-                    <small>Generated ${generatedDate}</small>
-                </div>
-
-                <div class="report-item-actions">
-                    <button
-                        type="button"
-                        class="report-view-button"
-                        data-report="${selectedType}">
-
-                        <i data-lucide="eye"></i>
-                        View
-                    </button>
-
-                    <button
-                        type="button"
-                        class="report-download-button"
-                        data-report="${selectedType}">
-
-                        <i data-lucide="download"></i>
-                        Download
-                    </button>
-                </div>
-            `;
-
-            reportList.prepend(newReport);
-
-            const newViewButton = newReport.querySelector(".report-view-button");
-
-            newViewButton.addEventListener("click", function () {
-                openReportModal(selectedType);
-            });
-
-            const newDownloadButton = newReport.querySelector(".report-download-button");
-
-            newDownloadButton.addEventListener("click", function () {
-                downloadReport(selectedType);
-            });
-
-            if (typeof lucide !== "undefined") {
-                lucide.createIcons();
-            }
-
-            alert("Report generated successfully.");
-        });
-    }
-
-    function getReportIcon(reportType) {
-        switch (reportType) {
-            case "tenant":
-                return "building-2";
-            case "user":
-                return "users";
-            case "activity":
-                return "activity";
-            case "system":
-                return "file-bar-chart";
-            default:
-                return "file-text";
-        }
-    }
-
-    function downloadReport(reportType) {
-        const report = reportData[reportType];
-
-        if (!report) {
+    try {
+        const { user } = await window.SystemAdmin.get("/api/auth/me");
+        if (user.role !== "system_admin" || user.accountStatus !== "active") {
+            window.location.href = "../auth/login.html";
             return;
         }
+        const name = [user.firstName, user.lastName].filter(Boolean).join(" ") || "System Admin";
+        document.querySelectorAll(".sidebar-user-info strong, .topbar-profile strong").forEach((element) => { element.textContent = name; });
+    } catch (error) {
+        console.error("System admin account loading failed:", error);
+    }
+});
 
-        const reportContent = `
-            ResortHub
-            System Reports
+"use strict";
 
-            Report Name: ${report.title}
-            Report Type: ${report.type}
-            Generated By: System Admin
-            Generated Date: ${report.date}
-            
-            Report Summary
+document.addEventListener("DOMContentLoaded", () => {
+    const list = document.querySelector(".report-list");
+    const modal = document.getElementById("reportModal");
+    const type = document.getElementById("reportType");
+    const from = document.getElementById("reportDateFrom");
+    const to = document.getElementById("reportDateTo");
+    const reports = new Map();
+    let selected = null;
+    const types = {
+        tenant: { title: "Tenant Report", icon: "building-2", section: "tenants",
+            fields: [["Total Records", "total"], ["Active", "active"], ["Suspended", "suspended"], ["Pending", "pending"], ["Rejected", "rejected"]] },
+        user: { title: "User Report", icon: "users", section: "users",
+            fields: [["Total Records", "total"], ["Active", "active"], ["Inactive", "inactive"], ["System Admins", "system_admin"], ["Resort Admins", "resort_admin"], ["Clients", "client"]] },
+        activity: { title: "Activity Report", icon: "activity", section: "activities",
+            fields: [["Total Records", "total"], ["User Actions", "user_actions"], ["Admin Actions", "admin_actions"]] },
+        system: { title: "System Summary Report", icon: "file-chart-column", section: "system",
+            fields: [["Reservations", "reservations"], ["Payments", "payments"], ["Documents", "documents"]] }
+    };
+    const requestedType = new URLSearchParams(window.location.search).get("type");
+    if (types[requestedType]) type.value = requestedType;
 
-            Total Records: ${report.total}
-            Active: ${report.active}
-            Suspended: ${report.suspended}
-            Pending: ${report.pending}
+    function renderList() {
+        list.innerHTML = reports.size ? [...reports].reverse().map(([id, report]) => {
+            const config = types[report.type];
+            return `<article class="report-item"><span class="report-item-icon ${report.type}"><i data-lucide="${config.icon}"></i></span>
+                <div class="report-item-info"><strong>${config.title}</strong><span>${SystemAdmin.escape(report.data.from)} to ${SystemAdmin.escape(report.data.to)}</span><small>Generated ${SystemAdmin.escape(SystemAdmin.date(report.generatedAt))}</small></div>
+                <div class="report-item-actions"><button type="button" class="report-view-button" data-id="${id}"><i data-lucide="eye"></i> View</button>
+                <button type="button" class="report-download-button" data-id="${id}"><i data-lucide="download"></i> Download</button></div></article>`;
+        }).join("") : "<p>No generated reports to display.</p>";
+        window.lucide?.createIcons();
+    }
 
-            Description: ${report.description}
-        `;
+    function view(report) {
+        selected = report;
+        const config = types[report.type];
+        const put = (id, value) => { document.getElementById(id).textContent = value; };
+        put("modalReportTitle", config.title);
+        put("modalReportDescription", `Database records created from ${report.data.from} to ${report.data.to}.`);
+        put("modalReportName", config.title);
+        put("modalReportType", config.title);
+        put("modalReportDate", SystemAdmin.date(report.generatedAt));
+        const grid = modal.querySelector(".report-summary-grid");
+        grid.innerHTML = config.fields.map(([label, key]) => `<div class="report-summary-item"><span>${SystemAdmin.escape(label)}</span><strong>${Number(report.data[config.section][key] || 0)}</strong></div>`).join("");
+        modal.classList.add("show");
+        document.body.style.overflow = "hidden";
+    }
+    const close = () => { modal.classList.remove("show"); document.body.style.overflow = ""; };
 
-        const blob = new Blob([reportContent], {
-            type: "text/plain",
-        });
-
-        const url = URL.createObjectURL(blob);
-
+    function download(report) {
+        const config = types[report.type];
+        const rows = [config.title, `From: ${report.data.from}`, `To: ${report.data.to}`,
+            `Generated: ${SystemAdmin.date(report.generatedAt)}`, "",
+            ...config.fields.map(([label, key]) => `${label}: ${Number(report.data[config.section][key] || 0)}`)];
+        const url = URL.createObjectURL(new Blob([rows.join("\n")], { type: "text/plain;charset=utf-8" }));
         const link = document.createElement("a");
         link.href = url;
-        link.download = report.title.replace(/\s+/g, "_").toLowerCase() + ".txt";
-
-        document.body.appendChild(link);
+        link.download = `resorthub_${report.type}_${report.data.from}_${report.data.to}.txt`;
         link.click();
-        document.body.removeChild(link);
         URL.revokeObjectURL(url);
     }
 
-    const downloadButtons = document.querySelectorAll(".report-download-button");
+    list.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-id]");
+        if (!button) return;
+        const report = reports.get(button.dataset.id);
+        if (!report) return;
+        if (button.classList.contains("report-view-button")) view(report);
+        else download(report);
+    });
+    ["closeReportModal", "closeReportDetails", "reportModalOverlay"].forEach((id) => document.getElementById(id)?.addEventListener("click", close));
+    document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+    document.getElementById("modalReportDownload")?.addEventListener("click", () => { if (selected) download(selected); });
 
-    downloadButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-            const reportType = button.dataset.report;
-
-            downloadReport(reportType);
-        });
+    document.getElementById("generateReportButton")?.addEventListener("click", async () => {
+        if (!types[type.value] || !from.value || !to.value || from.value > to.value) {
+            alert("Select a report type and a valid date range.");
+            return;
+        }
+        try {
+            const data = await SystemAdmin.get(`/api/admin/reports?from=${encodeURIComponent(from.value)}&to=${encodeURIComponent(to.value)}`);
+            const report = { type: type.value, data, generatedAt: new Date().toISOString() };
+            reports.set(String(Date.now()), report);
+            renderList();
+            view(report);
+        } catch (error) { alert(error.message); }
     });
 
-    if (modalReportDownload) {
-        modalReportDownload.addEventListener("click", function () {
-            downloadReport(currentReportType);
-        });
-    }
-
-    if (typeof lucide !== "undefined") {
-        lucide.createIcons();
-    }
+    SystemAdmin.get("/api/admin/summary").then((summary) => {
+        [["totalTenantReport", summary.tenants.total], ["totalUserReport", summary.users.total],
+            ["totalActivitiesReport", summary.activities.total], ["activeTenantReport", summary.tenants.active]]
+            .forEach(([id, value]) => { document.getElementById(id).textContent = value; });
+    }).catch((error) => SystemAdmin.error(list, error));
 });

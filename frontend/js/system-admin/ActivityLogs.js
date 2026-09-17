@@ -1,287 +1,153 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const activitySearch = document.getElementById("activitySearch");
-    const activityTypeFilter = document.getElementById("activityTypeFilter");
-    const activityActionFilter = document.getElementById("activityActionFilter");
-    const clearActivityFilter = document.getElementById("clearActivityFilter");
+"use strict";
 
-    const activityTableBody = document.getElementById("activityTableBody");
-    const activityRows = activityTableBody ? activityTableBody.querySelectorAll("tr") : [];
-
-    const refreshActivityButton = document.getElementById("refreshActivityButton");
-    const totalActivityCount = document.getElementById("totalActivityCount");
-    const todayActivityCount = document.getElementById("todayActivityCount");
-    const userActivityCount = document.getElementById("userActivityCount");
-    const adminActivityCount = document.getElementById("adminActivityCount");
-
-    const activityModal = document.getElementById("activityModal");
-    const activityModalOverlay = document.getElementById("activityModalOverlay");
-    const closeActivityModal = document.getElementById("closeActivityModal");
-    const closeActivityDetails = document.getElementById("closeActivityDetails");
-    const modalActivityTitle = document.getElementById("modalActivityTitle");
-
-    const modalActivityDescription = document.getElementById("modalActivityDescription");
-    const modalActivityDate = document.getElementById("modalActivityDate");
-    const modalActivityType = document.getElementById("modalActivityType");
-    const modalActivityUser = document.getElementById("modalActivityUser");
-    const modalActivityRole = document.getElementById("modalActivityRole");
-    const modalActivityTenant = document.getElementById("modalActivityTenant");
-    const modalActivityAction = document.getElementById("modalActivityAction");
-    const modalActivityId = document.getElementById("modalActivityId");
-    const modalActivityIp = document.getElementById("modalActivityIp");
-    const modalActivityDevice = document.getElementById("modalActivityDevice");
-
-    function filterActivities() {
-        const searchValue = activitySearch ? activitySearch.value.toLowerCase().trim() : "";
-        const selectedType = activityTypeFilter
-            ? activityTypeFilter.value.toLowerCase().trim()
-            : "";
-        const selectedAction = activityActionFilter
-            ? activityActionFilter.value.toLowerCase().trim()
-            : "";
-
-        activityRows.forEach(function (row) {
-            const rowText = row.textContent.toLocaleLowerCase().trim();
-            const rowType = (row.dataset.type || "").toLowerCase().trim();
-            const rowAction = (row.dataset.action || "").toLowerCase().trim();
-
-            const matchesSearch = searchValue === "" || rowText.includes(searchValue);
-            const matchesType = selectedType === "" || rowType === selectedType;
-            const matchesAction = selectedAction === "" || rowAction === selectedAction;
-
-            if (matchesSearch && matchesType && matchesAction) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    }
-
-    if (activitySearch) {
-        activitySearch.addEventListener("input", filterActivities);
-    }
-
-    if (activityTypeFilter) {
-        activityTypeFilter.addEventListener("change", filterActivities);
-    }
-
-    if (activityActionFilter) {
-        activityActionFilter.addEventListener("change", filterActivities);
-    }
-
-    if (clearActivityFilter) {
-        clearActivityFilter.addEventListener("click", function () {
-            if (activitySearch) {
-                activitySearch.value = "";
-            }
-
-            if (activityTypeFilter) {
-                activityTypeFilter.value = "";
-            }
-
-            if (activityActionFilter) {
-                activityActionFilter.value = "";
-            }
-
-            filterActivities();
-        });
-    }
-
-    function updateActivityCounts() {
-        const totalRows = activityRows.length;
-
-        let userCount = 0;
-        let adminCount = 0;
-
-        activityRows.forEach(function (row) {
-            const type = (row.dataset.type || "").toLowerCase().trim();
-
-            if (type === "user") {
-                userCount++;
-            }
-
-            if (type === "admin") {
-                adminCount++;
-            }
-        });
-
-        if (totalActivityCount) {
-            totalActivityCount.textContent = totalRows;
+window.SystemAdmin = {
+    escape(value) {
+        return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+            "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+        })[character]);
+    },
+    async get(url, options = {}) {
+        const token = sessionStorage.getItem("resorthub_access_token");
+        if (!token) {
+            window.location.href = "../auth/login.html";
+            throw new Error("Authentication is required.");
         }
-
-        if (userActivityCount) {
-            userActivityCount.textContent = userCount;
-        }
-
-        if (adminActivityCount) {
-            adminActivityCount.textContent = adminCount;
-        }
-    }
-
-    if (refreshActivityButton) {
-        refreshActivityButton.addEventListener("click", function () {
-            const icon = refreshActivityButton.querySelector("svg");
-
-            if (icon) {
-                icon.style.transform = "rotate(360deg)";
-                icon.style.transition = "transform 0.5s ease";
-            }
-
-            filterActivities();
-
-            setTimeout(function () {
-                if (icon) {
-                    icon.style.transform = "rotate(0deg)";
-                }
-            }, 500);
+        const response = await fetch(url, {
+            ...options,
+            headers: { Accept: "application/json", Authorization: `Bearer ${token}`, ...options.headers }
         });
+        const data = await response.json();
+        if (!response.ok) {
+            if (response.status === 401) {
+                sessionStorage.removeItem("resorthub_access_token");
+                window.location.href = "../auth/login.html";
+            }
+            throw new Error(data.message || "Unable to load system data.");
+        }
+        return data;
+    },
+    date(value) {
+        if (!value) return "—";
+        const parsed = new Date(String(value).replace(" ", "T"));
+        return Number.isNaN(parsed.getTime()) ? String(value) : parsed.toLocaleString("en-PH", { dateStyle: "medium", timeStyle: "short" });
+    },
+    error(container, error) {
+        if (container) container.textContent = error.message || "Unable to load records.";
     }
+};
 
-    function getActivityInformation(row) {
-        const dateElement = row.querySelector(".activity-date");
-        const userElement = row.querySelector(".activity-user");
-        const descriptionElement = row.querySelector(".activity-description");
-        const tenantElement = row.querySelector("td:nth-child(4)");
-        const typeElement = row.querySelector(".activity-type");
-
-        const date = dateElement?.querySelector("strong")?.textContent.trim() || "Unknown User";
-        const time = dateElement?.querySelector("span")?.textContent.trim() || "Unknown Time";
-        const userName = userElement?.querySelector("strong")?.textContent.trim() || "Unknown User";
-        const role = userElement?.querySelector("span")?.textContent.trim() || "Unknown Role";
-        const activity =
-            descriptionElement?.querySelector("strong")?.textContent.trim() || "Unknown Activity";
-        const description =
-            descriptionElement?.querySelector("span")?.textContent.trim() ||
-            "No description available";
-
-        const tenant = tenantElement?.textContent.trim() || "No Tenant";
-        const type = typeElement?.textContent.trim() || "Unknown";
-
-        const action = row.dataset.action
-            ? row.dataset.action.replace(/-/g, " ").replace(/\b\w/g, function (letter) {
-                  return letter.toUpperCase();
-              })
-            : "Unknown";
-
-        return {
-            date: date,
-            time: time,
-            user: userName,
-            role: role,
-            activity: activity,
-            description: description,
-            tenant: tenant,
-            type: type,
-            action: action,
-        };
-    }
-
-    /* OPEN ACTIVITY MODAL */
-
-    function openActivityModal(row) {
-        if (!activityModal || !row) {
+document.addEventListener("DOMContentLoaded", async () => {
+    document.querySelector(".sidebar-logout")?.addEventListener("click", (event) => {
+        event.preventDefault();
+        sessionStorage.removeItem("resorthub_access_token");
+        window.location.href = "../auth/login.html";
+    });
+    try {
+        const { user } = await window.SystemAdmin.get("/api/auth/me");
+        if (user.role !== "system_admin" || user.accountStatus !== "active") {
+            window.location.href = "../auth/login.html";
             return;
         }
+        const name = [user.firstName, user.lastName].filter(Boolean).join(" ") || "System Admin";
+        document.querySelectorAll(".sidebar-user-info strong, .topbar-profile strong").forEach((element) => { element.textContent = name; });
+    } catch (error) {
+        console.error("System admin account loading failed:", error);
+    }
+});
 
-        const activity = getActivityInformation(row);
+"use strict";
 
-        if (modalActivityTitle) {
-            modalActivityTitle.textContent = activity.activity;
-        }
+document.addEventListener("DOMContentLoaded", () => {
+    const body = document.getElementById("activityTableBody");
+    const timeline = document.querySelector(".activity-timeline");
+    const search = document.getElementById("activitySearch");
+    const type = document.getElementById("activityTypeFilter");
+    const action = document.getElementById("activityActionFilter");
+    const modal = document.getElementById("activityModal");
+    let logs = [];
+    const kind = (log) => log.actor_role === "system_admin" ? "admin" : "user";
+    const category = (log) => {
+        const name = String(log.action_type || "").toLowerCase();
+        if (name.includes("login")) return "login";
+        if (name.includes("approv") || name.includes("reject")) return "approval";
+        if (name.includes("reserv")) return "reservation";
+        if (name.includes("suspend")) return "suspension";
+        if (name.includes("profile")) return "profile";
+        return name;
+    };
+    const details = (log) => {
+        if (!log.action_details) return "—";
+        if (typeof log.action_details === "object") return JSON.stringify(log.action_details);
+        return String(log.action_details);
+    };
 
-        if (modalActivityDescription) {
-            modalActivityDescription.textContent = activity.description;
-        }
+    function render() {
+        const query = search.value.trim().toLowerCase();
+        const rows = logs.filter((log) => (!type.value || kind(log) === type.value)
+            && (!action.value || category(log) === action.value)
+            && [log.actor_name, log.tenant_name, log.action_type, details(log)]
+                .some((value) => String(value || "").toLowerCase().includes(query)));
+        body.innerHTML = rows.length ? rows.map((log) => {
+            const safe = SystemAdmin.escape;
+            return `<tr><td><div class="activity-date"><strong>${safe(SystemAdmin.date(log.created_at))}</strong></div></td>
+                <td><div class="activity-user"><span class="activity-user-avatar ${kind(log)}"><i data-lucide="user-round"></i></span><div><strong>${safe(log.actor_name || "System")}</strong><span>${safe(log.actor_role || "System")}</span></div></div></td>
+                <td><div class="activity-description"><strong>${safe(log.action_type || "Activity")}</strong><span>${safe(details(log))}</span></div></td>
+                <td>${safe(log.tenant_name || "—")}</td>
+                <td><span class="activity-type ${kind(log)}">${kind(log)}</span></td>
+                <td><button type="button" class="activity-view-button" data-id="${Number(log.id)}"><i data-lucide="eye"></i> View</button></td></tr>`;
+        }).join("") : `<tr><td colspan="6">${logs.length ? "No activity matches this filter." : "No recorded activity."}</td></tr>`;
+        window.lucide?.createIcons();
+    }
 
-        if (modalActivityDate) {
-            modalActivityDate.textContent = activity.date + " - " + activity.time;
-        }
-
-        if (modalActivityType) {
-            modalActivityType.textContent = activity.type;
-        }
-
-        if (modalActivityUser) {
-            modalActivityUser.textContent = activity.user;
-        }
-
-        if (modalActivityRole) {
-            modalActivityRole.textContent = activity.role;
-        }
-
-        if (modalActivityTenant) {
-            modalActivityTenant.textContent = activity.tenant;
-        }
-
-        if (modalActivityAction) {
-            modalActivityAction.textContent = activity.action;
-        }
-
-        const rowIndex = Array.from(activityRows).indexOf(row) + 1;
-
-        if (modalActivityId) {
-            modalActivityId.textContent = "ACT-" + String(rowIndex).padStart(6, "0");
-        }
-
-        if (modalActivityIp) {
-            const ipAddress = [
-                "192.168.1.100",
-                "192.168.1.101",
-                "192.168.1.102",
-                "192.168.1.103",
-                "192.168.1.104",
-            ];
-
-            modalActivityIp.textContent = ipAddress[rowIndex - 1] || "192.168.1.100";
-        }
-
-        if (modalActivityDevice) {
-            modalActivityDevice.textContent = "Windows Desktop";
-        }
-
-        activityModal.classList.add("show");
+    function show(log) {
+        const set = (id, value) => { const element = document.getElementById(id); if (element) element.textContent = value || "—"; };
+        set("modalActivityTitle", log.action_type);
+        set("modalActivityDescription", details(log));
+        set("modalActivityDate", SystemAdmin.date(log.created_at));
+        set("modalActivityType", kind(log));
+        set("modalActivityUser", log.actor_name || "System");
+        set("modalActivityRole", log.actor_role || "System");
+        set("modalActivityTenant", log.tenant_name);
+        set("modalActivityAction", log.action_type);
+        set("modalActivityId", `ACT-${String(log.id).padStart(6, "0")}`);
+        set("modalActivityIp", log.ip_address);
+        set("modalActivityDevice", "—");
+        modal.classList.add("show");
         document.body.style.overflow = "hidden";
     }
-
-    function closeActivityModalWindow() {
-        if (!activityModal) {
-            return;
-        }
-        activityModal.classList.remove("show");
-        document.body.style.overflow = "";
-    }
-
-    const activityViewButtons = document.querySelectorAll(".activity-view-button");
-
-    activityViewButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-            const row = button.closest("tr");
-
-            if (!row) {
-                return;
-            }
-
-            openActivityModal(row);
-        });
+    const close = () => { modal.classList.remove("show"); document.body.style.overflow = ""; };
+    body.addEventListener("click", (event) => {
+        const id = event.target.closest(".activity-view-button")?.dataset.id;
+        const log = logs.find((item) => String(item.id) === id);
+        if (log) show(log);
+    });
+    ["closeActivityModal", "closeActivityDetails", "activityModalOverlay"].forEach((id) => document.getElementById(id)?.addEventListener("click", close));
+    document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+    [search, type, action].forEach((control) => control.addEventListener(control === search ? "input" : "change", render));
+    document.getElementById("clearActivityFilter")?.addEventListener("click", () => {
+        search.value = type.value = action.value = "";
+        render();
     });
 
-    if (closeActivityModal) {
-        closeActivityModal.addEventListener("click", closeActivityModalWindow);
-    }
-
-    if (closeActivityDetails) {
-        closeActivityDetails.addEventListener("click", closeActivityModalWindow);
-    }
-
-    if (activityModalOverlay) {
-        activityModalOverlay.addEventListener("click", closeActivityModalWindow);
-    }
-
-    document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape" && activityModal && activityModal.classList.contains("show")) {
-            closeActivityModalWindow();
+    async function load() {
+        try {
+            const [rows, summary] = await Promise.all([
+                SystemAdmin.get("/api/admin/activity-logs"), SystemAdmin.get("/api/admin/summary")
+            ]);
+            logs = rows;
+            for (const [id, value] of [
+                ["totalActivityCount", summary.activities.total], ["todayActivityCount", summary.activities.today],
+                ["userActivityCount", summary.activities.user_actions], ["adminActivityCount", summary.activities.admin_actions]
+            ]) document.getElementById(id).textContent = value;
+            timeline.innerHTML = logs.length
+                ? logs.slice(0, 5).map((log) => `<div class="activity-timeline-item"><span class="activity-timeline-icon"><i data-lucide="activity"></i></span><div class="activity-timeline-content"><strong>${SystemAdmin.escape(log.action_type)}</strong><p>${SystemAdmin.escape(log.actor_name || log.tenant_name || "System")} · ${SystemAdmin.escape(SystemAdmin.date(log.created_at))}</p></div></div>`).join("")
+                : "<p>No recent activity to display.</p>";
+            render();
+        } catch (error) {
+            body.innerHTML = `<tr><td colspan="6">${SystemAdmin.escape(error.message)}</td></tr>`;
+            SystemAdmin.error(timeline, error);
         }
-    });
-
-    updateActivityCounts();
-    filterActivities();
+    }
+    document.getElementById("refreshActivityButton")?.addEventListener("click", load);
+    load();
 });

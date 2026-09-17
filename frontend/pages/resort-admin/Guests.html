@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="../../assets/resorthub-mark.png?v=2" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <title>Guests | ResortHub</title>
@@ -31,7 +32,7 @@
                 <!-- ResortHub Brand -->
 
                 <a class="brand" href="Dashboard.html">
-                    <i class="brand-mark" data-lucide="building-2"> </i>
+                    <img class="brand-mark" src="../../assets/resorthub-mark.png?v=2" alt="ResortHub SRH logo" />
 
                     <span>
                         <strong>ResortHub</strong>
@@ -231,7 +232,7 @@
 
                             <span> Total Guests </span>
 
-                            <strong id="totalGuests"> 24 </strong>
+                            <strong id="totalGuests">0</strong>
 
                             <small> Guest records </small>
                         </article>
@@ -245,7 +246,7 @@
 
                             <span> With Reservations </span>
 
-                            <strong id="guestsWithReservations"> 18 </strong>
+                            <strong id="guestsWithReservations">0</strong>
 
                             <small> Current reservation records </small>
                         </article>
@@ -259,7 +260,7 @@
 
                             <span> Current Guests </span>
 
-                            <strong id="currentGuests"> 6 </strong>
+                            <strong id="currentGuests">0</strong>
 
                             <small> Currently staying </small>
                         </article>
@@ -273,7 +274,7 @@
 
                             <span> Pending </span>
 
-                            <strong id="pendingGuests"> 3 </strong>
+                            <strong id="pendingGuests">0</strong>
 
                             <small> Pending reservation records </small>
                         </article>
@@ -364,343 +365,7 @@
                                     </tr>
                                 </thead>
 
-                                <tbody id="guestTableBody">
-                                    <!-- SAMPLE GUEST RECORD 1 -->
-
-                                    <tr
-                                        data-status="Current"
-                                        data-guest="Juan Dela Cruz"
-                                        data-reservation="RES-0001"
-                                    >
-                                        <td>
-                                            <div class="guest-cell">
-                                                <div class="guest-avatar">JD</div>
-
-                                                <div>
-                                                    <strong> Juan Dela Cruz </strong>
-
-                                                    <small> Guest ID: GST-0001 </small>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="contact-cell">
-                                                <span> 0917 123 4567 </span>
-
-                                                <small> juan@example.com </small>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <strong> RES-0001 </strong>
-                                        </td>
-
-                                        <td>Deluxe Room 01</td>
-
-                                        <td>
-                                            <div class="date-cell">
-                                                <span> Aug 20, 2026 </span>
-
-                                                <small> Aug 22, 2026 </small>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <span class="status-badge current"> Current </span>
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                class="table-action"
-                                                type="button"
-                                                title="View guest"
-                                            >
-                                                <i data-lucide="eye"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <!-- SAMPLE GUEST RECORD 2 -->
-
-                                    <tr
-                                        data-status="Reserved"
-                                        data-guest="Maria Santos"
-                                        data-reservation="RES-0002"
-                                    >
-                                        <td>
-                                            <div class="guest-cell">
-                                                <div class="guest-avatar">MS</div>
-
-                                                <div>
-                                                    <strong> Maria Santos </strong>
-
-                                                    <small> Guest ID: GST-0002 </small>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="contact-cell">
-                                                <span> 0918 234 5678 </span>
-
-                                                <small> maria@example.com </small>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <strong> RES-0002 </strong>
-                                        </td>
-
-                                        <td>Family Cottage 01</td>
-
-                                        <td>
-                                            <div class="date-cell">
-                                                <span> Aug 28, 2026 </span>
-
-                                                <small> Aug 30, 2026 </small>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <span class="status-badge reserved"> Reserved </span>
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                class="table-action"
-                                                type="button"
-                                                title="View guest"
-                                            >
-                                                <i data-lucide="eye"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <!-- SAMPLE GUEST RECORD 3 -->
-
-                                    <tr
-                                        data-status="Completed"
-                                        data-guest="Pedro Reyes"
-                                        data-reservation="RES-0003"
-                                    >
-                                        <td>
-                                            <div class="guest-cell">
-                                                <div class="guest-avatar">PR</div>
-
-                                                <div>
-                                                    <strong> Pedro Reyes </strong>
-
-                                                    <small> Guest ID: GST-0003 </small>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="contact-cell">
-                                                <span> 0919 345 6789 </span>
-
-                                                <small> pedro@example.com </small>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <strong> RES-0003 </strong>
-                                        </td>
-
-                                        <td>Standard Room 01</td>
-
-                                        <td>
-                                            <div class="date-cell">
-                                                <span> Aug 15, 2026 </span>
-
-                                                <small> Aug 17, 2026 </small>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <span class="status-badge completed"> Completed </span>
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                class="table-action"
-                                                type="button"
-                                                title="View guest"
-                                            >
-                                                <i data-lucide="eye"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <!-- SAMPLE GUEST RECORD 4 -->
-
-                                    <tr
-                                        data-status="Pending"
-                                        data-guest="Ana Garcia"
-                                        data-reservation="RES-0004"
-                                    >
-                                        <td>
-                                            <div class="guest-cell">
-                                                <div class="guest-avatar">AG</div>
-
-                                                <div>
-                                                    <strong> Ana Garcia </strong>
-
-                                                    <small> Guest ID: GST-0004 </small>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="contact-cell">
-                                                <span> 0920 456 7890 </span>
-
-                                                <small> ana@example.com </small>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <strong> RES-0004 </strong>
-                                        </td>
-
-                                        <td>Beach Cottage 01</td>
-
-                                        <td>
-                                            <div class="date-cell">
-                                                <span> Aug 29, 2026 </span>
-
-                                                <small> Aug 31, 2026 </small>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <span class="status-badge pending"> Pending </span>
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                class="table-action"
-                                                type="button"
-                                                title="View guest"
-                                            >
-                                                <i data-lucide="eye"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <!-- SAMPLE GUEST RECORD 5 -->
-
-                                    <tr
-                                        data-status="Current"
-                                        data-guest="Carlos Mendoza"
-                                        data-reservation="RES-0005"
-                                    >
-                                        <td>
-                                            <div class="guest-cell">
-                                                <div class="guest-avatar">CM</div>
-
-                                                <div>
-                                                    <strong> Carlos Mendoza </strong>
-
-                                                    <small> Guest ID: GST-0005 </small>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="contact-cell">
-                                                <span> 0921 567 8901 </span>
-
-                                                <small> carlos@example.com </small>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <strong> RES-0005 </strong>
-                                        </td>
-
-                                        <td>Deluxe Room 02</td>
-
-                                        <td>
-                                            <div class="date-cell">
-                                                <span> Aug 23, 2026 </span>
-
-                                                <small> Aug 25, 2026 </small>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <span class="status-badge current"> Current </span>
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                class="table-action"
-                                                type="button"
-                                                title="View guest"
-                                            >
-                                                <i data-lucide="eye"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <!-- SAMPLE GUEST RECORD 6 -->
-
-                                    <tr
-                                        data-status="Reserved"
-                                        data-guest="Sofia Cruz"
-                                        data-reservation="RES-0006"
-                                    >
-                                        <td>
-                                            <div class="guest-cell">
-                                                <div class="guest-avatar">SC</div>
-
-                                                <div>
-                                                    <strong> Sofia Cruz </strong>
-
-                                                    <small> Guest ID: GST-0006 </small>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="contact-cell">
-                                                <span> 0922 678 9012 </span>
-
-                                                <small> sofia@example.com </small>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <strong> RES-0006 </strong>
-                                        </td>
-
-                                        <td>Family Cottage 02</td>
-
-                                        <td>
-                                            <div class="date-cell">
-                                                <span> Sep 01, 2026 </span>
-
-                                                <small> Sep 03, 2026 </small>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <span class="status-badge reserved"> Reserved </span>
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                class="table-action"
-                                                type="button"
-                                                title="View guest"
-                                            >
-                                                <i data-lucide="eye"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="guestTableBody"></tbody>
                             </table>
 
                             <!-- Empty State -->

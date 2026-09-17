@@ -1,4 +1,4 @@
-/* RESORTHUB - GUESTS PAGE File: guests.js Frontend prototype / database-ready structure Functions: - Guest search - Status filtering - Clear filters - Guest record count - Summary count updates - View guest record - Refresh guest records - Lucide icon refresh NOTE: The guest records currently displayed in Guests.html are SAMPLE DATA ONLY. These records can later be replaced with database/API data without changing the page structure. */
+/* Resort-admin guest interface. The table remains empty until its database API is connected. */
 
 /* DOM ELEMENTS */
 

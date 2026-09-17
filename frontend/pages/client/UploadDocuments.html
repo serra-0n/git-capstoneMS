@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="../../assets/resorthub-mark.png?v=2" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -20,8 +21,10 @@
         <!-- Lucide Icons -->
         <script src="https://unpkg.com/lucide@latest"></script>
 
+        <script src="../../js/client/profile-menu.js" defer></script>
+
         <!-- Page JavaScript -->
-        <script src="../../js/client/UploadDocuments.js"></script>
+        <script src="../../js/client/Upload-documents.js"></script>
     </head>
 
     <body>
@@ -30,8 +33,7 @@
 
             <header class="client-topbar">
                 <div class="topbar-left">
-                    <a href="Dashboard.html" class="client-brand" aria-label="ResortHub Dashboard">
-                        <i data-lucide="building-2"></i>
+                    <a href="Dashboard.html" class="client-brand" aria-label="ResortHub Dashboard"><img class="resorthub-brand-icon" src="../../assets/resorthub-mark.png?v=2" alt="" />
 
                         <span> ResortHub </span>
                     </a>
@@ -233,16 +235,12 @@
 
                                                 <option value="valid_id">Valid ID</option>
 
-                                                <option value="proof_of_payment">
-                                                    Proof of Payment
-                                                </option>
-
                                                 <option value="reservation_form">
                                                     Reservation Form
                                                 </option>
 
-                                                <option value="other_operational_document">
-                                                    Other Operational Document
+                                                <option value="other">
+                                                    Other Document
                                                 </option>
                                             </select>
                                         </div>
@@ -265,14 +263,14 @@
                                             <span class="document-upload-text">
                                                 <strong> Choose a document to upload </strong>
 
-                                                <small> Select an image or PDF document. </small>
+                                                <small> Select a JPG, PNG, or WEBP image. </small>
                                             </span>
 
                                             <input
                                                 type="file"
                                                 id="documentFile"
                                                 name="document_file"
-                                                accept="image/*,.pdf,application/pdf"
+                                                accept="image/jpeg,image/png,image/webp"
                                                 required
                                             />
                                         </label>

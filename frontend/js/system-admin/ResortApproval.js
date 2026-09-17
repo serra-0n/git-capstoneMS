@@ -1,3 +1,60 @@
+"use strict";
+
+window.SystemAdmin = {
+    escape(value) {
+        return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+            "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+        })[character]);
+    },
+    async get(url, options = {}) {
+        const token = sessionStorage.getItem("resorthub_access_token");
+        if (!token) {
+            window.location.href = "../auth/login.html";
+            throw new Error("Authentication is required.");
+        }
+        const response = await fetch(url, {
+            ...options,
+            headers: { Accept: "application/json", Authorization: `Bearer ${token}`, ...options.headers }
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            if (response.status === 401) {
+                sessionStorage.removeItem("resorthub_access_token");
+                window.location.href = "../auth/login.html";
+            }
+            throw new Error(data.message || "Unable to load system data.");
+        }
+        return data;
+    },
+    date(value) {
+        if (!value) return "—";
+        const parsed = new Date(String(value).replace(" ", "T"));
+        return Number.isNaN(parsed.getTime()) ? String(value) : parsed.toLocaleString("en-PH", { dateStyle: "medium", timeStyle: "short" });
+    },
+    error(container, error) {
+        if (container) container.textContent = error.message || "Unable to load records.";
+    }
+};
+
+document.addEventListener("DOMContentLoaded", async () => {
+    document.querySelector(".sidebar-logout")?.addEventListener("click", (event) => {
+        event.preventDefault();
+        sessionStorage.removeItem("resorthub_access_token");
+        window.location.href = "../auth/login.html";
+    });
+    try {
+        const { user } = await window.SystemAdmin.get("/api/auth/me");
+        if (user.role !== "system_admin" || user.accountStatus !== "active") {
+            window.location.href = "../auth/login.html";
+            return;
+        }
+        const name = [user.firstName, user.lastName].filter(Boolean).join(" ") || "System Admin";
+        document.querySelectorAll(".sidebar-user-info strong, .topbar-profile strong").forEach((element) => { element.textContent = name; });
+    } catch (error) {
+        console.error("System admin account loading failed:", error);
+    }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     const applicationList = document.querySelector("#applicationList");
     const searchInput = document.querySelector(".approval-search input");
@@ -10,10 +67,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const reviewNotes = document.querySelector("#reviewNotes");
     const viewLicenseButton = document.querySelector("#viewLicenseButton");
     const rerunOcrButton = document.querySelector("#rerunOcrButton");
+    const ocrReviewSection = document.querySelector("#ocrReviewSection");
+    const ocrLoading = document.querySelector("#ocrLoading");
+    const ocrLoadingMessage = document.querySelector("#ocrLoadingMessage");
     const accessToken = sessionStorage.getItem("resorthub_access_token");
     let currentStatus = "pending";
     let currentApplication = null;
     let applicationsById = new Map();
+    let ocrReviewSequence = 0;
 
     if (!accessToken) {
         window.location.href = "../auth/login.html";
@@ -75,6 +136,105 @@ document.addEventListener("DOMContentLoaded", () => {
         if (result) result.textContent = label;
     }
 
+    function wait(milliseconds) {
+        return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+    }
+
+    function setOcrLoading(
+        isLoading,
+        message = "OCR is scanning and checking the submitted document...",
+    ) {
+        if (ocrLoading) {
+            ocrLoading.hidden = !isLoading;
+        }
+
+        if (ocrLoadingMessage) {
+            ocrLoadingMessage.textContent = message;
+        }
+
+        ocrReviewSection?.classList.toggle("ocr-is-loading", isLoading);
+    }
+
+    function updateLicenseStatus(tenant) {
+        const licenseStatus = document.querySelector("#reviewLicenseStatus");
+
+        if (!licenseStatus) return;
+
+        licenseStatus.textContent = tenant.license_filename
+            ? `OCR: ${tenant.license_ocr_status || "pending"} · Verification: ${tenant.license_verification_status || "pending"}`
+            : "No uploaded license";
+    }
+
+    async function fetchApplicationById(tenantId) {
+        const response = await fetch("/api/admin/tenants", {
+            headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        const tenants = await response.json();
+
+        if (!response.ok) {
+            throw new Error(tenants.message || "Unable to refresh the OCR result.");
+        }
+
+        tenants.forEach((tenant) => applicationsById.set(String(tenant.id), tenant));
+
+        return applicationsById.get(String(tenantId)) || null;
+    }
+
+    async function reviewTenantOcr(initialTenant) {
+        const reviewSequence = ++ocrReviewSequence;
+        let tenant = initialTenant;
+
+        setOcrLoading(true);
+        approveButton.disabled = true;
+        rejectButton.disabled = true;
+        rerunOcrButton.disabled = true;
+
+        try {
+            await wait(700);
+
+            for (let attempt = 0; attempt < 20; attempt += 1) {
+                if (reviewSequence !== ocrReviewSequence || !currentApplication) return;
+
+                const ocrStatus = String(tenant.license_ocr_status || "pending").toLowerCase();
+
+                if (!["pending", "processing"].includes(ocrStatus)) break;
+
+                if (attempt > 0) {
+                    await wait(1200);
+                }
+
+                const refreshedTenant = await fetchApplicationById(tenant.id);
+
+                if (refreshedTenant) {
+                    tenant = refreshedTenant;
+                }
+            }
+
+            if (reviewSequence !== ocrReviewSequence || !currentApplication) return;
+
+            updateLicenseStatus(tenant);
+            renderOcrAnalysis(tenant);
+        } catch (error) {
+            console.error("OCR status refresh failed:", error);
+            renderOcrAnalysis(tenant);
+        } finally {
+            if (reviewSequence === ocrReviewSequence && currentApplication) {
+                const applicationPending = currentApplication.dataset.status === "pending";
+                const ocrStillProcessing = ["pending", "processing"].includes(
+                    String(tenant.license_ocr_status || "pending").toLowerCase(),
+                );
+
+                setOcrLoading(false);
+                approveButton.disabled = !applicationPending || ocrStillProcessing;
+                rejectButton.disabled = !applicationPending || ocrStillProcessing;
+                rerunOcrButton.disabled = !tenant.license_filename || ocrStillProcessing;
+            }
+        }
+    }
+
     function renderOcrAnalysis(tenant) {
         const analysis = parseOcrAnalysis(tenant.license_extracted_data);
         const summary = document.querySelector("#ocrSummary");
@@ -95,7 +255,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!analysis) {
             summary.dataset.recommendation = "unavailable";
             recommendation.textContent =
-                tenant.license_ocr_status === "failed" ? "OCR Processing Failed" : "Not Analyzed";
+                tenant.license_ocr_status === "failed"
+                    ? "OCR Processing Failed"
+                    : tenant.license_ocr_status === "processing"
+                      ? "OCR Still Processing"
+                      : "Not Analyzed";
             score.textContent = "—";
             confidence.textContent = "—";
             submittedNumber.textContent = tenant.business_registration_number || "—";
@@ -183,6 +347,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function closeModal() {
+        ocrReviewSequence += 1;
+        setOcrLoading(false);
         reviewModal?.classList.remove("show");
         document.body.style.overflow = "";
         currentApplication = null;
@@ -217,9 +383,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     : "No uploaded license";
                 viewLicenseButton.disabled = !tenant.license_filename;
                 rerunOcrButton.disabled = !tenant.license_filename;
-                renderOcrAnalysis(tenant);
                 reviewModal?.classList.add("show");
                 document.body.style.overflow = "hidden";
+                reviewTenantOcr(tenant);
             });
         });
     }
@@ -329,8 +495,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const tenantId = currentApplication.dataset.tenantId;
         const tenant = applicationsById.get(tenantId);
 
+        ocrReviewSequence += 1;
         rerunOcrButton.disabled = true;
-        rerunOcrButton.textContent = "Analyzing license...";
+        approveButton.disabled = true;
+        rejectButton.disabled = true;
+        setOcrLoading(true, "OCR is scanning the license again...");
 
         try {
             const response = await fetch(`/api/admin/tenants/${tenantId}/license/reanalyze`, {
@@ -348,12 +517,18 @@ document.addEventListener("DOMContentLoaded", () => {
             tenant.license_ocr_status = "completed";
             tenant.license_extracted_text = result.extractedText;
             tenant.license_extracted_data = result.analysis;
+            await wait(500);
             renderOcrAnalysis(tenant);
             document.querySelector("#reviewLicenseStatus").textContent =
                 `OCR: completed · Verification: ${tenant.license_verification_status || "pending"}`;
         } catch (error) {
             alert(error.message);
         } finally {
+            const applicationPending = currentApplication?.dataset.status === "pending";
+
+            setOcrLoading(false);
+            approveButton.disabled = !applicationPending;
+            rejectButton.disabled = !applicationPending;
             rerunOcrButton.disabled = false;
             rerunOcrButton.innerHTML = '<i data-lucide="refresh-cw"></i> Run OCR Again';
             if (typeof lucide !== "undefined") lucide.createIcons();

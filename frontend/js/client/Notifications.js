@@ -1,8 +1,10 @@
 "use strict";
 
-/* RESORTHUB - CLIENT NOTIFICATIONS File: js/client/Notifications.js FRONTEND DEVELOPMENT MODE true: - Uses dummy notification data - Does NOT save notifications in localStorage - Does NOT connect to MySQL - Does NOT simulate unsupported notification services false: - Loads notifications from the Express backend - Database records become the source of truth */
+const accessToken = sessionStorage.getItem("resorthub_access_token");
 
-const USE_DUMMY_DATA = true;
+if (!accessToken) {
+    window.location.href = "../auth/login.html";
+}
 
 /* API ENDPOINTS */
 
@@ -11,60 +13,6 @@ const API_ENDPOINTS = {
 
     notifications: "/api/client/notifications",
 };
-
-/* DUMMY CLIENT Presentation data only. */
-
-const DUMMY_CLIENT = {
-    id: 1,
-
-    name: "Juan Dela Cruz",
-};
-
-/* DUMMY NOTIFICATIONS These are frontend presentation records only. The thesis supports clients monitoring reservation-related transactions, payment status, and document verification. The exact notification table fields and message wording are implementation structures, not thesis-defined fields. */
-
-const DUMMY_NOTIFICATIONS = [
-    {
-        id: 801,
-
-        client_id: 1,
-
-        reservation_id: 105,
-
-        reservation_reference: "RES-0105",
-
-        related_type: "reservation",
-
-        message: "The status of your reservation has been updated.",
-    },
-
-    {
-        id: 802,
-
-        client_id: 1,
-
-        reservation_id: 102,
-
-        reservation_reference: "RES-0102",
-
-        related_type: "payment",
-
-        message: "The payment status for your reservation has been updated.",
-    },
-
-    {
-        id: 803,
-
-        client_id: 1,
-
-        reservation_id: 103,
-
-        reservation_reference: "RES-0103",
-
-        related_type: "document",
-
-        message: "The document verification status for your reservation has been updated.",
-    },
-];
 
 /* APPLICATION STATE */
 
@@ -123,32 +71,8 @@ async function initializeNotificationsPage() {
 
     initializeProfileButton();
 
-    if (USE_DUMMY_DATA) {
-        loadDummyData();
-
-        return;
-    }
-
     await loadNotificationsFromDatabase();
 }
-
-/* DUMMY DATA MODE */
-
-function loadDummyData() {
-    notificationState.client = {
-        ...DUMMY_CLIENT,
-    };
-
-    notificationState.notifications = DUMMY_NOTIFICATIONS.map((notification) => ({
-        ...notification,
-    }));
-
-    renderClient();
-
-    renderNotifications();
-}
-
-/* DATABASE / API MODE */
 
 async function loadNotificationsFromDatabase() {
     setLoadingState(true);
@@ -180,6 +104,7 @@ async function loadClientFromApi() {
 
         headers: {
             Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
         },
     });
 
@@ -202,6 +127,7 @@ async function loadNotificationsFromApi() {
 
         headers: {
             Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
         },
     });
 

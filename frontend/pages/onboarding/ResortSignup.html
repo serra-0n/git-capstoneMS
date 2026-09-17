@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="../../assets/resorthub-mark.png?v=2" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>List Your Resort | ResortHub</title>
 
@@ -10,16 +11,8 @@
     <body>
         <header class="auth-header">
             <a href="../../index.html" class="auth-logo">
-                <span class="logo-text">ResortHub</span>
-                <span class="logo-dots"><span></span><span></span><span></span></span>
+                <img class="auth-brand-mark" src="../../assets/resorthub-mark.png?v=2" alt="" /><span class="logo-text">ResortHub</span>
             </a>
-            <nav class="auth-navigation">
-                <a href="ResortSignup.html" class="header-link resort-link active"
-                    >List your resort</a
-                >
-                <a href="../auth/login.html" class="header-link">Sign in</a>
-                <a href="../auth/signup.html" class="header-button">Create account</a>
-            </nav>
         </header>
         <main class="auth-main onboarding-shell">
             <section class="auth-card onboarding-card">
@@ -78,17 +71,6 @@
                         />
                     </label>
 
-                    <div class="form-row">
-                        <label class="form-group">
-                            <span class="form-label">Owner name</span>
-                            <input type="text" name="ownerName" required maxlength="150" />
-                        </label>
-                        <label class="form-group">
-                            <span class="form-label">Owner email</span>
-                            <input type="email" name="ownerEmail" required maxlength="150" />
-                        </label>
-                    </div>
-
                     <label class="file-field">
                         <span class="form-label">Resort license image</span>
                         <input
@@ -106,7 +88,7 @@
                     <p id="formMessage" class="message" role="status"></p>
                 </form>
 
-                <a class="back-link" href="../auth/login.html">Already have an account? Sign in</a>
+                <a class="back-link" href="../client/Dashboard.html">Return to client dashboard</a>
             </section>
         </main>
 
@@ -134,6 +116,61 @@
             </div>
         </footer>
 
+        <div class="success-modal" id="successModal" hidden>
+            <div class="success-modal-backdrop"></div>
+
+            <section
+                class="success-modal-dialog"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="successModalTitle">
+            
+                <div class="success-modal-icon">
+                    <i data-lucide="circle-check"></i>
+                </div>
+
+                <h2 id="successModalTitle">
+                    Application Submitted Successfully
+                </h2>
+
+                <p>
+                    Your resort application has been received. Please wait while
+                    the system administrator reviews and approves your application.
+                </p>
+
+                <div class="success-application-details">
+                    <div>
+                        <span>Application code</span>
+                        <strong id="successTenantCode">—</strong>
+                    </div>
+
+                    <div>
+                        <span>Application status</span>
+                        <strong>Pending Approval</strong>
+                    </div>
+
+                    <div>
+                        <span>OCR status</span>
+                        <strong id="successOcrStatus">Processing</strong>
+                    </div>
+                </div>
+
+                <p class="success-modal-note">
+                    You can continue using your client account while waiting for the
+                    approval result.
+                </p>
+
+                <button
+                    type="button"
+                    class="success-dashboard-button"
+                    id="successDashboardButton">
+
+                    Return to Dashboard
+                    <i data-lucide="arrow-right"></i>
+                </button>
+            </section>
+        </div>
+        <script src="https://unpkg.com/lucide@latest"></script>
         <script src="../../js/onboarding/resort-signup.js"></script>
     </body>
 </html>

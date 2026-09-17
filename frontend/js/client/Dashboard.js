@@ -1,47 +1,15 @@
 "use strict";
 
-/* RESORTHUB - CLIENT DASHBOARD File: js/client/Dashboard.js DEVELOPMENT MODE true: - Uses dummy data - Does not call the API - Does not use localStorage - Does not write to MySQL false: - Loads dashboard data from Express - Backend/database becomes source of truth */
+const accessToken = sessionStorage.getItem("resorthub_access_token");
 
-const USE_DUMMY_DATA = true;
+if (!accessToken) {
+    window.location.href = "../auth/login.html";
+}
 
 /* API ENDPOINT */
 
 const API_ENDPOINTS = {
     dashboard: "/api/client/dashboard",
-};
-
-/* DUMMY DATA */
-
-const DUMMY_DASHBOARD_DATA = {
-    client: {
-        id: 1,
-
-        name: "Juan Dela Cruz",
-    },
-
-    summary: {
-        active_reservations: 1,
-
-        payment_status: "Pending Verification",
-
-        uploaded_documents: 2,
-    },
-
-    current_reservation: {
-        id: 105,
-
-        reservation_reference: "RES-0105",
-
-        resort_name: "Azure Garden Resort",
-
-        accommodation_name: "Family Room",
-
-        check_in: "2026-09-15",
-
-        check_out: "2026-09-17",
-
-        reservation_status: "Pending",
-    },
 };
 
 /* APPLICATION STATE */
@@ -111,36 +79,8 @@ async function initializeDashboard() {
 
     initializeProfileButton();
 
-    if (USE_DUMMY_DATA) {
-        loadDummyDashboard();
-
-        return;
-    }
-
     await loadDashboardFromApi();
 }
-
-/* DUMMY MODE */
-
-function loadDummyDashboard() {
-    dashboardState.client = {
-        ...DUMMY_DASHBOARD_DATA.client,
-    };
-
-    dashboardState.summary = {
-        ...DUMMY_DASHBOARD_DATA.summary,
-    };
-
-    dashboardState.current_reservation = DUMMY_DASHBOARD_DATA.current_reservation
-        ? {
-              ...DUMMY_DASHBOARD_DATA.current_reservation,
-          }
-        : null;
-
-    renderDashboard();
-}
-
-/* API MODE */
 
 async function loadDashboardFromApi() {
     try {
@@ -151,6 +91,7 @@ async function loadDashboardFromApi() {
 
             headers: {
                 Accept: "application/json",
+                Authorization: `Bearer ${accessToken}`,
             },
         });
 
@@ -232,6 +173,7 @@ function normalizeReservation(reservation) {
 
         reservation_reference:
             reservation.reservation_reference ||
+            reservation.reservation_code ||
             reservation.reference ||
             reservation.reference_number ||
             "",

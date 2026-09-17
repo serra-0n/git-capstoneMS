@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="../../assets/resorthub-mark.png?v=2" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Resort Approvals | Resort Management Syatem</title>
 
@@ -14,7 +15,7 @@
     <body>
         <aside class="sidebar">
             <div class="sidebar-brand">
-                <img src="../../image/logo.png" />
+                <img class="system-brand-mark" src="../../assets/resorthub-mark.png?v=2" alt="ResortHub SRH logo" />
                 <div class="sidebar-brand-text">
                     <h2>ResortHub</h2>
                     <span>System Administrator</span>
@@ -68,7 +69,7 @@
                 </div>
             </nav>
             <div class="sidebar-user">
-                <img src="../../image/profile.png" alt="System Administrator" />
+                <span class="system-profile-avatar"><i data-lucide="user-round"></i></span>
 
                 <div class="sidebar-user-info">
                     <strong>System Admin</strong>
@@ -102,7 +103,7 @@
                     </button>
 
                     <div class="topbar-profile">
-                        <img src="../../image/profile.png" alt="System Administrator" />
+                        <span class="system-profile-avatar"><i data-lucide="user-round"></i></span>
 
                         <div>
                             <strong>System Admin</strong>
@@ -248,17 +249,17 @@
                         <div class="review-grid">
                             <div class="review-field">
                                 <span>Resort Name</span>
-                                <strong id="reviewResortName">—</strong>
+                                <strong id="reviewResortName">â€”</strong>
                             </div>
 
                             <div class="review-field">
                                 <span>Location</span>
-                                <strong id="reviewLocation">—</strong>
+                                <strong id="reviewLocation">â€”</strong>
                             </div>
 
                             <div class="review-field">
                                 <span>Resort Type</span>
-                                <strong id="reviewResortType">—</strong>
+                                <strong id="reviewResortType">â€”</strong>
                             </div>
                         </div>
                     </section>
@@ -275,12 +276,12 @@
                         <div class="review-grid">
                             <div class="review-field">
                                 <span>Owner Name</span>
-                                <strong id="reviewOwnerName">—</strong>
+                                <strong id="reviewOwnerName">â€”</strong>
                             </div>
 
                             <div class="review-field">
                                 <span>Email</span>
-                                <strong id="reviewOwnerEmail">—</strong>
+                                <strong id="reviewOwnerEmail">â€”</strong>
                             </div>
                         </div>
                     </section>
@@ -299,22 +300,22 @@
                         <div class="review-grid">
                             <div class="review-field">
                                 <span>Business Name</span>
-                                <strong id="reviewBusinessName">—</strong>
+                                <strong id="reviewBusinessName">â€”</strong>
                             </div>
 
                             <div class="review-field">
                                 <span>DTI / Business No.</span>
-                                <strong id="reviewBusinessRegistrationNumber">—</strong>
+                                <strong id="reviewBusinessRegistrationNumber">â€”</strong>
                             </div>
 
                             <div class="review-field">
                                 <span>Business Address</span>
-                                <strong id="reviewBusinessAddress">—</strong>
+                                <strong id="reviewBusinessAddress">â€”</strong>
                             </div>
 
                             <div class="review-field">
                                 <span>Application Submitted</span>
-                                <strong id="reviewSubmittedDate">—</strong>
+                                <strong id="reviewSubmittedDate">â€”</strong>
                             </div>
                         </div>
                     </section>
@@ -343,7 +344,7 @@
                         </div>
                     </section>
                     <!-- OCR Decision Support -->
-                    <section class="review-section">
+                    <section class="review-section" id="ocrReviewSection">
                         <div class="review-section-header">
                             <i data-lucide="scan-text"></i>
 
@@ -356,6 +357,18 @@
                             </div>
                         </div>
 
+                        <div class="ocr-loading" id="ocrLoading" role="status" hidden>
+                            <div class="ocr-loading-icon" aria-hidden="true">
+                                <i data-lucide="scan-line"></i>
+                                <span></span>
+                            </div>
+
+                            <strong>Reviewing the business license</strong>
+                            <p id="ocrLoadingMessage">
+                                OCR is scanning and checking the submitted document...
+                            </p>
+                        </div>
+
                         <div class="ocr-summary" id="ocrSummary" data-recommendation="unavailable">
                             <div>
                                 <span>OCR Recommendation</span>
@@ -363,11 +376,11 @@
                             </div>
                             <div>
                                 <span>Consistency Score</span>
-                                <strong id="ocrConsistencyScore">—</strong>
+                                <strong id="ocrConsistencyScore">â€”</strong>
                             </div>
                             <div>
                                 <span>OCR Confidence</span>
-                                <strong id="ocrConfidence">—</strong>
+                                <strong id="ocrConfidence">â€”</strong>
                             </div>
                         </div>
 
@@ -392,11 +405,11 @@
                         <div class="ocr-detected-grid">
                             <div class="review-field">
                                 <span>Submitted Registration Number</span>
-                                <strong id="ocrSubmittedNumber">—</strong>
+                                <strong id="ocrSubmittedNumber">â€”</strong>
                             </div>
                             <div class="review-field">
                                 <span>OCR-Detected Registration Number</span>
-                                <strong id="ocrDetectedNumber">—</strong>
+                                <strong id="ocrDetectedNumber">â€”</strong>
                             </div>
                         </div>
 
@@ -452,3 +465,4 @@
         </script>
     </body>
 </html>
+

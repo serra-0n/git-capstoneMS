@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="../../assets/resorthub-mark.png?v=2" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Reservation Management | ResortHub</title>
 
@@ -15,7 +16,7 @@
             <!-- Use the SAME sidebar from Dashboard.html -->
             <aside class="sidebar">
                 <a class="brand" href="Dashboard.html">
-                    <i class="brand-mark" data-lucide="building-2"></i>
+                    <img class="brand-mark" src="../../assets/resorthub-mark.png?v=2" alt="ResortHub SRH logo" />
 
                     <span>
                         <strong>ResortHub</strong>
@@ -24,10 +25,10 @@
                 </a>
 
                 <div class="resort-switcher">
-                    <span class="resort-avatar">BW</span>
+                    <span class="resort-avatar" data-context-resort-avatar>BW</span>
 
                     <span>
-                        <strong>Blue Waves Resort</strong>
+                        <strong data-context-resort-name>Blue Waves Resort</strong>
                         <small>Resort Owner</small>
                     </span>
                 </div>
@@ -111,13 +112,13 @@
                     </button>
 
                     <button class="top-select">
-                        <span class="avatar">BW</span>
-                        Blue Waves Resort
+                        <span class="avatar" data-context-resort-avatar>BW</span>
+                        <span data-context-resort-name>Blue Waves Resort</span>
                     </button>
 
                     <button class="profile">
                         <span>
-                            <b>Juan Dela Cruz</b>
+                            <b data-context-user-name>Resort Administrator</b>
                             <small>Resort Owner</small>
                         </span>
                     </button>
@@ -258,13 +259,7 @@
                                 </tbody>
                             </table>
 
-                            <div class="pagination">
-                                <button>&lt;</button>
-                                <button class="active">1</button>
-                                <button>2</button>
-                                <button>3</button>
-                                <button>&gt;</button>
-                            </div>
+                            <div class="pagination" aria-live="polite"></div>
                         </div>
 
                         <div class="side-column">
@@ -275,22 +270,22 @@
 
                                 <div class="activity-row">
                                     <span>Today's Check-ins</span>
-                                    <b>18</b>
+                                    <b id="todayCheckInCount">—</b>
                                 </div>
 
                                 <div class="activity-row">
                                     <span>Today's Check-outs</span>
-                                    <b>12</b>
+                                    <b id="todayCheckOutCount">—</b>
                                 </div>
 
                                 <div class="activity-row">
                                     <span>In-house Guests</span>
-                                    <b>46</b>
+                                    <b id="occupiedRoomCount">—</b>
                                 </div>
 
                                 <div class="activity-row">
                                     <span>Pending Reservations</span>
-                                    <b>23</b>
+                                    <b id="availableRoomCount">—</b>
                                 </div>
                             </div>
 
@@ -312,6 +307,7 @@
             </main>
         </div>
 
+        <script src="../../js/resort-admin/context.js" defer></script>
         <script src="../../js/resort-admin/Reservation.js" defer></script>
 
         <script src="https://unpkg.com/lucide@latest"></script>

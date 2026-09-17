@@ -2,20 +2,17 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="../../assets/resorthub-mark.png?v=2" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <title>Billing & Payments | ResortHub</title>
 
         <!-- GLOBAL STYLES -->
 
-        <link rel="stylesheet" href="../../css/resort-adminGlobal/Style.css" />
-        <link rel="stylesheet" href="../../css/resort-adminGlobal/Sidebar.css" />
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/style.css" />
+        <link rel="stylesheet" href="../../css/resort-adminGlobal/sidebar.css" />
         <link rel="stylesheet" href="../../css/resort-adminGlobal/nav.css" />
         <link rel="stylesheet" href="../../css/resort-admin/BillingPayments.css" />
-
-        <!-- PAGE STYLES -->
-
-        <link rel="stylesheet" href="../../css/resort-admin/billing-payments.css" />
 
         <!-- LUCIDE ICONS -->
 
@@ -30,7 +27,7 @@
 
             <aside class="sidebar">
                 <a class="brand" href="Dashboard.html">
-                    <i class="brand-mark" data-lucide="building-2"> </i>
+                    <img class="brand-mark" src="../../assets/resorthub-mark.png?v=2" alt="ResortHub SRH logo" />
 
                     <span>
                         <strong>ResortHub</strong>
@@ -41,10 +38,10 @@
                 <!-- Resort Switcher -->
 
                 <div class="resort-switcher">
-                    <span class="resort-avatar"> BW </span>
+                    <span class="resort-avatar" data-context-resort-avatar> BW </span>
 
                     <span>
-                        <strong>Blue Waves Resort</strong>
+                        <strong data-context-resort-name>Blue Waves Resort</strong>
                         <small>Resort Owner</small>
                     </span>
                 </div>
@@ -159,7 +156,7 @@
                     <!-- Resort Select -->
 
                     <button class="top-select" type="button">
-                        <span>Blue Waves Resort</span>
+                        <span data-context-resort-name>Blue Waves Resort</span>
 
                         <i data-lucide="chevron-down"></i>
                     </button>
@@ -167,10 +164,10 @@
                     <!-- Profile -->
 
                     <button class="profile" type="button">
-                        <span class="avatar"> BW </span>
+                        <span class="avatar" data-context-resort-avatar> BW </span>
 
                         <span>
-                            Resort Owner
+                            <strong data-context-user-name>Resort Owner</strong>
                             <small>Administrator</small>
                         </span>
 
@@ -219,9 +216,9 @@
 
                             <span> Total Transactions </span>
 
-                            <strong> 48 </strong>
+                            <strong> 0 </strong>
 
-                            <small> Sample data </small>
+                            <small> Current records </small>
                         </article>
 
                         <!-- Paid -->
@@ -233,9 +230,9 @@
 
                             <span> Paid </span>
 
-                            <strong> 32 </strong>
+                            <strong> 0 </strong>
 
-                            <small> Sample data </small>
+                            <small> Current records </small>
                         </article>
 
                         <!-- Pending Verification -->
@@ -247,9 +244,9 @@
 
                             <span> Pending Verification </span>
 
-                            <strong> 8 </strong>
+                            <strong> 0 </strong>
 
-                            <small> Sample data </small>
+                            <small> Current records </small>
                         </article>
 
                         <!-- Outstanding Balance -->
@@ -261,9 +258,9 @@
 
                             <span> Outstanding Balance </span>
 
-                            <strong> â‚±42,500 </strong>
+                            <strong> ₱0.00 </strong>
 
-                            <small> Sample data </small>
+                            <small> Current records </small>
                         </article>
                     </section>
 
@@ -357,144 +354,8 @@
                                 </thead>
 
                                 <tbody>
-                                    <!-- TRANSACTION 001 -->
-
                                     <tr>
-                                        <td>
-                                            <strong> TXN-0001 </strong>
-                                        </td>
-
-                                        <td>Juan Dela Cruz</td>
-
-                                        <td>RES-0012</td>
-
-                                        <td>â‚±8,500</td>
-
-                                        <td>â‚±8,500</td>
-
-                                        <td>â‚±0</td>
-
-                                        <td>GCash</td>
-
-                                        <td>
-                                            <span class="status-badge paid-badge"> Paid </span>
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                class="table-action"
-                                                type="button"
-                                                title="View transaction"
-                                            >
-                                                <i data-lucide="eye"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <!-- TRANSACTION 002 -->
-
-                                    <tr>
-                                        <td>
-                                            <strong> TXN-0002 </strong>
-                                        </td>
-
-                                        <td>Maria Santos</td>
-
-                                        <td>RES-0015</td>
-
-                                        <td>â‚±12,000</td>
-
-                                        <td>â‚±6,000</td>
-
-                                        <td>â‚±6,000</td>
-
-                                        <td>Maya</td>
-
-                                        <td>
-                                            <span class="status-badge partial-badge">
-                                                Partially Paid
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                class="table-action"
-                                                type="button"
-                                                title="View transaction"
-                                            >
-                                                <i data-lucide="eye"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <!-- TRANSACTION 003 -->
-
-                                    <tr>
-                                        <td>
-                                            <strong> TXN-0003 </strong>
-                                        </td>
-
-                                        <td>Pedro Reyes</td>
-
-                                        <td>RES-0018</td>
-
-                                        <td>â‚±6,500</td>
-
-                                        <td>â‚±6,500</td>
-
-                                        <td>â‚±0</td>
-
-                                        <td>Bank Transfer</td>
-
-                                        <td>
-                                            <span class="status-badge pending-badge">
-                                                Pending Verification
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                class="table-action verify-payment"
-                                                type="button"
-                                                title="Verify payment"
-                                            >
-                                                <i data-lucide="scan-search"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <!-- TRANSACTION 004 -->
-
-                                    <tr>
-                                        <td>
-                                            <strong> TXN-0004 </strong>
-                                        </td>
-
-                                        <td>Ana Garcia</td>
-
-                                        <td>RES-0020</td>
-
-                                        <td>â‚±10,000</td>
-
-                                        <td>â‚±0</td>
-
-                                        <td>â‚±10,000</td>
-
-                                        <td>GCash</td>
-
-                                        <td>
-                                            <span class="status-badge unpaid-badge"> Unpaid </span>
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                class="table-action"
-                                                type="button"
-                                                title="View transaction"
-                                            >
-                                                <i data-lucide="eye"></i>
-                                            </button>
-                                        </td>
+                                        <td colspan="9">Loading payment records...</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -609,7 +470,8 @@
 
         <!-- JAVASCRIPT -->
 
-        <script src="../../js/resort-admin/billingPayments.js"></script>
+        <script src="../../js/resort-admin/context.js"></script>
+        <script src="../../js/resort-admin/BillingPayments.js"></script>
 
         <script>
             /*

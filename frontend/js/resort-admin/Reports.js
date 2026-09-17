@@ -1,207 +1,20 @@
-/* RESORTHUB - REPORTS File: reports.js Frontend prototype / database-ready structure Supported report areas: - Reservation Summary - Occupancy Monitoring - Payment Records - Transaction Summary - Document Verification NOTE: The data below is SAMPLE DATA ONLY. It will later be replaced with database/API data. */
+/* Resort reports remain empty until report API integration is available. */
 
-/* SAMPLE RESERVATION DATA */
+/* Reservation records */
 
-const reservationRecords = [
-    {
-        id: 1,
-        reservationId: "RES-0001",
-        guest: "Juan Dela Cruz",
-        accommodation: "Deluxe Room",
-        status: "Confirmed",
-        date: "2026-08-20",
-    },
+const reservationRecords = [];
 
-    {
-        id: 2,
-        reservationId: "RES-0002",
-        guest: "Maria Santos",
-        accommodation: "Family Cottage",
-        status: "Confirmed",
-        date: "2026-08-20",
-    },
+/* Accommodation records */
 
-    {
-        id: 3,
-        reservationId: "RES-0003",
-        guest: "Pedro Reyes",
-        accommodation: "Standard Room",
-        status: "Pending",
-        date: "2026-08-21",
-    },
+const accommodationRecords = [];
 
-    {
-        id: 4,
-        reservationId: "RES-0004",
-        guest: "Ana Garcia",
-        accommodation: "Beach Cottage",
-        status: "Cancelled",
-        date: "2026-08-22",
-    },
+/* Payment records */
 
-    {
-        id: 5,
-        reservationId: "RES-0005",
-        guest: "Carlos Mendoza",
-        accommodation: "Deluxe Room",
-        status: "Confirmed",
-        date: "2026-08-23",
-    },
+const paymentRecords = [];
 
-    {
-        id: 6,
-        reservationId: "RES-0006",
-        guest: "Sofia Cruz",
-        accommodation: "Family Cottage",
-        status: "Confirmed",
-        date: "2026-08-24",
-    },
-];
+/* Verification records */
 
-/* SAMPLE ACCOMMODATION DATA */
-
-const accommodationRecords = [
-    {
-        id: 1,
-        name: "Deluxe Room 01",
-        type: "Room",
-        status: "Occupied",
-    },
-
-    {
-        id: 2,
-        name: "Deluxe Room 02",
-        type: "Room",
-        status: "Available",
-    },
-
-    {
-        id: 3,
-        name: "Standard Room 01",
-        type: "Room",
-        status: "Reserved",
-    },
-
-    {
-        id: 4,
-        name: "Standard Room 02",
-        type: "Room",
-        status: "Occupied",
-    },
-
-    {
-        id: 5,
-        name: "Family Cottage 01",
-        type: "Cottage",
-        status: "Reserved",
-    },
-
-    {
-        id: 6,
-        name: "Family Cottage 02",
-        type: "Cottage",
-        status: "Occupied",
-    },
-
-    {
-        id: 7,
-        name: "Beach Cottage 01",
-        type: "Cottage",
-        status: "Available",
-    },
-
-    {
-        id: 8,
-        name: "Beach Cottage 02",
-        type: "Cottage",
-        status: "Reserved",
-    },
-];
-
-/* SAMPLE PAYMENT DATA */
-
-const paymentRecords = [
-    {
-        id: 1,
-        transactionId: "TXN-0001",
-        reservationId: "RES-0001",
-        amount: 8500,
-        status: "Paid",
-        date: "2026-08-20",
-    },
-
-    {
-        id: 2,
-        transactionId: "TXN-0002",
-        reservationId: "RES-0002",
-        amount: 6000,
-        status: "Paid",
-        date: "2026-08-20",
-    },
-
-    {
-        id: 3,
-        transactionId: "TXN-0003",
-        reservationId: "RES-0003",
-        amount: 6500,
-        status: "Pending Verification",
-        date: "2026-08-21",
-    },
-
-    {
-        id: 4,
-        transactionId: "TXN-0004",
-        reservationId: "RES-0004",
-        amount: 5000,
-        status: "Outstanding",
-        date: "2026-08-22",
-    },
-
-    {
-        id: 5,
-        transactionId: "TXN-0005",
-        reservationId: "RES-0005",
-        amount: 10000,
-        status: "Paid",
-        date: "2026-08-23",
-    },
-];
-
-/* SAMPLE DOCUMENT VERIFICATION DATA */
-
-const verificationRecords = [
-    {
-        id: 1,
-        documentId: "DOC-0001",
-        transactionId: "TXN-0001",
-        status: "Verified",
-        date: "2026-08-20",
-    },
-
-    {
-        id: 2,
-        documentId: "DOC-0002",
-        transactionId: "TXN-0002",
-        status: "Verified",
-        date: "2026-08-20",
-    },
-
-    {
-        id: 3,
-        documentId: "DOC-0003",
-        transactionId: "TXN-0003",
-        status: "Pending Verification",
-        date: "2026-08-21",
-    },
-
-    {
-        id: 4,
-        documentId: "DOC-0004",
-        transactionId: "TXN-0004",
-        status: "Rejected",
-        date: "2026-08-22",
-    },
-];
+const verificationRecords = [];
 
 /* DOM ELEMENTS */
 
@@ -944,7 +757,7 @@ exportButtons.forEach((button) => {
 document.addEventListener("DOMContentLoaded", function () {
     /*
      * Calculate and display the
-     * initial sample report values.
+     * current report values.
      */
 
     updateAllReports();

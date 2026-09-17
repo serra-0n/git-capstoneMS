@@ -1,280 +1,104 @@
 "use strict";
 
-/* RESORTHUB - CLIENT RESORTS File: js/client/Resorts.js true = frontend demo data false = Express/MySQL API */
+const accessToken = sessionStorage.getItem("resorthub_access_token");
 
-const USE_DUMMY_DATA = true;
-
-/* API ENDPOINTS */
+if (!accessToken) {
+    window.location.href = "../auth/login.html";
+}
 
 const API_ENDPOINTS = {
     clientProfile: "/api/client/profile",
     resorts: "/api/resorts",
-
-    accommodationsByResort(resortId) {
-        return `/api/resorts/${encodeURIComponent(resortId)}/accommodations`;
-    },
+    accommodationsByResort: (resortId) =>
+        `/api/resorts/${encodeURIComponent(resortId)}/accommodations`,
 };
 
-/* DUMMY CLIENT Same structure expected from database/API later. */
-
-const DUMMY_CLIENT = {
-    id: 1,
-    name: "Juan Dela Cruz",
+const FALLBACK_IMAGES = {
+    resort: "../../assets/images/resort-fallback.png",
+    accommodation: "../../assets/images/accommodation-fallback.png",
 };
-
-/* DUMMY RESORTS Sample frontend records only. These are NOT actual resorts from the research. Database-ready fields: id name */
-
-const DUMMY_RESORTS = [
-    {
-        id: 1,
-        name: "Azure Garden Resort",
-    },
-    {
-        id: 2,
-        name: "Palm Breeze Resort",
-    },
-    {
-        id: 3,
-        name: "Serenity Springs Resort",
-    },
-];
-
-/* DUMMY ACCOMMODATIONS Sample frontend records only. Database-ready fields: id resort_id name type capacity amenities price availability */
-
-const DUMMY_ACCOMMODATIONS = [
-    {
-        id: 101,
-        resort_id: 1,
-        name: "Family Room",
-        type: "Room",
-        capacity: 4,
-        amenities: ["Air Conditioning", "Private Bathroom", "Television"],
-        price: 3500.0,
-        availability: "Available",
-    },
-
-    {
-        id: 102,
-        resort_id: 1,
-        name: "Standard Cottage",
-        type: "Cottage",
-        capacity: 6,
-        amenities: ["Table", "Seating Area"],
-        price: 2500.0,
-        availability: "Available",
-    },
-
-    {
-        id: 201,
-        resort_id: 2,
-        name: "Standard Room",
-        type: "Room",
-        capacity: 2,
-        amenities: ["Air Conditioning", "Private Bathroom"],
-        price: 2200.0,
-        availability: "Available",
-    },
-
-    {
-        id: 202,
-        resort_id: 2,
-        name: "Family Cottage",
-        type: "Cottage",
-        capacity: 8,
-        amenities: ["Table", "Seating Area", "Electric Fan"],
-        price: 4000.0,
-        availability: "Available",
-    },
-
-    {
-        id: 301,
-        resort_id: 3,
-        name: "Deluxe Room",
-        type: "Room",
-        capacity: 4,
-        amenities: ["Air Conditioning", "Private Bathroom", "Television"],
-        price: 4200.0,
-        availability: "Available",
-    },
-
-    {
-        id: 302,
-        resort_id: 3,
-        name: "Group Cottage",
-        type: "Cottage",
-        capacity: 10,
-        amenities: ["Table", "Seating Area", "Electric Fan"],
-        price: 4500.0,
-        availability: "Available",
-    },
-];
-
-/* APPLICATION STATE This structure stays the same whether the data comes from dummy arrays or MySQL. */
 
 const resortsState = {
     client: null,
     resorts: [],
     accommodations: [],
     selectedResort: null,
-    selectedAccommodation: null,
 };
 
-/* DOM ELEMENTS */
-
 const clientApp = document.getElementById("clientApp");
-
 const sidebarToggle = document.getElementById("sidebarToggle");
-
 const clientProfileButton = document.getElementById("clientProfileButton");
-
 const clientDisplayName = document.getElementById("clientDisplayName");
-
 const resortList = document.getElementById("resortList");
-
 const resortsEmptyState = document.getElementById("resortsEmptyState");
-
 const selectedResortSection = document.getElementById("selectedResortSection");
-
+const selectedResortImage = document.getElementById("selectedResortImage");
+const selectedResortType = document.getElementById("selectedResortType");
 const selectedResortName = document.getElementById("selectedResortName");
-
+const selectedResortLocation = document.getElementById("selectedResortLocation");
+const selectedResortDescription = document.getElementById("selectedResortDescription");
+const selectedResortBenefits = document.getElementById("selectedResortBenefits");
+const accommodationCount = document.getElementById("accommodationCount");
 const accommodationList = document.getElementById("accommodationList");
-
 const accommodationsEmptyState = document.getElementById("accommodationsEmptyState");
-
-const accommodationDetailCard = document.getElementById("accommodationDetailCard");
-
-const accommodationDetailName = document.getElementById("accommodationDetailName");
-
-const accommodationDetailAvailability = document.getElementById("accommodationDetailAvailability");
-
-const accommodationDetailType = document.getElementById("accommodationDetailType");
-
-const accommodationDetailCapacity = document.getElementById("accommodationDetailCapacity");
-
-const accommodationDetailPrice = document.getElementById("accommodationDetailPrice");
-
-const accommodationDetailStatus = document.getElementById("accommodationDetailStatus");
-
-const accommodationDetailAmenities = document.getElementById("accommodationDetailAmenities");
-
-const reserveAccommodationButton = document.getElementById("reserveAccommodationButton");
-
-/* INITIALIZE */
 
 document.addEventListener("DOMContentLoaded", initializeResortsPage);
 
 async function initializeResortsPage() {
     initializeIcons();
-
     initializeSidebar();
-
     initializeProfileButton();
+    await loadPageData();
+}
 
-    if (USE_DUMMY_DATA) {
-        loadDummyData();
+async function apiRequest(url) {
+    const response = await fetch(url, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
 
-        return;
+    if (response.status === 401 || response.status === 403) {
+        sessionStorage.removeItem("resorthub_access_token");
+        window.location.href = "../auth/login.html";
+        throw new Error("Your session has expired.");
     }
 
-    await loadDatabaseData();
+    if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        throw new Error(body.message || "Unable to load resort information.");
+    }
+
+    return response.json();
 }
 
-/* DUMMY DATA MODE */
-
-function loadDummyData() {
-    resortsState.client = {
-        ...DUMMY_CLIENT,
-    };
-
-    resortsState.resorts = DUMMY_RESORTS.map((resort) => ({
-        ...resort,
-    }));
-
-    renderClient();
-
-    renderResorts();
-}
-
-/* DATABASE / API MODE */
-
-async function loadDatabaseData() {
+async function loadPageData() {
     try {
-        const [clientResponse, resortsResponse] = await Promise.all([
-            fetch(API_ENDPOINTS.clientProfile, {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    Accept: "application/json",
-                },
-            }),
-
-            fetch(API_ENDPOINTS.resorts, {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    Accept: "application/json",
-                },
-            }),
+        const [clientData, resortsData] = await Promise.all([
+            apiRequest(API_ENDPOINTS.clientProfile),
+            apiRequest(API_ENDPOINTS.resorts),
         ]);
 
-        if (!clientResponse.ok) {
-            throw new Error("Unable to load client information.");
-        }
-
-        if (!resortsResponse.ok) {
-            throw new Error("Unable to load resorts.");
-        }
-
-        const clientData = await clientResponse.json();
-
-        const resortsData = await resortsResponse.json();
-
         resortsState.client = clientData.client || clientData;
+        resortsState.resorts = Array.isArray(resortsData)
+            ? resortsData
+            : resortsData.resorts || [];
 
-        resortsState.resorts = Array.isArray(resortsData) ? resortsData : resortsData.resorts || [];
-
-        renderClient();
-
+        clientDisplayName.textContent = resortsState.client?.name || "Client";
         renderResorts();
     } catch (error) {
         console.error("Unable to load resorts:", error);
-
         resortsState.resorts = [];
-
         renderResorts();
     }
 }
 
-/* CLIENT */
-
-function renderClient() {
-    if (!clientDisplayName) {
-        return;
-    }
-
-    clientDisplayName.textContent = resortsState.client?.name || "Client";
-}
-
-/* RESORT LIST */
-
 function renderResorts() {
-    if (!resortList) {
-        return;
-    }
-
-    resortList.innerHTML = "";
-
-    if (resortsState.resorts.length === 0) {
-        if (resortsEmptyState) {
-            resortsEmptyState.hidden = false;
-        }
-
-        return;
-    }
-
-    if (resortsEmptyState) {
-        resortsEmptyState.hidden = true;
-    }
+    resortList.replaceChildren();
+    resortsEmptyState.hidden = resortsState.resorts.length > 0;
 
     resortsState.resorts.forEach((resort) => {
         resortList.appendChild(createResortCard(resort));
@@ -283,161 +107,143 @@ function renderResorts() {
     initializeIcons();
 }
 
-/* CREATE RESORT CARD */
-
 function createResortCard(resort) {
     const card = document.createElement("article");
-
     card.className = "resort-card";
-
     card.dataset.resortId = String(resort.id);
 
-    const header = document.createElement("div");
+    const image = document.createElement("img");
+    image.className = "resort-card-image";
+    image.src = resolveImageUrl(resort.cover_image_path, FALLBACK_IMAGES.resort);
+    image.alt = `${resort.name || "Resort"} view`;
+    applyImageFallback(image, FALLBACK_IMAGES.resort);
 
-    header.className = "resort-card-header";
+    const shade = document.createElement("div");
+    shade.className = "resort-card-shade";
 
-    const icon = document.createElement("span");
+    const content = document.createElement("div");
+    content.className = "resort-card-content";
 
-    icon.className = "resort-card-icon";
+    const type = document.createElement("span");
+    type.className = "resort-type-pill";
+    type.textContent = titleCase(resort.resort_type || "Resort");
 
-    icon.innerHTML = '<i data-lucide="building-2"></i>';
+    const title = document.createElement("h3");
+    title.textContent = resort.name || "Resort";
 
-    const title = document.createElement("div");
+    const location = document.createElement("p");
+    location.className = "resort-card-location";
+    location.append(createIcon("map-pin"));
+    const locationText = document.createElement("span");
+    locationText.textContent = resort.location || "Location available soon";
+    location.append(locationText);
 
-    title.className = "resort-card-title";
+    const action = document.createElement("button");
+    action.type = "button";
+    action.className = "resort-expand-button";
+    action.append(document.createTextNode("Explore resort"), createIcon("arrow-up-right"));
+    action.addEventListener("click", (event) => {
+        event.stopPropagation();
+        toggleResort(resort);
+    });
 
-    const heading = document.createElement("h3");
-
-    heading.textContent = resort.name;
-
-    title.appendChild(heading);
-
-    header.appendChild(icon);
-
-    header.appendChild(title);
-
-    const body = document.createElement("div");
-
-    body.className = "resort-card-body";
-
-    const description = document.createElement("p");
-
-    description.className = "resort-card-description";
-
-    description.textContent = "View available rooms and cottages for this resort.";
-
-    const actions = document.createElement("div");
-
-    actions.className = "resort-card-actions";
-
-    const button = document.createElement("button");
-
-    button.type = "button";
-
-    button.className = "resort-view-button";
-
-    button.innerHTML = `
-        <i data-lucide="eye"></i>
-        <span>View Accommodations</span>
-    `;
-
-    button.addEventListener("click", () => selectResort(resort));
-
-    actions.appendChild(button);
-
-    body.appendChild(description);
-
-    body.appendChild(actions);
-
-    card.appendChild(header);
-
-    card.appendChild(body);
+    content.append(type, title, location, action);
+    card.append(image, shade, content);
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-expanded", "false");
+    card.addEventListener("click", () => toggleResort(resort));
+    card.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            toggleResort(resort);
+        }
+    });
 
     return card;
 }
 
-/* SELECT RESORT */
+async function toggleResort(resort) {
+    const isOpen =
+        resortsState.selectedResort &&
+        String(resortsState.selectedResort.id) === String(resort.id) &&
+        !selectedResortSection.hidden;
 
-async function selectResort(resort) {
-    resortsState.selectedResort = resort;
-
-    resortsState.selectedAccommodation = null;
-
-    updateSelectedResortCard();
-
-    if (selectedResortName) {
-        selectedResortName.textContent = resort.name;
-    }
-
-    if (selectedResortSection) {
-        selectedResortSection.hidden = false;
-    }
-
-    resetAccommodationDetail();
-
-    await loadAccommodations(resort.id);
-}
-
-/* LOAD ACCOMMODATIONS */
-
-async function loadAccommodations(resortId) {
-    if (USE_DUMMY_DATA) {
-        resortsState.accommodations = DUMMY_ACCOMMODATIONS.filter(
-            (accommodation) => String(accommodation.resort_id) === String(resortId),
-        );
-
-        renderAccommodations();
-
+    if (isOpen) {
+        selectedResortSection.hidden = true;
+        resortsState.selectedResort = null;
+        updateSelectedResortCards();
         return;
     }
 
-    try {
-        const response = await fetch(API_ENDPOINTS.accommodationsByResort(resortId), {
-            method: "GET",
-            credentials: "include",
-            headers: {
-                Accept: "application/json",
-            },
-        });
+    resortsState.selectedResort = resort;
+    selectedResortSection.hidden = false;
+    renderSelectedResort(resort);
+    updateSelectedResortCards();
+    renderAccommodationLoading();
 
-        if (!response.ok) {
-            throw new Error("Unable to load accommodations.");
+    try {
+        const data = await apiRequest(API_ENDPOINTS.accommodationsByResort(resort.id));
+
+        if (String(resortsState.selectedResort?.id) !== String(resort.id)) {
+            return;
         }
 
-        const data = await response.json();
-
         resortsState.accommodations = Array.isArray(data) ? data : data.accommodations || [];
-
         renderAccommodations();
     } catch (error) {
         console.error("Unable to load accommodations:", error);
-
         resortsState.accommodations = [];
-
         renderAccommodations();
+    }
+
+    selectedResortSection.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function renderSelectedResort(resort) {
+    selectedResortImage.src = resolveImageUrl(resort.cover_image_path, FALLBACK_IMAGES.resort);
+    selectedResortImage.alt = `${resort.name || "Resort"} destination`;
+    applyImageFallback(selectedResortImage, FALLBACK_IMAGES.resort);
+    selectedResortType.textContent = titleCase(resort.resort_type || "Resort");
+    selectedResortName.textContent = resort.name || "Resort";
+    selectedResortLocation.textContent = resort.location || "Location available soon";
+    selectedResortDescription.textContent =
+        resort.description ||
+        `Discover ${resort.name || "this resort"} and choose the room or cottage that fits your stay.`;
+
+    selectedResortBenefits.replaceChildren();
+    const benefits = normalizeList(resort.features);
+    const displayBenefits = benefits.length
+        ? benefits
+        : ["Verified resort", "Rooms & cottages", "Online reservation"];
+
+    displayBenefits.slice(0, 6).forEach((benefit) => {
+        const chip = document.createElement("span");
+        chip.append(createIcon("check"), document.createTextNode(benefit));
+        selectedResortBenefits.appendChild(chip);
+    });
+
+    initializeIcons();
+}
+
+function renderAccommodationLoading() {
+    accommodationList.replaceChildren();
+    accommodationsEmptyState.hidden = true;
+    accommodationCount.textContent = "Loading stays...";
+
+    for (let index = 0; index < 3; index += 1) {
+        const skeleton = document.createElement("div");
+        skeleton.className = "accommodation-card accommodation-skeleton";
+        skeleton.setAttribute("aria-hidden", "true");
+        accommodationList.appendChild(skeleton);
     }
 }
 
-/* RENDER ACCOMMODATIONS */
-
 function renderAccommodations() {
-    if (!accommodationList) {
-        return;
-    }
-
-    accommodationList.innerHTML = "";
-
-    if (resortsState.accommodations.length === 0) {
-        if (accommodationsEmptyState) {
-            accommodationsEmptyState.hidden = false;
-        }
-
-        return;
-    }
-
-    if (accommodationsEmptyState) {
-        accommodationsEmptyState.hidden = true;
-    }
+    accommodationList.replaceChildren();
+    const count = resortsState.accommodations.length;
+    accommodationCount.textContent = `${count} ${count === 1 ? "stay" : "stays"}`;
+    accommodationsEmptyState.hidden = count > 0;
 
     resortsState.accommodations.forEach((accommodation) => {
         accommodationList.appendChild(createAccommodationCard(accommodation));
@@ -446,319 +252,152 @@ function renderAccommodations() {
     initializeIcons();
 }
 
-/* CREATE ACCOMMODATION CARD */
-
 function createAccommodationCard(accommodation) {
     const card = document.createElement("article");
-
     card.className = "accommodation-card";
 
-    card.dataset.accommodationId = String(accommodation.id);
-
-    const header = document.createElement("div");
-
-    header.className = "accommodation-card-header";
-
-    const headingWrapper = document.createElement("div");
-
-    headingWrapper.className = "accommodation-card-heading";
-
-    const icon = document.createElement("span");
-
-    icon.className = "accommodation-card-icon";
-
-    if (String(accommodation.type).toLowerCase() === "cottage") {
-        icon.innerHTML = '<i data-lucide="house"></i>';
-    } else {
-        icon.innerHTML = '<i data-lucide="bed-double"></i>';
-    }
-
-    const titleWrapper = document.createElement("div");
-
-    titleWrapper.className = "accommodation-card-title";
-
-    const heading = document.createElement("h3");
-
-    heading.textContent = accommodation.name;
-
-    const type = document.createElement("span");
-
-    type.textContent = accommodation.type || "—";
-
-    titleWrapper.appendChild(heading);
-
-    titleWrapper.appendChild(type);
-
-    headingWrapper.appendChild(icon);
-
-    headingWrapper.appendChild(titleWrapper);
+    const media = document.createElement("div");
+    media.className = "accommodation-media";
+    const image = document.createElement("img");
+    image.src = resolveImageUrl(accommodation.image_path, FALLBACK_IMAGES.accommodation);
+    image.alt = `${accommodation.name || "Accommodation"} interior`;
+    applyImageFallback(image, FALLBACK_IMAGES.accommodation);
 
     const availability = document.createElement("span");
-
-    applyAvailabilityBadge(availability, accommodation.availability);
-
-    header.appendChild(headingWrapper);
-
-    header.appendChild(availability);
+    availability.className = "availability-pill";
+    availability.append(createIcon("circle-check"), document.createTextNode(accommodation.availability || "Available"));
+    media.append(image, availability);
 
     const body = document.createElement("div");
+    body.className = "accommodation-body";
+    const eyebrow = document.createElement("span");
+    eyebrow.className = "accommodation-type";
+    eyebrow.textContent = titleCase(accommodation.type || "Accommodation");
+    const title = document.createElement("h3");
+    title.textContent = accommodation.name || "Accommodation";
 
-    body.className = "accommodation-card-body";
+    const pax = document.createElement("p");
+    pax.className = "accommodation-pax";
+    pax.append(createIcon("users"), document.createTextNode(formatPax(accommodation.capacity)));
 
-    const info = document.createElement("div");
-
-    info.className = "accommodation-card-info";
-
-    info.appendChild(createInformationRow("Capacity", formatCapacity(accommodation.capacity)));
-
-    info.appendChild(createInformationRow("Price", formatCurrency(accommodation.price)));
-
-    const actions = document.createElement("div");
-
-    actions.className = "accommodation-card-actions";
-
-    const button = document.createElement("button");
-
-    button.type = "button";
-
-    button.className = "accommodation-view-button";
-
-    button.innerHTML = `
-        <i data-lucide="eye"></i>
-        <span>View Details</span>
-    `;
-
-    button.addEventListener("click", () => {
-        selectAccommodation(accommodation);
+    const benefits = document.createElement("div");
+    benefits.className = "accommodation-benefits";
+    const amenities = normalizeList(accommodation.amenities);
+    (amenities.length ? amenities : ["Amenity details available on request"]).slice(0, 4).forEach((amenity) => {
+        const item = document.createElement("span");
+        item.append(createIcon("check"), document.createTextNode(amenity));
+        benefits.appendChild(item);
     });
 
-    actions.appendChild(button);
+    const footer = document.createElement("div");
+    footer.className = "accommodation-footer";
+    const price = document.createElement("div");
+    price.className = "accommodation-price";
+    const amount = document.createElement("strong");
+    amount.textContent = formatCurrency(accommodation.price);
+    const period = document.createElement("span");
+    period.textContent = "per night";
+    price.append(amount, period);
 
-    body.appendChild(info);
-
-    body.appendChild(actions);
-
-    card.appendChild(header);
-
-    card.appendChild(body);
-
+    const reserve = document.createElement("a");
+    reserve.className = "reserve-stay-button";
+    reserve.href = `Reservations.html?resort=${encodeURIComponent(resortsState.selectedResort.id)}&accommodation=${encodeURIComponent(accommodation.id)}`;
+    reserve.append(document.createTextNode("Reserve"), createIcon("arrow-right"));
+    footer.append(price, reserve);
+    body.append(eyebrow, title, pax, benefits, footer);
+    card.append(media, body);
     return card;
 }
 
-/* INFORMATION ROW */
-
-function createInformationRow(label, value) {
-    const row = document.createElement("div");
-
-    row.className = "accommodation-card-info-row";
-
-    const labelElement = document.createElement("span");
-
-    labelElement.textContent = label;
-
-    const valueElement = document.createElement("strong");
-
-    valueElement.textContent = value;
-
-    row.appendChild(labelElement);
-
-    row.appendChild(valueElement);
-
-    return row;
-}
-
-/* SELECT ACCOMMODATION */
-
-function selectAccommodation(accommodation) {
-    resortsState.selectedAccommodation = accommodation;
-
-    updateSelectedAccommodationCard();
-
-    renderAccommodationDetail();
-}
-
-/* DETAIL PANEL */
-
-function renderAccommodationDetail() {
-    const accommodation = resortsState.selectedAccommodation;
-
-    if (!accommodation) {
-        return;
-    }
-
-    if (accommodationDetailCard) {
-        accommodationDetailCard.hidden = false;
-    }
-
-    setText(accommodationDetailName, accommodation.name);
-
-    setText(accommodationDetailType, accommodation.type);
-
-    setText(accommodationDetailCapacity, formatCapacity(accommodation.capacity));
-
-    setText(accommodationDetailPrice, formatCurrency(accommodation.price));
-
-    setText(accommodationDetailStatus, accommodation.availability);
-
-    setText(accommodationDetailAmenities, formatAmenities(accommodation.amenities));
-
-    applyAvailabilityBadge(accommodationDetailAvailability, accommodation.availability);
-
-    updateReserveButton();
-
-    initializeIcons();
-}
-
-/* RESERVE BUTTON Uses database IDs instead of names. */
-
-function updateReserveButton() {
-    if (
-        !reserveAccommodationButton ||
-        !resortsState.selectedResort ||
-        !resortsState.selectedAccommodation
-    ) {
-        return;
-    }
-
-    const resortId = encodeURIComponent(resortsState.selectedResort.id);
-
-    const accommodationId = encodeURIComponent(resortsState.selectedAccommodation.id);
-
-    reserveAccommodationButton.href = `Reservations.html?resort=${resortId}&accommodation=${accommodationId}`;
-}
-
-/* SELECTED CARDS */
-
-function updateSelectedResortCard() {
+function updateSelectedResortCards() {
     document.querySelectorAll(".resort-card").forEach((card) => {
-        card.classList.toggle(
-            "selected",
-
-            String(card.dataset.resortId) === String(resortsState.selectedResort?.id),
-        );
+        const selected =
+            resortsState.selectedResort &&
+            String(card.dataset.resortId) === String(resortsState.selectedResort.id) &&
+            !selectedResortSection.hidden;
+        card.classList.toggle("selected", Boolean(selected));
+        card.setAttribute("aria-expanded", String(Boolean(selected)));
+        const button = card.querySelector(".resort-expand-button");
+        if (button) {
+            button.firstChild.textContent = selected ? "Close details" : "Explore resort";
+        }
     });
 }
 
-function updateSelectedAccommodationCard() {
-    document.querySelectorAll(".accommodation-card").forEach((card) => {
-        card.classList.toggle(
-            "selected",
+function normalizeList(value) {
+    if (Array.isArray(value)) {
+        return value.map((item) => String(item).trim()).filter(Boolean);
+    }
+    return String(value || "")
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+}
 
-            String(card.dataset.accommodationId) === String(resortsState.selectedAccommodation?.id),
-        );
+function resolveImageUrl(value, fallback) {
+    const source = String(value || "").trim();
+    if (!source) return fallback;
+    if (/^(https?:|data:|blob:)/i.test(source)) return source;
+    return source.startsWith("/") ? source : `/${source.replace(/^\.\//, "")}`;
+}
+
+function applyImageFallback(image, fallback) {
+    image.addEventListener("error", () => {
+        if (!image.src.endsWith(fallback.replace(/^\.\.\/\.\.\//, ""))) {
+            image.src = fallback;
+        }
     });
 }
 
-/* RESET DETAIL */
-
-function resetAccommodationDetail() {
-    resortsState.selectedAccommodation = null;
-
-    if (accommodationDetailCard) {
-        accommodationDetailCard.hidden = true;
-    }
-}
-
-/* AVAILABILITY BADGE Presentation only. Availability itself comes from data/database. */
-
-function applyAvailabilityBadge(element, availability) {
-    if (!element) {
-        return;
-    }
-
-    const value = String(availability || "").trim();
-
-    element.className = "status-badge";
-
-    element.textContent = value || "—";
-
-    if (value.toLowerCase() === "available") {
-        element.classList.add("status-success");
-    } else {
-        element.classList.add("status-info");
-    }
-}
-
-/* FORMAT VALUES */
-
-function formatCapacity(value) {
-    if (value === null || value === undefined || value === "") {
-        return "—";
-    }
-
-    return String(value);
-}
-
-function formatAmenities(amenities) {
-    if (!Array.isArray(amenities) || amenities.length === 0) {
-        return "—";
-    }
-
-    return amenities.join(", ");
+function formatPax(value) {
+    const capacity = Number(value);
+    return Number.isFinite(capacity) && capacity > 0
+        ? `Up to ${capacity} ${capacity === 1 ? "guest" : "guests"}`
+        : "Capacity available on request";
 }
 
 function formatCurrency(value) {
     const amount = Number(value);
-
-    if (value === null || value === undefined || Number.isNaN(amount)) {
-        return "—";
-    }
-
+    if (!Number.isFinite(amount)) return "Price on request";
     return new Intl.NumberFormat("en-PH", {
         style: "currency",
         currency: "PHP",
-        minimumFractionDigits: 2,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
     }).format(amount);
 }
 
-function setText(element, value) {
-    if (!element) {
-        return;
-    }
-
-    element.textContent =
-        value === null || value === undefined || value === "" ? "—" : String(value);
+function titleCase(value) {
+    return String(value || "")
+        .replace(/[_-]+/g, " ")
+        .replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
-/* SIDEBAR */
+function createIcon(name) {
+    const icon = document.createElement("i");
+    icon.setAttribute("data-lucide", name);
+    return icon;
+}
 
 function initializeSidebar() {
-    if (!sidebarToggle || !clientApp) {
-        return;
-    }
-
+    if (!sidebarToggle || !clientApp) return;
     sidebarToggle.addEventListener("click", () => {
-        const isMobile = window.matchMedia("(max-width: 760px)").matches;
-
-        if (isMobile) {
+        if (window.matchMedia("(max-width: 760px)").matches) {
             clientApp.classList.toggle("sidebar-mobile-open");
-
             return;
         }
-
         clientApp.classList.toggle("sidebar-collapsed");
-
-        sidebarToggle.setAttribute(
-            "aria-expanded",
-
-            String(!clientApp.classList.contains("sidebar-collapsed")),
-        );
+        sidebarToggle.setAttribute("aria-expanded", String(!clientApp.classList.contains("sidebar-collapsed")));
     });
 }
-
-/* PROFILE */
 
 function initializeProfileButton() {
-    if (!clientProfileButton) {
-        return;
+    if (clientProfileButton) {
+        clientProfileButton.addEventListener("click", () => {
+            window.location.href = "Profile.html";
+        });
     }
-
-    clientProfileButton.addEventListener("click", () => {
-        window.location.href = "Profile.html";
-    });
 }
-
-/* ICONS */
 
 function initializeIcons() {
     if (typeof lucide !== "undefined" && typeof lucide.createIcons === "function") {

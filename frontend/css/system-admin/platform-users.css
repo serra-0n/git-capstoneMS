@@ -252,8 +252,8 @@
     height: 38px;
     min-width: 38px;
     border-radius: 50%;
-    background: #f1f5f9;
-    color: #64748b;
+    background: #dbeafe;
+    color: #2563eb;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -272,7 +272,7 @@
     margin-bottom: 3px;
 }
 
-.platform-user-info span {
+.platform-user-info > div span {
     display: block;
     color: #94a3b8;
     font-size: 13px;
@@ -333,6 +333,8 @@
 .user-account-status.inactive::before {
     background: #f59e0b;
 }
+.user-account-status.suspended { color: #dc2626; }
+.user-account-status.suspended::before { background: #dc2626; }
 
 .user-action-button {
     width: 34px;

@@ -1,27 +1,9 @@
 "use strict";
 
-/* RESORTHUB - CLIENT PROFILE File: js/client/Profile.js FRONTEND DEVELOPMENT MODE true: - Uses dummy client data - Simulates saving only in memory - Does NOT save to localStorage - Does NOT update MySQL false: - Loads the client profile from the Express backend - Sends profile updates to the backend */
-
-const USE_DUMMY_DATA = true;
-
 /* API ENDPOINTS */
 
 const API_ENDPOINTS = {
     profile: "/api/client/profile",
-};
-
-/* DUMMY CLIENT DATA Presentation data only. */
-
-const DUMMY_CLIENT = {
-    id: 1,
-
-    full_name: "Juan Dela Cruz",
-
-    email: "juan.delacruz@example.com",
-
-    contact_number: "09171234567",
-
-    role: "Client",
 };
 
 /* APPLICATION STATE */
@@ -81,50 +63,46 @@ async function initializeProfilePage() {
 
     initializeProfileForm();
 
-    if (USE_DUMMY_DATA) {
-        loadDummyProfile();
-
-        return;
-    }
-
     await loadProfileFromDatabase();
-}
-
-/* DUMMY PROFILE */
-
-function loadDummyProfile() {
-    profileState.client = {
-        ...DUMMY_CLIENT,
-    };
-
-    renderProfile();
 }
 
 /* LOAD PROFILE FROM BACKEND */
 
 async function loadProfileFromDatabase() {
+    const token = sessionStorage.getItem("resorthub_access_token");
+
+    if (!token) {
+        window.location.href = "../auth/login.html";
+        return;
+    }
+
     setSavingState(true);
 
     try {
         const response = await fetch(API_ENDPOINTS.profile, {
             method: "GET",
 
-            credentials: "include",
-
             headers: {
                 Accept: "application/json",
+                Authorization: `Bearer ${token}`,
             },
         });
 
-        if (!response.ok) {
-            throw new Error("Unable to load client profile.");
+        if (response.status === 401) {
+            sessionStorage.removeItem("resorthub_access_token");
+            window.location.href = "../auth/login.html";
+            return;
         }
 
         const data = await response.json();
 
+        if (!response.ok) {
+            throw new Error(data.message || "Unable to load your profile.");
+        }
+
         profileState.client = normalizeClient(data);
 
-        if (!profileState.client) {
+        if (!profileState.client?.id) {
             throw new Error("Client profile data is unavailable.");
         }
 
@@ -132,7 +110,7 @@ async function loadProfileFromDatabase() {
     } catch (error) {
         console.error("Profile loading error:", error);
 
-        showProfileMessage("Unable to load your profile.", "error");
+        showProfileMessage(error.message || "Unable to load your profile.", "error");
     } finally {
         setSavingState(false);
     }
@@ -216,7 +194,6 @@ function initializeProfileForm() {
 
 async function handleProfileSubmit(event) {
     event.preventDefault();
-
     clearProfileMessage();
 
     if (profileState.saving) {
@@ -224,18 +201,10 @@ async function handleProfileSubmit(event) {
     }
 
     const formData = collectProfileFormData();
-
     const validationMessage = validateProfileForm(formData);
 
     if (validationMessage) {
         showProfileMessage(validationMessage, "error");
-
-        return;
-    }
-
-    if (USE_DUMMY_DATA) {
-        saveDummyProfile(formData);
-
         return;
     }
 
@@ -284,42 +253,16 @@ function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-/* DUMMY SAVE This changes only the current page state. Nothing is stored permanently. */
-
-function saveDummyProfile(formData) {
-    setSavingState(true);
-
-    /*
-     * Small delay only for frontend interaction feedback.
-     * This is not a real database request.
-     */
-
-    window.setTimeout(() => {
-        profileState.client = {
-            ...profileState.client,
-
-            id: formData.client_id ?? profileState.client?.id ?? null,
-
-            full_name: formData.full_name,
-
-            email: formData.email,
-
-            contact_number: formData.contact_number,
-
-            role: profileState.client?.role || "Client",
-        };
-
-        renderProfile();
-
-        showProfileMessage("Profile changes saved for frontend preview.", "success");
-
-        setSavingState(false);
-    }, 500);
-}
-
 /* SAVE PROFILE TO BACKEND */
 
 async function saveProfileToDatabase(formData) {
+    const token = sessionStorage.getItem("resorthub_access_token");
+
+    if (!token) {
+        window.location.href = "../auth/login.html";
+        return;
+    }
+
     setSavingState(true);
 
     try {
@@ -331,22 +274,21 @@ async function saveProfileToDatabase(formData) {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
             },
 
             body: JSON.stringify({
                 full_name: formData.full_name,
 
-                email: formData.email,
-
                 contact_number: formData.contact_number,
             }),
         });
 
-        if (!response.ok) {
-            throw new Error("Unable to update client profile.");
-        }
-
         const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Unable to update client profile.");
+        }
 
         /*
          * Prefer the backend-returned record.
@@ -368,11 +310,11 @@ async function saveProfileToDatabase(formData) {
 
         renderProfile();
 
-        showProfileMessage("Profile updated successfully.", "success");
+        showProfileMessage(data.message || "Profile updated successfully.", "success");
     } catch (error) {
         console.error("Profile update error:", error);
 
-        showProfileMessage("Unable to update your profile.", "error");
+        showProfileMessage(error.message || "Unable to update your profile.", "error");
     } finally {
         setSavingState(false);
     }

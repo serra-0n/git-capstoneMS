@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="../../assets/resorthub-mark.png?v=2" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Sign In | ResortHub</title>
         <link rel="stylesheet" href="../../css/auth/login.css" />
@@ -10,13 +11,7 @@
     <body>
         <header class="auth-header">
             <a href="../../index.html" class="auth-logo">
-                <span class="logo-text">ResortHub</span>
-
-                <span class="logo-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </span>
+                <img class="auth-brand-mark" src="../../assets/resorthub-mark.png?v=2" alt="" /><span class="logo-text">ResortHub</span>
             </a>
 
             <nav class="auth-navigation">
@@ -37,16 +32,15 @@
         <main class="auth-main">
             <section class="auth-card">
                 <div class="auth-card-header">
+                    <img class="auth-card-brand" src="../../assets/resorthub-logo.png?v=2" alt="ResortHub SRH logo" />
                     <h1>Sign in or create an account</h1>
                     <p>Sign in or Sign up to manage your reservations and documents.</p>
                 </div>
 
                 <div class="social-login">
-                    <button type="button" class="social-button google-button">
-                        <span class="social-icon">G</span>
-                        <span>Sign in with Google</span>
-                    </button>
+                    <div id="googleSignInButton"></div>
                 </div>
+                <p id="googleSignInStatus" role="status" aria-live="polite"></p>
 
                 <div class="auth-divider">
                     <span></span>
@@ -152,6 +146,10 @@
         </footer>
 
         <script src="../../js/auth/login.js"></script>
+        <script src="https://accounts.google.com/gsi/client"
+            async
+            onload="initializeGoogleSignIn()"
+            onerror="showGoogleLoadError()"></script>
         <script>
             lucide.createIcons();
         </script>

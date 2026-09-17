@@ -59,12 +59,13 @@ body {
 }
 
 .logo-dots {
-    display: inline-flex;
+    display: none;
     align-items: center;
     gap: 2px;
 
     margin-top: 2px;
 }
+.auth-brand-mark { width: 42px; height: 42px; object-fit: contain; flex: none; }
 
 .logo-dots span {
     width: 4px;
@@ -638,6 +639,195 @@ body {
 
 .footer-column a:hover {
     color: #2563eb;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+.success-modal[hidden] {
+    display: none;
+}
+
+.success-modal {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+
+    display: grid;
+    place-items: center;
+
+    padding: 20px;
+}
+
+.success-modal-backdrop {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(15, 23, 42, 0.66);
+
+    backdrop-filter: blur(4px);
+}
+
+.success-modal-dialog {
+    position: relative;
+    z-index: 1;
+
+    width: min(100%, 470px);
+
+    padding: 34px;
+
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 24px 70px
+        rgba(15, 23, 42, 0.3);
+
+    text-align: center;
+}
+
+.success-modal-icon {
+    display: grid;
+    place-items: center;
+
+    width: 68px;
+    height: 68px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.success-modal-icon svg {
+    width: 34px;
+    height: 34px;
+
+    stroke-width: 2.5;
+}
+
+.success-modal-dialog h2 {
+    margin: 0 0 12px;
+
+    color: #111827;
+
+    font-size: 24px;
+    line-height: 1.25;
+}
+
+.success-modal-dialog > p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.success-application-details {
+    display: grid;
+    gap: 10px;
+
+    margin: 24px 0;
+}
+
+.success-application-details > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    padding: 12px 14px;
+
+    border-radius: 9px;
+
+    background: #f8fafc;
+}
+
+.success-application-details span {
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+.success-application-details strong {
+    color: #172554;
+
+    font-size: 12px;
+    text-align: right;
+}
+
+.success-modal-note {
+    margin-bottom: 22px !important;
+
+    color: #475569 !important;
+
+    font-size: 12px !important;
+}
+
+.success-dashboard-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    width: 100%;
+    min-height: 45px;
+
+    border: 0;
+    border-radius: 9px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.success-dashboard-button:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+}
+
+.success-dashboard-button svg {
+    width: 17px;
+    height: 17px;
+}
+
+.message.error {
+    color: #b91c1c;
+}
+
+@media (max-width: 480px) {
+    .success-modal-dialog {
+        padding: 26px 20px;
+    }
+
+    .success-modal-dialog h2 {
+        font-size: 20px;
+    }
+
+    .success-application-details > div {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .success-application-details strong {
+        text-align: left;
+    }
 }
 
 /* TABLET */

@@ -78,6 +78,7 @@ async function submitDeposit(request, response) {
             `SELECT id, tenant_id, client_id,
                     total_amount,
                     deposit_amount,
+                    payment_plan,
                     amount_paid,
                     reservation_status,
                     payment_status,
@@ -174,6 +175,21 @@ async function submitDeposit(request, response) {
 
                 return response.status(409).json({
                     message: "An initial payment has already been submitted."
+                });
+            }
+
+            const requiredInitialOption = reservation.payment_plan === "half"
+                ? "deposit"
+                : "full";
+
+            if (paymentOption !== requiredInitialOption) {
+                await connection.rollback();
+                removeUploadFile(request.file);
+
+                return response.status(409).json({
+                    message: reservation.payment_plan === "half"
+                        ? "This reservation requires the selected 50% deposit."
+                        : "This reservation requires full payment."
                 });
             }
         }

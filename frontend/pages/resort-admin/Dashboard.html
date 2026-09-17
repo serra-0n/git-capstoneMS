@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="../../assets/resorthub-mark.png?v=2" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <title>Operational Dashboard | ResortHub</title>
@@ -16,7 +17,7 @@
         <div class="app-shell">
             <aside class="sidebar">
                 <a class="brand" href="Dashboard.html">
-                    <i class="brand-mark" data-lucide="building-2"></i>
+                    <img class="brand-mark" src="../../assets/resorthub-mark.png?v=2" alt="ResortHub SRH logo" />
 
                     <span>
                         <strong>ResortHub</strong>
@@ -131,8 +132,8 @@
                         </div>
 
                         <div class="date-card">
-                            <b>May 24, 2025</b>
-                            <span>Saturday</span>
+                            <b>Loading date...</b>
+                            <span></span>
                         </div>
                     </div>
 
@@ -145,7 +146,7 @@
 
                                 <div>
                                     <div class="label">Total Reservations</div>
-                                    <div class="number">128</div>
+                                    <div class="number">0</div>
                                 </div>
                             </div>
                         </article>
@@ -158,7 +159,7 @@
 
                                 <div>
                                     <div class="label">Available Rooms/Cottages</div>
-                                    <div class="number">24 / 60</div>
+                                    <div class="number">0</div>
                                 </div>
                             </div>
                         </article>
@@ -171,7 +172,7 @@
 
                                 <div>
                                     <div class="label">Pending Payments</div>
-                                    <div class="number">15</div>
+                                    <div class="number">0</div>
                                 </div>
                             </div>
                         </article>
@@ -184,7 +185,7 @@
 
                                 <div>
                                     <div class="label">Pending OCR Verifications</div>
-                                    <div class="number">9</div>
+                                    <div class="number">0</div>
                                 </div>
                             </div>
                         </article>
@@ -198,17 +199,17 @@
 
                             <div class="activity-row">
                                 <span>Check-ins Today</span>
-                                <b>18</b>
+                                <b>0</b>
                             </div>
 
                             <div class="activity-row">
                                 <span>Check-outs Today</span>
-                                <b>12</b>
+                                <b>0</b>
                             </div>
 
                             <div class="activity-row">
                                 <span>In-house Guests</span>
-                                <b>46</b>
+                                <b>0</b>
                             </div>
                         </article>
 
@@ -219,7 +220,7 @@
 
                             <div class="revenue">
                                 <span class="revenue-label">Total Revenue</span>
-                                <div class="revenue-amount">₱285,450.00</div>
+                                <div class="revenue-amount">₱0.00</div>
                                 <div class="revenue-period">This month</div>
                             </div>
                         </article>
@@ -233,8 +234,8 @@
                                 <i data-lucide="credit-card"></i>
 
                                 <div>
-                                    <div class="notice-title">15 payments are pending.</div>
-                                    <div class="notice-copy">Please verify payments.</div>
+                                    <div class="notice-title">No payment data available.</div>
+                                    <div class="notice-copy">Payment statistics will appear when records are available.</div>
                                 </div>
                             </div>
 
@@ -242,8 +243,8 @@
                                 <i data-lucide="scan-search"></i>
 
                                 <div>
-                                    <div class="notice-title">9 OCR documents need review.</div>
-                                    <div class="notice-copy">Validate submitted documents.</div>
+                                    <div class="notice-title">No OCR data available.</div>
+                                    <div class="notice-copy">Document statistics will appear when records are available.</div>
                                 </div>
                             </div>
                         </article>
@@ -270,21 +271,7 @@
 
                                     <tbody>
                                         <tr>
-                                            <td>RH-250524-00123</td>
-                                            <td>Juan Miguel Dela Cruz</td>
-                                            <td>Family Cottage</td>
-                                            <td>₱4,950.00</td>
-                                            <td><span class="status green">Confirmed</span></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>RH-250524-00124</td>
-                                            <td>Maria Santos</td>
-                                            <td>Deluxe Room</td>
-                                            <td>₱6,800.00</td>
-                                            <td>
-                                                <span class="status orange">Pending Payment</span>
-                                            </td>
+                                            <td colspan="5">No reservation data available.</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -324,6 +311,6 @@
         </div>
 
         <script src="https://unpkg.com/lucide@latest"></script>
-        <script src="../../js/resort-admin/Dashboard.js"></script>
+        <script src="../../js/resort-admin/dashboard.js"></script>
     </body>
 </html>

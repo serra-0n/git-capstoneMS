@@ -178,6 +178,9 @@
     background: #dcfce7;
     color: #15803d;
 }
+.tenant-detail-status.suspended { background: #fee2e2; color: #dc2626; }
+.tenant-detail-status.pending { background: #fef3c7; color: #b45309; }
+.tenant-detail-status.rejected, .tenant-detail-status.inactive { background: #f3f4f6; color: #6b7280; }
 
 .tenant-activity-list {
     display: flex;
@@ -508,7 +511,7 @@
     font-weight: 600;
 }
 
-.tenant-resort span {
+.tenant-resort > div span {
     display: block;
     margin-top: 4px;
     color: #9ca3af;
@@ -569,6 +572,9 @@
     background: #fef3c7;
     color: #b45309;
 }
+.tenant-status.rejected, .tenant-status.inactive { background: #f3f4f6; color: #6b7280; }
+.admin-empty-state { padding: 20px; color: #64748b; }
+.suspended-tenant-button[hidden] { display: none !important; }
 
 .tenant-view-button {
     height: 31px;

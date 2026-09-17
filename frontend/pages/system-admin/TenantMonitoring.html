@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="../../assets/resorthub-mark.png?v=2" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Tenant Monitoring | Resort Management System</title>
 
@@ -14,7 +15,7 @@
     <body>
         <aside class="sidebar">
             <div class="sidebar-brand">
-                <img src="../../image/logo.png" alt="ResortHub Logo" />
+                <img class="system-brand-mark" src="../../assets/resorthub-mark.png?v=2" alt="ResortHub SRH logo" />
 
                 <div class="sidebar-brand-text">
                     <h2>ResortHub</h2>
@@ -71,11 +72,11 @@
             </nav>
 
             <div class="sidebar-user">
-                <img src="../../image/profile.png" alt="System Administrator" />
+                <span class="system-profile-avatar"><i data-lucide="user-round"></i></span>
 
                 <div class="sidebar-user-info">
-                    <strong>Strong Admin</strong>
-                    <span>Adminitrator</span>
+                    <strong>System Admin</strong>
+                    <span>Administrator</span>
                 </div>
             </div>
 
@@ -105,7 +106,7 @@
                     </button>
 
                     <div class="topbar-profile">
-                        <img src="../../image/profile.png" alt="System Administrator" />
+                        <span class="system-profile-avatar"><i data-lucide="user-round"></i></span>
 
                         <div>
                             <strong>System Admin</strong>
@@ -134,7 +135,7 @@
 
                     <div>
                         <span>Total Tenants</span>
-                        <strong id="totalTenantCount">12</strong>
+                        <strong id="totalTenantCount">0</strong>
                     </div>
                 </article>
 
@@ -145,7 +146,7 @@
 
                     <div>
                         <span>Active Tenants</span>
-                        <strong id="activeTenantCount">9</strong>
+                        <strong id="activeTenantCount">0</strong>
                     </div>
                 </article>
 
@@ -156,7 +157,7 @@
 
                     <div>
                         <span>Suspended</span>
-                        <strong id="suspendedTenantCount">2</strong>
+                        <strong id="suspendedTenantCount">0</strong>
                     </div>
                 </article>
 
@@ -167,7 +168,7 @@
 
                     <div>
                         <span>Pending</span>
-                        <strong id="pendingTenantCount">1</strong>
+                        <strong id="pendingTenantCount">0</strong>
                     </div>
                 </article>
             </section>
@@ -197,146 +198,22 @@
                 </div>
 
                 <div class="tenant-tabs">
-                    <button class="tenant-tab active" data-status="active">
-                        Active(<span class="tab-count">9</span>)
+                    <button class="tenant-tab active" data-status="all">All (<span class="tab-count">0</span>)</button>
+                    <button class="tenant-tab" data-status="active">
+                        Active (<span class="tab-count">0</span>)
                     </button>
 
                     <button class="tenant-tab" data-status="suspended">
-                        Suspended(<span class="tab-count">2</span>)
+                        Suspended (<span class="tab-count">0</span>)
                     </button>
 
                     <button class="tenant-tab" data-status="pending">
-                        Pending(<span class="tab-count">1</span>)
+                        Pending (<span class="tab-count">0</span>)
                     </button>
+                    <button class="tenant-tab" data-status="rejected">Rejected (<span class="tab-count">0</span>)</button>
                 </div>
 
-                <div class="tenant-list">
-                    <article
-                        class="tenant-item"
-                        data-name="Blue Lagoon Resort"
-                        data-location="Panglao, Bohol"
-                        data-owner="Juan Dela Cruz"
-                        data-status="Active"
-                        data-tenant-id="TEN-0001"
-                        data-type="Beach Resort"
-                    >
-                        <div class="tenant-resort">
-                            <div class="tenant-avatar">
-                                <i data-lucide="building-2"></i>
-                            </div>
-
-                            <div>
-                                <strong>Blue Lagoon Resort</strong>
-                                <span>Panglao, Bohol</span>
-                            </div>
-                        </div>
-
-                        <div class="tenant-owner">
-                            <span class="tenant-label"> Resort Admin</span>
-                            <strong> Juan Dela Cruz</strong>
-                        </div>
-
-                        <div class="tenant-date">
-                            <span class="tenant-label">Registered</span>
-                            <strong>May 31, 2025</strong>
-                        </div>
-
-                        <div>
-                            <span class="tenant-status active">Active</span>
-                        </div>
-
-                        <div>
-                            <button type="button" class="tenant-view-button">
-                                <i data-lucide="eye"></i>
-                                View Details
-                            </button>
-                        </div>
-                    </article>
-
-                    <article
-                        class="tenant-item"
-                        data-name="Seaside View Resort"
-                        data-location="San Juan, La Union"
-                        data-owner="Maria Santos"
-                        data-status="Active"
-                        data-tenant-id="TEN-0002"
-                        data-type="Beach Resort"
-                    >
-                        <div class="tenant-resort">
-                            <div class="tenant-avatar">
-                                <i data-lucide="building-2"></i>
-                            </div>
-
-                            <div>
-                                <strong> Seaside View Resort </strong>
-                                <span> San Juan, La Union </span>
-                            </div>
-                        </div>
-
-                        <div class="tenant-owner">
-                            <span class="tenant-label"> Resort Admin</span>
-                            <strong> Maria Santos</strong>
-                        </div>
-
-                        <div class="tenant-date">
-                            <span class="tenant-label">Registered</span>
-                            <strong> May 30, 2025</strong>
-                        </div>
-
-                        <div>
-                            <span class="tenant-status active">Active</span>
-                        </div>
-
-                        <div>
-                            <button type="button" class="tenant-view-button">
-                                <i data-lucide="eye"></i>
-                                View Details
-                            </button>
-                        </div>
-                    </article>
-
-                    <article
-                        class="tenant-item"
-                        data-name="Mountain Breeze Resort"
-                        data-location="Baguio City, Benguet"
-                        data-owner="Pedro Reyes"
-                        data-status="Suspended"
-                        data-tenant-id="TEN-0003"
-                        data-type="Mountain Resort"
-                    >
-                        <div class="tenant-resort">
-                            <div class="tenant-avatar">
-                                <i data-lucide="building-2"></i>
-                            </div>
-
-                            <div>
-                                <strong>Mountain Breeze Resort</strong>
-                                <span>Baguio City, Benguet</span>
-                            </div>
-                        </div>
-
-                        <div class="tenant-owner">
-                            <span class="tenant-label">Resort Admin</span>
-                            <strong>Pedro Reyes</strong>
-                        </div>
-
-                        <div class="tenant-date">
-                            <span class="tenant-label">Registered</span>
-                            <strong>May 28, 2025</strong>
-                        </div>
-
-                        <div>
-                            <span class="tenant-status suspended">Suspended</span>
-                        </div>
-
-                        <div>
-                            <button type="button" class="tenant-view-button">
-                                <i data-lucide="eye"></i>
-                                View Details
-                            </button>
-                        </div>
-                    </article>
-                </div>
+                <div class="tenant-list"><p>No tenant records to display.</p></div>
             </section>
 
             <div class="tenant-modal" id="tenantModal">
@@ -345,7 +222,7 @@
                 <div class="tenant-modal-content">
                     <div class="tenant-modal-heading">
                         <span class="modal-label">Tenant Details</span>
-                        <h2 id="modaltenantName">Blue Lagoon Resort</h2>
+                        <h2 id="modaltenantName">Tenant Details</h2>
 
                         <p>View and manage registered resort tenant information.</p>
                     </div>
@@ -371,22 +248,22 @@
                         <div class="tenant-detail-grid">
                             <div class="tenant-detail-field">
                                 <span> Resort Name </span>
-                                <strong id="modalResortName">Blue Lagoon Resort</strong>
+                                <strong id="modalResortName">â€”</strong>
                             </div>
 
                             <div class="tenant-detail-field">
                                 <span>Location</span>
-                                <strong id="modalLocation"> Panglao, Bohol </strong>
+                                <strong id="modalLocation">—</strong>
                             </div>
 
                             <div class="tenant-detail-field">
                                 <span>Resort Type</span>
-                                <strong>Beach Resort</strong>
+                                <strong>—</strong>
                             </div>
 
                             <div class="tenant-detail-field">
                                 <span>Tenant ID</span>
-                                <strong>TEN-0001</strong>
+                                <strong>—</strong>
                             </div>
                         </div>
                     </section>
@@ -396,29 +273,29 @@
                             <i data-lucide="user"></i>
 
                             <div>
-                                <h3>Resort Administrator</h3>
-                                <p>Account information of the resort administrator.</p>
+                                <h3>Resort Owner</h3>
+                                <p>Contact information submitted with the resort application.</p>
                             </div>
                         </div>
 
                         <div class="tenant-detail-grid">
                             <div class="tenant-detail-field">
                                 <span>Name</span>
-                                <strong>Juan Dela Cruz</strong>
+                                <strong>â€”</strong>
                             </div>
 
                             <div class="tenant-detail-field">
                                 <span>Email</span>
-                                <strong>juandelacruz@example.com</strong>
+                                <strong>—</strong>
                             </div>
 
                             <div class="tenant-detail-field">
                                 <span>Contact Number</span>
-                                <strong>+63 912 345 6789</strong>
+                                <strong>—</strong>
                             </div>
 
                             <div class="tenant-detail-field">
-                                <span>Account Status</span>
+                                <span>Resort Status</span>
                                 <strong class="tenant-detail-status active">Active</strong>
                             </div>
                         </div>
@@ -436,17 +313,17 @@
                         <div class="tenant-activity-list">
                             <div class="tenant-activity-item">
                                 <span>Last Login</span>
-                                <strong>June 1, 2025 — 10:32 AM</strong>
+                                <strong>â€”</strong>
                             </div>
 
                             <div class="tenant-activity-item">
                                 <span>Total Users</span>
-                                <strong>18 Users</strong>
+                                <strong>—</strong>
                             </div>
 
                             <div class="tenant-activity-item">
-                                <span>Active Reservations</span>
-                                <strong>4 Reservations</strong>
+                                <span>Open Reservations</span>
+                                <strong>—</strong>
                             </div>
                         </div>
                     </section>
@@ -470,3 +347,4 @@
         </script>
     </body>
 </html>
+

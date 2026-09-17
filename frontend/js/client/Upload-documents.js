@@ -1,8 +1,12 @@
 "use strict";
 
-/* RESORTHUB - CLIENT UPLOAD DOCUMENTS File: js/client/UploadDocuments.js DEVELOPMENT MODE true: - Uses dummy reservation/document data - Uploaded files exist only in memory - Does NOT perform real OCR - Does NOT save files to MySQL/server storage - Does NOT use localStorage false: - Loads records from Express API - Uploads documents using FormData - Backend performs OCR processing - Backend/database becomes the source of truth */
+/* ResortHub client document uploads backed by the authenticated API. */
 
-const USE_DUMMY_DATA = true;
+const accessToken = sessionStorage.getItem("resorthub_access_token");
+
+if (!accessToken) {
+    window.location.href = "../auth/login.html";
+}
 
 /* API ENDPOINTS */
 
@@ -15,100 +19,6 @@ const API_ENDPOINTS = {
 
     uploadDocument: "/api/client/documents",
 };
-
-/* DUMMY CLIENT */
-
-const DUMMY_CLIENT = {
-    id: 1,
-
-    name: "Juan Dela Cruz",
-};
-
-/* DUMMY RESERVATIONS Presentation records only. */
-
-const DUMMY_RESERVATIONS = [
-    {
-        id: 105,
-
-        reference: "RES-0105",
-
-        resort_name: "Azure Garden Resort",
-
-        accommodation_name: "Family Room",
-    },
-
-    {
-        id: 102,
-
-        reference: "RES-0102",
-
-        resort_name: "Palm Breeze Resort",
-
-        accommodation_name: "Standard Room",
-    },
-
-    {
-        id: 103,
-
-        reference: "RES-0103",
-
-        resort_name: "Serenity Springs Resort",
-
-        accommodation_name: "Deluxe Room",
-    },
-];
-
-/* DUMMY DOCUMENTS Verification statuses below are sample presentation data. The backend should eventually define the actual status. */
-
-const DUMMY_DOCUMENTS = [
-    {
-        id: 701,
-
-        client_id: 1,
-
-        reservation_id: 105,
-
-        reservation_reference: "RES-0105",
-
-        document_type: "valid_id",
-
-        file_name: "valid-id-sample.jpg",
-
-        verification_status: "Pending Verification",
-    },
-
-    {
-        id: 702,
-
-        client_id: 1,
-
-        reservation_id: 102,
-
-        reservation_reference: "RES-0102",
-
-        document_type: "proof_of_payment",
-
-        file_name: "proof-of-payment-sample.jpg",
-
-        verification_status: "Verified",
-    },
-
-    {
-        id: 703,
-
-        client_id: 1,
-
-        reservation_id: 103,
-
-        reservation_reference: "RES-0103",
-
-        document_type: "reservation_form",
-
-        file_name: "reservation-form-sample.pdf",
-
-        verification_status: "Pending Verification",
-    },
-];
 
 /* APPLICATION STATE */
 
@@ -197,40 +107,8 @@ async function initializeUploadDocumentsPage() {
 
     initializeRemoveFileButton();
 
-    if (USE_DUMMY_DATA) {
-        loadDummyData();
-
-        return;
-    }
-
     await loadDocumentDataFromDatabase();
 }
-
-/* DUMMY DATA */
-
-function loadDummyData() {
-    documentState.client = {
-        ...DUMMY_CLIENT,
-    };
-
-    documentState.reservations = DUMMY_RESERVATIONS.map((reservation) => ({
-        ...reservation,
-    }));
-
-    documentState.documents = DUMMY_DOCUMENTS.map((document) => ({
-        ...document,
-    }));
-
-    renderClient();
-
-    renderReservations();
-
-    applyReservationFromUrl();
-
-    renderDocuments();
-}
-
-/* DATABASE MODE */
 
 async function loadDocumentDataFromDatabase() {
     try {
@@ -260,6 +138,7 @@ async function loadClientFromApi() {
 
         headers: {
             Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
         },
     });
 
@@ -282,6 +161,7 @@ async function loadReservationsFromApi() {
 
         headers: {
             Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
         },
     });
 
@@ -304,6 +184,7 @@ async function loadDocumentsFromApi() {
 
         headers: {
             Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
         },
     });
 
@@ -354,6 +235,7 @@ function normalizeReservation(reservation) {
 
         reference:
             reservation.reference ||
+            reservation.reservation_code ||
             reservation.reservation_reference ||
             reservation.reference_number ||
             "",
@@ -388,7 +270,11 @@ function normalizeDocument(document) {
 
         reservation_id: document.reservation_id ?? null,
 
-        reservation_reference: document.reservation_reference || document.reference_number || "",
+        reservation_reference:
+            document.reservation_reference ||
+            document.reservation_code ||
+            document.reference_number ||
+            "",
 
         document_type: document.document_type || "",
 
@@ -847,12 +733,6 @@ async function handleDocumentUpload(event) {
 
     const formData = createDocumentFormData();
 
-    if (USE_DUMMY_DATA) {
-        uploadDummyDocument(formData);
-
-        return;
-    }
-
     await uploadDocumentToApi(formData);
 }
 
@@ -890,63 +770,6 @@ function createDocumentFormData() {
     return formData;
 }
 
-/* DUMMY UPLOAD This does NOT perform OCR. The newly uploaded record exists only in memory until the page is refreshed. */
-
-function uploadDummyDocument(formData) {
-    setSubmittingState(true);
-
-    window.setTimeout(() => {
-        const reservation = documentState.reservations.find(
-            (item) => String(item.id) === String(formData.get("reservation_id")),
-        );
-
-        const file = formData.get("document_file");
-
-        const newDocument = {
-            id: createTemporaryDocumentId(),
-
-            client_id: documentState.client?.id ?? null,
-
-            reservation_id: reservation?.id ?? null,
-
-            reservation_reference: reservation?.reference || "",
-
-            document_type: formData.get("document_type"),
-
-            file_name: file instanceof File ? file.name : "",
-
-            verification_status: "Pending Verification",
-        };
-
-        documentState.documents.unshift(newDocument);
-
-        renderDocuments();
-
-        resetUploadForm();
-
-        showDocumentMessage(
-            "Document uploaded for frontend preview. OCR processing and verification have not been performed.",
-            "success",
-        );
-
-        setSubmittingState(false);
-    }, 700);
-}
-
-/* TEMPORARY DUMMY ID */
-
-function createTemporaryDocumentId() {
-    const currentIds = documentState.documents
-        .map((item) => Number(item.id))
-        .filter((id) => Number.isFinite(id));
-
-    if (currentIds.length === 0) {
-        return 1;
-    }
-
-    return Math.max(...currentIds) + 1;
-}
-
 /* API UPLOAD Backend should: - receive multipart/form-data - store document record - store uploaded file - perform OCR processing - store OCR result / verification information as needed */
 
 async function uploadDocumentToApi(formData) {
@@ -957,6 +780,10 @@ async function uploadDocumentToApi(formData) {
             method: "POST",
 
             credentials: "include",
+
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
 
             body: formData,
         });

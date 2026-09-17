@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="../../assets/resorthub-mark.png?v=2" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>System Reports | Resort Management System</title>
 
@@ -15,7 +16,7 @@
     <body>
         <aside class="sidebar">
             <div class="sidebar-brand">
-                <img src="../../frontend/image/logo.png" alt="ResortHub Logo" />
+                <img class="system-brand-mark" src="../../assets/resorthub-mark.png?v=2" alt="ResortHub SRH logo" />
 
                 <div class="sidebar-brand-text">
                     <h2>ResortHub</h2>
@@ -76,7 +77,7 @@
             </nav>
 
             <div class="sidebar-user">
-                <img src="../../frontend/image/profile.png" alt="System Administrator" />
+                <span class="system-profile-avatar"><i data-lucide="user-round"></i></span>
 
                 <div class="sidebar-user-info">
                     <strong>System Admin</strong>
@@ -111,7 +112,7 @@
                     </button>
 
                     <div class="topbar-profile">
-                        <img src="../../frontend/image/profile.png" alt="System Administrator" />
+                        <span class="system-profile-avatar"><i data-lucide="user-round"></i></span>
 
                         <div>
                             <strong>System Admin</strong>
@@ -138,7 +139,7 @@
 
                     <div>
                         <span>Total Tenants</span>
-                        <strong id="totalTenantReport">12</strong>
+                        <strong id="totalTenantReport"> 0 </strong>
                     </div>
                 </article>
 
@@ -149,7 +150,7 @@
 
                     <div>
                         <span>Total Users</span>
-                        <strong id="totalUserReport">248</strong>
+                        <strong id="totalUserReport"> 0 </strong>
                     </div>
                 </article>
 
@@ -160,7 +161,7 @@
 
                     <div>
                         <span>System Activities</span>
-                        <strong id="totalActivitiesReport">1,248</strong>
+                        <strong id="totalActivitiesReport"> 0 </strong>
                     </div>
                 </article>
 
@@ -171,7 +172,7 @@
 
                     <div>
                         <span>Active Tenants</span>
-                        <strong id="activeTenantReport">9</strong>
+                        <strong id="activeTenantReport"> 0 </strong>
                     </div>
                 </article>
             </section>
@@ -223,125 +224,11 @@
                     <div>
                         <span class="section-label">REPORTS</span>
                         <h2>Available Reports</h2>
-                        <p>View previously generated system reports.</p>
+                        <p>View reports generated on this page during the current session.</p>
                     </div>
                 </div>
 
-                <div class="report-list">
-                    <article class="report-item" data-report-type="tenant">
-                        <div class="report-item-icon tenant">
-                            <i data-lucide="building-2"></i>
-                        </div>
-
-                        <div class="report-item-info">
-                            <strong>Tenant Management Report</strong>
-
-                            <span>
-                                Summary of registered, active, suspended, and pending tenants.
-                            </span>
-
-                            <small>Generated June 1, 2025</small>
-                        </div>
-
-                        <div class="report-item-actions">
-                            <button type="button" class="report-view-button" data-report="tenant">
-                                <i data-lucide="eye"></i>
-                                View
-                            </button>
-
-                            <button
-                                type="button"
-                                class="report-download-button"
-                                data-report="tenant"
-                            >
-                                <i data-lucide="download"></i>
-                                Download
-                            </button>
-                        </div>
-                    </article>
-
-                    <article class="report-item" data-report-type="user">
-                        <div class="report-item-icon user">
-                            <i data-lucide="users"></i>
-                        </div>
-
-                        <div class="report-item-info">
-                            <strong>Platform User Report</strong>
-                            <span> Overview of platform users, roles, and account statuses. </span>
-
-                            <small>Generated June 1, 2025</small>
-                        </div>
-
-                        <div class="report-item-actions">
-                            <button type="button" class="report-view-button" data-report="user">
-                                <i data-lucide="eye"></i>
-                                View
-                            </button>
-
-                            <button type="button" class="report-download-button" data-report="user">
-                                <i data-lucide="download"></i>
-                                Download
-                            </button>
-                        </div>
-                    </article>
-
-                    <article class="report-item" data-report-type="activity">
-                        <div class="report-item-icon activity">
-                            <i data-lucide="activity"></i>
-                        </div>
-
-                        <div class="report-item-info">
-                            <strong>Activity Report</strong>
-                            <span> Summary of user and administrator activities. </span>
-
-                            <small>Generated May 31, 2025</small>
-                        </div>
-
-                        <div class="report-item-actions">
-                            <button type="button" class="report-view-button" data-report="activity">
-                                <i data-lucide="eye"></i>
-                                View
-                            </button>
-
-                            <button
-                                type="button"
-                                class="report-download-button"
-                                data-report="activity"
-                            >
-                                <i data-lucide="download"></i>
-                                Download
-                            </button>
-                        </div>
-                    </article>
-
-                    <article class="report-item" data-report-type="system">
-                        <div class="report-item-icon system">
-                            <i data-lucide="file-bar-chart"></i>
-                        </div>
-
-                        <div class="report-item-info">
-                            <strong>System Summary Report</strong>
-                            <span> Overall summary of the ResortHub platform. </span>
-                            <small>Generated May 31, 2025</small>
-                        </div>
-
-                        <div class="report-item-actions">
-                            <button type="button" class="report-view-button" data-report="system">
-                                <i data-lucide="eye"></i>
-                                View
-                            </button>
-
-                            <button
-                                type="button"
-                                class="report-download-button"
-                                data-report="system"
-                            >
-                                <i data-lucide="download"></i>
-                                Download
-                            </button>
-                        </div>
-                    </article>
-                </div>
+                <div class="report-list"><p>No generated reports to display.</p></div>
             </section>
 
             <div class="report-modal" id="reportModal">
@@ -391,7 +278,7 @@
 
                             <div class="report-detail-field">
                                 <span>Generated Date</span>
-                                <strong id="modalReportDate">June 1, 2025</strong>
+                                <strong id="modalReportDate">â€”</strong>
                             </div>
                         </div>
                     </section>
@@ -409,22 +296,22 @@
                         <div class="report-summary-grid">
                             <div class="report-summary-item">
                                 <span>Total Records</span>
-                                <strong>12</strong>
+                                <strong> 0 </strong>
                             </div>
 
                             <div class="report-summary-item">
                                 <span>Active</span>
-                                <strong>9</strong>
+                                <strong> 0 </strong>
                             </div>
 
                             <div class="report-summary-item">
                                 <span>Suspended</span>
-                                <strong>2</strong>
+                                <strong> 0 </strong>
                             </div>
 
                             <div class="report-summary-item">
                                 <span>Pending</span>
-                                <strong>1</strong>
+                                <strong> 0 </strong>
                             </div>
                         </div>
                     </section>
@@ -453,3 +340,4 @@
         </script>
     </body>
 </html>
+

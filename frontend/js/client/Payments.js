@@ -1,7 +1,5 @@
 "use strict";
 
-const USE_DUMMY_DATA = false;
-
 const accessToken = sessionStorage.getItem("resorthub_access_token");
 
 if (!accessToken) {
@@ -19,72 +17,6 @@ const API_ENDPOINTS = {
 
     submitPayment: "/api/client/payments",
 };
-
-/* DUMMY CLIENT Presentation data only. */
-
-const DUMMY_CLIENT = {
-    id: 1,
-
-    name: "Juan Dela Cruz",
-};
-
-/* DUMMY BILLING DATA These values are only for frontend presentation/testing. They are NOT thesis/database facts. The actual billing amount and payment status must later come from the backend / MySQL database. */
-
-const DUMMY_BILLINGS = [
-    {
-        billing_id: 501,
-
-        reservation_id: 105,
-
-        client_id: 1,
-
-        reservation_reference: "RES-0105",
-
-        resort_name: "Azure Garden Resort",
-
-        accommodation_name: "Family Room",
-
-        billing_amount: 7000.0,
-
-        payment_status: "Pending",
-    },
-
-    {
-        billing_id: 502,
-
-        reservation_id: 102,
-
-        client_id: 1,
-
-        reservation_reference: "RES-0102",
-
-        resort_name: "Palm Breeze Resort",
-
-        accommodation_name: "Standard Room",
-
-        billing_amount: 4400.0,
-
-        payment_status: "Pending Verification",
-    },
-
-    {
-        billing_id: 503,
-
-        reservation_id: 103,
-
-        client_id: 1,
-
-        reservation_reference: "RES-0103",
-
-        resort_name: "Serenity Springs Resort",
-
-        accommodation_name: "Deluxe Room",
-
-        billing_amount: 8400.0,
-
-        payment_status: "Verified",
-    },
-];
 
 /* APPLICATION STATE */
 
@@ -203,48 +135,8 @@ async function initializePaymentsPage() {
     initializePaymentOptions();
     initializeFileInput();
 
-    if (USE_DUMMY_DATA) {
-        loadDummyData();
-
-        return;
-    }
-
     await loadPaymentDataFromDatabase();
 }
-
-/* DUMMY DATA MODE */
-
-function loadDummyData() {
-    paymentState.client = {
-        ...DUMMY_CLIENT,
-    };
-
-    paymentState.billings = DUMMY_BILLINGS.map((billing) => ({
-        ...billing,
-    }));
-
-    const requestedReservationId = getReservationIdFromUrl();
-
-    if (requestedReservationId) {
-        paymentState.selectedBilling =
-            paymentState.billings.find(
-                (billing) => String(billing.reservation_id) === String(requestedReservationId),
-            ) || null;
-    } else {
-        /*
-         * For frontend preview only.
-         * The first dummy billing record is displayed.
-         */
-
-        paymentState.selectedBilling = paymentState.billings[0] || null;
-    }
-
-    renderClient();
-
-    renderPaymentPage();
-}
-
-/* DATABASE / API MODE */
 
 async function loadPaymentDataFromDatabase() {
     try {
@@ -413,6 +305,8 @@ function normalizeBilling(billing) {
 
         deposit_amount: parseNumericValue(billing.deposit_amount ?? 0),
 
+        payment_plan: billing.payment_plan || "half",
+
         amount_paid: parseNumericValue(billing.amount_paid ?? 0),
 
         gcash_account_name: billing.gcash_account_name || "",
@@ -577,33 +471,27 @@ function configurePaymentOptions(billing) {
         (paymentStatus === "partially_paid" ||
             (paymentStatus === "pending" && billing.amount_paid > 0));
 
-    if (fullPaymentOption) {
-        fullPaymentOption.hidden = balanceMode;
-    }
+    const paymentPlan = String(billing.payment_plan || "half").toLowerCase();
+    const depositPlan = paymentPlan === "half";
 
-    if (depositPaymentOption) {
-        depositPaymentOption.hidden = balanceMode;
-    }
-
-    if (payLaterButton) {
-        payLaterButton.hidden = balanceMode;
-    }
+    if (fullPaymentOption) fullPaymentOption.hidden = balanceMode || depositPlan;
+    if (depositPaymentOption) depositPaymentOption.hidden = balanceMode || !depositPlan;
+    if (payLaterButton) payLaterButton.hidden = true;
 
     if (balancePaymentOption) {
         balancePaymentOption.hidden = !balanceMode;
     }
 
+    const selectedOption = balanceMode ? "balance" : depositPlan ? "deposit" : "full";
     const selectedInput = document.querySelector(
-        balanceMode
-            ? 'input[name="payment_option"][value="balance"]'
-            : 'input[name="payment_option"][value="deposit"]',
+        `input[name="payment_option"][value="${selectedOption}"]`,
     );
 
     if (selectedInput) {
         selectedInput.checked = true;
     }
 
-    paymentState.selectedPaymentOption = balanceMode ? "balance" : "deposit";
+    paymentState.selectedPaymentOption = selectedOption;
 }
 
 function initializePaymentOptions() {
@@ -748,11 +636,6 @@ async function handlePaymentSubmission(event) {
 
     const formData = createPaymentFormData();
 
-    if (USE_DUMMY_DATA) {
-        submitDummyPayment(formData);
-        return;
-    }
-
     await submitPaymentToApi(formData);
 }
 /*VALIDATION*/
@@ -800,47 +683,6 @@ function createPaymentFormData() {
     }
 
     return formData;
-}
-
-/* DUMMY PAYMENT SUBMISSION This simulates only the frontend interaction. It does NOT: - process money - verify payment - store uploaded files - write to MySQL */
-
-function submitDummyPayment(formData) {
-    setSubmittingState(true);
-
-    console.log("Dummy payment submission:");
-
-    for (const [key, value] of formData.entries()) {
-        if (value instanceof File) {
-            console.log(key, value.name);
-        } else {
-            console.log(key, value);
-        }
-    }
-
-    window.setTimeout(() => {
-        /*
-         * Submitted payment becomes pending verification
-         * only for the current frontend session.
-         *
-         * This does NOT represent actual payment
-         * verification.
-         */
-
-        if (paymentState.selectedBilling) {
-            paymentState.selectedBilling.payment_status = "Pending Verification";
-        }
-
-        renderPaymentPage();
-
-        resetPaymentSubmissionFields();
-
-        showPaymentMessage(
-            "Payment information submitted for frontend preview. Verification has not been performed.",
-            "success",
-        );
-
-        setSubmittingState(false);
-    }, 800);
 }
 
 /* REAL API PAYMENT SUBMISSION */

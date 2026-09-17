@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const bcrypt = require("bcryptjs");
 const pool = require("../config/database");
+const TenantMembership = require("../models/TenantMembership");
 const upload = require("../middleware/uploadMiddleware");
 const { extractText } = require("../services/ocrService");
 const { analyzeBusinessLicense } = require("../services/ocrAnalysisService");
@@ -10,6 +10,7 @@ const authRoutes = require("../routes/authRoutes");
 const reservationRoutes = require("../routes/reservationRoutes");
 const paymentRoutes = require("../routes/paymentRoutes");
 const roomRoutes = require("../routes/roomRoutes");
+const adminOverviewRoutes = require("../routes/adminOverviewRoutes");
 
 const {
     authenticateUser,
@@ -18,6 +19,47 @@ const {
 
 const app = express();
 
+async function processResortLicenseOcr({
+	documentId,
+	filePath,
+	businessName,
+	businessRegistrationNumber
+}) {
+	try {
+		const ocrResult = await extractText(filePath);
+		const analysis = analyzeBusinessLicense({
+			text: ocrResult.text,
+			confidence: ocrResult.confidence,
+			businessName,
+			businessRegistrationNumber
+		});
+
+		await pool.execute(
+			`UPDATE documents
+			 SET ocr_status = 'completed',
+				 extracted_text = ?,
+				 extracted_data = ?
+			 WHERE id = ?`,
+			[
+				ocrResult.text || null,
+				JSON.stringify(analysis),
+				documentId
+			]
+		);
+	} catch (error) {
+		console.error("Resort license OCR failed:", error);
+
+		await pool.execute(
+			`UPDATE documents
+			 SET ocr_status = 'failed',
+				 extracted_text = NULL,
+				 extracted_data = NULL
+			 WHERE id = ?`,
+			[documentId]
+		);
+	}
+}
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,6 +67,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api", reservationRoutes);
 app.use("/api", paymentRoutes);
 app.use("/api", roomRoutes);
+app.use("/api/admin", adminOverviewRoutes);
 app.use(express.static(path.resolve(__dirname, "../../frontend")));
 app.use("/uploads", express.static(path.resolve(__dirname)));
 
@@ -43,8 +86,13 @@ app.get("/api/admin/tenants",authenticateUser,requireRole("system_admin"), async
 		const [tenants] = await pool.execute(
 			`SELECT t.id, t.tenant_code, t.resort_name, t.business_name,
 					t.business_registration_number, t.resort_type, t.location,
-					t.owner_name, t.owner_email, t.approval_status, t.tenant_status,
+					t.owner_name, t.owner_email, t.contact_number, t.approval_status, t.tenant_status,
 					t.review_notes, t.created_at,
+					(SELECT COUNT(*) FROM tenant_memberships tm WHERE tm.tenant_id = t.id) AS total_users,
+					(SELECT COUNT(*) FROM reservations r WHERE r.tenant_id = t.id
+					 AND r.reservation_status NOT IN ('cancelled', 'rejected', 'expired')) AS active_reservations,
+					(SELECT MAX(u.last_login) FROM users u JOIN tenant_memberships tm2 ON tm2.user_id = u.id
+					 WHERE tm2.tenant_id = t.id) AS last_login,
 					d.original_filename AS license_filename,
 					d.mime_type AS license_mime_type,
 					d.ocr_status AS license_ocr_status,
@@ -172,13 +220,29 @@ app.get(
 	async (request, response) => {
 		try {
 			const [accounts] = await pool.execute(
-				`SELECT u.id, u.first_name, u.last_name, u.email,
-					t.id AS tenant_id, t.resort_name, t.resort_type,
-					t.location, t.logo_path
-				 FROM users u
-				 JOIN tenants t ON t.id = u.tenant_id
-				 WHERE u.id = ? AND t.id = ?
-				 LIMIT 1`,
+				`SELECT
+					users.id,
+					users.first_name,
+					users.last_name,
+					users.email,
+					tenants.id AS tenant_id,
+					tenants.resort_name,
+					tenants.resort_type,
+					tenants.location,
+					tenants.logo_path,
+					tenant_memberships.membership_role
+				FROM users
+				INNER JOIN tenant_memberships
+					ON tenant_memberships.user_id = users.id
+				INNER JOIN tenants
+					ON tenants.id = tenant_memberships.tenant_id
+				WHERE users.id = ?
+					AND tenants.id = ?
+					AND tenant_memberships.membership_status = 'active'
+					AND tenant_memberships.membership_role IN ('owner', 'admin')
+					AND tenants.approval_status = 'approved'
+					AND tenants.tenant_status = 'active'
+				LIMIT 1`,
 				[request.user.id, request.user.tenantId]
 			);
 
@@ -200,6 +264,7 @@ app.get(
 					name: account.resort_name,
 					type: account.resort_type,
 					location: account.location,
+					membershipRole: account.membership_role,
 					hasLogo: Boolean(account.logo_path)
 				}
 			});
@@ -266,6 +331,17 @@ app.patch("/api/admin/tenants/:id/status", authenticateUser, requireRole("system
 			return response.status(404).json({ message: "Tenant application was not found." });
 		}
 
+		const membershipStatus =
+			status === "approved"
+				? "active"
+				: "suspended";
+
+		await TenantMembership.updateOwnerMembershipStatus(
+			tenantId,
+			membershipStatus,
+			connection
+		);
+
 		await connection.execute(
 			`INSERT INTO activity_logs (tenant_id, action_type, entity_type, entity_id, action_details)
 			 VALUES (?, ?, 'tenant', ?, ?)`,
@@ -295,99 +371,23 @@ app.patch("/api/admin/tenants/:id/status", authenticateUser, requireRole("system
 	}
 });
 
-app.post("/api/onboarding/resorts/:id/complete", upload.single("resortLogo"), async (request, response) => {
-	const tenantId = Number(request.params.id);
-	const {
-		password,
-		description,
-		contactNumber,
-		contactEmail,
-		resortName,
-		resortType,
-		location
-	} = request.body;
-
-	if (!Number.isInteger(tenantId) || !password || password.length < 6 ||
-		!description?.trim() || !contactNumber?.trim() || !contactEmail?.trim() ||
-		!resortName?.trim() || !resortType || !location?.trim()) {
-		return response.status(400).json({ message: "All required resort information must be completed." });
-	}
-
-	const connection = await pool.getConnection();
-
-	try {
-		await connection.beginTransaction();
-		const [tenants] = await connection.execute(
-			`SELECT owner_name, owner_email
-			 FROM tenants
-			 WHERE id = ? AND approval_status = 'approved' AND tenant_status = 'active'`,
-			[tenantId]
-		);
-
-		if (tenants.length !== 1) {
-			await connection.rollback();
-			return response.status(403).json({ message: "This resort is not approved for account setup." });
-		}
-
-		const nameParts = tenants[0].owner_name.trim().split(/\s+/).reduce(
-			(parts, part, index) => {
-				if (index === 0) parts[0] = part;
-				else parts[1] += `${parts[1] ? " " : ""}${part}`;
-				return parts;
-			},
-			["", ""]
-		);
-		const passwordHash = await bcrypt.hash(password, 12);
-		const logoPath = request.file
-			? path.relative(path.resolve(__dirname, "../.."), request.file.path)
-			: null;
-
-		const [userResult] = await connection.execute(
-			`INSERT INTO users
-				(tenant_id, first_name, last_name, email, password_hash, role, account_status, setup_status)
-			 VALUES (?, ?, ?, ?, ?, 'resort_admin', 'active', 'completed')`,
-			[tenantId, nameParts[0], nameParts[1], tenants[0].owner_email, passwordHash]
-		);
-
-		await connection.execute(
-			`UPDATE tenants
-			 SET resort_name = ?, resort_type = ?, location = ?, description = ?,
-				 contact_number = ?, contact_email = ?, logo_path = COALESCE(?, logo_path)
-			 WHERE id = ?`,
-			[resortName.trim(), resortType, location.trim(), description.trim(), contactNumber.trim(), contactEmail.trim(), logoPath, tenantId]
-		);
-
-		await connection.execute(
-			`INSERT INTO activity_logs (tenant_id, user_id, action_type, entity_type, entity_id, action_details)
-			 VALUES (?, ?, 'user_created', 'user', ?, 'Resort administrator account completed setup')`,
-			[tenantId, userResult.insertId, userResult.insertId]
-		);
-
-		await connection.commit();
-		response.status(201).json({ message: "Resort account setup completed." });
-	} catch (error) {
-		await connection.rollback();
-		console.error("Resort account setup failed:", error);
-		response.status(500).json({ message: "Unable to complete resort account setup." });
-	} finally {
-		connection.release();
-	}
-});
-
-app.post("/api/onboarding/resorts", upload.single("license"), async (request, response) => {
+app.post("/api/onboarding/resorts", authenticateUser, requireRole("client"), upload.single("license"), async (request, response) => {
 	const {
 		resortName,
 		businessName,
 		businessRegistrationNumber,
 		resortType,
-		location,
-		ownerName,
-		ownerEmail
+		location
 	} = request.body;
 
-	if (!resortName?.trim() || !businessName?.trim() ||
-		!businessRegistrationNumber?.trim() || !resortType?.trim() ||
-		!location?.trim() || !ownerName?.trim() || !ownerEmail?.trim() || !request.file) {
+	if (
+		!resortName?.trim() ||
+		!businessName?.trim() ||
+		!businessRegistrationNumber?.trim() ||
+		!resortType?.trim() ||
+		!location?.trim() ||
+		!request.file
+	) {
 		return response.status(400).json({
 			message: "Resort details and a license image are required."
 		});
@@ -397,6 +397,31 @@ app.post("/api/onboarding/resorts", upload.single("license"), async (request, re
 
 	try {
 		await connection.beginTransaction();
+
+		const [owners] = await connection.execute(
+			`SELECT first_name, last_name, email
+			FROM users
+			WHERE id = ?
+				AND account_status = 'active'
+			LIMIT 1`,
+			[request.user.id]
+		);
+
+		if (owners.length !== 1) {
+			await connection.rollback();
+
+			return response.status(403).json({
+				message: "The owner account is unavailable."
+			});
+		}
+
+		const owner = owners[0];
+
+		const ownerName = [owner.first_name, owner.last_name]
+			.filter(Boolean)
+			.join(" ");
+
+		const ownerEmail = owner.email;
 
 		const tenantCode = `TEN-${Date.now().toString().slice(-8)}`;
 		const [tenantResult] = await connection.execute(
@@ -412,51 +437,53 @@ app.post("/api/onboarding/resorts", upload.single("license"), async (request, re
 				businessRegistrationNumber.trim(),
 				resortType.trim(),
 				location.trim(),
-				ownerName.trim(),
-				ownerEmail.trim().toLowerCase()
+				ownerName,
+				ownerEmail
 			]
 		);
 
-		let ocrText = "";
-		let ocrStatus = "processing";
-		let ocrAnalysis = null;
+		await TenantMembership.createOwnerMembership(
+			request.user.id,
+			tenantResult.insertId,
+			connection
+		);
 
-		try {
-			const ocrResult = await extractText(request.file.path);
-			ocrText = ocrResult.text;
-			ocrAnalysis = analyzeBusinessLicense({
-				text: ocrResult.text,
-				confidence: ocrResult.confidence,
-				businessName: businessName.trim(),
-				businessRegistrationNumber: businessRegistrationNumber.trim()
-			});
-			ocrStatus = "completed";
-		} catch (error) {
-			ocrStatus = "failed";
-		}
+		const storedFilePath = path.relative(
+			path.resolve(__dirname, "../.."),
+			request.file.path
+		).replaceAll("\\", "/");
 
-		await connection.execute(
+		const [documentResult] = await connection.execute(
 			`INSERT INTO documents
 				(tenant_id, document_type, original_filename, file_path, mime_type,
 				 file_size, ocr_status, extracted_text, extracted_data, verification_status)
-			 VALUES (?, 'resort_license', ?, ?, ?, ?, ?, ?, ?, 'pending')`,
+			 VALUES (?, 'resort_license', ?, ?, ?, ?, 'processing', NULL, NULL, 'pending')`,
 			[
 				tenantResult.insertId,
 				request.file.originalname,
-				path.relative(path.resolve(__dirname, "../.."), request.file.path),
+				storedFilePath,
 				request.file.mimetype,
-				request.file.size,
-				ocrStatus,
-				ocrText || null,
-				ocrAnalysis ? JSON.stringify(ocrAnalysis) : null
+				request.file.size
 			]
 		);
 
 		await connection.commit();
+
 		response.status(201).json({
 			message: "Resort application submitted for review.",
 			tenantCode,
-			ocrStatus
+			ocrStatus: "processing"
+		});
+
+		setImmediate(() => {
+			processResortLicenseOcr({
+				documentId: documentResult.insertId,
+				filePath: request.file.path,
+				businessName: businessName.trim(),
+				businessRegistrationNumber: businessRegistrationNumber.trim()
+			}).catch((error) => {
+				console.error("Unable to save the OCR failure state:", error);
+			});
 		});
 	} catch (error) {
 		await connection.rollback();

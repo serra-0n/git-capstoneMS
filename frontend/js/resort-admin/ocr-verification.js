@@ -1,4 +1,4 @@
-/* RESORTHUB - OCR VERIFICATION File: ocr-verification.js FRONTEND FUNCTIONS - Document upload - File validation - Document information display - Document preview - Drag and drop - OCR verification simulation - Verification result display - Save verification record simulation - Clear verification - Remove selected document - Sidebar toggle - Logout - Lucide icon refresh NOTE: The OCR process in this file is a FRONTEND SIMULATION. When the backend/database is ready, the simulated verification function can be replaced with an API request without changing the overall HTML structure. */
+/* Resort-admin document upload interface. OCR remains unavailable until its backend endpoint is connected. */
 
 /* GLOBAL VARIABLES */
 
@@ -368,123 +368,13 @@ function resetOCRResult() {
 function verifyDocument() {
     if (!selectedFile) {
         showUploadError("Please select a document before starting verification.");
-
         return;
     }
 
-    if (verificationInProgress) {
-        return;
-    }
-
-    verificationInProgress = true;
-
-    /*
-     * Disable button while processing.
-     */
-
-    if (verifyDocumentButton) {
-        verifyDocumentButton.disabled = true;
-
-        verifyDocumentButton.innerHTML = `
-      <i data-lucide="loader-circle"></i>
-      Processing Document...
-    `;
-    }
-
-    refreshIcons();
-
-    /*
-     * Change verification status.
-     */
-
-    setVerificationStatus("processing", "Processing");
-
-    /*
-     * Hide previous result.
-     */
-
-    if (resultEmpty) {
-        resultEmpty.hidden = true;
-    }
-
-    if (extractedData) {
-        extractedData.hidden = true;
-    }
-
-    /*
-     * FRONTEND SIMULATION
-     *
-     * This delay represents OCR processing.
-     *
-     * Later this section can be replaced by:
-     *
-     * fetch("/api/ocr/verify", {
-     *   method: "POST",
-     *   body: formData
-     * })
-     */
-
-    setTimeout(function () {
-        completeVerification();
-    }, 1800);
-}
-
-/* COMPLETE VERIFICATION */
-
-function completeVerification() {
     verificationInProgress = false;
-
-    /*
-     * Sample extracted information.
-     *
-     * These are placeholder values for the frontend.
-     *
-     * Actual values should come from the OCR service
-     * and backend/database.
-     */
-
-    const extractedResult = {
-        fullName: "Juan Dela Cruz",
-
-        documentType: "Valid Identification",
-
-        documentNumber: "************",
-
-        birthDate: "—",
-
-        expirationDate: "—",
-
-        verificationStatus: "Verified",
-    };
-
-    /*
-     * Display extracted information.
-     */
-
-    displayOCRResult(extractedResult);
-
-    /*
-     * Update verification status.
-     */
-
-    setVerificationStatus("success", "Verified");
-
-    /*
-     * Re-enable verify button.
-     */
-
-    if (verifyDocumentButton) {
-        verifyDocumentButton.disabled = false;
-
-        verifyDocumentButton.innerHTML = `
-      <i data-lucide="scan-search"></i>
-      Verify Document
-    `;
-    }
-
-    refreshIcons();
+    setVerificationStatus("idle", "Not configured");
+    showUploadError("OCR verification is not connected to the server yet.");
 }
-
 /* DISPLAY OCR RESULT */
 
 function displayOCRResult(result) {

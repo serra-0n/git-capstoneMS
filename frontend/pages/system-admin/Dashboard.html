@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="../../assets/resorthub-mark.png?v=2" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>System Admin Dashboard | ResortHub</title>
 
@@ -15,7 +16,7 @@
     <body>
         <aside class="sidebar">
             <div class="sidebar-brand">
-                <img src="../../frontend/image/logo.png" alt="ResortHub Logo" />
+                <img class="system-brand-mark" src="../../assets/resorthub-mark.png?v=2" alt="ResortHub SRH logo" />
 
                 <div class="sidebar-brand-text">
                     <h2>ResortHub</h2>
@@ -76,7 +77,7 @@
             </nav>
 
             <div class="sidebar-user">
-                <img src="../../frontend/image/profile.png" alt="System Administrator" />
+                <span class="system-profile-avatar"><i data-lucide="user-round"></i></span>
 
                 <div class="sidebar-user-info">
                     <strong>System Admin</strong>
@@ -111,7 +112,7 @@
                     </button>
 
                     <div class="topbar-profile">
-                        <img src="../../frontend/image/profile.png" alt="System Administrator" />
+                        <span class="system-profile-avatar"><i data-lucide="user-round"></i></span>
 
                         <div>
                             <strong>System Admin</strong>
@@ -140,7 +141,7 @@
 
                     <div>
                         <span>Total Tenants</span>
-                        <strong id="dashboardTotalTenants">12</strong>
+                        <strong id="dashboardTotalTenants">0</strong>
                     </div>
                 </article>
 
@@ -151,7 +152,7 @@
 
                     <div>
                         <span>Total Users</span>
-                        <strong id="dashboardTotalUsers">248</strong>
+                        <strong id="dashboardTotalUsers">0</strong>
                     </div>
                 </article>
 
@@ -162,7 +163,7 @@
 
                     <div>
                         <span>Active Tenants</span>
-                        <strong id="dashboardActiveTenants">9</strong>
+                        <strong id="dashboardActiveTenants">0</strong>
                     </div>
                 </article>
 
@@ -173,7 +174,7 @@
 
                     <div>
                         <span>Pending Approvals</span>
-                        <strong id="dashboardPendingApprovals">8</strong>
+                        <strong id="dashboardPendingApprovals">0</strong>
                     </div>
                 </article>
             </section>
@@ -197,7 +198,7 @@
                         <div class="tenant-status-item">
                             <div>
                                 <span class="tenant-status-label">Active</span>
-                                <strong>9 Tenants</strong>
+                                <strong>0 Tenants</strong>
                             </div>
 
                             <span class="status-badge active">Active</span>
@@ -206,7 +207,7 @@
                         <div class="tenant-status-item">
                             <div>
                                 <span class="tenant-status-label">Suspended</span>
-                                <strong>2 Tenants</strong>
+                                <strong>0 Tenants</strong>
                             </div>
 
                             <span class="status-badge suspended">Suspended</span>
@@ -215,7 +216,7 @@
                         <div class="tenant-status-item">
                             <div>
                                 <span class="tenant-status-label">Pending</span>
-                                <strong>1 Tenant</strong>
+                                <strong>0 Tenants</strong>
                             </div>
 
                             <span class="status-badge pending">Pending</span>
@@ -241,7 +242,7 @@
 
                     <div class="approval-summary">
                         <div class="approval-number">
-                            <strong>8</strong>
+                            <strong>0</strong>
                             <span> Applications Pending Review </span>
                         </div>
 
@@ -267,55 +268,7 @@
                     </a>
                 </div>
 
-                <div class="dashboard-activity-list">
-                    <div class="dashboard-activity-item">
-                        <div class="dashboard-activity-icon login">
-                            <i data-lucide="log-in"></i>
-                        </div>
-
-                        <div class="dashboard-activity-content">
-                            <strong>Resort Admin Login</strong>
-                            <p>Blue Lagoon Resort administrator logged in.</p>
-                            <span>Today, 10:32 AM</span>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-activity-item">
-                        <div class="dashboard-activity-icon approval">
-                            <i data-lucide="check-circle"></i>
-                        </div>
-
-                        <div class="dashboard-activity-content">
-                            <strong>Resort Application Approved</strong>
-                            <p>Seaside View Resort was approved by System Admin.</p>
-                            <span>Today, 9:45 AM</span>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-activity-item">
-                        <div class="dashboard-activity-icon user">
-                            <i data-lucide="user-plus"></i>
-                        </div>
-
-                        <div class="dashboard-activity-content">
-                            <strong>New Platform User</strong>
-                            <p>A new user account was registered on the platform.</p>
-                            <span>Yesterday, 4:18 PM</span>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-activity-item">
-                        <div class="dashboard-activity-icon warning">
-                            <i data-lucide="alert-circle"></i>
-                        </div>
-
-                        <div class="dashboard-activity-content">
-                            <strong>Tenant Suspended</strong>
-                            <p>Mountain Breeze Resort account was suspended.</p>
-                            <span>Yesterday, 2:06 PM</span>
-                        </div>
-                    </div>
-                </div>
+                <div class="dashboard-activity-list"><p>No recent activity to display.</p></div>
             </section>
 
             <!-- REPORTS -->
@@ -334,7 +287,7 @@
                 </div>
 
                 <div class="dashboard-report-grid">
-                    <div class="dashboard-report-item">
+                    <div class="dashboard-report-item" data-report="tenant">
                         <div class="dashboard-report-icon tenant">
                             <i data-lucide="building-2"></i>
                         </div>
@@ -345,7 +298,7 @@
                         </div>
                     </div>
 
-                    <div class="dashboard-report-item">
+                    <div class="dashboard-report-item" data-report="user">
                         <div class="dashboard-report-icon user">
                             <i data-lucide="users"></i>
                         </div>
@@ -356,7 +309,7 @@
                         </div>
                     </div>
 
-                    <div class="dashboard-report-item">
+                    <div class="dashboard-report-item" data-report="activity">
                         <div class="dashboard-report-icon activity">
                             <i data-lucide="activity"></i>
                         </div>
@@ -367,7 +320,7 @@
                         </div>
                     </div>
 
-                    <div class="dashboard-report-item">
+                    <div class="dashboard-report-item" data-report="system">
                         <div class="dashboard-report-icon system">
                             <i data-lucide="file-bar-chart"></i>
                         </div>
@@ -387,3 +340,4 @@
         </script>
     </body>
 </html>
+

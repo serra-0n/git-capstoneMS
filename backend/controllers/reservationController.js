@@ -1,5 +1,8 @@
 const Reservation = require("../models/Reservation");
 const User = require("../models/User");
+const pool = require("../config/database");
+const path = require("path");
+const fs = require("fs");
 
 function validId(value) {
     return Number.isInteger(Number(value)) && Number(value) > 0;
@@ -116,11 +119,214 @@ async function clientProfile(request, response) {
                 id: user.id,
                 name: [user.first_name, user.last_name].filter(Boolean).join(" "),
                 email: user.email,
-                contact_number: ""
+                contact_number: user.contact_number || "",
+                role: user.role
             }
         });
     } catch (error) {
         response.status(500).json({ message: "Unable to load client information." });
+    }
+}
+
+async function updateClientProfile(request, response) {
+    const fullName = String(request.body.full_name || "").trim();
+    const contactNumber = String(request.body.contact_number || "").trim();
+    const nameParts = fullName.split(/\s+/).filter(Boolean);
+    const firstName = nameParts.shift() || "";
+    const lastName = nameParts.join(" ");
+
+    if (!firstName || !lastName || firstName.length > 80 || lastName.length > 80) {
+        return response.status(400).json({
+            message: "Enter both a first and last name, up to 80 characters each."
+        });
+    }
+
+    if (contactNumber && !/^[0-9+()\-\s]{7,30}$/.test(contactNumber)) {
+        return response.status(400).json({ message: "Enter a valid contact number." });
+    }
+
+    try {
+        const user = await User.updateClientProfile(request.user.id, {
+            firstName,
+            lastName,
+            contactNumber
+        });
+
+        return response.json({
+            message: "Profile updated successfully.",
+            client: {
+                id: user.id,
+                name: [user.first_name, user.last_name].filter(Boolean).join(" "),
+                email: user.email,
+                contact_number: user.contact_number || "",
+                role: user.role
+            }
+        });
+    } catch (error) {
+        console.error("Client profile update failed:", error);
+        return response.status(500).json({ message: "Unable to update your profile." });
+    }
+}
+
+async function clientDashboard(request, response) {
+    try {
+        const user = await User.findById(request.user.id);
+        const reservations = await Reservation.listForClient(request.user.id);
+        const activeStatuses = new Set(["pending", "awaiting_deposit", "confirmed"]);
+        const active = reservations.filter((item) => activeStatuses.has(item.reservation_status));
+        const current = active[0] || null;
+        const [[documentCount]] = await pool.execute(
+            "SELECT COUNT(*) AS total FROM documents WHERE client_id = ?",
+            [request.user.id]
+        );
+
+        return response.json({
+            dashboard: {
+                client: {
+                    id: user.id,
+                    name: [user.first_name, user.last_name].filter(Boolean).join(" ")
+                },
+                summary: {
+                    active_reservations: active.length,
+                    payment_status: current?.payment_status || "No active payment",
+                    uploaded_documents: Number(documentCount.total)
+                },
+                current_reservation: current
+            }
+        });
+    } catch (error) {
+        console.error("Client dashboard failed:", error);
+        return response.status(500).json({ message: "Unable to load dashboard information." });
+    }
+}
+
+async function listClientNotifications(request, response) {
+    try {
+        const [reservationRows] = await pool.execute(
+            `SELECT id, reservation_code, reservation_status, updated_at
+             FROM reservations WHERE client_id = ? ORDER BY updated_at DESC LIMIT 25`,
+            [request.user.id]
+        );
+        const [paymentRows] = await pool.execute(
+            `SELECT p.id, p.reservation_id, r.reservation_code,
+                    p.verification_status, p.updated_at
+             FROM payments p
+             JOIN reservations r ON r.id = p.reservation_id
+             WHERE p.client_id = ? ORDER BY p.updated_at DESC LIMIT 25`,
+            [request.user.id]
+        );
+        const [documentRows] = await pool.execute(
+            `SELECT d.id, d.reservation_id, r.reservation_code,
+                    d.verification_status, d.updated_at
+             FROM documents d
+             JOIN reservations r ON r.id = d.reservation_id
+             WHERE d.client_id = ? ORDER BY d.updated_at DESC LIMIT 25`,
+            [request.user.id]
+        );
+
+        const notifications = [
+            ...reservationRows.map((item) => ({
+                id: `reservation-${item.id}`,
+                reservation_id: item.id,
+                reservation_reference: item.reservation_code,
+                related_type: "reservation",
+                message: `Reservation status: ${item.reservation_status.replaceAll("_", " ")}.`,
+                updated_at: item.updated_at
+            })),
+            ...paymentRows.map((item) => ({
+                id: `payment-${item.id}`,
+                reservation_id: item.reservation_id,
+                reservation_reference: item.reservation_code,
+                related_type: "payment",
+                message: `Payment verification status: ${item.verification_status.replaceAll("_", " ")}.`,
+                updated_at: item.updated_at
+            })),
+            ...documentRows.map((item) => ({
+                id: `document-${item.id}`,
+                reservation_id: item.reservation_id,
+                reservation_reference: item.reservation_code,
+                related_type: "document",
+                message: `Document verification status: ${item.verification_status.replaceAll("_", " ")}.`,
+                updated_at: item.updated_at
+            }))
+        ].sort((a, b) => String(b.updated_at).localeCompare(String(a.updated_at))).slice(0, 50);
+
+        return response.json({ notifications });
+    } catch (error) {
+        console.error("Client notification list failed:", error);
+        return response.status(500).json({ message: "Unable to load notifications." });
+    }
+}
+
+async function listClientDocuments(request, response) {
+    try {
+        const [documents] = await pool.execute(
+            `SELECT d.id, d.client_id, d.reservation_id, r.reservation_code,
+                    d.document_type, d.original_filename AS file_name,
+                    d.verification_status, d.created_at
+             FROM documents d
+             JOIN reservations r ON r.id = d.reservation_id
+             WHERE d.client_id = ?
+             ORDER BY d.created_at DESC`,
+            [request.user.id]
+        );
+        return response.json({ documents });
+    } catch (error) {
+        console.error("Client document list failed:", error);
+        return response.status(500).json({ message: "Unable to load uploaded documents." });
+    }
+}
+
+async function uploadClientDocument(request, response) {
+    const reservationId = Number(request.body.reservation_id);
+    const documentType = String(request.body.document_type || "").trim();
+    const allowedTypes = new Set(["valid_id", "reservation_form", "other"]);
+
+    if (!validId(reservationId) || !allowedTypes.has(documentType) || !request.file) {
+        if (request.file?.path) {
+            fs.unlink(request.file.path, () => {});
+        }
+        return response.status(400).json({ message: "A reservation, document type, and image are required." });
+    }
+
+    try {
+        const reservation = await Reservation.findForClient(reservationId, request.user.id);
+        if (!reservation) {
+            fs.unlink(request.file.path, () => {});
+            return response.status(404).json({ message: "Reservation was not found." });
+        }
+
+        const projectRoot = path.resolve(__dirname, "../..");
+        const storedPath = path.relative(projectRoot, request.file.path).replaceAll("\\", "/");
+        const [result] = await pool.execute(
+            `INSERT INTO documents
+                (tenant_id, client_id, reservation_id, uploaded_by, document_type,
+                 original_filename, file_path, mime_type, file_size, ocr_status,
+                 verification_status)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', 'pending')`,
+            [reservation.tenant_id, request.user.id, reservation.id, request.user.id,
+             documentType, request.file.originalname, storedPath,
+             request.file.mimetype, request.file.size]
+        );
+
+        return response.status(201).json({
+            message: "Document uploaded successfully.",
+            document: {
+                id: result.insertId,
+                client_id: request.user.id,
+                reservation_id: reservation.id,
+                reservation_reference: reservation.reservation_code,
+                document_type: documentType,
+                file_name: request.file.originalname,
+                verification_status: "pending"
+            }
+        });
+    } catch (error) {
+        if (request.file?.path) {
+            fs.unlink(request.file.path, () => {});
+        }
+        console.error("Client document upload failed:", error);
+        return response.status(500).json({ message: "Unable to upload document." });
     }
 }
 
@@ -133,11 +339,14 @@ async function createReservation(request, response) {
     const guestCount = Number(request.body.guest_count || 1);
     const checkIn = String(request.body.check_in || "");
     const checkOut = String(request.body.check_out || "");
+    const paymentPlan = String(request.body.payment_plan || "half").trim().toLowerCase();
+    const allowedPaymentPlans = new Set(["full", "half", "later"]);
 
     if (!validId(tenantId) || !validId(accommodationId) || !guestName ||
         !contactNumber || !/^\S+@\S+\.\S+$/.test(guestEmail) ||
         !Number.isInteger(guestCount) || guestCount < 1 ||
-        !validDate(checkIn) || !validDate(checkOut) || checkOut <= checkIn) {
+        !validDate(checkIn) || !validDate(checkOut) || checkOut <= checkIn ||
+        !allowedPaymentPlans.has(paymentPlan)) {
         return response.status(400).json({ message: "Valid reservation information is required." });
     }
 
@@ -149,7 +358,7 @@ async function createReservation(request, response) {
     try {
         const reservation = await Reservation.create({
             clientId: request.user.id, tenantId, accommodationId, guestName,
-            contactNumber, guestEmail, guestCount, checkIn, checkOut
+            contactNumber, guestEmail, guestCount, checkIn, checkOut, paymentPlan
         });
         return response.status(201).json({
             message: "Reservation submitted for resort approval.",
@@ -157,6 +366,8 @@ async function createReservation(request, response) {
                 id: reservation.id,
                 reference: reservation.reservationCode,
                 totalAmount: reservation.totalAmount,
+                paymentPlan: reservation.paymentPlan,
+                requiredPaymentAmount: reservation.requiredPaymentAmount,
                 status: "pending"
             }
         });
@@ -230,6 +441,11 @@ module.exports = {
     listAccommodations,
     listUnavailableDates,
     clientProfile,
+    updateClientProfile,
+    clientDashboard,
+    listClientNotifications,
+    listClientDocuments,
+    uploadClientDocument,
     createReservation,
     listClientReservations,
     getClientReservation,

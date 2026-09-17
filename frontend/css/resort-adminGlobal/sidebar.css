@@ -23,9 +23,10 @@
 }
 
 .brand-mark {
-    width: 24px;
-    height: 24px;
-    color: #08a75a;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    object-fit: contain;
 }
 
 .brand strong {

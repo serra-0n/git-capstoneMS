@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="../../assets/resorthub-mark.png?v=2" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <title>Rooms & Cottages | ResortHub</title>
@@ -22,7 +23,7 @@
 
             <aside class="sidebar">
                 <a class="brand" href="Dashboard.html">
-                    <i class="brand-mark" data-lucide="building-2"></i>
+                    <img class="brand-mark" src="../../assets/resorthub-mark.png?v=2" alt="ResortHub SRH logo" />
 
                     <span>
                         <strong>ResortHub</strong>
@@ -31,10 +32,10 @@
                 </a>
 
                 <div class="resort-switcher">
-                    <span class="resort-avatar">BW</span>
+                    <span class="resort-avatar" data-context-resort-avatar>BW</span>
 
                     <span>
-                        <strong>Blue Waves Resort</strong>
+                        <strong data-context-resort-name>Blue Waves Resort</strong>
                         <small>Resort Owner</small>
                     </span>
                 </div>
@@ -121,14 +122,14 @@
                     </button>
 
                     <button class="top-select" type="button">
-                        <span class="avatar">BW</span>
-                        <span>Blue Waves Resort</span>
+                        <span class="avatar" data-context-resort-avatar>BW</span>
+                        <span data-context-resort-name>Blue Waves Resort</span>
                         <i data-lucide="chevron-down"></i>
                     </button>
 
                     <div class="profile">
                         <span>
-                            <strong>Juan Dela Cruz</strong>
+                            <strong data-context-user-name>Resort Administrator</strong>
                             <small>Resort Owner</small>
                         </span>
                     </div>
@@ -156,7 +157,7 @@
                                 Export Report
                             </button>
 
-                            <button class="btn btn-primary" type="button">
+                            <button class="btn btn-primary" id="openAddRoomModal" type="button">
                                 <i data-lucide="plus"></i>
                                 Add Room / Cottage
                             </button>
@@ -170,7 +171,7 @@
                             </div>
 
                             <span>Total Rooms / Cottages</span>
-                            <strong>60</strong>
+                            <strong>0</strong>
                             <small>Current records</small>
                         </div>
 
@@ -180,7 +181,7 @@
                             </div>
 
                             <span>Available</span>
-                            <strong>24</strong>
+                            <strong>0</strong>
                             <small>Current records</small>
                         </div>
 
@@ -190,7 +191,7 @@
                             </div>
 
                             <span>Reserved</span>
-                            <strong>12</strong>
+                            <strong>0</strong>
                             <small>Current records</small>
                         </div>
 
@@ -200,7 +201,7 @@
                             </div>
 
                             <span>Occupied</span>
-                            <strong>18</strong>
+                            <strong>0</strong>
                             <small>Current data</small>
                         </div>
 
@@ -210,7 +211,7 @@
                             </div>
 
                             <span>Maintenance</span>
-                            <strong>6</strong>
+                            <strong>0</strong>
                             <small>Current data</small>
                         </div>
                     </div>
@@ -256,123 +257,11 @@
                             </div>
 
                             <div class="rooms-grid">
-                                <!-- ROOM 1 -->
-
-                                <article class="room-card">
-                                    <div class="room-image">
-                                        <i data-lucide="bed-double"></i>
-                                    </div>
-
-                                    <div class="room-card-content">
-                                        <h3>Family Cottage 1</h3>
-
-                                        <span class="room-type"> Cottage </span>
-
-                                        <span class="status-badge available-badge">
-                                            Available
-                                        </span>
-
-                                        <button class="status-button" type="button">
-                                            Update Status
-                                        </button>
-                                    </div>
-                                </article>
-
-                                <!-- ROOM 2 -->
-
-                                <article class="room-card">
-                                    <div class="room-image"></div>
-
-                                    <div class="room-card-content">
-                                        <h3>Family Cottage 2</h3>
-
-                                        <span class="room-type"> Cottage </span>
-
-                                        <span class="status-badge reserved-badge"> Reserved </span>
-
-                                        <button class="status-button" type="button">
-                                            Update Status
-                                        </button>
-                                    </div>
-                                </article>
-
-                                <!-- ROOM 3 -->
-
-                                <article class="room-card">
-                                    <div class="room-image"></div>
-
-                                    <div class="room-card-content">
-                                        <h3>Deluxe Room 101</h3>
-
-                                        <span class="room-type"> Room </span>
-
-                                        <span class="status-badge occupied-badge"> Occupied </span>
-
-                                        <button class="status-button" type="button">
-                                            Update Status
-                                        </button>
-                                    </div>
-                                </article>
-
-                                <!-- ROOM 4 -->
-
-                                <article class="room-card">
-                                    <div class="room-image"></div>
-
-                                    <div class="room-card-content">
-                                        <h3>Deluxe Room 102</h3>
-
-                                        <span class="room-type"> Room </span>
-
-                                        <span class="status-badge maintenance-badge">
-                                            Maintenance
-                                        </span>
-
-                                        <button class="status-button" type="button">
-                                            Update Status
-                                        </button>
-                                    </div>
-                                </article>
-
-                                <!-- ROOM 5 -->
-
-                                <article class="room-card">
-                                    <div class="room-image"></div>
-
-                                    <div class="room-card-content">
-                                        <h3>Beachfront Villa 1</h3>
-
-                                        <span class="room-type"> Cottage </span>
-
-                                        <span class="status-badge available-badge">
-                                            Available
-                                        </span>
-
-                                        <button class="status-button" type="button">
-                                            Update Status
-                                        </button>
-                                    </div>
-                                </article>
-
-                                <!-- ROOM 6 -->
-
-                                <article class="room-card">
-                                    <div class="room-image"></div>
-
-                                    <div class="room-card-content">
-                                        <h3>Standard Cottage 1</h3>
-
-                                        <span class="room-type"> Cottage </span>
-
-                                        <span class="status-badge occupied-badge"> Occupied </span>
-
-                                        <button class="status-button" type="button">
-                                            Update Status
-                                        </button>
-                                    </div>
-                                </article>
+                                <div class="rooms-empty">
+                                    <i data-lucide="loader-circle"></i>
+                                    <h3>Loading accommodations...</h3>
+                                </div>
                             </div>
-
                             <!-- QUICK ACTIONS -->
 
                             <div class="quick-actions">
@@ -398,7 +287,7 @@
                             </div>
                         </section>
 
-                        <!-- OCCUPANCY SUMMARY OPTION A: SAMPLE DATA -->
+                        <!-- OCCUPANCY SUMMARY -->
 
                         <aside class="room-summary">
                             <section class="summary-card">
@@ -407,7 +296,7 @@
                                 <div class="occupancy-chart">
                                     <div class="donut">
                                         <div class="donut-center">
-                                            <strong>60</strong>
+                                            <strong>0</strong>
                                             <span>Total</span>
                                         </div>
                                     </div>
@@ -420,7 +309,7 @@
                                             Available
                                         </span>
 
-                                        <strong>24 (40%)</strong>
+                                        <strong>0 (0%)</strong>
                                     </div>
 
                                     <div>
@@ -429,7 +318,7 @@
                                             Reserved
                                         </span>
 
-                                        <strong>12 (20%)</strong>
+                                        <strong>0 (0%)</strong>
                                     </div>
 
                                     <div>
@@ -438,7 +327,7 @@
                                             Occupied
                                         </span>
 
-                                        <strong>18 (30%)</strong>
+                                        <strong>0 (0%)</strong>
                                     </div>
 
                                     <div>
@@ -447,7 +336,7 @@
                                             Maintenance
                                         </span>
 
-                                        <strong>6 (10%)</strong>
+                                        <strong>0 (0%)</strong>
                                     </div>
                                 </div>
                             </section>
@@ -496,12 +385,149 @@
                         </aside>
                     </div>
                 </section>
+
+                <div class="room-modal" id="addRoomModal" hidden>
+                    <button
+                        class="room-modal-backdrop"
+                        id="closeAddRoomBackdrop"
+                        type="button"
+                        aria-label="Close add accommodation dialog"
+                    ></button>
+
+                    <section
+                        class="room-modal-dialog"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="addRoomModalTitle"
+                    >
+                        <div class="room-modal-header">
+                            <div>
+                                <h2 id="addRoomModalTitle">Add Room / Cottage</h2>
+                                <p id="roomModalDescription">Create an accommodation clients can reserve.</p>
+                            </div>
+
+                            <button
+                                class="room-modal-close"
+                                id="closeAddRoomModal"
+                                type="button"
+                                aria-label="Close add accommodation dialog"
+                            >
+                                <i data-lucide="x"></i>
+                            </button>
+                        </div>
+
+                        <form id="addRoomForm" class="room-form" enctype="multipart/form-data">
+                            <div class="room-form-field room-form-wide">
+                                <label for="roomName">Name</label>
+                                <input
+                                    id="roomName"
+                                    name="name"
+                                    type="text"
+                                    maxlength="150"
+                                    placeholder="Example: Deluxe Room 101"
+                                    required
+                                />
+                            </div>
+
+                            <div class="room-form-field">
+                                <label for="roomType">Type</label>
+                                <select id="roomType" name="accommodation_type" required>
+                                    <option value="room">Room</option>
+                                    <option value="cottage">Cottage</option>
+                                    <option value="villa">Villa</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="room-form-field">
+                                <label for="roomCapacity">Guest capacity</label>
+                                <input
+                                    id="roomCapacity"
+                                    name="capacity"
+                                    type="number"
+                                    min="1"
+                                    step="1"
+                                    value="2"
+                                    required
+                                />
+                            </div>
+
+                            <div class="room-form-field">
+                                <label for="roomStatus">Listing status</label>
+                                <select id="roomStatus" name="availability_status" required>
+                                    <option value="available">Available</option>
+                                    <option value="maintenance">Maintenance</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+
+                            <div class="room-form-field room-form-wide">
+                                <label for="roomRate">Nightly rate</label>
+                                <input
+                                    id="roomRate"
+                                    name="nightly_rate"
+                                    type="number"
+                                    min="0.01"
+                                    step="0.01"
+                                    placeholder="2500.00"
+                                    required
+                                />
+                            </div>
+
+                            <div class="room-form-field room-form-wide">
+                                <label for="roomDescription">Description</label>
+                                <textarea id="roomDescription" name="description" rows="3" maxlength="2000" placeholder="Describe the room, view, sleeping setup, and what makes it special."></textarea>
+                            </div>
+
+                            <div class="room-form-field room-form-wide">
+                                <label for="roomImage">Room or cottage picture</label>
+                                <input id="roomImage" name="image" type="file" accept="image/jpeg,image/png,image/webp" />
+                                <small class="room-field-help">JPG, PNG, or WEBP up to 5 MB. Leave empty while editing to keep the current picture.</small>
+                                <div class="room-image-preview" id="roomImagePreview" hidden>
+                                    <img id="roomImagePreviewElement" alt="Selected accommodation preview" />
+                                </div>
+                            </div>
+
+                            <fieldset class="room-form-field room-form-wide amenities-fieldset">
+                                <legend>Amenities and benefits</legend>
+                                <div class="amenities-picker">
+                                    <label><input type="checkbox" name="amenity" value="Air conditioning" />Air conditioning</label>
+                                    <label><input type="checkbox" name="amenity" value="Wi-Fi" />Wi-Fi</label>
+                                    <label><input type="checkbox" name="amenity" value="Private bathroom" />Private bathroom</label>
+                                    <label><input type="checkbox" name="amenity" value="Television" />Television</label>
+                                    <label><input type="checkbox" name="amenity" value="Kitchen" />Kitchen</label>
+                                    <label><input type="checkbox" name="amenity" value="Refrigerator" />Refrigerator</label>
+                                    <label><input type="checkbox" name="amenity" value="Pool access" />Pool access</label>
+                                    <label><input type="checkbox" name="amenity" value="Breakfast included" />Breakfast included</label>
+                                    <label><input type="checkbox" name="amenity" value="Free parking" />Free parking</label>
+                                    <label><input type="checkbox" name="amenity" value="Pet friendly" />Pet friendly</label>
+                                </div>
+                                <label class="additional-amenities" for="roomAdditionalAmenities">Other amenities</label>
+                                <input id="roomAdditionalAmenities" type="text" placeholder="Separate additional amenities with commas" maxlength="500" />
+                            </fieldset>
+
+                            <p class="room-form-message" id="roomFormMessage" hidden></p>
+
+                            <div class="room-form-actions room-form-wide">
+                                <button class="btn btn-secondary" id="cancelAddRoom" type="button">
+                                    Cancel
+                                </button>
+
+                                <button class="btn btn-primary" id="saveRoomButton" type="submit">
+                                    <i data-lucide="plus"></i>
+                                    Add Accommodation
+                                </button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
             </main>
         </div>
 
         <script>
             lucide.createIcons();
         </script>
+        <script src="../../js/resort-admin/context.js"></script>
         <script src="../../js/resort-admin/Rooms.js"></script>
     </body>
 </html>
