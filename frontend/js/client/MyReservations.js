@@ -11,7 +11,10 @@ if (!accessToken) {
     window.location.href = "../auth/login.html";
 }
 
-document.addEventListener("DOMContentLoaded", loadReservations);
+document.addEventListener("DOMContentLoaded", function () {
+    initializeIcons();
+    loadReservations();
+});
 
 async function loadReservations() {
     try {
@@ -60,9 +63,7 @@ function renderReservations(reservations) {
     reservationList.hidden = false;
     reservationEmptyState.hidden = true;
 
-    if (typeof lucide !== "undefined") {
-        lucide.createIcons();
-    }
+    initializeIcons();
 }
 
 function createReservationCard(reservation) {
@@ -212,4 +213,13 @@ function escapeHtml(value) {
     const element = document.createElement("div");
     element.textContent = String(value ?? "");
     return element.innerHTML;
+}
+
+function initializeIcons() {
+    if (
+        typeof window.lucide !== "undefined" &&
+        typeof window.lucide.createIcons === "function"
+    ) {
+        window.lucide.createIcons();
+    }
 }

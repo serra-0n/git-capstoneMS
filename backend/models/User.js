@@ -1,7 +1,7 @@
 const pool =  require ("../config/database");
 
-async function findByEmail(email) {
-    const [users] = await pool.execute(
+async function findByEmail(email, executor = pool) {
+    const [users] = await executor.execute(
         `SELECT
             id,
             tenant_id,
@@ -31,13 +31,16 @@ async function updateLastLogin(userId) {
     );
 }
 
-async function createClient({
-    firstName,
-    lastName,
-    email,
-    passwordHash
-}) {
-    const [result] = await pool.execute(
+async function createClient(
+    {
+        firstName,
+        lastName,
+        email,
+        passwordHash
+    },
+    executor = pool
+) {
+    const [result] = await executor.execute(
         `INSERT INTO users
             (
                 tenant_id,

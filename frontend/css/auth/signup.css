@@ -53,7 +53,13 @@ body {
     margin-top: 2px;
 }
 .auth-brand-mark { width: 42px; height: 42px; object-fit: contain; flex: none; }
-.auth-card-brand { width: 160px; height: 110px; display: block; margin: 0 auto 16px; object-fit: contain; }
+.auth-card-brand {
+    width: 132px;
+    height: 88px;
+    display: block;
+    margin: 0 auto 12px;
+    object-fit: contain;
+}
 
 .logo-dots span {
     width: 4px;
@@ -159,40 +165,40 @@ body {
     flex: 1;
     display: flex;
     justify-content: center;
-    padding: 48px 20px 55px;
+    align-items: flex-start;
+    padding: 36px 20px 48px;
 }
 
 .auth-card {
     width: 100%;
     max-width: 450px;
-    padding: 32px 34px 28px;
+    padding: 28px 34px 24px;
     background: #ffffff;
     border: 1px solid #e5e7eb;
     border-radius: 14px;
     box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
 }
 
-.auth-header {
-    margin-bottom: 24px;
+.auth-card-header {
+    margin-bottom: 18px;
     text-align: center;
 }
 
 .auth-card-header h1 {
-    margin: 0 0 8px;
+    margin: 0 0 6px;
     color: #111827;
-    font-size: 23px;
+    font-size: 24px;
     font-weight: 700;
-    line-height: 1.3;
+    line-height: 1.25;
     letter-spacing: -0.4px;
 }
 
 .auth-card-header p {
     max-width: 350px;
-    height: 44px;
     margin: 0 auto;
     color: #64748b;
-    font-size: 12px;
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.55;
 }
 
 .social-login {
@@ -201,7 +207,7 @@ body {
 
 .social-button {
     width: 100%;
-    height: 50px;
+    height: 46px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -211,7 +217,7 @@ body {
     border-radius: 8px;
     background: #ffffff;
     color: #374151;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     white-space: nowrap;
     cursor: pointer;
@@ -248,6 +254,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    margin: 12px 0 16px;
 }
 
 .auth-divider span {
@@ -267,6 +274,30 @@ body {
     width: 100%;
 }
 
+#emailStep,
+#otpStep,
+#accountStep {
+    width: 100%;
+}
+
+#otpStep > p {
+    margin: 0 0 16px;
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+#verificationEmail {
+    color: #111827;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+#resendOtpButton {
+    height: 44px;
+    margin-top: 10px;
+}
+
 .form-row {
     width: 100%;
     display: grid;
@@ -276,14 +307,14 @@ body {
 
 .form-group {
     width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     color: #374151;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
 }
 
@@ -291,7 +322,7 @@ body {
 .form-group input[type="email"],
 .form-group input[type="password"] {
     width: 100%;
-    height: 42px;
+    height: 46px;
     display: block;
     padding: 0 12px;
     border: 1px solid #d1d5db;
@@ -299,7 +330,7 @@ body {
     outline: none;
     background: #ffffff;
     color: #111827;
-    font-size: 13px;
+    font-size: 14px;
     transition:
         border-color 0.2s ease,
         box-shadow 0.2s ease;
@@ -361,13 +392,13 @@ body {
     display: block;
     margin-top: 5px;
     color: #94a3b8;
-    font-size: 10px;
+    font-size: 11px;
     line-height: 1.4;
 }
 
 .terms-checkbox {
     width: 100%;
-    margin: 0 0 18px;
+    margin: 2px 0 16px;
 }
 
 .terms-checkbox label {
@@ -403,7 +434,7 @@ body {
 
 .continue-button {
     width: 100%;
-    height: 44px;
+    height: 46px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -412,7 +443,7 @@ body {
     border-radius: 8px;
     background: #2563eb;
     color: #ffffff;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     transition:
@@ -438,14 +469,36 @@ body {
     box-shadow: none;
 }
 
+#signupStatus {
+    margin: 14px 0 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+#signupStatus:empty {
+    display: none;
+}
+
+#signupStatus[data-state="success"] {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+#signupStatus[data-state="error"] {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
 .signup-prompt {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
-    margin-top: 20px;
+    margin-top: 18px;
     color: #64748b;
-    font-size: 13.5px;
+    font-size: 13px;
 }
 
 .signup-prompt a {
@@ -459,7 +512,7 @@ body {
 }
 
 .terms-text {
-    margin: 18px 0 0;
+    margin: 14px 0 0;
     color: #94a3b8;
     font-size: 11px;
     line-height: 1.5;
@@ -507,7 +560,7 @@ body {
 .footer-column a {
     width: fit-content;
     color: #64748b;
-    font-size: 15;
+    font-size: 13px;
     text-decoration: none;
     transition: color 0.2s ease;
 }
@@ -551,7 +604,7 @@ body {
     .header-button {
         min-height: 34px;
         padding: 0 12px;
-        font-size: 10px;
+        font-size: 12px;
     }
 
     .header-menu {
@@ -573,7 +626,7 @@ body {
     }
 
     .auth-card-header p {
-        font-size: 11px;
+        font-size: 13px;
     }
 
     .form-row {
@@ -605,10 +658,10 @@ body {
     }
 
     .social-button {
-        font-size: 11px;
+        font-size: 13px;
     }
 
     .terms-checkbox span {
-        font-size: 9px;
+        font-size: 11px;
     }
 }

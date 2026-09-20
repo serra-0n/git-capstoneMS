@@ -275,6 +275,115 @@ app.get(
 	}
 );
 
+app.get("/api/resort-admin/payment-settings",
+	authenticateUser,
+	requireRole("resort_admin"),
+	async function (request, response) {
+		try {
+			const [tenants] = await pool.execute(
+				`SELECT gcash_account_name, gcash_number, gcash_qr_path
+				FROM tenants
+				WHERE id = ?
+				LIMIT 1`,
+				[request.user.tenantId],
+			);
+
+			if (tenants.length !== 1) {
+				return response.status(404).json({
+					message: "Resort account was not found.",
+				});
+			}
+
+			return response.json({paymentSettings: tenants[0],});
+		} catch (error) {
+			console.error("Gcash settings retrieval failed:", error);
+			return response.status(500).json({
+				message: "Unable to load Gcash settings."
+			});
+		}
+	},
+);
+
+app.patch("/api/resort-admin/payment-settings",
+	authenticateUser,
+	requireRole("resort_admin"),
+	upload.single("gcash_qr"),
+	async function (request, response) {
+		const accountName = String(request.body.gcash_account_name || "",).trim();
+
+		const gcashNumber = String(request.body.gcash_number || "",)
+			.replaceAll(" ", "")
+			.replaceAll("-", "")
+			.trim();
+
+		if (!accountName) {
+			return response.status(400).json({
+				message: "The Gcash account name is required.",
+			});
+		}
+
+		if (!/^09\d{9}$/.test(gcashNumber)) {
+			return response.status(400).json({
+				message: "Enter a valid 11-digit Gcash number.",
+			});
+		}
+
+		try {
+			const [tenants] = await pool.execute(
+				`SELECT gcash_qr_path
+				FROM tenants
+				WHERE id = ?
+				LIMIT 1`,
+				[request.user.tenantId],
+			);
+
+			if (tenants.length !== 1) {
+				return response.status(404).json({
+					message: "Resort account was not found.",
+				});
+			}
+
+			const gcashQrPath = request.file
+				? `uploads/files/${request.file.filename}`
+				: tenants[0].gcash_qr_path;
+
+			if (!gcashQrPath) {
+				return response.status(400).json({
+					message: "Upload your Gcash QR image.",
+				});
+			}
+
+			await pool.execute(
+				`UPDATE tenants
+				SET gcash_account_name = ?,
+					gcash_number = ?,
+					gcash_qr_path = ?
+				WHERE id = ?`,
+				[
+					accountName,
+					gcashNumber,
+					gcashQrPath,
+					request.user.tenantId
+				],
+			);
+
+			return response.json({
+				message: "Gcash payment settings saved successfully.",
+				paymentSettings: {
+					gcash_account_name: accountName,
+					gcash_number: gcashNumber,
+					gcash_qr_path: gcashQrPath,
+				},
+			});
+		} catch (error) {
+			console.error("Gcash settings update failed.", error);
+			return response.status(500).json({
+				message: "Unable to save Gcash settings."
+			})
+		}
+	}
+)
+
 app.get(
 	"/api/resort-admin/logo",
 	authenticateUser,

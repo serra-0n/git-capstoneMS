@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
 function initializeSettings() {
     initializeResortSettings();
 
+    initializeGcashSettings();
+
     initializeAccountSettings();
 
     initializePasswordSettings();
@@ -79,6 +81,148 @@ function saveResortInformation() {
     });
 
     showSaveMessage("Resort information saved successfully.");
+}
+
+/*Gcash payment settings*/
+
+function initializeGcashSettings() {
+    const form = document.getElementById("gcashSettingsForm");
+    const qrInput = document.getElementById("gcashQr");
+
+    if (!form || !qrInput) {
+        return;
+    }
+
+    loadGcashSettings();
+
+    qrInput.addEventListener("change", function () {
+        previewGcashQr(qrInput.files[0]);
+    });
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        saveGcashSettings(form);
+    });
+}
+
+async function loadGcashSettings() {
+    const accessToken = sessionStorage.getItem("resorthub_access_token");
+
+    if (!accessToken) {
+        window.location.href = "../auth/login.html";
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            "/api/resort-admin/payment-settings",
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            },
+        );
+
+        const result = await response.json()
+
+        if (!response.ok) {
+            throw new Error(result.message || "Unable to load GCash settings",);
+        }
+
+        const settings = result.paymentSettings || {};
+
+        document.getElementById("gcashAccountName").value = settings.gcash_account_name || "";
+        document.getElementById("gcashNumber").value = settings.gcash_number || "";
+        showSavedGcashQr(settings.gcash_qr_path);
+    } catch (error) {
+        console.error("Gcash settings loading failed:", error);
+        showSaveMessage(error.message);
+    }
+}
+
+async function saveGcashSettings(form) {
+    const accessToken = sessionStorage.getItem("resorthub_access_token",);
+
+    const saveButton = document.getElementById("saveGcashButton");
+    const gcashNumber = document
+        .getElementById("gcashNumber")
+        .value.replaceAll(" ", "")
+        .replaceAll("-", "");
+
+    if (!/^09\d{9}$/.test(gcashNumber)) {
+        showSaveMessage("Enter a valid 11-digit Gcash number.");
+        return;
+    }
+
+    const formData = new FormData(form);
+
+    formData.set("gcash_number", gcashNumber);
+
+    saveButton.disabled = true;
+    saveButton.textContent = "Saving...";
+
+    try {
+        const response = await fetch(
+            "/api/resort-admin/payment-settings",
+            {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: formData,
+            },
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                result.message || "Unable to save GCash settings.",
+            );
+        }
+
+        showSavedGcashQr(result.paymentSettings.gcash_qr_path,);
+
+        document.getElementById("gcashQr").value = "";
+        showSaveMessage(result.message);
+    } catch (error) {
+        console.error("Gcash settings saving failed:", error);
+        showSaveMessage(error.message);
+    } finally {
+        saveButton.disabled = false;
+        saveButton.innerHTML = `
+            <i data-lucide="save"></i>
+            Save GCash Settings`;
+            refreshIcons();
+    }
+}
+
+function previewGcashQr(file) {
+    if (!file) {
+        return;
+    }
+
+    const preview = document.getElementById("gcashQrPreview");
+
+    preview.src = URL.createObjectURL(file);
+    preview.hidden = false;
+}
+
+function showSavedGcashQr(qrPath) {
+    const preview = document.getElementById("gcashQrPreview");
+
+    if(!qrPath) {
+        preview.removeAttribute("src");
+        preview.hidden = true;
+        return;
+    }
+
+    const normalizedPath = String(qrPath)
+        .replaceAll("\\", "/")
+        .replace(/^\/+/, "");
+
+    preview.src = `/${normalizedPath}`;
+    preview.hidden = false;
 }
 
 /* ACCOUNT SETTINGS */

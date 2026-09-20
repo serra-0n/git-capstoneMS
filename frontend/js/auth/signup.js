@@ -1,59 +1,83 @@
 document.addEventListener("DOMContentLoaded", function () {
     const signupForm = document.getElementById("signupForm");
-    const password = document.getElementById("password");
-    const confirmPassword = document.getElementById("confirmPassword");
-    const passwordToggle = document.getElementById("passwordToggle");
-    const confirmPasswordToggle = document.getElementById("confirmPasswordToggle");
-    const passwordIcon = document.getElementById("passwordIcon");
-    const confirmPasswordIcon = document.getElementById("confirmPasswordIcon");
-    const agreeTerms = document.getElementById("agreeTerms");
+
+    const emailStep = document.getElementById("emailStep");
+    const otpStep = document.getElementById("otpStep");
+    const accountStep = document.getElementById("accountStep");
+
+    const email = document.getElementById("email");
+    const otp = document.getElementById("otp");
+    const verificationEmail = document.getElementById("verificationEmail");
 
     const firstName = document.getElementById("firstName");
     const lastName = document.getElementById("lastName");
-    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+
+    const agreeTerms = document.getElementById("agreeTerms");
+    const signupStatus = document.getElementById("signupStatus");
+
+    const sendOtpButton = document.getElementById("sendOtpButton");
+    const verifyOtpButton = document.getElementById("verifyOtpButton");
+
+    const resendOtpButton = document.getElementById("resendOtpButton");
     const createAccountButton = document.getElementById("createAccountButton");
+    const passwordToggle = document.getElementById("passwordToggle");
+    const confirmPasswordToggle = document.getElementById("confirmPasswordToggle");
+
+    const passwordIcon = document.getElementById("passwordIcon");
+    const confirmPasswordIcon = document.getElementById("confirmPasswordIcon");
+
+    let challengeToken = "";
+    let resendTimer;
+
+    function showStep(step) {
+        emailStep.hidden = step !== "email";
+        otpStep.hidden = step !== "otp";
+        accountStep.hidden = step !== "account";
+    }
+
+    function showStatus(message, state = "") {
+        signupStatus.textContent = message;
+        signupStatus.dataset.state = state;
+    }
 
     function togglePassword(input, icon, button) {
         if (!input || !icon || !button) {
             return;
         }
 
-        if (input.type === "password") {
-            input.type = "text";
+        const passwordIsHidden = input.type === "password";
 
-            button.setAttribute("aria-label", "Hide password");
-            icon.setAttribute("data-lucide", "eye-off");
-        } else {
-            input.type = "password";
+        input.type = passwordIsHidden
+            ? "text"
+            : "password";
 
-            button.setAttribute("aria-label", "Show password");
-            icon.setAttribute("data-lucide", "eye");
-        }
+        button.setAttribute(
+            "aria-label",
+            passwordIsHidden
+                ? "Hide password"
+                : "Show password"
+        );
+
+        icon.setAttribute(
+            "data-lucide",
+            passwordIsHidden
+                ? "eye-off"
+                : "eye"
+        );
 
         if (typeof lucide !== "undefined") {
             lucide.createIcons();
         }
     }
 
-    if (passwordToggle) {
-        passwordToggle.addEventListener("click", function () {
-            togglePassword(password, passwordIcon, passwordToggle);
-        });
-    }
-
-    if (confirmPasswordToggle) {
-        confirmPasswordToggle.addEventListener("click", function () {
-            togglePassword(confirmPassword, confirmPasswordIcon, confirmPasswordToggle);
-        });
-    }
-
     function validatePassword() {
-        if (!password) {
-            return false;
-        }
-
         if (password.value.length < 6) {
-            password.setCustomValidity("Password must at least 6 characters.");
+            password.setCustomValidity(
+                "Password must be at least 6 characters."
+            );
+
             return false;
         }
 
@@ -62,17 +86,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function validateConfirmPassword() {
-        if (!password || !confirmPassword) {
-            return false;
-        }
-
         if (confirmPassword.value === "") {
-            confirmPassword.setCustomValidity("Please confirm your password.");
+            confirmPassword.setCustomValidity(
+                "Please confirm your password."
+            );
+
             return false;
         }
 
         if (password.value !== confirmPassword.value) {
-            confirmPassword.setCustomValidity("Password do not match.");
+            confirmPassword.setCustomValidity(
+                "Passwords do not match."
+            );
+
             return false;
         }
 
@@ -80,98 +106,311 @@ document.addEventListener("DOMContentLoaded", function () {
         return true;
     }
 
-    if (password) {
-        password.addEventListener("input", function () {
-            validatePassword();
+    async function readResponse(response) {
+        const result = await response.json();
 
-            if (confirmPassword && confirmPassword.value !== "") {
-                validateConfirmPassword();
-            }
-        });
+        if (!response.ok) {
+            const error = new Error(
+                result.message || "The request failed."
+            );
+
+            error.code = result.code;
+            error.retryAfterSeconds = Number(
+                response.headers.get("Retry-After") || 0
+            );
+
+            throw error;
+        }
+
+        return result;
     }
 
-    if (confirmPassword) {
-        confirmPassword.addEventListener("input", function () {
-            validateConfirmPassword();
-        });
+    async function requestSignupOtp() {
+        const response = await fetch(
+            "/api/auth/signup/request-otp",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email.value.trim().toLowerCase()
+                })
+            }
+        );
+
+        return readResponse(response);
     }
 
-    if (signupForm) {
-        signupForm.addEventListener("submit", async function (event) {
-            event.preventDefault();
+    function startResendCountdown(seconds) {
+        clearInterval(resendTimer);
 
-            const passwordValid = validatePassword();
-            const confirmPasswordValid = validateConfirmPassword();
+        let remainingSeconds = Math.max(
+            Number(seconds) || 60,
+            1
+        );
 
-            if (agreeTerms && !agreeTerms.checked) {
-                agreeTerms.setCustomValidity(
-                    "You must agree to the Terms of Use and Privacy Policy",
-                );
-            } else if (agreeTerms) {
-                agreeTerms.setCustomValidity("");
-            }
+        resendOtpButton.disabled = true;
 
-            if (!signupForm.checkValidity()) {
-                signupForm.reportValidity();
+        function updateButton() {
+            resendOtpButton.textContent =
+                `Resend code in ${remainingSeconds}s`;
+        }
+
+        updateButton();
+
+        resendTimer = setInterval(function () {
+            remainingSeconds -= 1;
+
+            if (remainingSeconds <= 0) {
+                clearInterval(resendTimer);
+                resendOtpButton.disabled = false;
+                resendOtpButton.textContent = "Resend code";
                 return;
             }
 
-            if (!passwordValid || !confirmPasswordValid) {
+            updateButton();
+        }, 1000);
+    }
+
+    sendOtpButton.addEventListener("click", async function () {
+        if (!email.checkValidity()) {
+            email.reportValidity();
+            return;
+        }
+
+        sendOtpButton.disabled = true;
+        sendOtpButton.textContent = "Sending code...";
+        showStatus("");
+
+        try {
+            const result = await requestSignupOtp();
+
+            challengeToken = result.challengeToken;
+            verificationEmail.textContent =
+                email.value.trim().toLowerCase();
+
+            email.readOnly = true;
+            showStep("otp");
+            showStatus(result.message, "success");
+            startResendCountdown(60);
+            otp.focus();
+        } catch (error) {
+            showStatus(error.message, "error");
+
+            if (error.retryAfterSeconds > 0) {
+                startResendCountdown(
+                    error.retryAfterSeconds
+                );
+            }
+        } finally {
+            sendOtpButton.disabled = false;
+            sendOtpButton.textContent =
+                "Send verification code";
+        }
+    });
+
+    resendOtpButton.addEventListener(
+        "click",
+        async function () {
+            resendOtpButton.disabled = true;
+            resendOtpButton.textContent = "Sending...";
+            showStatus("");
+
+            try {
+                const result = await requestSignupOtp();
+
+                challengeToken = result.challengeToken;
+                otp.value = "";
+
+                showStatus(result.message, "success");
+                startResendCountdown(60);
+                otp.focus();
+            } catch (error) {
+                showStatus(error.message, "error");
+
+                if (error.retryAfterSeconds > 0) {
+                    startResendCountdown(
+                        error.retryAfterSeconds
+                    );
+                } else {
+                    resendOtpButton.disabled = false;
+                    resendOtpButton.textContent =
+                        "Resend code";
+                }
+            }
+        }
+    );
+
+    verifyOtpButton.addEventListener(
+        "click",
+        async function () {
+            const enteredOtp = otp.value.trim();
+
+            if (!/^\d{6}$/.test(enteredOtp)) {
+                otp.setCustomValidity(
+                    "Enter the six-digit verification code."
+                );
+
+                otp.reportValidity();
+                return;
+            }
+
+            otp.setCustomValidity("");
+            verifyOtpButton.disabled = true;
+            verifyOtpButton.textContent = "Verifying...";
+            showStatus("");
+
+            try {
+                const response = await fetch(
+                    "/api/auth/signup/verify-otp",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            challengeToken,
+                            otp: enteredOtp
+                        })
+                    }
+                );
+
+                const result = await readResponse(response);
+
+                challengeToken = result.challengeToken;
+                showStep("account");
+                showStatus(result.message, "success");
+                firstName.focus();
+            } catch (error) {
+                showStatus(error.message, "error");
+                verifyOtpButton.disabled = false;
+                verifyOtpButton.textContent = "Verify email";
+            }
+        }
+    );
+
+    passwordToggle.addEventListener("click", function () {
+        togglePassword(
+            password,
+            passwordIcon,
+            passwordToggle
+        );
+    });
+
+    confirmPasswordToggle.addEventListener(
+        "click",
+        function () {
+            togglePassword(
+                confirmPassword,
+                confirmPasswordIcon,
+                confirmPasswordToggle
+            );
+        }
+    );
+
+    password.addEventListener("input", function () {
+        validatePassword();
+
+        if (confirmPassword.value !== "") {
+            validateConfirmPassword();
+        }
+    });
+
+    confirmPassword.addEventListener(
+        "input",
+        validateConfirmPassword
+    );
+
+    agreeTerms.addEventListener("change", function () {
+        agreeTerms.setCustomValidity(
+            agreeTerms.checked
+                ? ""
+                : "You must agree to the Terms of Use and Privacy Policy."
+        );
+    });
+
+    signupForm.addEventListener(
+        "submit",
+        async function (event) {
+            event.preventDefault();
+
+            const passwordIsValid = validatePassword();
+            const confirmationIsValid =
+                validateConfirmPassword();
+
+            if (!agreeTerms.checked) {
+                agreeTerms.setCustomValidity(
+                    "You must agree to the Terms of Use and Privacy Policy."
+                );
+            }
+
+            if (
+                !signupForm.checkValidity() ||
+                !passwordIsValid ||
+                !confirmationIsValid
+            ) {
                 signupForm.reportValidity();
                 return;
             }
 
             createAccountButton.disabled = true;
-            createAccountButton.textContent = "Creating account...";
+            createAccountButton.textContent =
+                "Creating account...";
+
+            showStatus("");
 
             try {
-                const response = await fetch("/api/auth/signup", {
-                    method: "POST",
-                    headers: {
-                        "content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        firstName: firstName.value.trim(),
-                        lastName: lastName.value.trim(),
-                        email: email.value.trim().toLowerCase(),
-                        password: password.value,
-                    }),
-                });
+                const response = await fetch(
+                    "/api/auth/signup",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            challengeToken,
+                            firstName: firstName.value.trim(),
+                            lastName: lastName.value.trim(),
+                            password: password.value
+                        })
+                    }
+                );
 
-                const result = await response.json();
+                const result = await readResponse(response);
 
-                if (!response.ok) {
-                    throw new Error(result.message || "Signup failed.");
-                }
+                showStatus(result.message, "success");
 
-                alert(result.message);
                 window.location.href = "login.html";
             } catch (error) {
-                alert(error.message);
+                showStatus(error.message, "error");
+
+                if (
+                    error.code === "OTP_EXPIRED" ||
+                    error.code === "EMAIL_NOT_VERIFIED"
+                ) {
+                    challengeToken = "";
+                    email.readOnly = false;
+                    otp.value = "";
+                    showStep("email");
+                }
 
                 createAccountButton.disabled = false;
-                createAccountButton.textContent = "Create account";
+                createAccountButton.textContent =
+                    "Create account";
             }
-        });
-    }
+        }
+    );
 
-    if (agreeTerms) {
-        agreeTerms.addEventListener("change", function () {
-            if (agreeTerms.checked) {
-                agreeTerms.setCustomValidity("");
-            } else {
-                agreeTerms.setCustomValidity(
-                    "You must agree to the Terms of Use and Privacy Policy.",
-                );
-            }
-        });
-    }
-
-    const googleButton = document.querySelector(".google-button");
+    const googleButton = document.querySelector(
+        ".google-button"
+    );
 
     if (googleButton) {
         googleButton.addEventListener("click", function () {
             alert("Google sign up will be connected later.");
         });
     }
+
+    showStep("email");
 });

@@ -1,34 +1,253 @@
 const loginForm = document.getElementById("loginForm");
+
+const credentialsStep = document.getElementById(
+    "credentialsStep"
+);
+
+const loginOtpStep = document.getElementById(
+    "loginOtpStep"
+);
+
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
-const passwordToggle = document.getElementById("passwordToggle");
-const continueButton = document.getElementById("continueButton");
+const loginOtpInput = document.getElementById("loginOtp");
+
+const passwordToggle = document.getElementById(
+    "passwordToggle"
+);
+
+const passwordIcon = document.getElementById(
+    "passwordIcon"
+);
+
+const continueButton = document.getElementById(
+    "continueButton"
+);
+
+const verifyLoginOtpButton = document.getElementById(
+    "verifyLoginOtpButton"
+);
+
+const resendLoginOtpButton = document.getElementById(
+    "resendLoginOtpButton"
+);
+
+const changeLoginAccountButton = document.getElementById(
+    "changeLoginAccountButton"
+);
+
+const loginVerificationEmail = document.getElementById(
+    "loginVerificationEmail"
+);
+
+const loginStatus = document.getElementById("loginStatus");
 const rememberMe = document.getElementById("rememberMe");
-const forgotPassword = document.querySelector(".forgot-password");
-const passwordIcon = document.getElementById("passwordIcon");
 
-if (passwordToggle && passwordInput && passwordIcon) {
-    passwordToggle.addEventListener("click", function () {
-        const isPassword = passwordInput.type === "password";
+const forgotPassword = document.querySelector(
+    ".forgot-password"
+);
 
-        if (isPassword) {
-            passwordInput.type = "text";
-            passwordToggle.setAttribute("aria-label", "Hide password");
-            passwordIcon.setAttribute("data-lucide", "eye-off");
-        } else {
-            passwordInput.type = "password";
-            passwordToggle.setAttribute("aria-label", "Show password");
-            passwordIcon.setAttribute("data-lucide", "eye");
-        }
+let loginChallengeToken = "";
+let loginResendTimer;
+let loginOtpMethod = "password";
+let googleCredential = "";
 
-        if (typeof lucide !== "undefined") {
-            lucide.createIcons();
-        }
-    });
+function showLoginStatus(message, state = "") {
+    loginStatus.textContent = message;
+    loginStatus.dataset.state = state;
 }
 
-if (rememberMe && emailInput) {
-    const savedEmail = localStorage.getItem("resorthub_remember_email");
+function showLoginStep(step) {
+    const credentialsAreActive = step === "credentials";
+    const otpIsActive = step === "otp";
+
+    credentialsStep.hidden = !credentialsAreActive;
+    loginOtpStep.hidden = !otpIsActive;
+
+    emailInput.disabled = !credentialsAreActive;
+    passwordInput.disabled = !credentialsAreActive;
+    rememberMe.disabled = !credentialsAreActive;
+    loginOtpInput.disabled = !otpIsActive;
+}
+
+function togglePassword() {
+    const passwordIsHidden =
+        passwordInput.type === "password";
+
+    passwordInput.type = passwordIsHidden
+        ? "text"
+        : "password";
+
+    passwordToggle.setAttribute(
+        "aria-label",
+        passwordIsHidden
+            ? "Hide password"
+            : "Show password"
+    );
+
+    passwordIcon.setAttribute(
+        "data-lucide",
+        passwordIsHidden
+            ? "eye-off"
+            : "eye"
+    );
+
+    if (typeof lucide !== "undefined") {
+        lucide.createIcons();
+    }
+}
+
+async function readLoginResponse(response) {
+    const result = await response.json();
+
+    if (!response.ok) {
+        const error = new Error(
+            result.message || "The request failed."
+        );
+
+        error.code = result.code;
+        error.retryAfterSeconds = Number(
+            response.headers.get("Retry-After") || 0
+        );
+
+        throw error;
+    }
+
+    return result;
+}
+
+async function requestLoginOtp() {
+    const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            email: emailInput.value.trim().toLowerCase(),
+            password: passwordInput.value
+        })
+    });
+
+    const result = await readLoginResponse(response);
+
+    if (
+        !result.requiresOtp ||
+        !result.challengeToken
+    ) {
+        throw new Error(
+            "The server returned an invalid login response."
+        );
+    }
+
+    return result;
+}
+
+async function requestGoogleLoginOtp() {
+    if (!googleCredential) {
+        throw new Error(
+            "Google sign-in has expired. Please choose your Google account again."
+        );
+    }
+
+    const response = await fetch("/api/auth/google", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            credential: googleCredential
+        })
+    });
+
+    const result = await readLoginResponse(response);
+
+    if (
+        !result.requiresOtp ||
+        !result.challengeToken
+    ) {
+        throw new Error(
+            "The server returned an invalid Google sign-in response."
+        );
+    }
+
+    return result;
+}
+
+function requestActiveLoginOtp() {
+    return loginOtpMethod === "google"
+        ? requestGoogleLoginOtp()
+        : requestLoginOtp();
+}
+
+function startLoginResendCountdown(seconds) {
+    clearInterval(loginResendTimer);
+
+    let remainingSeconds = Math.max(
+        Number(seconds) || 60,
+        1
+    );
+
+    resendLoginOtpButton.disabled = true;
+
+    function updateButton() {
+        resendLoginOtpButton.textContent =
+            `Resend code in ${remainingSeconds}s`;
+    }
+
+    updateButton();
+
+    loginResendTimer = setInterval(function () {
+        remainingSeconds -= 1;
+
+        if (remainingSeconds <= 0) {
+            clearInterval(loginResendTimer);
+            resendLoginOtpButton.disabled = false;
+            resendLoginOtpButton.textContent =
+                "Resend code";
+            return;
+        }
+
+        updateButton();
+    }, 1000);
+}
+
+function completeLogin(result) {
+    const destinations = {
+        system_admin: "../system-admin/Dashboard.html",
+        resort_admin: "../resort-admin/Dashboard.html",
+        client: "../client/Dashboard.html"
+    };
+
+    const destination = destinations[result.user?.role];
+
+    if (
+        typeof result.token !== "string" ||
+        !destination
+    ) {
+        throw new Error(
+            "The server returned an invalid login response."
+        );
+    }
+
+    sessionStorage.setItem(
+        "resorthub_access_token",
+        result.token
+    );
+
+    window.location.href = destination;
+}
+
+if (passwordToggle) {
+    passwordToggle.addEventListener(
+        "click",
+        togglePassword
+    );
+}
+
+if (rememberMe) {
+    const savedEmail = localStorage.getItem(
+        "resorthub_remember_email"
+    );
 
     if (savedEmail) {
         emailInput.value = savedEmail;
@@ -36,118 +255,228 @@ if (rememberMe && emailInput) {
     }
 }
 
-if (loginForm) {
-    loginForm.addEventListener("submit", async function (event) {
+loginForm.addEventListener(
+    "submit",
+    async function (event) {
         event.preventDefault();
+
+        if (!loginOtpStep.hidden) {
+            verifyLoginOtpButton.click();
+            return;
+        }
 
         const email = emailInput.value.trim();
         const password = passwordInput.value;
 
-        if (email === "") {
-            alert("Please enter your email.");
+        if (!email || !emailInput.checkValidity()) {
+            emailInput.reportValidity();
             emailInput.focus();
             return;
         }
 
-        if (!emailInput.checkValidity()) {
-            alert("Please enter a valid email address.");
-            emailInput.focus();
-            return;
-        }
+        if (!password) {
+            passwordInput.setCustomValidity(
+                "Please enter your password."
+            );
 
-        if (password === "") {
-            alert("Please enter your password.");
+            passwordInput.reportValidity();
             passwordInput.focus();
             return;
         }
 
-        if (password.length < 6) {
-            alert("Password must be at least 6 characters");
-            passwordInput.focus();
-            return;
-        }
+        passwordInput.setCustomValidity("");
 
-        if (rememberMe && rememberMe.checked) {
-            localStorage.setItem("resorthub_remember_email", email);
+        if (rememberMe.checked) {
+            localStorage.setItem(
+                "resorthub_remember_email",
+                email
+            );
         } else {
-            localStorage.removeItem("resorthub_remember_email");
+            localStorage.removeItem(
+                "resorthub_remember_email"
+            );
         }
 
         continueButton.disabled = true;
-        continueButton.textContent = "Signing in...";
+        continueButton.textContent = "Sending code...";
+        showLoginStatus("");
 
         try {
-            const response = await fetch("/api/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email,
-                    password,
-                }),
-            });
+            loginOtpMethod = "password";
+            googleCredential = "";
 
-            const result = await response.json();
+            const result = await requestLoginOtp();
 
-            if (!response.ok) {
-                throw new Error(result.message || "Login failed.");
-            }
+            loginChallengeToken = result.challengeToken;
+            loginVerificationEmail.textContent =
+                email.toLowerCase();
 
-            sessionStorage.setItem("resorthub_access_token", result.token);
-
-            switch (result.user.role) {
-                case "system_admin":
-                    window.location.href = "../system-admin/Dashboard.html";
-                    break;
-
-                case "resort_admin":
-                    window.location.href = "../resort-admin/Dashboard.html";
-                    break;
-
-                case "client":
-                    window.location.href = "../client/Dashboard.html";
-                    break;
-
-                default:
-                    throw new Error("The account role is invalid.");
-            }
+            showLoginStep("otp");
+            showLoginStatus(result.message, "success");
+            startLoginResendCountdown(60);
+            loginOtpInput.focus();
         } catch (error) {
-            alert(error.message);
+            showLoginStatus(error.message, "error");
+        } finally {
             continueButton.disabled = false;
-            continueButton.textContent = "Continue";
+            continueButton.textContent = "Sign in";
         }
-    });
-}
+    }
+);
+
+loginOtpInput.addEventListener("input", function () {
+    loginOtpInput.value = loginOtpInput.value
+        .replace(/\D/g, "")
+        .slice(0, 6);
+
+    loginOtpInput.setCustomValidity("");
+});
+
+verifyLoginOtpButton.addEventListener(
+    "click",
+    async function () {
+        const enteredOtp = loginOtpInput.value.trim();
+
+        if (!/^\d{6}$/.test(enteredOtp)) {
+            loginOtpInput.setCustomValidity(
+                "Enter the six-digit verification code."
+            );
+
+            loginOtpInput.reportValidity();
+            return;
+        }
+
+        loginOtpInput.setCustomValidity("");
+        verifyLoginOtpButton.disabled = true;
+        verifyLoginOtpButton.textContent =
+            "Verifying...";
+        showLoginStatus("");
+
+        try {
+            const verificationEndpoint =
+                loginOtpMethod === "google"
+                    ? "/api/auth/google/verify-otp"
+                    : "/api/auth/login/verify-otp";
+
+            const response = await fetch(
+                verificationEndpoint,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        challengeToken:
+                            loginChallengeToken,
+                        otp: enteredOtp
+                    })
+                }
+            );
+
+            const result = await readLoginResponse(
+                response
+            );
+
+            showLoginStatus(
+                result.message,
+                "success"
+            );
+
+            completeLogin(result);
+        } catch (error) {
+            showLoginStatus(error.message, "error");
+            verifyLoginOtpButton.disabled = false;
+            verifyLoginOtpButton.textContent =
+                "Verify and sign in";
+        }
+    }
+);
+
+resendLoginOtpButton.addEventListener(
+    "click",
+    async function () {
+        resendLoginOtpButton.disabled = true;
+        resendLoginOtpButton.textContent =
+            "Sending...";
+        showLoginStatus("");
+
+        try {
+            const result = await requestActiveLoginOtp();
+
+            loginChallengeToken = result.challengeToken;
+            loginOtpInput.value = "";
+
+            showLoginStatus(result.message, "success");
+            startLoginResendCountdown(60);
+            loginOtpInput.focus();
+        } catch (error) {
+            showLoginStatus(error.message, "error");
+
+            if (error.retryAfterSeconds > 0) {
+                startLoginResendCountdown(
+                    error.retryAfterSeconds
+                );
+            } else {
+                resendLoginOtpButton.disabled = false;
+                resendLoginOtpButton.textContent =
+                    "Resend code";
+            }
+        }
+    }
+);
+
+changeLoginAccountButton.addEventListener(
+    "click",
+    function () {
+        clearInterval(loginResendTimer);
+
+        loginChallengeToken = "";
+        loginOtpMethod = "password";
+        googleCredential = "";
+        loginOtpInput.value = "";
+        passwordInput.value = "";
+
+        resendLoginOtpButton.disabled = false;
+        resendLoginOtpButton.textContent =
+            "Resend code";
+
+        showLoginStatus("");
+        showLoginStep("credentials");
+        emailInput.focus();
+    }
+);
 
 if (forgotPassword) {
-    forgotPassword.addEventListener("click", function (event) {
-        event.preventDefault();
-        const email = emailInput.value.trim();
+    forgotPassword.addEventListener(
+        "click",
+        function (event) {
+            event.preventDefault();
 
-        if (email === "") {
-            alert("Please enter your email first.");
-            emailInput.focus();
-            return;
+            if (
+                !emailInput.value.trim() ||
+                !emailInput.checkValidity()
+            ) {
+                emailInput.reportValidity();
+                emailInput.focus();
+                return;
+            }
+
+            alert(
+                "Password reset will be connected later."
+            );
         }
-
-        if (!emailInput.checkValidity()) {
-            alert("Please enter a valid email address.");
-            emailInput.focus();
-            return;
-        }
-
-        alert("Password reset will be connected to the backend later.");
-    });
+    );
 }
 
-if (emailInput) {
-    emailInput.addEventListener("input", function () {
-        if (rememberMe && rememberMe.checked === false) {
-            localStorage.removeItem("resorthub_remember_email");
-        }
-    });
-}
+emailInput.addEventListener("input", function () {
+    if (!rememberMe.checked) {
+        localStorage.removeItem(
+            "resorthub_remember_email"
+        );
+    }
+});
+
+showLoginStep("credentials");
 
 let googleSignInPending = false;
 
@@ -187,39 +516,23 @@ async function handleGoogleSignIn(googleResponse) {
     }
 
     googleSignInPending = true;
-    status.textContent = "Signing in with Google...";
+    status.textContent = "Sending verification code...";
 
     try {
-        const response = await fetch("/api/auth/google", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                credential: googleResponse.credential
-            })
-        });
+        loginOtpMethod = "google";
+        googleCredential = googleResponse.credential;
 
-        const result = await response.json();
+        const result = await requestGoogleLoginOtp();
 
-        if (!response.ok) {
-            throw new Error(result.message || "Google sign-in failed.")
-        }
+        loginChallengeToken = result.challengeToken;
+        loginVerificationEmail.textContent = result.email;
+        loginOtpInput.value = "";
 
-        const destinations = {
-            client: "../client/Dashboard.html",
-            resort_admin: "../resort-admin/Dashboard.html",
-            system_admin: "../system-admin/Dashboard.html"
-        };
-
-        const destination = destinations[result.user?.role];
-
-        if (!destination || typeof result.token !== "string") {
-            throw new Error("The server returned an invalid login response.");
-        }
-
-        sessionStorage.setItem("resorthub_access_token", result.token);
-        window.location.href = destination;
+        status.textContent = "";
+        showLoginStep("otp");
+        showLoginStatus(result.message, "success");
+        startLoginResendCountdown(60);
+        loginOtpInput.focus();
     } catch (error) {
         status.textContent = error.message || "Unable to sign in.";
     } finally {

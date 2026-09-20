@@ -423,6 +423,77 @@
                         </div>
                     </section>
 
+                    <!-- GCASH PAYMENT SETTINGS -->
+                     <section class="settings-card">
+                        <div class="settings-card-header">
+                            <div class="settings-heading-icon">
+                                <i data-lucide="wallet-cards"></i>
+                            </div>
+
+                            <div>
+                                <h2>Gcash Payment Settings</h2>
+                                <p>
+                                    Configure the Gcash account clients will use for reservation payments.
+                                </p>
+                            </div>
+                        </div>
+
+                        <form id="gcashSettingsForm">
+                            <div class="settings-form">
+                                <div class="form-group">
+                                    <label for="gcashAccountName">Gcash Account Name</label>
+
+                                    <input
+                                        type="text"
+                                        id="gcashAccountName"
+                                        name="gcash_account_name"
+                                        placeholder="Enter the registered account name"
+                                        required/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="gcashNumber">Gcash Number</label>
+
+                                    <input
+                                        type="tel"
+                                        id="gcashNumber"
+                                        name="gcash_number"
+                                        placeholder="09xxxxxxxxx"
+                                        inputmode="numeric"
+                                        maxlength="11"
+                                        required/>
+                                </div>
+
+                                <div class="form-group full-width">
+                                    <label for="gcashQr">Gcash QR Image</label>
+
+                                    <div class="gcash-upload-area">
+                                        <input
+                                            type="file"
+                                            id="gcashQr"
+                                            name="gcash_qr"
+                                            accept="image/png,image/jpeg,image/webp"/>
+
+                                        <p>Accepted formats: JPG, PNG, and WEBP. Maximum size: 5 MB.</p>
+
+                                        <img
+                                            id="gcashQrPreview"
+                                            class="gcash-qr-preview"
+                                            alt="GCash QR preview"
+                                            hidden/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="settings-card-footer">
+                            <button type="submit" class="btn-primary" id="saveGcashButton">
+                                <i data-lucide="save"></i>
+                                Save GCash Settings
+                            </button>
+                        </div>
+                        </form>
+                     </section>
+
                     <!-- SYSTEM PREFERENCES -->
 
                     <section class="settings-card">
@@ -498,6 +569,7 @@
 
         <!-- PAGE JAVASCRIPT -->
 
+        <script src="../../js/resort-admin/context.js"></script>
         <script src="../../js/resort-admin/settings.js"></script>
 
         <!-- LUCIDE INITIALIZATION -->

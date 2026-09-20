@@ -49,59 +49,130 @@
                 </div>
 
                 <form class="login-form" id="loginForm">
-                    <div class="form-group">
-                        <label for="email">Email</label>
+                    <section id="credentialsStep">
+                        <div class="form-group">
+                            <label for="email">Email</label>
 
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="login@email.com"
-                            autocomplete="email"
-                            required
-                        />
-                    </div>
-
-                    <div class="form-group">
-                        <div class="password-label-row">
-                            <label for="password">Password</label>
-                            <a href="#" class="forgot-password">Forgot password?</a>
-                        </div>
-
-                        <div class="password-input-wrapper">
                             <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Enter your password"
-                                autocomplete="current-password"
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="login@email.com"
+                                autocomplete="email"
                                 required
                             />
-
-                            <button
-                                type="button"
-                                class="password-toggle"
-                                id="passwordToggle"
-                                aria-label="Show password"
-                            >
-                                <i data-lucide="eye" id="passwordIcon"></i>
-                            </button>
                         </div>
-                    </div>
 
-                    <div class="remember-row">
-                        <label class="remember-label">
-                            <input type="checkbox" id="rememberMe" name="rememberMe" />
+                        <div class="form-group">
+                            <div class="password-label-row">
+                                <label for="password">Password</label>
 
-                            <span>Remember me</span>
-                        </label>
-                    </div>
+                                <a href="#" class="forgot-password">
+                                    Forgot password?
+                                </a>
+                            </div>
 
-                    <button type="submit" class="continue-button" id="continueButton">
-                        Sign in
-                    </button>
+                            <div class="password-input-wrapper">
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Enter your password"
+                                    autocomplete="current-password"
+                                    required
+                                />
+
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    id="passwordToggle"
+                                    aria-label="Show password"
+                                >
+                                    <i
+                                        data-lucide="eye"
+                                        id="passwordIcon"
+                                    ></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="remember-row">
+                            <label class="remember-label">
+                                <input
+                                    type="checkbox"
+                                    id="rememberMe"
+                                    name="rememberMe"
+                                />
+
+                                <span>Remember me</span>
+                            </label>
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="continue-button"
+                            id="continueButton"
+                        >
+                            Sign in
+                        </button>
+                    </section>
+
+                    <section id="loginOtpStep" hidden>
+                        <p class="otp-instruction">
+                            Enter the six-digit verification code sent to
+                            <strong id="loginVerificationEmail"></strong>.
+                        </p>
+
+                        <div class="form-group">
+                            <label for="loginOtp">
+                                Verification code
+                            </label>
+
+                            <input
+                                type="text"
+                                id="loginOtp"
+                                name="loginOtp"
+                                placeholder="000000"
+                                inputmode="numeric"
+                                autocomplete="one-time-code"
+                                pattern="[0-9]{6}"
+                                maxlength="6"
+                                required
+                            />
+                        </div>
+
+                        <button
+                            type="button"
+                            class="continue-button"
+                            id="verifyLoginOtpButton"
+                        >
+                            Verify and sign in
+                        </button>
+
+                        <button
+                            type="button"
+                            class="social-button"
+                            id="resendLoginOtpButton"
+                        >
+                            Resend code
+                        </button>
+
+                        <button
+                            type="button"
+                            class="change-account-button"
+                            id="changeLoginAccountButton"
+                        >
+                            Use a different account
+                        </button>
+                    </section>
+
+                    <p
+                        id="loginStatus"
+                        role="status"
+                        aria-live="polite"
+                    ></p>
                 </form>
-
+                
                 <div class="signup-prompt">
                     <span>Don't have an account?</span>
                     <a href="signup.html">Create account</a>
