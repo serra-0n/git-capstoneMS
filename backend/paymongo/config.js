@@ -14,7 +14,7 @@ function required(name) {
     return value;
 }
 
-const mode = required("PAYMONGO_MODE");0
+const mode = required("PAYMONGO_MODE");
 
 if (!["test", "live"].includes(mode)) {
     throw new Error(`PAYMONGO_MODE must be either "test" or "live"`);
@@ -27,9 +27,9 @@ if (!secretKey.startsWith(`sk_${mode}_`)) {
 
 }
 
-const accountlabel = required("PAYMONGO_ACCOUNT_LABEL");
+const accountLabel = required("PAYMONGO_ACCOUNT_LABEL");
 
-if (!/^[A-Za-z0-9_-]{1,100}$/.test(accountlabel)) {
+if (!/^[A-Za-z0-9_-]{1,100}$/.test(accountLabel)) {
     throw new Error("PAYMONGO_ACCOUNT_LABEL must contain only letters, numbers, underscores, or hyphens.");
 }
 
@@ -62,7 +62,7 @@ module.exports = Object.freeze({
     live: mode === "live",
     secretKey,
     webhookSecret: required("PAYMONGO_WEBHOOK_SECRET"),
-    accountlabel,
+    accountLabel,
     tenantIds,
     appBaseUrl: baseUrl.origin
 });

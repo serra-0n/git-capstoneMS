@@ -29,6 +29,14 @@ const paymentState = {
     submitting: false,
 };
 
+const gcashState = {
+    ready: false,
+    enabled: false,
+    active: null,
+    pollVersion: 0,
+
+};
+
 /* DOM ELEMENTS */
 
 /* Shared layout */
@@ -128,6 +136,10 @@ const currentPaymentStatus = document.getElementById("currentPaymentStatus");
 document.addEventListener("DOMContentLoaded", initializePaymentsPage);
 
 async function initializePaymentsPage() {
+    if (!accessToken){
+        return;
+    }
+
     initializeIcons();
     initializeSidebar();
     initializeProfileButton();
@@ -135,7 +147,39 @@ async function initializePaymentsPage() {
     initializePaymentOptions();
     initializeFileInput();
 
+    if (paymentForm && paymentFormMessage){
+        paymentForm.insertAdjacentElement(
+            "beforebegin",
+            paymentFormMessage
+        );
+    }
+
     await loadPaymentDataFromDatabase();
+
+    if (!paymentState.selectedBilling){
+        return;
+    }
+
+    try {
+        await loadGcashOverview();
+
+        const parameters = new URLSearchParams(window.location.search);
+
+        const attemptId =
+            gcashState.active?.id ||
+            parameters.get("attempt");
+
+        if (attemptId){
+            void monitorGcashAttempt(attemptId);
+        }
+    }catch(error)   {
+        showPaymentMessage(
+            `${error.message} refresh the page before making a payment.`,
+            "error"
+        );
+    }
+
+    updatePaymentFormState(paymentState.selectedBilling);
 }
 
 async function loadPaymentDataFromDatabase() {
@@ -545,39 +589,36 @@ function handlePayLater() {
 }
 
 function renderGcashPaymentDetails() {
-    if (!gcashPaymentDetails) {
-        return;
-    }
-
     const gcashSelected = paymentMethod?.value === "gcash";
-    gcashPaymentDetails.hidden = !gcashSelected;
 
-    if (!gcashSelected) {
-        return;
+    if (gcashPaymentDetails) {
+        gcashPaymentDetails.hidden = !gcashSelected;
     }
 
-    const billing = paymentState.selectedBilling;
-    const accountName = billing?.gcash_account_name || "";
-    const number = billing?.gcash_number || "";
-    const qrPath = billing?.gcash_qr_path || "";
-    const configured = Boolean(accountName && number);
+    for (const field of [transactionReference, proofOfPayment]){
+        if (!field){
+            continue;
+        }
 
-    setText(gcashAccountName, accountName);
-    setText(gcashNumber, number);
+        const group = field.closest(".form_group");
 
-    if (gcashUnavailableMessage) {
-        gcashUnavailableMessage.hidden = configured;
-    }
-
-    if (gcashQrContainer && gcashQrImage) {
-        gcashQrContainer.hidden = !qrPath;
-
-        if (qrPath) {
-            gcashQrImage.src = `/${qrPath.replaceAll("\\", "/")}`;
-        } else {
-            gcashQrImage.removeAttribute("src");
+        if (group){
+            group.hidden = gcashSelected;
         }
     }
+
+    const notice = paymentForm?.querySelector(
+        ".payment-verification-notice p"
+    );
+
+    if (notice) {
+        notice.textContent = gcashSelected
+        ? "Your payment will be verified automatically. Returning from checkout does not by itself confirm payment."
+        : "Submitted payment information and proof of payment will be reviewed by authorized resort personnel."
+    }
+
+    updatePaymentFormState(paymentState.selectedBilling);
+
 }
 /*PAYMENT FORM*/
 
@@ -620,10 +661,11 @@ async function handlePaymentSubmission(event) {
 
     clearPaymentMessage();
 
-    const billing = paymentState.selectedBilling;
-
-    if (!billing) {
-        showPaymentMessage("Billing information is unavailable.", "error");
+    if (!paymentState.selectedBilling){
+        showPaymentMessage(
+            "Billing information is unavailable.",
+            "error"
+        );
         return;
     }
 
@@ -633,27 +675,41 @@ async function handlePaymentSubmission(event) {
         showPaymentMessage(validationMessage, "error");
         return;
     }
+    if (paymentMethod.value === "gcash") {
+        await startGcashCheckout();
+        return;
+    }
 
-    const formData = createPaymentFormData();
-
-    await submitPaymentToApi(formData);
+    await submitPaymentToApi(createPaymentFormData());
 }
 /*VALIDATION*/
 
 function validatePaymentForm() {
-    if (!paymentMethod || !paymentMethod.value) {
+    if (!gcashState.ready) {
+        return "Payment information is unavailable. Refresh the page first.";
+    }
+
+    if (!paymentMethod?.value){
         return "Please select a payment method.";
     }
 
-    if (
-        paymentMethod.value === "gcash" &&
-        (!paymentState.selectedBilling?.gcash_account_name ||
-            !paymentState.selectedBilling?.gcash_number)
-    ) {
-        return "The resort has not configured its GCash payment information.";
+    if (gcashState.active){
+        if (paymentMethod.value !== "gcash"){
+            return "An online payment is already in progress.";
+        }
+        if (gcashState.active.status !== "pending"){
+            return "Your existing payment is still being checked";
+        }
     }
 
-    if (!transactionReference || !transactionReference.value.trim()) {
+    if (paymentMethod.value === "gcash"){
+        if(!gcashState.enabled) {
+            return "Online Gcash payments are unavailable for this resort.";
+        }
+
+        return "";
+    }
+    if (!transactionReference?.value.trim()) {
         return "Please enter the transaction reference number.";
     }
 
@@ -690,6 +746,8 @@ function createPaymentFormData() {
 async function submitPaymentToApi(formData) {
     setSubmittingState(true);
 
+    let submitted = false;
+
     try {
         const response = await fetch(API_ENDPOINTS.submitPayment, {
             method: "POST",
@@ -700,62 +758,36 @@ async function submitPaymentToApi(formData) {
             body: formData,
         });
 
-        /*
-         * Do NOT manually set Content-Type when using
-         * FormData. The browser creates the multipart
-         * boundary automatically.
-         */
+        const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-            let message = "Unable to submit payment information.";
-
-            try {
-                const errorData = await response.json();
-
-                if (errorData?.message) {
-                    message = errorData.message;
-                }
-            } catch (error) {
-                /*
-                 * Keep default error message when
-                 * response is not JSON.
-                 */
-            }
-
-            throw new Error(message);
+            throw new Error(
+                data.message || "Unable to submit payment information."
+            );
         }
-
-        const data = await response.json();
-
-        /*
-         * Backend-returned payment/billing record becomes
-         * the source of truth.
-         */
-
-        const updatedBilling = normalizeBilling(data?.billing || data?.payment || data);
-
-        if (updatedBilling) {
-            paymentState.selectedBilling = {
-                ...paymentState.selectedBilling,
-
-                ...updatedBilling,
-            };
-        } else if (data?.payment_status) {
-            paymentState.selectedBilling.payment_status = data.payment_status;
-        }
-
-        renderPaymentPage();
+        submitted = true;
 
         resetPaymentSubmissionFields();
 
-        showPaymentMessage(
-            data?.message || "Payment information submitted successfully.",
-            "success",
-        );
-    } catch (error) {
-        console.error("Payment submission error:", error);
+        await refreshCurrentPayment();
 
-        showPaymentMessage(error.message || "Unable to submit payment information.", "error");
+        renderGcashPaymentDetails();
+
+        showPaymentMessage(
+            data.message || "Payment submitted for manual verification.",
+            "success"
+        );
+    }catch (error) {
+        if (submitted) {
+            gcashState.ready = false;
+        }
+
+        showPaymentMessage(
+            submitted
+                ? "Payment was submitted, but the update information could not be loaded. Refresh the page before submitting again."
+                : error.message,
+            "error"
+        );
     } finally {
         setSubmittingState(false);
     }
@@ -785,31 +817,63 @@ function resetPaymentSubmissionFields() {
 
 function updatePaymentFormState(billing) {
     const paymentStatus = String(billing?.payment_status || "")
-        .trim()
         .toLowerCase();
 
     const reservationStatus = String(billing?.reservation_status || "")
-        .trim()
         .toLowerCase();
 
     const deadline = billing?.deposit_due_at ? new Date(billing.deposit_due_at) : null;
 
-    const validDeadline = deadline && !Number.isNaN(deadline.getTime());
-
-    const expired = !validDeadline || deadline.getTime() <= Date.now();
-
-    const awaitingDeposit = reservationStatus === "awaiting_deposit";
-
-    const confirmedReservation = reservationStatus === "confirmed";
+    const deadlineOpen = deadline && Number.isFinite(deadline.getTime()) &&
+        deadline.getTime() > Date.now();
 
     const remainingBalance = Math.max(
         Number(billing?.total_amount || 0) - Number(billing?.amount_paid || 0),
         0,
     );
 
-    const paymentSubmitted = ["pending", "pending verification"].includes(paymentStatus);
 
     const fullyPaid = ["paid", "verified"].includes(paymentStatus);
+
+    const initialAllowed =
+        reservationStatus === "awaiting_deposit" &&
+        paymentStatus === "unpaid" &&
+        deadlineOpen;
+
+    const balanceAllowed =
+        reservationStatus === "confirmed" &&
+        paymentStatus === "partially_paid" &&
+        remainingBalance > 0;
+
+    const active = gcashState.active;
+
+    if(active && paymentMethod) {
+        paymentMethod.value = "gcash"
+    }
+
+    const gcashSelected = paymentMethod?.value === "gcash";
+
+    const resumeAllowed =
+        active?.status ==="pending" &&
+        ((
+            reservationStatus === "awaiting_deposit" &&
+            deadlineOpen
+        )||
+        reservationStatus === "confirmed"
+    );
+
+    const allowed =
+        Boolean(billing) &&
+        gcashState.ready &&
+        !fullyPaid &&
+        (
+            active
+                ? resumeAllowed
+                :initialAllowed || balanceAllowed
+        ) &&
+        (!gcashSelected || gcashState.enabled);
+
+    const enabled = allowed && !paymentState.submitting;
 
     if (paymentForm) {
         paymentForm.hidden = fullyPaid;
@@ -819,39 +883,57 @@ function updatePaymentFormState(billing) {
         paymentCompleteMessage.hidden = !fullyPaid;
     }
 
-    setText(paymentSubmissionTitle, fullyPaid ? "Payment Complete" : "Payment Submission");
+    setText(
+        paymentSubmissionTitle,
+        fullyPaid ? "payment complete" : "Reservation Payment"
+    );
 
     setText(
         paymentSubmissionDescription,
         fullyPaid
-            ? "Your reservation has been fully paid."
-            : "Submit payment information for manual verification.",
+        ? "Your reservation has been fully paid"
+        :gcashSelected
+        ? "Continue to checkout to pay with Gcash."
+        : "submit your payment details for manual verification"
     );
 
-    const initialPaymentAllowed = awaitingDeposit && !expired && paymentStatus === "unpaid";
+    paymentOptionInputs.forEach((input) => {
+        input.disabled = !enabled || Boolean(active);
 
-    const balancePaymentAllowed =
-        confirmedReservation && paymentStatus === "partially_paid" && remainingBalance > 0;
-
-    const paymentAllowed = initialPaymentAllowed || balancePaymentAllowed;
-
-    const controls = [...paymentOptionInputs, paymentMethod, transactionReference, proofOfPayment];
-
-    controls.forEach((control) => {
-        if (control) {
-            control.disabled = !paymentAllowed;
-        }
     });
 
-    if (payLaterButton) {
-        payLaterButton.disabled = !initialPaymentAllowed;
+    if (paymentMethod) {
+        paymentMethod.disabled = !enabled || Boolean(active);
     }
 
-    if (!submitPaymentButton) {
+    for (const field of [transactionReference, proofOfPayment]) {
+        if (!field){
+            continue;
+        }
+
+        field.required = !gcashSelected;
+        field.disabled = !enabled || gcashSelected;
+
+        const group = field.closest(".form-group");
+
+        if (group){
+            group.hidden = gcashSelected;
+        }
+    }
+
+    if (gcashPaymentDetails) {
+        gcashPaymentDetails.hidden = !gcashSelected;
+    }
+
+    if (payLaterButton) {
+        payLaterButton.hidden = true;
+    }
+
+    if (!submitPaymentButton){
         return;
     }
 
-    submitPaymentButton.disabled = !paymentAllowed;
+    submitPaymentButton.disabled = !enabled;
 
     const buttonText = submitPaymentButton.querySelector("span");
 
@@ -859,62 +941,35 @@ function updatePaymentFormState(billing) {
         return;
     }
 
-    if (fullyPaid) {
-        buttonText.textContent = "Payment Verified";
-
-        return;
+    if (paymentState.submitting) {
+        buttonText.textContent = "processing...";
+    }else if (fullyPaid) {
+        buttonText.textContent = "Payment Complete";
+    }else if (!gcashState.ready) {
+        buttonText.textContent = "Payment Information Unavailable";
+    }else if (active?.status === "needs_review") {
+        buttonText.textContent = "Payment Under Review";
+    }else if (active?.status === "creating") {
+        buttonText.textContent = "Checking Checkout";
+    }else if (active && resumeAllowed && gcashState.enabled) {
+        buttonText.textContent = "Continue Gcash Checkout";
+    }else if (!allowed) {
+        buttonText.textContent =
+            paymentStatus === "pending"
+                ? "Payment Pending"
+                : "Payment Not Available";
+    } else {
+        buttonText.textContent = gcashSelected
+            ? "Continue to Gcash"
+            : "Submit Manual Payment";
     }
-
-    if (paymentSubmitted) {
-        buttonText.textContent = "Pending Verification";
-
-        return;
-    }
-
-    if (balancePaymentAllowed) {
-        buttonText.textContent = "Submit Balance Payment";
-
-        return;
-    }
-
-    if (awaitingDeposit && expired) {
-        buttonText.textContent = "Payment Period Expired";
-
-        return;
-    }
-
-    if (!paymentAllowed) {
-        buttonText.textContent = "Payment Not Available";
-
-        return;
-    }
-
-    buttonText.textContent =
-        paymentState.selectedPaymentOption === "full" ? "Submit Full Payment" : "Submit Deposit";
 }
 
 /* SUBMITTING STATE */
 
 function setSubmittingState(submitting) {
     paymentState.submitting = submitting;
-
-    if (!submitPaymentButton) {
-        return;
-    }
-
-    if (!submitting) {
-        updatePaymentFormState(paymentState.selectedBilling);
-
-        return;
-    }
-
-    submitPaymentButton.disabled = true;
-
-    const buttonText = submitPaymentButton.querySelector("span");
-
-    if (buttonText) {
-        buttonText.textContent = "Submitting...";
-    }
+    updatePaymentFormState(paymentState.selectedBilling);
 }
 
 /* FORM MESSAGE */
@@ -1059,3 +1114,351 @@ function initializeIcons() {
         lucide.createIcons();
     }
 }
+
+async function gcashApi(path, options = {}) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
+
+    try {
+        const response = await fetch(`/api/paymongo${path}`, {
+            ...options,
+            credentials: "include",
+            cache: "no-store",
+            signal: controller.signal,
+            headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${accessToken}`,
+                ...(options.body
+                    ?{ "Content-Type": "application/json"}
+                    :{}),
+            },
+        });
+
+        const data = await response.json().catch(() => null);
+
+        if (!response.ok) {
+            throw new Error(
+                data?.message ||
+                `Payment request failed (${response.status}).`
+            );
+        }
+        if (!data){
+            throw new Error("The server returned an invalid payment response");
+        }
+
+        return data;
+    }catch (error) {
+        if (error.name === "AbortError") {
+            throw new Error(
+                "The payment request timed out. Its result must be checked before trying again."
+            );
+        }
+
+        throw error;
+    }finally {
+        clearTimeout(timeout);
+    }
+}
+
+async function  loadGcashOverview() {
+    const data = await gcashApi("/overview");
+
+    if (
+        data.role !== "client" ||
+        !Array.isArray(data.reservations) ||
+        !Array.isArray(data.payments)
+    ){
+        throw new Error("Unable to load online payments information.");
+    }
+
+    const reservationId = String(
+        paymentState.selectedBilling?.reservation_id || ""
+    );
+
+    const reservation = data.reservations.find(
+        (item) => String(item.id) === reservationId
+    );
+
+    if (!reservation) {
+        throw new Error("The reservation is unavailable for this account.");
+    }
+
+    gcashState.enabled = reservation.online_enabled === true;
+
+    gcashState.active = data.payments.find(
+        (attempt) =>
+            String(attempt.reservation_id) === reservationId &&
+            String(attempt.active_reservation_id) === reservationId
+    ) || null;
+
+    gcashState.ready = true;
+
+    if (gcashState.active && paymentMethod) {
+        paymentMethod.value = "gcash";
+    }
+}
+
+async function refreshCurrentPayment() {
+    const reservationId =
+        paymentState.selectedBilling?.reservation_id;
+
+    if (!reservationId) {
+        throw new Error("No reservation is selected.");
+    }
+
+    await loadBillingByReservationFromApi(reservationId);
+
+    if (!paymentState.selectedBilling) {
+        throw new Error("The reservation could not be loaded.");
+    }
+
+    await loadGcashOverview();
+
+    renderPaymentPage();
+}
+
+function rememberGcashAttempt(attemptId) {
+    const url = new URL(window.location.href);
+
+    url.searchParams.set(
+        "reservation",
+        String(paymentState.selectedBilling.reservation_id)
+    );
+
+    url.searchParams.set("attempt", attemptId);
+    url.searchParams.delete("returned");
+
+    // Keep the attempt available if the page is refreshed.
+    window.history.replaceState(null, "", url);
+}
+
+async function startGcashCheckout() {
+    // Stop an older status loop while starting or resuming checkout.
+    gcashState.pollVersion += 1;
+
+    setSubmittingState(true);
+
+    let monitorId = null;
+    let redirecting = false;
+
+    try {
+        const reservationId =
+            paymentState.selectedBilling.reservation_id;
+
+        const stage =
+            gcashState.active?.payment_stage ||
+            paymentState.selectedPaymentOption;
+
+        const data = await gcashApi(
+            `/reservations/${encodeURIComponent(reservationId)}/checkout`,
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    payment_option: stage,
+                }),
+            }
+        );
+
+        if (
+            typeof data.attempt_id !== "string" ||
+            !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(
+                data.attempt_id
+            )
+        ) {
+            throw new Error("The server returned an invalid payment attempt.");
+        }
+
+        rememberGcashAttempt(data.attempt_id);
+
+        monitorId = data.attempt_id;
+
+        gcashState.active = {
+            id: data.attempt_id,
+            reservation_id: reservationId,
+            payment_stage: stage,
+            status: data.status,
+        };
+
+        if (data.status === "pending" && data.checkout_url) {
+            const checkoutUrl = new URL(data.checkout_url);
+
+            if (
+                checkoutUrl.protocol !== "https:" ||
+                checkoutUrl.hostname !== "checkout.paymongo.com" ||
+                checkoutUrl.username ||
+                checkoutUrl.password ||
+                checkoutUrl.port
+            ) {
+                throw new Error("The server returned an invalid checkout URL.");
+            }
+
+            window.location.assign(checkoutUrl.href);
+            redirecting = true;
+            return;
+        }
+
+        showPaymentMessage(
+            data.message || "Checking your payment status...",
+            "info"
+        );
+    } catch (error) {
+        // A failed network response does not prove checkout creation failed.
+        // Reload before allowing another payment submission.
+        gcashState.ready = false;
+
+        showPaymentMessage(
+            `${error.message} Refresh this page to check for an existing payment before trying again.`,
+            "error"
+        );
+    } finally {
+        if (!redirecting) {
+            setSubmittingState(false);
+        }
+    }
+
+    if (monitorId && gcashState.ready) {
+        void monitorGcashAttempt(monitorId);
+    }
+}
+
+async function monitorGcashAttempt(attemptId) {
+    const version = ++gcashState.pollVersion;
+
+    if (
+        !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(
+            String(attemptId)
+        )
+    ) {
+        showPaymentMessage("The payment attempt ID is invalid.", "error");
+        return;
+    }
+
+    const reservationId = String(
+        paymentState.selectedBilling?.reservation_id || ""
+    );
+
+    const returnedFromCancel =
+        new URLSearchParams(window.location.search)
+            .get("returned") === "cancel";
+
+    // Bounded polling: stop after 24 checks.
+    for (let check = 0; check < 24; check += 1) {
+        if (version !== gcashState.pollVersion) {
+            return;
+        }
+
+        try {
+            const data = await gcashApi(
+                `/attempts/${encodeURIComponent(attemptId)}`
+            );
+
+            if (version !== gcashState.pollVersion) {
+                return;
+            }
+
+            const attempt = data.attempt;
+
+            if (
+                !attempt ||
+                String(attempt.id) !== String(attemptId) ||
+                String(attempt.reservation_id) !== reservationId
+            ) {
+                throw new Error(
+                    "This payment attempt does not match the selected reservation."
+                );
+            }
+
+            const terminal = [
+                "paid",
+                "failed",
+                "expired",
+                "needs_review",
+            ].includes(attempt.status);
+
+            if (terminal) {
+                // Refresh totals and availability from the backend.
+                await refreshCurrentPayment();
+
+                if (version !== gcashState.pollVersion) {
+                    return;
+                }
+
+                const messages = {
+                    paid: [
+                        "Payment verified. Your reservation payment information has been updated.",
+                        "success",
+                    ],
+                    failed: [
+                        "This payment attempt failed. Check the updated reservation before trying again.",
+                        "error",
+                    ],
+                    expired: [
+                        "This checkout expired. You can try again if the reservation still allows payment.",
+                        "info",
+                    ],
+                    needs_review: [
+                        "This payment needs review. Contact the resort and do not send another payment for this attempt.",
+                        "info",
+                    ],
+                };
+
+                const [message, type] = messages[attempt.status];
+
+                showPaymentMessage(message, type);
+                return;
+            }
+
+            if (!["creating", "pending"].includes(attempt.status)) {
+                throw new Error("The server returned an unknown payment status.");
+            }
+
+            gcashState.active = {
+                ...gcashState.active,
+                ...attempt,
+            };
+
+            if (paymentMethod) {
+                paymentMethod.value = "gcash";
+            }
+
+            renderGcashPaymentDetails();
+
+            showPaymentMessage(
+                returnedFromCancel
+                    ? "You returned from checkout. Payment is not confirmed yet. You can resume an available checkout below."
+                    : "Waiting for payment verification. Do not submit another payment.",
+                "info"
+            );
+        } catch (error) {
+            if (version !== gcashState.pollVersion) {
+                return;
+            }
+
+            gcashState.ready = false;
+
+            updatePaymentFormState(paymentState.selectedBilling);
+
+            showPaymentMessage(
+                `${error.message} Refresh the page to check the payment again.`,
+                "error"
+            );
+
+            return;
+        }
+
+        if (check < 23) {
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+        }
+    }
+
+    if (version === gcashState.pollVersion) {
+        showPaymentMessage(
+            "Payment is still awaiting confirmation. Refresh this page later to check again. Do not make a second payment if you already completed checkout.",
+            "info"
+        );
+    }
+}
+
+window.addEventListener("pagehide", () => {
+    gcashState.pollVersion += 1;
+});
